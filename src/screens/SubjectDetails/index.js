@@ -1,0 +1,87 @@
+/* eslint-disable arrow-body-style */
+import { useNavigation, useRoute } from '@react-navigation/native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+import SearchBar from 'react-native-platform-searchbar'
+import { Container, Text } from '../../components/common'
+import { Loader } from '../../components/Loader'
+import StageCard from '../../components/StageCard'
+import SubjectCard from '../../components/SubjectCard'
+import { getSubject, } from '../../redux/action/subjectPageAction'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { IMAGEURL } from '../../utils/functions'
+import { heightp } from '../../utils/responsiveDesign'
+
+const SubjectDetails = () => {
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { level } = route.params;
+  // const data = useAppSelector((state)=> console.log(state, 'hello'));
+  const {subject} = useAppSelector((state)=> state.subPage);
+  const [searchText, setSearchText] = useState();
+  const subjectData = subject?.data;
+  useEffect(() => {
+    const payload = {
+      level
+    }
+    dispatch(getSubject(payload))
+  },[dispatch, level]);
+
+  const navigateSubjectsDetails = useCallback((item) => {
+    const {id, title, image} = item;
+    const uri = `${IMAGEURL}/${image}`
+    if (id)
+      navigation.navigate('DisplaySubject', {
+        subjectId: id,
+        title,
+        uri
+      });
+  }, [navigation]);
+  const searchFilteredData = searchText
+  ? subjectData?.filter((x) =>
+      x.title.toLowerCase().includes(searchText.toLowerCase()),
+    )
+  : subjectData;
+
+  return (
+      <Container>
+         {/* <Loader visible={loading} />  */}
+        <View style={styles.containerFlex}>
+          <View style={{marginBottom: 15}}>
+            <SearchBar
+            placeholder="Search Subjects"
+            value={searchText}
+            onChangeText={(text) => setSearchText(text)}
+            style={styles.searchBar}
+            />
+          </View>
+            <FlatList
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={styles.flatlistContent}
+              ListEmptyComponent={() => <Text text="No Data" />}
+              data={searchFilteredData}
+              showsVerticalScrollIndicator={false}
+              onEndReachedThreshold={0.5}
+              renderItem={({item}) => (
+                <SubjectCard 
+                pressed={() => navigateSubjectsDetails(item)}
+                numberOfStudents={item?.number_of_students} 
+                duration={item?.number_of_hours} 
+                uri={`${IMAGEURL}/${item?.image}`} contents={item?.title} />
+            )}
+            />
+          </View>
+      </Container>
+  )
+}
+const styles = StyleSheet.create({
+  flatlistContent: {
+    flexGrow: 1,
+  },
+  containerFlex: {
+    marginBottom: heightp(20)
+  }
+})
+
+export default SubjectDetails;
