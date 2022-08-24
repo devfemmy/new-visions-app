@@ -37,7 +37,7 @@ const StageCard = ({
       alignItems: 'center',
       justifyContent: 'center',
       paddingHorizontal: heightp(10),
-      marginTop: dark ? heightp(18) : 0,
+      marginTop: dark ? heightp(20) : 0,
     },
     darkContainer: {
       minHeight: heightp(110),
