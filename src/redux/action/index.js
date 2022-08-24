@@ -33,3 +33,6 @@ export {
 
 export {getSubjectStages, getSubjectLevels, getSubject, getSubjectDetails, } from "./subjectPageAction";
 export { getTeachers } from "./teachersPageAction";
+export { getSubjectTeachers } from "./subjectTeachersAction";
+export { getSubjectGroups } from "./subGroupAction";
+export { getGroupDays } from "./getGroupDaysAction";

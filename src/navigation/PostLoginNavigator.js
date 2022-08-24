@@ -13,6 +13,10 @@ import Notification from '../screens/Notification/Notification';
 import SubjectDetails from '../screens/SubjectDetails';
 import DisplaySubject from '../screens/DisplaySubject';
 import Teachers from '../screens/Teachers';
+import SubjectTeachers from '../screens/SubjectTeachers';
+import FullLessonSubscription from '../screens/FullLessonSubscription';
+import SubscriptionSuccess from '../screens/FullLessonSubscription/SuccessfulSub';
+
 import { useContext } from 'react';
 import { AppState } from '../context/AppState';
 import Attendance from '../screens/Parent/Attendance';
@@ -75,6 +79,33 @@ export const PostLoginNavigator = () => {
         options={({route}) => ({
           headerShown: true,
           title: route.params.title
+        })}
+      />
+        <MainStack.Screen
+        name="SubjectTeachers"
+        component={SubjectTeachers}
+        options={({route}) => ({
+          headerShown: true,
+          title: 'Subject Teachers'
+        })}
+      />
+      <MainStack.Screen
+        name="FullLesson"
+        component={FullLessonSubscription}
+        options={({route}) => ({
+          headerShown: true,
+          title: 'Full Lessons Subscription'
+        })}
+      />
+      <MainStack.Screen
+        name="SuccessSub"
+        component={SubscriptionSuccess}
+        options={({route}) => ({
+          headerShown: false,
+          title: '',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
         })}
       />
       <MainStack.Screen

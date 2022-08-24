@@ -36,6 +36,7 @@ const English = {
 
   // Drawer Content
   Home: 'Home',
+  HomePage: 'Home',
   LiveBoadcastTimes: 'Live Broadcast Times',
   StudySubjectList: 'Study Subject List',
   Quizzes: 'Quizzes',

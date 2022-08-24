@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text } from "react-native";
 
 import colors from "../helpers/colors";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function Card({ title, subTitle, image }) {
   return (

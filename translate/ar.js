@@ -39,6 +39,7 @@ const Arabic = {
 
   //Drawer content:
   Home: 'الرئيسية',
+  HomePage: 'الرئيسية',
   LiveBoadcastTimes: 'أوقات البث المباشر',
   StudySubjectList: 'الدورات المشتركة',
   Quizzes: 'الإختبارات',

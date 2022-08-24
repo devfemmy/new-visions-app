@@ -7,11 +7,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { globalStyles } from '../helpers/globalStyles';
 import { heightp } from '../utils/responsiveDesign';
 import { Text } from './common';
-import TimeIcon from '../assets/img/time.svg'
 import IconText from './IconText';
 import colors from '../helpers/colors';
 
-const TeachersDetailCard = ({contents, uri, gender, city, pressed}) => {
+const TeachersDetailCard = ({contents, title,
+   uri, gender, city,lessonPrice,numberOfStudents, 
+   bookCourse,subjectCalendar,
+  pressed, subjectDetails}) => {
   const styles = StyleSheet.create({
     container: {
       minHeight: heightp(100),
@@ -19,13 +21,36 @@ const TeachersDetailCard = ({contents, uri, gender, city, pressed}) => {
       borderRadius: 10,
       paddingVertical: heightp(5),
       backgroundColor: 'rgba(249, 249, 249, 1)',
-      marginVertical: heightp(10),
+      marginTop: heightp(10),
+      marginVertical: subjectDetails ? 0 : heightp(10),
     },
     textAlign: {
-      
+      fontWeight: 'bold',
+      // textTransform: 'uppercase'
+    },
+    lowerContainer: {
+      backgroundColor: 'rgba(249, 249, 249, 1)',
+      borderTopColor: 'rgba(0, 0, 0, 0.1)',
+      borderTopWidth: 1,
+      paddingHorizontal: heightp(20),
+      paddingVertical: heightp(5),
+      paddingTop: heightp(10)
+    },
+    bookBtn: {
+      backgroundColor: 'rgba(67, 72, 84, 1)',
+      marginVertical: heightp(10),
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: heightp(40),
+      borderRadius: 8
+    },
+    textWhite: {
+      color: 'white',
+      fontWeight: 'bold'
     }
   })
   return (
+    <>
     <Pressable onPress={pressed} style={[styles.container, globalStyles.rowBetween]}>
       <View>
       <FastImage
@@ -39,10 +64,30 @@ const TeachersDetailCard = ({contents, uri, gender, city, pressed}) => {
       </View>
       <View style={{width: '60%'}}>
         <Text style={styles.textAlign} text={contents} />
-        <IconText text={gender && gender === 1 ? 'Male' : 'Female'} children={<Ionicons name="ios-person" size={20} color={colors.primary} />} />
-        <IconText text={city && city} children={<Ionicons name="ios-home" size={20} color={colors.primary} />} />
+        {subjectDetails ? 
+          <IconText text={numberOfStudents && `${numberOfStudents} students`} children={<Ionicons name="ios-people" size={20} color={colors.primary} />} />:
+          <IconText text={gender && gender === 1 ? 'Male' : 'Female'} children={<Ionicons name="ios-person" size={20} color={colors.primary} />} /> 
+      }
+    {subjectDetails ? 
+          <IconText text={lessonPrice && `${lessonPrice} SAR`} children={<Ionicons name="ios-pricetag" size={20} color={colors.primary} />} />:
+          <IconText text={city && city} children={<Ionicons name={subjectDetails ? "ios-pricetag" : "ios-home"} size={20} color={colors.primary} />} />
+      }
       </View>
     </Pressable>
+    {subjectDetails ? 
+  <View style={[styles.lowerContainer]}>
+    <View style={globalStyles.rowBetween}>
+      <Text numberOfLines={1} style={styles.textAlign} text={title && title} />
+      <Pressable onPress={subjectCalendar} style={globalStyles.subBtn}>
+        <Text style={globalStyles.btnColor} text="Subject Calendar" />
+      </Pressable>
+    </View>
+    <Pressable onPress={bookCourse} style={styles.bookBtn}>
+        <Text style={styles.textWhite} text="Book Full Course" />
+    </Pressable>
+  </View> : null
+  }
+    </>
   )
 }
 

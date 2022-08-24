@@ -3,9 +3,10 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, Linking, StyleSheet, View } from 'react-native'
+import { FlatList, Linking, Pressable, StyleSheet, View } from 'react-native'
 import FastImage from 'react-native-fast-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Timeline from 'react-native-timeline-flatlist';
 import { Container, Text } from '../../components/common'
 import IconText from '../../components/IconText';
@@ -37,13 +38,12 @@ const DisplaySubject = () => {
     dispatch(getSubjectDetails(payload))
   },[dispatch, subjectId]);
 
-  // const navigateSubjects = useCallback(() => {
-  //   if (activeStage)
-  //     navigation.navigate('Home', {
-  //       level: activeLevel?.id,
-  //       // subject: route?.params?.SubjectValue ? route.params.SubjectValue : '',
-  //     });
-  // }, [activeLevel?.id, activeStage, navigation]);
+  const subscribeToLessons = useCallback(() => {
+    if (subjectId)
+      navigation.navigate('SubjectTeachers', {
+        subject_id: subjectId
+      });
+  }, [navigation, subjectId]);
 
   return (
       <Container>
@@ -76,12 +76,20 @@ const DisplaySubject = () => {
             </View>
             <View style={[globalStyles.rowBetween, styles.listing]}>
             <IconText text="Download Book" 
-            children={<Ionicons name="ios-download-outline" size={25} color={colors.black} />} />
-            <Text onPress={() => Linking.openURL(pdf_link)} style={styles.textColor} text="Download" />
+            children={<Ionicons name="ios-download" size={25} color={colors.black} />} />
+            <Pressable onPress={() => Linking.openURL(pdf_link)} style={globalStyles.subBtn}>
+              <Text style={globalStyles.btnColor} text="Download" />
+            </Pressable>
+            </View>
+            <View style={[globalStyles.rowBetween, styles.listing]}>
+            <IconText text="Subscribe" 
+            children={<MaterialIcons name="youtube-subscription" size={25} color={colors.black} />} />
+            <Pressable onPress={subscribeToLessons} style={globalStyles.subBtn}>
+              <Text style={globalStyles.btnColor} text="Subscribe" />
+            </Pressable>
             </View>
         </View>
         </View>
-        {/* {<View style={{ margin: 15, marginRight: 25 }}> */}
         <Text style={styles.lessonProgress} text="Lesson progress" />
           <Timeline
             columnFormat={lang === 'ar' ? 'single-column-left' : 'single-column-right'}
@@ -98,7 +106,6 @@ const DisplaySubject = () => {
             titleStyle={{ color: 'rgb(59,63,73)', fontFamily: 'Cairo-Regular' }}
             position="right"
           />
-        {/* </View>} */}
       </Container>
   )
 }
@@ -110,7 +117,10 @@ const styles = StyleSheet.create({
     marginBottom: heightp(20)
   },
   listing: {
-    marginVertical: heightp(8)
+    marginVertical: heightp(8),
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    borderBottomWidth: 1,
+    alignItems: 'center'
   },
   textColor: {
     color: colors.primary,

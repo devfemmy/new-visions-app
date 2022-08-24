@@ -6,11 +6,12 @@ import {
   TouchableHighlight,
   Text,
 } from "react-native";
-import MaterialCommunityIcons  from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import colors from "../../helpers/colors";
-export default function ListItem({
+
+function ListItem({
   title,
   subTitle,
   otherText,
@@ -24,7 +25,7 @@ export default function ListItem({
       <TouchableHighlight underlayColor={colors.gray} onPress={onPress}>
         <View style={styles.container}>
           {IconComponent}
-          {image && <Image style={styles.image} require={image} />}
+          {image && <Image style={styles.image} source={image} />}
           <View style={styles.detailsContainer}>
             <Text style={styles.title} numberOfLines={1}>
               {title}
@@ -48,7 +49,7 @@ export default function ListItem({
         </View>
       </TouchableHighlight>
     </Swipeable>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -86,3 +87,5 @@ const styles = StyleSheet.create({
     fontFamily: "Cairo-Regular",
   },
 });
+
+export default ListItem;

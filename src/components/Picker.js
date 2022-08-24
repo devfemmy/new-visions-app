@@ -7,7 +7,7 @@ import {
   Button,
   FlatList,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Text from "./Text";
 import defaultStyles from "../helpers/styles";

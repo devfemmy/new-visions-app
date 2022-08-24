@@ -49,5 +49,17 @@ export const globalStyles = StyleSheet.create({
     borderBottomColor: 'rgba(112, 112, 112, 0.5)',
     borderBottomWidth: 1,
     marginVertical: heightp(20)
+  },
+  subBtn: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 20,
+    borderRadius: 15,
+    justifyContent: 'center',
+    paddingVertical: 2,
+    marginBottom: 10
+  },
+  btnColor: {
+    color: colors.white,
+    fontWeight: 'bold'
   }
 });

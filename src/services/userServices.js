@@ -30,5 +30,20 @@ export default class HomePageService {
     const res = await baseAxios.post('/getTeachers', data)
     return res?.data || res;
   }
+
+  static async getSubjectTeachers (data){
+    const res = await baseAxios.post('/getSubjectTeachers', data)
+    return res?.data || res;
+  }
+
+  static async getSubjectGroups (data){
+    const res = await baseAxios.post('/getSubjectGroups', data)
+    return res?.data || res;
+  }
+
+  static async getGroupDays (data){
+    const res = await baseAxios.post('/getGroupDays', data)
+    return res?.data || res;
+  }
   
 }

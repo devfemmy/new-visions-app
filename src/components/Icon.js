@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function Icon({
   name,

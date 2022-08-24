@@ -5,6 +5,9 @@ import levelPageReducer from './reducer/levelPageSlice';
 import subjectDetailsReducer from './reducer/subjectDetailSlice';
 import subReducer from './reducer/subjectSlice';
 import teachersReducer from './reducer/teachersSlice';
+import subjectTeacherReducer from './reducer/subjectTeachersSlice';
+import subjectGroupReducer from './reducer/subjectGroupSlice';
+import groupDaysReducer from './reducer/getGroupDaysSlice';
 import appReducer from './reducer/appSlice';
 
 const store = configureStore({
@@ -15,6 +18,9 @@ const store = configureStore({
    subPage: subReducer,
    subjectDetailsPage: subjectDetailsReducer,
    teachersPage: teachersReducer,
+   subjectTeachersPage: subjectTeacherReducer,
+   subjectGroupPage: subjectGroupReducer,
+   groupDaysPage: groupDaysReducer,
    app: appReducer
   },
 })

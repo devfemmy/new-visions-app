@@ -16,11 +16,20 @@ const StageCard = ({
   activeLevel,
   setActiveLevel,
   setActiveStage,
+  show,
+  group,
+  groupNumber,
+  reducedHeight,
   navigateSubjects,}) => {
-  const isActive = activeStage?.name === stage?.name;
+    let isActive
+  if (group) {
+    isActive = activeStage?.id === stage?.id;
+  }else {
+    isActive = activeStage?.name === stage?.name;
+  }
   const styles = StyleSheet.create({
     container: {
-      minHeight: heightp(110),
+      minHeight: reducedHeight ? heightp(80): heightp(110),
       backgroundColor: isActive ? colors.primary : colors.dark,
       borderRadius: 8,
       width: dark ? '100%' :  widthp(121),
@@ -28,7 +37,7 @@ const StageCard = ({
       alignItems: 'center',
       justifyContent: 'center',
       paddingHorizontal: heightp(10),
-      marginTop: dark ? heightp(20) : 0
+      marginTop: dark ? heightp(20) : 0,
     },
     darkContainer: {
       minHeight: heightp(110),
@@ -85,10 +94,11 @@ const StageCard = ({
         setActiveStage(stage);
         if (stage.name !== activeStage?.name) setActiveLevel(null);
       }} style={!dark ? styles.darkContainer : styles.container}>
+        {group && !reducedHeight ? <Text style={styles.textColor} text={groupNumber} /> : null}
         <Text style={styles.textColor} text={text} />
       </Pressable>
     }
-      {isActive ? (
+      {isActive && !show ? (
         <>
           <View style={styles.levels}>
             {levels?.map((level) => {
