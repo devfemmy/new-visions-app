@@ -45,5 +45,15 @@ export default class HomePageService {
     const res = await baseAxios.post('/getGroupDays', data)
     return res?.data || res;
   }
+
+  static async postNotificationData (data){
+    const res = await baseAxios.post('/updateNotificationsToken', data)
+    return res?.data || res;
+  }
+
+  static async getNotificationData (data){
+    const res = await baseAxios.post('/getNotifications', data)
+    return res?.data || res;
+  }
   
 }

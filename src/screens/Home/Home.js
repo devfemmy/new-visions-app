@@ -3,6 +3,7 @@ import FastImage from 'react-native-fast-image';
 import React,{useEffect} from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import i18n from "i18n-js";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Container, Text } from '../../components/common';
 import { globalStyles } from '../../helpers/globalStyles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -12,6 +13,7 @@ import HeaderTitle from '../../components/common/HeaderTitle';
 import StageCard from '../../components/StageCard';
 import TeachersCard from '../../components/TeachersCard';
 import { IMAGEURL } from '../../utils/functions';
+import HomePageService from '../../services/userServices';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -23,6 +25,21 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getHomePage())
+    // Send Notification Token
+
+    async function postNotificationToken() {
+      const fcmtoken = await AsyncStorage.getItem("fcmtoken");
+      const payload = {
+        token: fcmtoken
+      }
+      try {
+        const res = await HomePageService.postNotificationData(payload);
+        return res;
+      } catch (err) {
+        console.log(err, 'error');
+      } 
+    }
+    postNotificationToken();
   }, [dispatch])
   
   return (
