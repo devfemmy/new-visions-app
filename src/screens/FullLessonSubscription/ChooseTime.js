@@ -33,7 +33,7 @@ const ChooseTime = ({getGroupDaysData}) => {
         reducedHeight
         activeLevel={activeLevel}
         setActiveLevel={setActiveLevel}
-        activeStage={activeStage}
+        // activeStage={activeStage}
         setActiveStage={setActiveStage}
         dark text={item.start && `${item.start} - ${item.end}`} />)}
     </View>

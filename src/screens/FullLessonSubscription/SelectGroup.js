@@ -10,7 +10,9 @@ const SelectGroup = () => {
   const [activeStage, setActiveStage] = useState(null);
   const [activeLevel, setActiveLevel] = useState(null);
   const items = [
-    { id: 1, name: 'Select Group'},
+    { id: 1, name: 'Morning Session'},
+    { id: 2, name: 'Evening Session'},
+    { id: 3, name: 'Special Date'},
   ];
   useEffect(() => {
     if (activeStage == null) {

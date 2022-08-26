@@ -66,7 +66,7 @@ export const RootBottomTabNavigator = () => {
         headerShown: false,
         tabBarIcon: ({focused, color, size}) => {
           let iconName = '';
-          if (route.name === I18n.t("HomePage")) {
+          if (route.name === ("HomePage")) {
             iconName = focused ? 'ios-home' : 'ios-home-outline';
           } else if (route.name === I18n.t("Profile")) {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
@@ -83,7 +83,7 @@ export const RootBottomTabNavigator = () => {
         tabBarInactiveTintColor: 'gray',
         tabBarHideOnKeyboard: true,
       })}>
-      <RootBottomTab.Screen name={I18n.t("HomePage")} component={Home} 
+      <RootBottomTab.Screen name={"HomePage"} component={Home} 
       options={{
         headerTitle:  (props) => <LogoTitle {...props} />,
         headerLeft: HeaderLeft,

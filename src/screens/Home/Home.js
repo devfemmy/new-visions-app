@@ -41,7 +41,7 @@ const Home = () => {
     }
     postNotificationToken();
   }, [dispatch])
-  
+  console.log('stagesArray', stagesArray)
   return (
     (
         <Container>
