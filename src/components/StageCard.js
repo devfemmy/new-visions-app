@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { Pressable, StyleSheet, TouchableOpacity, View, } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import colors from '../helpers/colors'
 import { globalStyles } from '../helpers/globalStyles'
 import { heightp, widthp } from '../utils/responsiveDesign'
@@ -18,6 +19,7 @@ const StageCard = ({
   setActiveStage,
   show,
   group,
+  uri,
   groupNumber,
   reducedHeight,
   navigateSubjects,}) => {
@@ -87,6 +89,14 @@ const StageCard = ({
       {!dark ? 
       <Pressable    
             onPress={() => {}} style={!dark ? styles.darkContainer : styles.container}>
+            <FastImage
+                  style={{width: heightp(50), height: heightp(40), borderRadius: 10}}
+                  source={{
+                    uri,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
             <Text style={styles.textColor} text={text} />
           </Pressable>: 
       <Pressable    
@@ -113,6 +123,7 @@ const StageCard = ({
                     { backgroundColor: isActiveLevel ? colors.primary : colors.black },
                   ]}
                 >
+
                   <Text text={level.name} numberOfLines={1} style={styles.level} />
                 </TouchableOpacity>
               );

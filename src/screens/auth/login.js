@@ -24,7 +24,7 @@ function Login({ navigation }) {
   const submitLogin = (values) => {
     showLoadingSpinner(true);
     axios
-      .post('https://mo.visionsplus.net/api/login', {
+      .post('https://newvisions.sa/api/login', {
         email: values.email,
         password: values.password,
       })

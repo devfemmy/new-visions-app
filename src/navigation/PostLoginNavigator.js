@@ -6,6 +6,8 @@ import {
 } from '@react-navigation/stack';
 import i18n from "i18n-js";
 
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import colors from '../helpers/colors';
 import { heightp } from '../utils/responsiveDesign';
 import DrawerNavigator from './DrawerNavigator';
@@ -22,11 +24,24 @@ import { AppState } from '../context/AppState';
 import Attendance from '../screens/Parent/Attendance';
 import Subscriptions from '../screens/Parent/Subscriptions';
 import Profile from '../screens/Parent/Profile';
+import Calendar from '../screens/Calendar';
+import BackIcon from '../assets/img/back.svg';
+import MessageScreen from '../screens/Messages/MessageScreen';
 
 const MainStack = createStackNavigator();
 
 export const PostLoginNavigator = () => {
-  
+  const navigation = useNavigation()
+  const backRight = () => (
+    <TouchableOpacity
+    onPress={() => navigation.goBack()}
+      style={{
+        marginLeft: 16,
+      }}
+    >
+      <BackIcon width={20} height={20} />
+    </TouchableOpacity>
+  );
   return (
     <MainStack.Navigator
       initialRouteName="Home"
@@ -73,12 +88,29 @@ export const PostLoginNavigator = () => {
           title: i18n.t('Teachers')
         })}
       />
+        <MainStack.Screen
+        name="Calendar"
+        component={Calendar}
+        options={() => ({
+          headerShown: true,
+          title: i18n.t('Calendar')
+        })}
+      />
       <MainStack.Screen
         name="DisplaySubject"
         component={DisplaySubject}
         options={({route}) => ({
           headerShown: true,
           title: route.params.title
+        })}
+      />
+      <MainStack.Screen
+        name="ChatScreen"
+        component={MessageScreen}
+        options={({route}) => ({
+          headerShown: true,
+          title: route.params.title,
+          headerLeft: backRight
         })}
       />
         <MainStack.Screen

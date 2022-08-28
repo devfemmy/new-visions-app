@@ -22,7 +22,7 @@ const SubjectTeachers = () => {
 
   useEffect(() => {
     const payload = {
-      subject_id: "2",
+      subject_id: "1",
     }
     dispatch(getSubjectTeachers(payload))
   },[dispatch, subject_id]);

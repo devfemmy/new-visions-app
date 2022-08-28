@@ -12,7 +12,7 @@ import { heightp } from '../../utils/responsiveDesign';
 import HeaderTitle from '../../components/common/HeaderTitle';
 import StageCard from '../../components/StageCard';
 import TeachersCard from '../../components/TeachersCard';
-import { IMAGEURL } from '../../utils/functions';
+import { IMAGEURL, IMAGEURL2 } from '../../utils/functions';
 import HomePageService from '../../services/userServices';
 
 const Home = () => {
@@ -80,9 +80,13 @@ const Home = () => {
               data={stagesArray}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.5}
-              renderItem={({item}) => (
-                  <StageCard text={item.name} />
-            )}
+              renderItem={({item}) => {
+                const uri = `${IMAGEURL2}${item.image}`;
+                console.log(uri)
+               return (
+                  <StageCard uri={uri} text={item.name} />
+            )
+              }}
             />
           </View>
           <View style={globalStyles.horizontal} />

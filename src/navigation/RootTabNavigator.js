@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import I18n from 'i18n-js';
 import Home from '../screens/Home/Home';
 import colors from '../helpers/colors';
 import { widthp } from '../utils/responsiveDesign';
@@ -17,7 +18,7 @@ import ParentProfile from '../screens/Parent/Profile'
 import ParentProfileNavigator from '../navigation/ParentProfileNavigator'
 import { AppState } from '../context/AppState';
 import Global from '../../Global';
-import I18n from 'i18n-js';
+import Conversation from '../screens/Messages/Conversations';
 
 const RootBottomTab = createBottomTabNavigator();
 
@@ -95,7 +96,7 @@ export const RootBottomTabNavigator = () => {
       <RootBottomTab.Screen options={{headerShown: true, headerLeft: backRight, unmountOnBlur: true}} name={I18n.t('Subjects')} component={Subject} />
       <RootBottomTab.Screen name={I18n.t("Subscriptions")} component={Home} />
       {Global.UserType == 3 &&
-        <RootBottomTab.Screen name={I18n.t("Messages")} component={Home} />
+        <RootBottomTab.Screen options={{headerShown: true, headerLeft: backRight, unmountOnBlur: true}} name={I18n.t("Messages")} component={Conversation} />
       }
       <RootBottomTab.Screen name={I18n.t("Profile")} component={(Global.UserType == 4 ? ParentProfileNavigator : Profile)} />
     </RootBottomTab.Navigator>

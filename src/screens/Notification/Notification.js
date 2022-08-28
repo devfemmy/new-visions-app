@@ -18,7 +18,6 @@ const Notification = () => {
       setLoading(true)
       try {
         const res = await HomePageService.getNotificationData()
-        console.log('res', res);
         const data = res?.data;
         setLoading(false)
         setNotificatioData(data);     

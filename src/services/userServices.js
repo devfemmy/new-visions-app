@@ -55,5 +55,20 @@ export default class HomePageService {
     const res = await baseAxios.post('/getNotifications', data)
     return res?.data || res;
   }
+
+  static async getCalendar (data){
+    const res = await baseAxios.post('/getCalendar', data)
+    return res?.data || res;
+  }
+
+  static async checkLive (data){
+    const res = await baseAxios.post('/checkLive', data)
+    return res?.data || res;
+  }
+
+  static async getConversations (data){
+    const res = await baseAxios.post('/getMessages', data)
+    return res?.data || res;
+  }
   
 }
