@@ -36,3 +36,5 @@ export { getTeachers } from "./teachersPageAction";
 export { getSubjectTeachers } from "./subjectTeachersAction";
 export { getSubjectGroups } from "./subGroupAction";
 export { getGroupDays } from "./getGroupDaysAction";
+export {getSubjectChaptersAndLessons} from "./subjectLessonsAction";
+export {getTeacherFreeDays} from "./getTeachersFreeDaysAction";

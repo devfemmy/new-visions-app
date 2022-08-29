@@ -1,13 +1,14 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, LogBox, StyleSheet, View } from 'react-native'
 import { Container, Text } from '../../components/common'
 import StageCard from '../../components/StageCard'
 import { getSubjectLevels, getSubjectStages } from '../../redux/action/subjectPageAction'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp } from '../../utils/responsiveDesign';
 
+LogBox.ignoreAllLogs();
 const Subject = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();

@@ -8,6 +8,9 @@ import teachersReducer from './reducer/teachersSlice';
 import subjectTeacherReducer from './reducer/subjectTeachersSlice';
 import subjectGroupReducer from './reducer/subjectGroupSlice';
 import groupDaysReducer from './reducer/getGroupDaysSlice';
+import teacherFreeDaysReducer from './reducer/getTeachersFreeDaysSlice';
+import getSubjectChaptersAndLessonsReducer from './reducer/getSubjectChapterLessonSlice';
+
 import appReducer from './reducer/appSlice';
 
 const store = configureStore({
@@ -19,6 +22,8 @@ const store = configureStore({
    subjectDetailsPage: subjectDetailsReducer,
    teachersPage: teachersReducer,
    subjectTeachersPage: subjectTeacherReducer,
+   getSubjectChaptersAndLessonsPage: getSubjectChaptersAndLessonsReducer,
+   teacherFreeDaysPage: teacherFreeDaysReducer,
    subjectGroupPage: subjectGroupReducer,
    groupDaysPage: groupDaysReducer,
    app: appReducer

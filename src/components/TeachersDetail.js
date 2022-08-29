@@ -12,7 +12,7 @@ import colors from '../helpers/colors';
 
 const TeachersDetailCard = ({contents, title,
    uri, gender, city,lessonPrice,numberOfStudents, 
-   bookCourse,subjectCalendar,
+   bookCourse,subjectCalendar,bookPrivateLesson,
   pressed, subjectDetails}) => {
   const styles = StyleSheet.create({
     container: {
@@ -38,6 +38,14 @@ const TeachersDetailCard = ({contents, title,
     },
     bookBtn: {
       backgroundColor: 'rgba(67, 72, 84, 1)',
+      marginVertical: heightp(10),
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: heightp(40),
+      borderRadius: 8
+    },
+    bookBtn2: {
+      backgroundColor: colors.primary,
       marginVertical: heightp(10),
       justifyContent: 'center',
       alignItems: 'center',
@@ -82,7 +90,10 @@ const TeachersDetailCard = ({contents, title,
         <Text style={globalStyles.btnColor} text="Subject Calendar" />
       </Pressable>
     </View>
-    <Pressable onPress={bookCourse} style={styles.bookBtn}>
+    <Pressable onPress={bookPrivateLesson} style={styles.bookBtn}>
+        <Text style={styles.textWhite} text="Book Private Lesson" />
+    </Pressable>
+    <Pressable onPress={bookCourse} style={styles.bookBtn2}>
         <Text style={styles.textWhite} text="Book Full Course" />
     </Pressable>
   </View> : null

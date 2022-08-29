@@ -41,7 +41,6 @@ const Home = () => {
     }
     postNotificationToken();
   }, [dispatch])
-  console.log('stagesArray', stagesArray)
   return (
     (
         <Container>
@@ -82,7 +81,6 @@ const Home = () => {
               onEndReachedThreshold={0.5}
               renderItem={({item}) => {
                 const uri = `${IMAGEURL2}${item.image}`;
-                console.log(uri)
                return (
                   <StageCard uri={uri} text={item.name} />
             )

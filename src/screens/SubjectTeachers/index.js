@@ -19,10 +19,9 @@ const SubjectTeachers = () => {
   const { subject_id } = route.params;
   const {subjectTeachersPage, app: {loading}} = useAppSelector((state)=> state);
   const subjectTeachersData = subjectTeachersPage?.subjectTeachersData;
-
   useEffect(() => {
     const payload = {
-      subject_id: "1",
+      subject_id: "8",
     }
     dispatch(getSubjectTeachers(payload))
   },[dispatch, subject_id]);
@@ -33,6 +32,15 @@ const SubjectTeachers = () => {
     // if (id)
       navigation.navigate('FullLesson', {
         subject_id,
+      });
+  }, [navigation, subject_id]);
+  const navigatePivateLesson = useCallback((teacher_id) => {
+    // const {id, title, image} = item;
+    // const uri = `${IMAGEURL}/${image}`
+    // if (id)
+      navigation.navigate('PrivateLesson', {
+        subject_id,
+        teacher_id,
       });
   }, [navigation, subject_id]);
   const searchFilteredData = searchText
@@ -63,6 +71,7 @@ const SubjectTeachers = () => {
                 <TeachersDetailCard
                 subjectDetails 
                 bookCourse={navigateFullSubscription}
+                bookPrivateLesson={() => navigatePivateLesson(item.id)}
                 title={item?.subject?.title} 
                 lessonPrice={item?.lesson_price}
                 numberOfStudents={item?.subject?.number_of_students} 

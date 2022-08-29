@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, LogBox, StyleSheet, View } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
 import { Loader } from '../../components/Loader'
@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 
+LogBox.ignoreAllLogs();
 const SubjectDetails = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();

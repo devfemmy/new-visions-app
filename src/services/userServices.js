@@ -46,6 +46,16 @@ export default class HomePageService {
     return res?.data || res;
   }
 
+  static async getSubjectChaptersAndLessons (data){
+    const res = await baseAxios.post('/getSubjectChaptersAndLessons', data)
+    return res?.data || res;
+  }
+
+  static async getTeacherFreeDays (data){
+    const res = await baseAxios.post('/getTeacherFreeDays', data)
+    return res?.data || res;
+  }
+
   static async postNotificationData (data){
     const res = await baseAxios.post('/updateNotificationsToken', data)
     return res?.data || res;

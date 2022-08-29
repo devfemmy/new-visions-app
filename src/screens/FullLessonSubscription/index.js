@@ -53,7 +53,7 @@ const FullLessonSubscription = () => {
                     <ChooseGroup subjectGroupData={subjectGroupData} />
                   </View>
               </ProgressStep>
-              <ProgressStep nextBtnText="Subscribe" onSubmit={() => navigation.navigate('SuccessSub')} label="Group Days">
+              <ProgressStep nextBtnText="Subscribe" onSubmit={() => navigation.navigate('SuccessSub', {name: 'Full Lesson'})} label="Group Days">
                 <View>
                     <ChooseTime getGroupDaysData={getGroupDaysData} />
                   </View>

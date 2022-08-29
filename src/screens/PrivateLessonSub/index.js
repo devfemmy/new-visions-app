@@ -1,0 +1,71 @@
+/* eslint-disable camelcase */
+/* eslint-disable import/no-cycle */
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { createContext, useEffect, useState } from 'react'
+import { View } from 'react-native';
+import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
+import { Container,} from '../../components/common'
+import colors from '../../helpers/colors';
+import { getSubjectChaptersAndLessons, getTeacherFreeDays } from '../../redux/action';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import ChooseGroup from '../FullLessonSubscription/ChooseGroup';
+import SelectGroup from '../FullLessonSubscription/SelectGroup';
+import ChooseFreeDay from './ChooseFreeday';
+import ChooseLesson from './ChooseLesson';
+// import ChooseGroup from './ChooseGroup';
+// import ChooseTime from './ChooseTime';
+// import SelectGroup from './SelectGroup';
+
+export const SubContext = createContext(null);
+const PrivateLessonSubscription = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch();
+  const { subject_id, teacher_id } = route.params;
+  const {getSubjectChaptersAndLessonData} = useAppSelector((state)=> state.getSubjectChaptersAndLessonsPage);
+  const {teachersFreeDaysData} = useAppSelector((state)=> state.teacherFreeDaysPage);
+  console.log(getSubjectChaptersAndLessonData, 'getSubjectChaptersAndLessonData');
+  console.log('teachersFreeDaysData', teachersFreeDaysData)
+  useEffect(() => {
+    const payload = {
+      subject_id: '8'
+    }
+    dispatch(getSubjectChaptersAndLessons(payload))
+  }, [dispatch, subject_id]);
+  const [disabledProp, setDisabledProps] = useState(false);
+  const [groupId, setGroupId] = useState(null);
+  useEffect(() => {
+    const payload = {
+      teacher_id: '5'
+    }
+    dispatch(getTeacherFreeDays(payload))
+  }, [dispatch, teacher_id]);
+  return (
+    <SubContext.Provider value={{ disabledProp, setDisabledProps, setGroupId }}>
+      <Container>
+        <View style={{flex: 1}}>
+          <ProgressSteps 
+          completedStepIconColor={colors.primary}
+          activeStepIconBorderColor={colors.primary} 
+          completedProgressBarColor={colors.primary} 
+          activeLabelColor={colors.primary} removeBtnRow>
+              <ProgressStep  nextBtnDisabled={!disabledProp} label="Choose Class">
+                  <View>
+                    {/* <SelectGroup /> */}
+                    <ChooseLesson lessons={getSubjectChaptersAndLessonData} />
+                  </View>
+              </ProgressStep>
+              <ProgressStep  nextBtnText="Subscribe" onSubmit={() => navigation.navigate('SuccessSub', {name: 'Private Lesson'})} nextBtnDisabled={!disabledProp}  label="Choose the day">
+                <View>
+                    {/* <ChooseGroup subjectGroupData={subjectGroupData} /> */}
+                    <ChooseFreeDay freeDays={teachersFreeDaysData} />
+                  </View>
+              </ProgressStep>
+          </ProgressSteps>
+        </View>
+      </Container>
+    </SubContext.Provider>
+  )
+};
+
+export default PrivateLessonSubscription;

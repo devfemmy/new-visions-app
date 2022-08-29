@@ -27,6 +27,7 @@ import Profile from '../screens/Parent/Profile';
 import Calendar from '../screens/Calendar';
 import BackIcon from '../assets/img/back.svg';
 import MessageScreen from '../screens/Messages/MessageScreen';
+import PrivateLessonSubscription from '../screens/PrivateLessonSub';
 
 const MainStack = createStackNavigator();
 
@@ -127,6 +128,14 @@ export const PostLoginNavigator = () => {
         options={({route}) => ({
           headerShown: true,
           title: 'Full Lessons Subscription'
+        })}
+      />
+      <MainStack.Screen
+        name="PrivateLesson"
+        component={PrivateLessonSubscription}
+        options={({route}) => ({
+          headerShown: true,
+          title: 'Private Lessons Subscription'
         })}
       />
       <MainStack.Screen
