@@ -20,6 +20,7 @@ const StageCard = ({
   show,
   group,
   uri,
+  withImg,
   groupNumber,
   reducedHeight,
   navigateSubjects,}) => {
@@ -56,6 +57,11 @@ const StageCard = ({
       color: 'white',
       fontWeight: 'bold'
     },
+    textStyleImg: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: heightp(19)
+    },
     levels: {
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -82,6 +88,10 @@ const StageCard = ({
         justifyContent: 'center',
         borderRadius: 20,
         marginTop: heightp(20)
+    },
+    withImageStyle: {
+      justifyContent: 'space-between',
+      flexDirection: 'row'
     }
   });
   return (
@@ -105,7 +115,19 @@ const StageCard = ({
         if (stage.name !== activeStage?.name) setActiveLevel(null);
       }} style={!dark ? styles.darkContainer : styles.container}>
         {group && !reducedHeight ? <Text style={styles.textColor} text={groupNumber} /> : null}
-        <Text style={styles.textColor} text={text} />
+        {withImg ? <View style={styles.withImageStyle}>
+          <FastImage
+            style={{width: heightp(50), height: heightp(40), borderRadius: 10, marginRight: heightp(15)}}
+            source={{
+              uri,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+              />
+            <Text style={withImg ? styles.textStyleImg : styles.textColor} text={text} />
+        </View> : 
+          <Text style={styles.textColor} text={text} />
+        }
       </Pressable>
     }
       {isActive && !show ? (

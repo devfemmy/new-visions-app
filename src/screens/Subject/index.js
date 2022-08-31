@@ -6,6 +6,7 @@ import { Container, Text } from '../../components/common'
 import StageCard from '../../components/StageCard'
 import { getSubjectLevels, getSubjectStages } from '../../redux/action/subjectPageAction'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { IMAGEURL2 } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign';
 
 LogBox.ignoreAllLogs();
@@ -42,8 +43,12 @@ const Subject = () => {
               data={subjectData}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.5}
-              renderItem={({item}) => (
+              renderItem={({item}) => {
+                const uri = `${IMAGEURL2}${item.image}`;
+                return (
                   <StageCard 
+                  withImg
+                  uri={uri}
                   navigateSubjects={navigateSubjects}
                   stage={item}
                   levels={levelData}
@@ -52,7 +57,9 @@ const Subject = () => {
                   setActiveLevel={setActiveLevel}
                   setActiveStage={setActiveStage}
                    dark text={item.name} />
-            )}
+            )
+              }
+          }
             />
           </View>
       </Container>

@@ -2,12 +2,15 @@
 /* eslint-disable import/no-cycle */
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { createContext, useEffect, useState } from 'react'
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { Container,} from '../../components/common'
 import colors from '../../helpers/colors';
 import { getSubjectChaptersAndLessons, getTeacherFreeDays } from '../../redux/action';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { deviceStorage } from '../../services/deviceStorage';
+import { getInAppPurchaseProducts } from '../../services/getInAppPurchase';
+import { requestPurchase } from '../../services/iap';
 import ChooseGroup from '../FullLessonSubscription/ChooseGroup';
 import SelectGroup from '../FullLessonSubscription/SelectGroup';
 import ChooseFreeDay from './ChooseFreeday';
@@ -24,8 +27,6 @@ const PrivateLessonSubscription = () => {
   const { subject_id, teacher_id } = route.params;
   const {getSubjectChaptersAndLessonData} = useAppSelector((state)=> state.getSubjectChaptersAndLessonsPage);
   const {teachersFreeDaysData} = useAppSelector((state)=> state.teacherFreeDaysPage);
-  console.log(getSubjectChaptersAndLessonData, 'getSubjectChaptersAndLessonData');
-  console.log('teachersFreeDaysData', teachersFreeDaysData)
   useEffect(() => {
     const payload = {
       subject_id: '8'
@@ -40,6 +41,24 @@ const PrivateLessonSubscription = () => {
     }
     dispatch(getTeacherFreeDays(payload))
   }, [dispatch, teacher_id]);
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      getInAppPurchaseProducts();
+    }
+  }, []);
+  const subscribeToLesson = () => {
+  //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+    const subscriptionInfo = {
+      billNumber: 'ios_bill',
+      paymentFor: 'OneLesson',
+      lessonId: '1258',
+      subjectId: subject_id,
+      price: 200,
+    };
+    deviceStorage
+      .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
+      .then(() => requestPurchase({ sku: '' }));
+  }
   return (
     <SubContext.Provider value={{ disabledProp, setDisabledProps, setGroupId }}>
       <Container>
@@ -55,7 +74,7 @@ const PrivateLessonSubscription = () => {
                     <ChooseLesson lessons={getSubjectChaptersAndLessonData} />
                   </View>
               </ProgressStep>
-              <ProgressStep  nextBtnText="Subscribe" onSubmit={() => navigation.navigate('SuccessSub', {name: 'Private Lesson'})} nextBtnDisabled={!disabledProp}  label="Choose the day">
+              <ProgressStep  nextBtnText="Subscribe" onSubmit={subscribeToLesson} nextBtnDisabled={!disabledProp}  label="Choose the day">
                 <View>
                     {/* <ChooseGroup subjectGroupData={subjectGroupData} /> */}
                     <ChooseFreeDay freeDays={teachersFreeDaysData} />
