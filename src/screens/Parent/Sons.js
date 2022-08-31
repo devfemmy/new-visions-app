@@ -10,6 +10,7 @@ import ListItem from '../../components/lists/ListItem'
 import { API_URL_Prod } from '../../helpers/common'
 import SonListItem from './SonListItem'
 import { useNavigation } from '@react-navigation/native'
+import Toast from 'react-native-toast-message';
 
 export default function Sons({navigation}) {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
@@ -28,10 +29,10 @@ export default function Sons({navigation}) {
 
             return;
         }
-        alert(searchMail);
+        //alert(searchMail);
         showLoadingSpinner(true);
         axios
-      .post('https://mo.visionsplus.net/api/addNewChild', {
+      .post('https://newvisions.sa/api/addNewChild', {
 email:searchMail
       })
       .then(response => {
@@ -43,15 +44,19 @@ email:searchMail
           if (response.data.code == 200) {
             const data = response.data.data;
             getChildren();
+            showLoadingSpinner(false);
             setLoadingContent(true);
             console.log(sons);
           }else if(response.data.code == 403){
-            alert(11);
+            //alert(11);
             onLogout();
             showLoadingSpinner(false);
           } else {
             showLoadingSpinner(false);
-            alert(response.data.message);
+            Toast.show({
+              text1:response.data.message,
+              type:'error',
+              style:{color:colors.dark}});
           }
         }
       })
@@ -68,7 +73,7 @@ email:searchMail
     const getChildren = (value) => {
         //showLoadingSpinner(true);
     axios
-      .post('https://mo.visionsplus.net/api/getUserChildren', {
+      .post('https://newvisions.sa/api/getUserChildren', {
       })
       .then(response => {
         //alert(response.data.code);
@@ -86,7 +91,10 @@ email:searchMail
             onLogout();
           } else {
             showLoadingSpinner(false);
-            alert(response.data.message);
+            Toast.show({
+              text1:response.data.message,
+              type:'error',
+              style:{color:colors.dark}});
           }
         }
       })

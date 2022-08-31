@@ -51,15 +51,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor:colors.white,
     borderRadius:40,
-    height:40,
+    height:50,
     color: colors.black,
     width:'100%'
   },text: {
     color: colors.black,
     fontSize: 18,
     fontFamily: "Cairo-Regular",
-    width:'100%',
-    height:40,
+    width:'95%',
+    height:50,
+    padding:5
   },
   icon: {
     marginRight: 10,

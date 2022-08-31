@@ -12,24 +12,26 @@ import axios from 'axios'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { TouchableWithoutFeedback } from 'react-native'
 import SonAttendanceItem from './SonAttendanceItem'
+import { useLayoutEffect } from 'react'
 
 export default function Attendance({route}) {
 
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
     useContext(AppContext);
-
+    
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const monthsAr = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيه", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
     const [monthName, setMonthName] = useState("");
     const [monthNo, setMonthNo] = useState(new Date().getMonth() + 1);
+    const [yearNo, setyearNo] = useState(new Date().getFullYear());
     const [attendance, setAttendance] = useState([]);
 
     function getAttendance(id, month) {
-        showLoadingSpinner(true);
         axios
-      .post('https://mo.visionsplus.net/api/getChildAttendance', {
-        "child_id": "6",
-        "month": monthNo
+      .post('https://newvisions.sa/api/getChildAttendance', {
+        "child_id": route.params.id,
+        "month": monthNo,
+        "year":yearNo
       })
       .then(response => {
         if (
@@ -74,13 +76,27 @@ export default function Attendance({route}) {
     );
 
     function prevMonth() {
+      //alert(yearNo + " - " + monthNo);
+      if(monthNo == 1){
+        setMonthNo(12);
+        setyearNo(yearNo - 1);
+      }else{
         setMonthNo(monthNo - 1);
+      }
+        
+        
         setMonthNameFun(monthNo);
         console.log(monthNo);
     }
 
     function nextMonth() {
-        setMonthNo(monthNo + 1);
+      //alert(yearNo + " - " + monthNo);
+        if(monthNo == 12){
+          setMonthNo(1);
+          setyearNo(yearNo + 1);
+        }else{
+          setMonthNo(monthNo + 1);
+        }
         setMonthNameFun(monthNo);
         console.log(monthNo);
     }
@@ -93,7 +109,7 @@ export default function Attendance({route}) {
         }else{
             monthName = months[no - 1];
         }   
-        setMonthName(monthName + " " + new Date().getFullYear());
+        setMonthName(monthName);
     }
 
     const EmptyItem = ({item, index})=>(
@@ -103,11 +119,16 @@ export default function Attendance({route}) {
       );
 
     useEffect(()=>{
+      
         setMonthNameFun(monthNo);
         //setMonthNo(monthNo);
         getAttendance(route.params.id, monthNo);
     },[monthNo])
 
+
+    useLayoutEffect(()=>{
+      showLoadingSpinner(true);
+    },[]);
   return (
     <Screen>
         <View style={{backgroundColor:colors.white, flex:1}}>
@@ -128,7 +149,7 @@ export default function Attendance({route}) {
                 <TouchableWithoutFeedback onPress={()=>{prevMonth();}}>
             <AntDesign name="caretright" size={20} color={colors.white} />
             </TouchableWithoutFeedback>
-            <Text style={styles.subItemText}>{monthName}</Text>
+            <Text style={styles.subItemText}>{monthName} {yearNo}</Text>
             <TouchableWithoutFeedback onPress={()=>{nextMonth();}}>
             <AntDesign name="caretleft" size={20} color={colors.white} />
             </TouchableWithoutFeedback>

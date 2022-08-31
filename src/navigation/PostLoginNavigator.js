@@ -28,7 +28,10 @@ import Calendar from '../screens/Calendar';
 import BackIcon from '../assets/img/back.svg';
 import MessageScreen from '../screens/Messages/MessageScreen';
 import PrivateLessonSubscription from '../screens/PrivateLessonSub';
-
+import I18n from 'i18n-js';
+import MultiPackageDetails from '../screens/MultiPackages/MultiPackageDetails';
+import PackagesList from '../screens/Packages/PackagesList';
+import MultiPackagesList from '../screens/MultiPackages/MultiPackagesList';
 const MainStack = createStackNavigator();
 
 export const PostLoginNavigator = () => {
@@ -158,23 +161,45 @@ export const PostLoginNavigator = () => {
         }}
       />
 
-<MainStack.Screen
-        name="Subscriptions"
-        component={Subscriptions}
+
+		<MainStack.Screen
+        name="PackagesList"
+        component={PackagesList}
         options={{
-          title: "Subscriptions",
-          headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+          title: I18n.t('Packages'),
+          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
         }}
       />
 
 <MainStack.Screen
-        name="Attendance"
-        component={Attendance}
+        name="MultiPackagesList"
+        component={MultiPackagesList}
         options={{
-          title: "Attendance",
-          headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+          title: I18n.t('MultiPackages'),
+          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
         }}
       />
+
+<MainStack.Screen
+        name="MultiPackageDetails"
+        component={MultiPackageDetails}
+        options={{
+          title: I18n.t('MultiPackages'),
+          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+        }}
+      />
+      <MainStack.Screen
+       options={{
+          title: I18n.t("Subscriptions"),
+          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+        }}
+        name={"Subscriptions"} component={Subscriptions} />
+      <MainStack.Screen
+       options={{
+          title: I18n.t("Attendace"),
+          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+        }}
+         name={"Attendance"} component={Attendance} />			   
     </MainStack.Navigator>
   );
 }

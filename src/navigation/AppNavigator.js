@@ -10,9 +10,10 @@ import Global from '../../Global';
 
 
 export default function AppNavigator() {
-  const {isLoading, user, initUUID} = useContext(AppContext);
+  const {isLoading, user, initUUID, onLogout} = useContext(AppContext);
   
   useEffect(() => {
+    
   }, []);
 
   return isLoading ? (

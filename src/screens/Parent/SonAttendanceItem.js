@@ -25,7 +25,7 @@ export default function SonAttendanceItem({id, time, date, title, description, v
       <View style={{justifyContent:'space-between', padding:5,width:'50%', alignItems:'flex-start'}} >
         <Text style={[styles.attendanceTxt,{color:colors.primary}]}>{date}</Text>
         <Text style={styles.attendanceTxt}>{title}</Text>
-        <Text style={styles.attendanceTxt}>{description}</Text>
+        <Text style={styles.attendanceTxt} numberOfLines={1} >{description}</Text>
       </View>
       <View style={{justifyContent:'space-between', padding:5,width:'40%', alignItems:'flex-start'}} >
         <Text></Text>

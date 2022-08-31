@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-import React,{useEffect} from 'react';
+import React,{useContext, useEffect, useState} from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import i18n from "i18n-js";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,8 +14,15 @@ import StageCard from '../../components/StageCard';
 import TeachersCard from '../../components/TeachersCard';
 import { IMAGEURL, IMAGEURL2 } from '../../utils/functions';
 import HomePageService from '../../services/userServices';
+import Global from '../../../Global';
+import { AppContext } from '../../context/AppState';
+import axios from 'axios';
 
 const Home = () => {
+
+  const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
+    useContext(AppContext);
+
   const navigation = useNavigation();
   const dispatch = useAppDispatch()
   const data = useAppSelector((state)=> state.homePage);
@@ -23,8 +30,42 @@ const Home = () => {
   const stagesArray = data?.homeData?.stages;
   const teachersArray = data?.homeData?.teachers;  
 
+  const [packages, setPackages] = useState([]);
+  function getPackages(params) {
+      axios
+    .post('https://newvisions.sa/api/getPackages', {
+      
+    })
+    .then(response => {
+      if (
+        response != undefined &&
+        response.data != undefined &&
+        response.data.code != undefined
+      ) {
+        if (response.data.code == 200) {
+          const data = response.data.data.data;
+          console.log("multi Packages: "+data);
+          setPackages(data);
+          showLoadingSpinner(false);
+          console.log(packages);
+        }else if(response.data.code == 403){
+          onLogout();
+          showLoadingSpinner(false);
+        } else {
+          showLoadingSpinner(false);
+          alert(response.data.message);
+        }
+      }
+    })
+    .catch(error => {
+      showLoadingSpinner(false);
+      alert(error);
+    });
+  }
+
   useEffect(() => {
     dispatch(getHomePage())
+getPackages();
     // Send Notification Token
 
     async function postNotificationToken() {
@@ -44,7 +85,7 @@ const Home = () => {
   return (
     (
         <Container>
-          <HeaderTitle text={i18n.t('MultiPackages')} />
+          <HeaderTitle pressed={() => navigation.navigate('MultiPackagesList')} text={i18n.t('MultiPackages')} />
           <View style={styles.containerFlex}>
             <FlatList
               horizontal
@@ -69,6 +110,34 @@ const Home = () => {
             />
           </View>
           <View style={globalStyles.horizontal} />
+
+          <HeaderTitle pressed={() => navigation.navigate('PackagesList')} text={i18n.t('Packages')} />
+          <View style={styles.containerFlex}>
+            <FlatList
+              horizontal
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={styles.flatlistContent}
+              ListEmptyComponent={() => <Text text="No Data" />}
+              data={packages}
+              showsVerticalScrollIndicator={false}
+              onEndReachedThreshold={0.5}
+              renderItem={({item}) => {
+                const uri = `${IMAGEURL}/${item.image}`
+                return (
+                  <FastImage
+                  style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
+                  source={{
+                    uri,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+            )}}
+            />
+          </View>
+          <View style={globalStyles.horizontal} />
+
+          {Global.UserType == 3 &&<>
           <HeaderTitle pressed={() => navigation.navigate('Subjects')} text={i18n.t('EducationalLevel')} />
           <View style={styles.containerFlex}>
             <FlatList
@@ -88,6 +157,8 @@ const Home = () => {
             />
           </View>
           <View style={globalStyles.horizontal} />
+          </>
+            }
           <HeaderTitle pressed={() => navigation.navigate('Teachers')} text={i18n.t('Teachers')} />
           <View style={styles.containerFlex}>
             <FlatList

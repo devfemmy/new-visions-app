@@ -37,7 +37,6 @@ function LoginForm({ submitLogin }) {
           AntDesignIcon="lock"
           name="password"
           secureTextEntry
-          keyboardType="numeric"
           labelName={i18n.t("Password")}
         />
         

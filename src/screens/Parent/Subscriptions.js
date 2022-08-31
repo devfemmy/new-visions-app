@@ -9,6 +9,7 @@ import { AppContext } from '../../context/AppState'
 import { FlatList } from 'react-native-gesture-handler'
 import axios from 'axios'
 import SonSubItem from './SonSubItem'
+import { useLayoutEffect } from 'react'
 
 export default function Subscriptions({route}) {
     const [subscriptions, setSubscriptions] = useState([]);
@@ -21,10 +22,9 @@ export default function Subscriptions({route}) {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
     useContext(AppContext);
     function getSonSubscriptions(){
-        showLoadingSpinner(true);
         axios
-      .post('https://mo.visionsplus.net/api/getChildPayments', {
-        "child_id": "6"
+      .post('https://newvisions.sa/api/getChildPayments', {
+        "child_id": route.params.id
       })
       .then(response => {
         if (
@@ -71,7 +71,10 @@ export default function Subscriptions({route}) {
         getSonSubscriptions();
         //onLogout();
     },[]);
-
+    
+    useLayoutEffect(()=>{
+      showLoadingSpinner(true);
+    },[]);
   return (
     <Screen>
         <View style={{backgroundColor:colors.white, flex:1}}>

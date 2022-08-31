@@ -41,7 +41,7 @@ borderColor:colors.dark,
             />
           }
           paginationStyle={{
-            bottom: 70,
+            bottom: 30,
           }}
           loop={false}
         >
