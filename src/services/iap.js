@@ -3,9 +3,8 @@ import { Platform } from 'react-native';
 import * as RNIap from 'react-native-iap';
 
 export const requestPurchase = async ({ sku }) => {
-  console.log('sku', sku)
   try {
-    await RNIap.requestPurchase(sku, false);
+    await RNIap.requestPurchase(sku, true);
   } catch (err) {
     // alert(err.message);
     console.log(err.message, 'error')

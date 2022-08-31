@@ -57,7 +57,7 @@ const PrivateLessonSubscription = () => {
     };
     deviceStorage
       .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
-      .then(() => requestPurchase({ sku: '' }));
+      .then(() => requestPurchase({ sku: 1618734692 }));
   }
   return (
     <SubContext.Provider value={{ disabledProp, setDisabledProps, setGroupId }}>
