@@ -11,8 +11,11 @@ export default function Step4() {
     const navigation = useNavigation();
   return (
     <Screen>
-      <ImageBackground source={require('../../assets/img/Step4.png')} style={styles.backgroundImage}></ImageBackground>
-
+      <ImageBackground source={require('../../assets/img/Step4.png')} style={styles.backgroundImage}>
+        <View style={styles.overlay}>
+      <Text style={styles.titleText}>المواد الدراسية </Text>
+        <Text style={styles.titleText}>يمكنك اختيار المادة التي تحتاج الى دراستها من بين مجموعة واسعة من المواد في جميع المراحل التعليمية والتسجيل فيها  اما بنظام المنهج الكامل او بنظام الحصة الواحدة</Text>
+        </View>
       <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate("Login")}>
                 <View style={styles.loginBtnView}>
                     
@@ -22,23 +25,33 @@ export default function Step4() {
                     <Text style={styles.loginText}>{I18n.t('login')}</Text>
                 </View>
             </TouchableOpacity>
+            
+      </ImageBackground>
+
+      
     </Screen>
   )
 }
 const styles = StyleSheet.create({
     backgroundImage:{
         flex:1,
-        resizeMode:'stretch'
-    },loginBtn:{
+        resizeMode:'stretch',
+        justifyContent:'flex-end',
+        paddingBottom:50,
+        paddingHorizontal:10,
+    },overlay: {
+        backgroundColor:'rgba(0,0,0,0.4)',
+        borderRadius:15,
+        padding:10
+    },
+    loginBtn:{
         width:'80%',
         flexDirection:'row',
         height:45,
         justifyContent:'center',
         alignSelf:'center',
-        
     },
     loginBtnView:{
-        flex:1,
         borderRadius:40,
         backgroundColor:colors.white,
         flexDirection:'row',
@@ -63,4 +76,10 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     marginRight:'35%'
     },
+    titleText:{
+      color:colors.white,
+      fontSize:22,
+      fontWeight:'bold',
+      fontFamily:'Cairo',
+  },
 });

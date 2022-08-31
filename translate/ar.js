@@ -12,6 +12,8 @@ const Arabic = {
   DontHaveAnAccount: 'ليس لديك حساب؟',
   ForgotPassword: 'هل نسيت كلمة السر؟',
   CreateANewAccount: 'انشاء حساب جديد',
+  ContinueWithGoogle:'الدخول بحساب جوجل',
+  ContinueWithApple:'الدخول بحساب أبل',
 
   //Forgot Password
   EnterYourEmailToRestYourPassword:
@@ -39,7 +41,6 @@ const Arabic = {
 
   //Drawer content:
   Home: 'الرئيسية',
-  HomePage: 'الرئيسية',
   LiveBoadcastTimes: 'أوقات البث المباشر',
   StudySubjectList: 'الدورات المشتركة',
   Quizzes: 'الإختبارات',
@@ -111,6 +112,7 @@ const Arabic = {
 	Sons:'الأبناء',
   Subscriptions:'الاشتراكات',
   Attendace:'جدول الحضور',
+  Attendance:'جدول الحضور',
 Play:"مشاهدة",
   Add:'إضافة',
   PreviewBill:'عرض الفاتورة',									
@@ -154,9 +156,20 @@ Play:"مشاهدة",
   UnitsOfTheSubjects: 'فصول المادة',
   MultiPackages: 'الدورات المشتركة',
   Calendar: 'البث المباشر',
+  Packages:'الباقات',
+  MultiPackageBrief:'نبذة تعريفية عن محور الدورة',
 
+  SubscripePackage:'اشترك بالدورة الاّن',
+  Share:'مشاركة',
+  Details:'التفاصيل',
   //-------Intro------------
   Welcome:'مرحبا بك في منصة نيو فيجن التعليمية',
+
+  Accept:'قبول',
+  Reject:'رفض',
+  //-----------Errors-----------------------------
+  userLoggedOut:'.تم تسجيل الدخول من جهاز اّخر',
+  appUpdate:'يرجي تحديث التطبيق',
 };
 
 export default Arabic;

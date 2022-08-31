@@ -1,0 +1,159 @@
+import { View, Text, ImageBackground } from 'react-native'
+import React from 'react'
+import { IMAGEURL } from '../../utils/functions';
+import FastImage from 'react-native-fast-image';
+import { StyleSheet } from 'react-native';
+import colors from '../../helpers/colors';
+import IonIcons from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import I18n from 'i18n-js';
+import { useState } from 'react';
+import { AppContext } from '../../context/AppState';
+import { useContext } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { ScrollView } from 'react-native';
+import DetailsTeachers from './DetailsTeachers'
+import { TouchableOpacity } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useLayoutEffect } from 'react';
+import HTML from 'react-native-render-html';
+import { Dimensions } from 'react-native';
+import Screen from '../../components/Screen';
+
+export default function MultiPackageDetails({route}) {
+
+  const [description, setDescription] = useState({});
+  const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
+    useContext(AppContext);
+
+  const uri = `${IMAGEURL}/${description.image}`;
+
+  function getMultiPackageDetails(params) {
+    axios
+  .post('https://newvisions.sa/api/getMultiPackageDetails', {
+    'package_id':route.params.id
+  })
+  .then(response => {
+    if (
+      response != undefined &&
+      response.data != undefined &&
+      response.data.code != undefined
+    ) {
+      if (response.data.code == 200) {
+        const data = response.data.data;
+        console.log("multi Package Details: "+data);
+        setDescription(data);
+        showLoadingSpinner(false);
+        console.log(description);
+      }else if(response.data.code == 403){
+        onLogout();
+        showLoadingSpinner(false);
+      } else {
+        showLoadingSpinner(false);
+        alert(response.data.message);
+      }
+    }
+  })
+  .catch(error => {
+    showLoadingSpinner(false);
+    alert(error);
+  });
+}
+
+useEffect(()=>{
+    getMultiPackageDetails();
+},[]);
+
+useLayoutEffect(()=>{
+  showLoadingSpinner(true);
+},[]);
+
+  return (
+    <Screen style={{marginBottom:20}}>
+      <ScrollView>
+      <FastImage
+                  style={{width: '95%', height: 200, borderRadius: 10, alignSelf:'center', marginTop:10}}
+                  source={{
+                    uri,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+      <Text style={[styles.subItemText,{alignSelf:'center'}]}>{description.title}</Text>
+      <View style={styles.countContainer}>
+            <View style={styles.countHalfContainer}>
+              <IonIcons name='people-circle' color={colors.primary} size={60} />
+              <View>
+                <Text style={styles.subItemText}>{I18n.t('Students')}</Text>
+                <Text style={styles.subItemText}>{description.number_of_students}</Text>
+              </View>
+            </View>
+            <View style={styles.countHalfContainer}>
+            <View style={{width:50, height:50, alignItems:'center', justifyContent:'center', backgroundColor:colors.primary, borderRadius:25}}><MaterialIcons name='local-offer' color={colors.white} size={40} /></View>
+              <View>
+                <Text style={styles.subItemText}>{I18n.t('SAR')}</Text>
+                <Text style={styles.subItemText}>{description.price}</Text>
+              </View>
+            </View>
+      </View>
+
+      <View style={{flexDirection:'row', margin:10, alignItems:'center'}}>
+            <AntDesign name='infocirlce' color={colors.primary} size={16} />
+            <Text style={[styles.subItemText,{color:colors.primary, marginHorizontal:10}]}>{I18n.t('MultiPackageBrief')}</Text>
+      </View>
+      <View style={{backgroundColor:colors.gray, height:120, borderRadius:10, width:'95%', alignSelf:'center'}}>
+        <ScrollView nestedScrollEnabled={true}>
+          {description && 
+          <HTML 
+          source={{html:description.description}}
+          imagesMaxWidth={Dimensions.get("window").width}
+           />}
+        </ScrollView>
+      </View>
+      <View style={{flexDirection:'row', margin:10, alignItems:'center'}}>
+            <IonIcons name='people' color={colors.primary} size={20} />
+            <Text style={[styles.subItemText,{color:colors.primary, marginHorizontal:10}]}>{I18n.t('Teachers')}</Text>
+      </View>
+      { description && <DetailsTeachers data={description.content} />}
+
+      <View style={{backgroundColor:colors.primary, width:'90%', height:40, alignSelf:'center', justifyContent:'center', alignItems:'center', marginTop:20, borderRadius:20}}>
+        <TouchableOpacity>
+        <View style={{flexDirection:'row'}}>
+            
+            <Text style={[styles.subItemText,{marginHorizontal:20, color:colors.white}]}>{I18n.t('SubscripePackage')}</Text>
+            <FontAwesome name={(I18n.locale == 'ar'? 'arrow-circle-left':'arrow-circle-right')} size={30} color={colors.white} />
+        </View>
+        </TouchableOpacity>
+      </View>
+      </ScrollView>
+    </Screen>
+  )
+}
+
+const styles = StyleSheet.create({
+  subItemText:{
+    color:colors.dark,
+    fontSize:20,
+    fontWeight:'700',
+    fontFamily:'Cairo', alignSelf:'center'
+},
+countContainer:{
+  flexDirection:'row',
+  backgroundColor:colors.gray,
+  alignSelf:'center',
+  justifyContent:'space-between',
+  alignItems:'center',
+  height:100,
+  width:'95%',
+  borderRadius:10
+},
+countHalfContainer:{
+  width:'50%',
+  height:'100%',
+  alignItems:'center',
+  justifyContent:'center',
+  flexDirection:'row'
+}
+});

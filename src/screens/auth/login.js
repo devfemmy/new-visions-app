@@ -15,7 +15,10 @@ import LoginApi from "../../api/Login/LoginApi";
 import axios from "axios";
 import Global from "../../../Global";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { appleAuthAndroid, AppleButton } from '@invertase/react-native-apple-authentication';
 
+import { v4 as uuid } from 'uuid'
+import { SocialButtons } from "./SocialButtons";
 
 function Login({ navigation }) {
   const { changeLang, lang, showLoadingSpinner, initUUID, onLogin } =
@@ -57,8 +60,11 @@ function Login({ navigation }) {
     Global.UserName = userData.first_name + userData.last_name;
     Global.phone = userData.phone;
     Global.email = userData.email;
+    Global.UserId = userData.id;
     onLogin(userData, true);
   };
+
+  
 
   return (
     <Screen>
@@ -72,6 +78,8 @@ function Login({ navigation }) {
         
       <LoginForm submitLogin={submitLogin} />
       </View>
+
+      <SocialButtons />      
       </ScrollView>
       </ImageBackground>
     </Screen>

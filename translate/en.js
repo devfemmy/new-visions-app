@@ -12,6 +12,9 @@ const English = {
   DontHaveAnAccount: 'Dont Have An Account?',
   ForgotPassword: 'Forgot Password',
   CreateANewAccount: 'Create A New Account',
+  
+  ContinueWithGoogle:'Login with Google',
+  ContinueWithApple:'Login with Apple',
 
   // Forgot Password
   EnterYourEmailToRestYourPassword: 'Enter your Email to rest your Password',
@@ -36,7 +39,6 @@ const English = {
 
   // Drawer Content
   Home: 'Home',
-  HomePage: 'Home',
   LiveBoadcastTimes: 'Live Broadcast Times',
   StudySubjectList: 'Study Subject List',
   Quizzes: 'Quizzes',
@@ -108,6 +110,7 @@ PackagesSubscriptions: 'Package Subscription',
   Sons:'Childrens',
   Subscriptions:'Subscriptions',
   Attendace:'Attendance',
+  Attendance:'Attendance',
   Add:'Add',
   Play:"Play",
 
@@ -148,9 +151,22 @@ EnterNewPassword: 'Enter New Password',
 ChangePassword: 'Change Password',
 
 MultiPackages: 'MultiPackages',
+MultiPackageBrief:'Brief about the course',
+SubscripePackage:'Subscripe Now',
+
+Packages:'Packages',
+Share:'Share',
+Details:'Details',
 
 //-------Intro------------
 Welcome:'Welcome to New Visions',
+
+Accept:'Accept',
+Reject:'Reject',
+//-----------Errors-----------------------------
+userLoggedOut:'This Account is Logged in from another Device.',
+appUpdate:'kindly update mobile application to be able to use it',
+
 };
 
 export default English;
