@@ -41,7 +41,7 @@ const DrawerNavigator = () => {
         </TouchableOpacity>
     )
     const CustomDrawerContent = (props) => {
-        const { onLogout } = useContext(AppContext)
+        const { onLogout, user } = useContext(AppContext)
         return (
             <View style={{ flex: 1 }}>
                 <DrawerContentScrollView
@@ -83,7 +83,7 @@ const DrawerNavigator = () => {
                                 lineHeight: 24,
                             }}
                         >
-                            Guest
+                            {user?.first_name}
                         </Text>
                     </View>
                     <View style={styles.itemList}>
