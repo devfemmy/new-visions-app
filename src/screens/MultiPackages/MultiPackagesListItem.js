@@ -37,7 +37,7 @@ export default function MultiPackagesListItem({price, number_of_students, title,
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{detailsClicked();}}>
-                                <View style={styles.itemBtn}>
+                                <View style={styles.itemBtn2}>
                             <Text style={styles.itemBtnTxt}>{I18n.t('Details')}</Text>
                             <AntDesign name='arrowleft' color={colors.white} size={16} />
                             </View>
@@ -56,10 +56,19 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         borderRadius: 15,
         marginTop:20,
-        borderWidth:1,
-        borderColor:'rgba(0, 0, 0, 0.3)',
+        // borderWidth:1,
+        // borderColor:'rgba(0, 0, 0, 0.3)',
         paddingHorizontal: heightp(10),
-        marginVertical: heightp(20)
+        marginVertical: heightp(20),
+        backgroundColor: 'white',
+        shadowColor: 'rgba(0,0,0,0.2)',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 12,
+        elevation: 5,
     },
     subItemText:{
         color:colors.dark,
@@ -80,13 +89,13 @@ const styles = StyleSheet.create({
     },
     itemBtn2:{
         height:30,
-        width:'40%',
         // marginLeft:10,
-        backgroundColor:colors.dark,
+        backgroundColor:colors.primary,
         alignItems:'center',
         justifyContent:'center',
         flexDirection:'row',
-        borderRadius:10
+        borderRadius:10,
+        width: heightp(80)
     },
     itemBtnTxt:{
         color:colors.white,

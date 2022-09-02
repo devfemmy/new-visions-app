@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Provider } from "react-redux";
 import { Alert } from 'react-native';
 import * as RNIap from 'react-native-iap';
+import SplashScreen from 'react-native-splash-screen';
 import messaging from '@react-native-firebase/messaging';
 import AppNavigator from './src/navigation/AppNavigator';
 import {AppState} from './src/context/AppState';
@@ -36,9 +37,7 @@ export default function App() {
     try {
       const res = (await RNIap?.initConnection?.()) || false;
       if (res) {
-        console.log('update 222', RNIap.purchaseUpdatedListener )
         purchaseUpdateSubscription.current = RNIap.purchaseUpdatedListener(async (purchase) => {
-          console.log('purcase 222', purchase)
           const receipt = purchase.transactionReceipt;
           if (receipt) {
             deviceStorage
@@ -47,7 +46,6 @@ export default function App() {
               })
               .then((data) => {
                 console.log('data', data)
-                // validateReceiptIOS({ purchase, subscriptionInfo: data, setIsLoading });
               });
           } else {
             purchaseErrorSubscription.current = RNIap.purchaseErrorListener(
@@ -71,7 +69,9 @@ export default function App() {
     }
   };
    
-
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   useEffect(() => {
     if (isIOS) {
       iapInit();

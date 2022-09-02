@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     fontFamily:'Cairo-Bold',
     alignSelf:'center',
     fontWeight:'bold',
-    marginRight:'35%'
+    marginRight:'35%',
+    color: colors.black
     },
     titleText:{
       color:colors.white,

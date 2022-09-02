@@ -5,6 +5,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import I18n from 'i18n-js'
+import Teachers from '../screens/Teachers'
+import Calendar from '../screens/Calendar'
 import Home from '../screens/Home/Home'
 import colors from '../helpers/colors'
 import { widthp } from '../utils/responsiveDesign'
@@ -77,7 +79,13 @@ export const RootBottomTabNavigator = () => {
                         iconName = focused ? 'ios-book' : 'ios-book-outline'
                     } else if (route.name === I18n.t('Messages')) {
                         iconName = focused ? 'ios-mail' : 'ios-mail-outline'
-                    } else if (route.name === I18n.t('Subscriptions')) {
+                    }else if (route.name === I18n.t('Teachers')) {
+                        iconName = focused ? 'ios-people' : 'ios-people-outline'
+                    } 
+                    else if (route.name === I18n.t('LiveNow')) {
+                        iconName = focused ? 'ios-videocam' : 'ios-videocam-outline'
+                    }
+                    else if (route.name === I18n.t('Subscriptions')) {
                         iconName = focused
                             ? 'ios-receipt'
                             : 'ios-receipt-outline'
@@ -112,6 +120,28 @@ export const RootBottomTabNavigator = () => {
                     }}
                     name={I18n.t('Subjects')}
                     component={Subject}
+                />
+            )}
+            {Global.UserType == 3 && (
+                <RootBottomTab.Screen
+                    options={{
+                        headerShown: true,
+                        headerLeft: backRight,
+                        unmountOnBlur: true,
+                    }}
+                    name={I18n.t('Teachers')}
+                    component={Teachers}
+                />
+            )}
+        {Global.UserType == 3 && (
+                <RootBottomTab.Screen
+                    options={{
+                        headerShown: true,
+                        headerLeft: backRight,
+                        unmountOnBlur: true,
+                    }}
+                    name={I18n.t('LiveNow')}
+                    component={Calendar}
                 />
             )}
             {/* {Global.UserType == 3 &&

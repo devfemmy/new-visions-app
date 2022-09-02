@@ -27,13 +27,18 @@ const SubjectTeachers = () => {
   },[dispatch, subject_id]);
 
   const navigateFullSubscription = useCallback((item) => {
-    // const {id, title, image} = item;
-    // const uri = `${IMAGEURL}/${image}`
-    // if (id)
       navigation.navigate('FullLesson', {
         subject_id,
       });
   }, [navigation, subject_id]);
+  const navigateTeachersProfile = useCallback((item) => {
+    console.log('item', item)
+    const teacherItem = item?.user
+    navigation.navigate('TeacherProfile', {
+      item: teacherItem,
+      title: `${teacherItem?.first_name} ${teacherItem?.last_name}`
+    });
+}, [navigation]);
   const navigatePivateLesson = useCallback((teacher_id) => {
     // const {id, title, image} = item;
     // const uri = `${IMAGEURL}/${image}`
@@ -67,17 +72,20 @@ const SubjectTeachers = () => {
               data={searchFilteredData}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.5}
-              renderItem={({item}) => (
-                <TeachersDetailCard
-                subjectDetails 
-                bookCourse={navigateFullSubscription}
-                bookPrivateLesson={() => navigatePivateLesson(item.id)}
-                title={item?.subject?.title} 
-                lessonPrice={item?.lesson_price}
-                numberOfStudents={item?.subject?.number_of_students} 
-                uri={`${IMAGEURL}/${item?.user?.image}`} 
-                contents={`${item?.user?.first_name} ${item?.user?.last_name}`} />
-            )}
+              renderItem={({item}) => {
+                return (
+                  <TeachersDetailCard
+                  subjectDetails 
+                  viewProfile={() => navigateTeachersProfile(item)}
+                  bookCourse={navigateFullSubscription}
+                  bookPrivateLesson={() => navigatePivateLesson(item.id)}
+                  title={item?.subject?.title} 
+                  lessonPrice={item?.lesson_price}
+                  numberOfStudents={item?.subject?.number_of_students} 
+                  uri={`${IMAGEURL}/${item?.user?.image}`} 
+                  contents={`${item?.user?.first_name} ${item?.user?.last_name}`} />
+              )
+              }}
             />
           </View>
       </Container>
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   containerFlex: {
-    marginBottom: heightp(20)
+    marginBottom: heightp(60)
   }
 })
 
