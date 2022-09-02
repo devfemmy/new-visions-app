@@ -21,6 +21,7 @@ import { useLayoutEffect } from 'react';
 import HTML from 'react-native-render-html';
 import { Dimensions } from 'react-native';
 import Screen from '../../components/Screen';
+import { heightp } from '../../utils/responsiveDesign';
 
 export default function MultiPackageDetails({route}) {
 
@@ -29,6 +30,7 @@ export default function MultiPackageDetails({route}) {
     useContext(AppContext);
 
   const uri = `${IMAGEURL}/${description.image}`;
+  
 
   function getMultiPackageDetails(params) {
     axios
@@ -71,30 +73,31 @@ useLayoutEffect(()=>{
 },[]);
 
   return (
-    <Screen style={{marginBottom:20}}>
+    <Screen style={{marginBottom:20, paddingHorizontal: 20}}>
       <ScrollView>
-      <FastImage
-                  style={{width: '95%', height: 200, borderRadius: 10, alignSelf:'center', marginTop:10}}
-                  source={{
-                    uri,
-                    priority: FastImage.priority.normal,
-                  }}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
+          <FastImage
+            style={{width: '95%', height: 200, borderRadius: 10, alignSelf:'center', marginTop:10}}
+            source={{
+              uri,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
       <Text style={[styles.subItemText,{alignSelf:'center'}]}>{description.title}</Text>
       <View style={styles.countContainer}>
             <View style={styles.countHalfContainer}>
-              <IonIcons name='people-circle' color={colors.primary} size={60} />
+              <IonIcons name='people-circle' color={colors.primary} size={48} />
               <View>
-                <Text style={styles.subItemText}>{I18n.t('Students')}</Text>
-                <Text style={styles.subItemText}>{description.number_of_students}</Text>
+                <Text style={styles.subItemText2}>{I18n.t('Students')}</Text>
+                <Text style={styles.subItemText2}>{description.number_of_students}</Text>
               </View>
             </View>
             <View style={styles.countHalfContainer}>
-            <View style={{width:50, height:50, alignItems:'center', justifyContent:'center', backgroundColor:colors.primary, borderRadius:25}}><MaterialIcons name='local-offer' color={colors.white} size={40} /></View>
+            <View style={{width:45, height:40, alignItems:'center', justifyContent:'center', backgroundColor:colors.primary, borderRadius:25}}>
+              <MaterialIcons name='local-offer' color={colors.white} size={30} /></View>
               <View>
-                <Text style={styles.subItemText}>{I18n.t('SAR')}</Text>
-                <Text style={styles.subItemText}>{description.price}</Text>
+                <Text style={styles.subItemText2}>{I18n.t('SAR')}</Text>
+                <Text style={styles.subItemText2}>{description.price}</Text>
               </View>
             </View>
       </View>
@@ -103,7 +106,7 @@ useLayoutEffect(()=>{
             <AntDesign name='infocirlce' color={colors.primary} size={16} />
             <Text style={[styles.subItemText,{color:colors.primary, marginHorizontal:10}]}>{I18n.t('MultiPackageBrief')}</Text>
       </View>
-      <View style={{backgroundColor:colors.gray, height:120, borderRadius:10, width:'95%', alignSelf:'center'}}>
+      <View style={{backgroundColor:'rgba(0, 0, 0, 0.05)', height:150, borderRadius:10, width:'95%', alignSelf:'center', paddingHorizontal: heightp(10)}}>
         <ScrollView nestedScrollEnabled={true}>
           {description && 
           <HTML 
@@ -118,7 +121,7 @@ useLayoutEffect(()=>{
       </View>
       { description && <DetailsTeachers data={description.content} />}
 
-      <View style={{backgroundColor:colors.primary, width:'90%', height:40, alignSelf:'center', justifyContent:'center', alignItems:'center', marginTop:20, borderRadius:20}}>
+      <View style={{backgroundColor:colors.primary, width:'90%', height:45, alignSelf:'center', justifyContent:'center', alignItems:'center', marginTop:20, borderRadius:20}}>
         <TouchableOpacity>
         <View style={{flexDirection:'row'}}>
             
@@ -135,25 +138,32 @@ useLayoutEffect(()=>{
 const styles = StyleSheet.create({
   subItemText:{
     color:colors.dark,
-    fontSize:20,
+    fontSize:heightp(16),
     fontWeight:'700',
     fontFamily:'Cairo', alignSelf:'center'
 },
 countContainer:{
   flexDirection:'row',
-  backgroundColor:colors.gray,
+  backgroundColor:'rgba(0, 0, 0, 0.05)',
   alignSelf:'center',
   justifyContent:'space-between',
   alignItems:'center',
   height:100,
   width:'95%',
-  borderRadius:10
+  borderRadius:10,
+  marginVertical: heightp(10)
 },
 countHalfContainer:{
   width:'50%',
-  height:'100%',
+  // height:'100%',
   alignItems:'center',
   justifyContent:'center',
   flexDirection:'row'
+},
+subItemText2: {
+  marginLeft: heightp(5),
+  fontWeight: 'bold',
+  fontSize: heightp(15),
+  lineHeight: heightp(20)
 }
 });

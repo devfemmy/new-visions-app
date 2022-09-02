@@ -105,7 +105,6 @@ export default function MultiPackagesList() {
       shareClicked = {()=>{shareDetails(item);}}
        />  
     );
-    console.log('multiPackages', multiPackages)
   return (
     <Screen>
         {multiPackages&&

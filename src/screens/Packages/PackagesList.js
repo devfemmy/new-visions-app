@@ -96,9 +96,9 @@ export default function PackagesList() {
       };
 
     const renderItem = ({item})=>(
-      <PackagesListItem title={item.title}
-      number_of_students={item.number_of_students}
-      price={item.price} 
+      <PackagesListItem uri={item?.image} title={item?.title}
+      number_of_students={item?.number_of_students}
+      price={item?.price} 
       detailsClicked={()=>{openDetails(item);}}
       shareClicked = {()=>{shareDetails(item);}}
        />  

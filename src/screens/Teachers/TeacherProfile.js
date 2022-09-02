@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Rating, AirbnbRating } from 'react-native-ratings'
 import { Container, Text } from '../../components/common'
 import IconText from '../../components/IconText'
 import colors from '../../helpers/colors'
@@ -12,8 +13,7 @@ import defaultStyles from '../../helpers/styles'
 import HomePageService from '../../services/userServices'
 import { IMAGEURL, IMAGEURL2 } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
-import Video from 'react-native-video'
-import { Rating, AirbnbRating } from 'react-native-ratings'
+// import Video from 'react-native-video'
 
 const TeacherProfile = () => {
     const route = useRoute()

@@ -180,7 +180,7 @@ const DrawerNavigator = () => {
                         headerLeft: backRight,
                         unmountOnBlur: true,
                         // headerTransparent: true,
-                        // headerTintColor: colors.white,
+                        headerTintColor: colors.black,
                         drawerIcon: () => (
                             <Ionicons
                                 name={'calendar'}
@@ -198,7 +198,7 @@ const DrawerNavigator = () => {
                         // headerLeft: backRight,
                         // unmountOnBlur: true,
                         // headerTransparent: true,
-                        // headerTintColor: colors.white,
+                        headerTintColor: colors.black,
                         drawerIcon: () => (
                             <Ionicons
                                 name={'alarm'}
@@ -216,7 +216,7 @@ const DrawerNavigator = () => {
                         // headerLeft: backRight,
                         // unmountOnBlur: true,
                         // headerTransparent: true,
-                        // headerTintColor: colors.white,
+                        headerTintColor: colors.black,
                         drawerIcon: () => (
                             <Ionicons
                                 name={'bar-chart'}
@@ -234,7 +234,7 @@ const DrawerNavigator = () => {
                         // headerLeft: backRight,
                         // unmountOnBlur: true,
                         // headerTransparent: true,
-                        // headerTintColor: colors.white,
+                        headerTintColor: colors.black,
                         drawerIcon: () => (
                             <Ionicons
                                 name={'albums'}
@@ -252,7 +252,7 @@ const DrawerNavigator = () => {
                         // headerLeft: backRight,
                         // unmountOnBlur: true,
                         // headerTransparent: true,
-                        // headerTintColor: colors.white,
+                        headerTintColor: colors.black,
                         drawerIcon: () => (
                             <Ionicons
                                 name={'settings-sharp'}
@@ -270,7 +270,7 @@ const DrawerNavigator = () => {
                         // headerLeft: backRight,
                         // unmountOnBlur: true,
                         // headerTransparent: true,
-                        // headerTintColor: colors.white,
+                        headerTintColor: colors.black,
                         drawerIcon: () => (
                             <Ionicons
                                 name={'information-circle'}
@@ -288,7 +288,7 @@ const DrawerNavigator = () => {
                         // headerLeft: backRight,
                         // unmountOnBlur: true,
                         // headerTransparent: true,
-                        // headerTintColor: colors.white,
+                        headerTintColor: colors.black,
                         drawerIcon: () => (
                             <MaterialIcons
                                 name={'delete'}
