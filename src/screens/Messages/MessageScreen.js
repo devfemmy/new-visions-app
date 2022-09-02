@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native'
-import React, { useContext, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
     Dimensions,
     FlatList,
@@ -10,6 +10,7 @@ import {
     View,
     Platform,
 } from 'react-native'
+import Pusher from 'pusher-js/react-native'
 import FastImage from 'react-native-fast-image'
 import Hyperlink from 'react-native-hyperlink'
 import Icons from 'react-native-vector-icons/MaterialIcons'
@@ -17,14 +18,104 @@ import { Container, Text } from '../../components/common'
 import colors from '../../helpers/colors'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
 import { heightp } from '../../utils/responsiveDesign'
+import pusherConfig from '../../../pusher.json'
+import HomePageService from '../../services/userServices'
+import { AppContext } from '../../context/AppState'
 
 const MessageScreen = () => {
     const route = useRoute()
-    const { uri, items } = route.params
+    const { onLogout, user } = useContext(AppContext)
+    const { uri, items, title } = route.params
     const [messages, setMessages] = useState('')
+    const [chats, setChats] = useState([])
+    const [msg, setMsg] = useState()
     const messgArr = items.messages
+    {
+        console.log('messgArrrrrrr', items)
+    }
     const sender = 'hello'
     LogBox.ignoreAllLogs()
+
+    useEffect(() => {
+        // onGetMessageById()
+        console.log(':hooo')
+
+        const pusher = new Pusher(pusherConfig.key, pusherConfig) // (1)
+
+        const chatChannel = pusher.subscribe('my-channel') // (2)
+
+        chatChannel.bind('pusher:subscription_succeeded', (members) => {
+            console.log(
+                'subscription_succeeded->>>>>>>>>>>>>>>>>>>>',
+                title,
+                members
+            )
+            chatChannel.bind('join', (data) => {
+                console.log('join herexxxx', data)
+                setMsg(data)
+                // handleMessage(data)
+            })
+            chatChannel.bind('message', (data) => {
+                console.log('message herexxxx', data)
+                setChats([...chats, data])
+                // handleMessage(data)
+            })
+            chatChannel.bind('chat-update', (data) => {
+                console.log('message herexxxx', data)
+                setChats([...chats, data])
+                // handleMessage(data)
+            })
+        })
+        return () => {
+            pusher.unsubscribe('my-channel')
+        }
+    })
+
+    useEffect(() => {
+        onGetMessageById()
+    }, [])
+
+    const onSendMessage = async () => {
+        // (9)
+        console.log('messages', messages)
+        const payload = {
+            message: messages,
+            conversation_id: items?.conversation_id,
+        }
+        try {
+            const res = await HomePageService.sendMessage(payload)
+            if (res.code === 403) {
+                onLogout()
+            } else {
+                const data = res
+                console.log('messages here', data)
+                return res
+            }
+        } catch (err) {
+            console.log(err, 'error')
+        }
+    }
+    const onGetMessageById = async () => {
+        // (9)
+        console.log('messages', items?.conversation_id)
+        const payload = {
+            conversation_id: items?.conversation_id,
+        }
+        try {
+            const res = await HomePageService.getMessageById(payload)
+            if (res.code === 403) {
+                onLogout()
+            } else {
+                const data = res?.data[0]
+                console.log('onGetMessageById messages here', data?.messages)
+                setChats(data?.messages)
+                return res
+            }
+        } catch (err) {
+            console.log(err, 'error')
+        }
+    }
+
     return (
         <View
             style={{
@@ -52,7 +143,7 @@ const MessageScreen = () => {
                         paddingHorizontal: heightp(10),
                         backgroundColor: colors.white,
                     }}
-                    data={messgArr}
+                    data={chats}
                     showsVerticalScrollIndicator={true}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={({ item }) => (
@@ -63,12 +154,12 @@ const MessageScreen = () => {
                                 maxWidth:
                                     Dimensions.get('window').width / 1.2 + 10,
                                 alignSelf:
-                                    sender === item.sendBy
+                                    user?.id === item?.user_id
                                         ? 'flex-end'
                                         : 'flex-start',
                             }}
                         >
-                            {sender === '' ? (
+                            {user?.id === item?.user_id ? (
                                 <View
                                     style={{
                                         borderRadius: 20,
@@ -99,6 +190,7 @@ const MessageScreen = () => {
                                         alignItems: 'center',
                                     }}
                                 >
+                                    <>{console.log('hereeeee', item)}</>
                                     <FastImage
                                         style={{
                                             width: heightp(25),
@@ -191,7 +283,10 @@ const MessageScreen = () => {
                             alignSelf: 'center',
                             marginLeft: 5,
                         }}
-                        onPress={() => {}}
+                        onPress={() => {
+                            onSendMessage()
+                            setMessages('')
+                        }}
                     >
                         <Icons name="send" size={30} color={colors.primary} />
                     </TouchableOpacity>

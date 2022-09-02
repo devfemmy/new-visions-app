@@ -35,6 +35,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+play/
 
 # BUCK
 buck-out/
@@ -100,6 +101,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+play/
 
 # TypeScript v1 declaration files
 typings/
