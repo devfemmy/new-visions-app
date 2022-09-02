@@ -6,23 +6,101 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { appleAuth , appleAuthAndroid, AppleButton } from '@invertase/react-native-apple-authentication';
+import axios from "axios";
+import { v4 as uuid } from 'uuid'
 import Screen from "../../components/Screen";
 import colors from "../../helpers/colors";
 import LoginForm from "./LoginForm";
 
 import { AppContext } from "../../context/AppState";
 import LoginApi from "../../api/Login/LoginApi";
-import axios from "axios";
 import Global from "../../../Global";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { appleAuthAndroid, AppleButton } from '@invertase/react-native-apple-authentication';
 
-import { v4 as uuid } from 'uuid'
+
 import { SocialButtons } from "./SocialButtons";
+import { heightp } from "../../utils/responsiveDesign";
+// import { socialAuthApi } from "../../api/socialAuthApi";
 
 function Login({ navigation }) {
   const { changeLang, lang, showLoadingSpinner, initUUID, onLogin } =
     useContext(AppContext);
+    const socialAuthApi = ({givenName, familyName, email, id, type}) => {
+      axios
+      .post('https://www.newvisions.sa/api/signupExternal', {
+        first_name: givenName,
+        last_name: familyName,
+        email,
+        client_id: id,
+        type,
+      })
+      .then(async (response) => {
+        if (response.data.code === 200) {
+          setUserInfo(response.data.data)
+        } else {
+          alert(JSON.stringify(response.data.message));
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    }
+
+    const onAppleButtonPress = async () => {
+      // performs login request
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+    
+      // get current authentication state for user
+      // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);    
+      // use credentialState response to ensure the user is authenticated
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        // user is authenticated
+        socialAuthApi({
+          firstName: appleAuthRequestResponse?.fullName?.givenName,
+          lastName: appleAuthRequestResponse?.fullName?.familyName,
+          email: appleAuthRequestResponse?.email,
+          id: appleAuthRequestResponse?.user,
+          type: 'APPLE',
+        });
+      }
+    }
+
+    const signInGoogle = async () => {
+      // It will prompt google Signin Widget
+      try {
+        await GoogleSignin.hasPlayServices({
+          // Check if device has Google Play Services installed
+          // Always resolves to true on iOS
+          showPlayServicesUpdateDialog: true,
+        });
+        const {
+          user: { givenName, familyName, id, email },
+        } = await GoogleSignin.signIn();
+        socialAuthApi({
+          firstName: givenName,
+          lastName: familyName,
+          email,
+          id,
+          type: 'GMAIL',
+        });        
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          // alert('User Cancelled the Login Flow');
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          alert('Signing In');
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          alert('Play Services Not Available or Outdated');
+        } else {
+          alert(error.message);
+        }
+      }
+    };
 
   const submitLogin = (values) => {
     showLoadingSpinner(true);
@@ -78,8 +156,10 @@ function Login({ navigation }) {
         
       <LoginForm submitLogin={submitLogin} />
       </View>
-
-      {/* <SocialButtons />       */}
+      <View style={styles.socialLogin}>
+        <SocialButtons onAppleButtonPress={onAppleButtonPress} signInGoogle={signInGoogle} />
+        {/* <AppleButton />  */}
+      </View>    
       </ScrollView>
       </ImageBackground>
     </Screen>
@@ -101,15 +181,9 @@ const styles = StyleSheet.create({
     marginVertical:50,
     resizeMode:'stretch'
   },
-  container: {
-    flexDirection: "column",
-  },
-  incontainer: {
-    alignSelf: "center",
-    justifyContent:'center',
-    alignItems:'center',
-    flexDirection: "column",
-    width:'90%'
+  socialLogin: {
+    paddingHorizontal: heightp(25),
+    marginVertical: heightp(10)
   },
 });
 

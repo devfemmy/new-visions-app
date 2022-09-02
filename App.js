@@ -14,6 +14,7 @@ import { NotificationListener, requestUserPermission } from './utils/pushNotific
 import { usePlatform } from './src/utils/usePlatform';
 import { deviceStorage } from './src/services/deviceStorage';
 import { iapSkus } from './src/services/iap';
+import { googleSignInInit } from './src/services/googleSignInInit';
 
 initTranslate();
 setInterceptors();
@@ -22,6 +23,7 @@ export default function App() {
   const purchaseUpdateSubscription = useRef(null);
   const purchaseErrorSubscription = useRef(null);
   useEffect(() => {
+    googleSignInInit();
     requestUserPermission();
     NotificationListener();
     const unsubscribe = messaging().onMessage(async remoteMessage => {

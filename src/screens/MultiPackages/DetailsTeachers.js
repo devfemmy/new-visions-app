@@ -1,6 +1,5 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
-import { StyleSheet } from 'react-native'
 import colors from '../../helpers/colors';
 import DetailsTeacherItem from './DetailsTeacherItem';
 
@@ -25,7 +24,7 @@ export default function DetailsTeachers({data}) {
 }
 const styles = StyleSheet.create({
     BGView:{
-        backgroundColor:colors.gray,
+        backgroundColor:'rgba(0, 0, 0, 0.05)',
         borderRadius:15,
         width:'95%',
         alignSelf:'center'

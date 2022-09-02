@@ -153,6 +153,7 @@ ChangePassword: 'Change Password',
 MultiPackages: 'MultiPackages',
 MultiPackageBrief:'Brief about the course',
 SubscripePackage:'Subscripe Now',
+PackageDetails: 'Package Details',
 
 Packages:'Packages',
 Share:'Share',
