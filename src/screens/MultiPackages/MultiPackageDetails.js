@@ -30,6 +30,7 @@ export default function MultiPackageDetails({route}) {
     useContext(AppContext);
 
   const uri = `${IMAGEURL}/${description.image}`;
+  
 
   function getMultiPackageDetails(params) {
     axios
