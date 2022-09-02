@@ -1,18 +1,17 @@
-import { View, Text, Image, FlatList } from 'react-native'
+import { View, Text, Image, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
-import colors from '../../helpers/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import I18n from 'i18n-js';
-import { StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import colors from '../../helpers/colors';
 import { IMAGEURL } from '../../utils/functions';
 import { heightp } from '../../utils/responsiveDesign';
 
 export default function DetailsTeacherItem({image, teacherName, subjectName, calender}) {
 
     const dateArr = ["السبت","الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعه"];
-    const dateArrEn = ["Saterday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"];
+    const dateArrEn = ["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"];
     const renderItem = ({item})=>(
         <View style={{backgroundColor:colors.darkGray, flexDirection:'row', width:100, height:30, alignItems:'center',justifyContent:'center', borderRadius:5, marginHorizontal:5}}>
             <FontAwesome5 name='calendar-day' size={20} color={colors.dark} />

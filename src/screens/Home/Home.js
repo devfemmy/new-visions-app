@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import React,{useCallback, useContext, useEffect, useState} from 'react';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import i18n from "i18n-js";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Container, Text } from '../../components/common';
@@ -104,15 +104,18 @@ getPackages();
                 onEndReachedThreshold={0.5}
                 renderItem={({item}) => {
                   const uri = `${IMAGEURL}/${item.image}`
+                  // navigation.navigate("MultiPackageDetails", item); 
                   return (
-                    <FastImage
-                    style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
-                    source={{
-                      uri,
-                      priority: FastImage.priority.normal,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
+                    <Pressable onPress={() => navigation.navigate("MultiPackageDetails", item)}>
+                      <FastImage
+                      style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
+                      source={{
+                        uri,
+                        priority: FastImage.priority.normal,
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                    </Pressable>
               )}}
               />
             </View>
@@ -131,14 +134,16 @@ getPackages();
                 renderItem={({item}) => {
                   const uri = `${IMAGEURL}/${item.image}`
                   return (
-                    <FastImage
-                    style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
-                    source={{
-                      uri,
-                      priority: FastImage.priority.normal,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
+                    <Pressable  onPress={() => navigation.navigate("MultiPackageDetails", item)}>
+                      <FastImage
+                      style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
+                      source={{
+                        uri,
+                        priority: FastImage.priority.normal,
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                    </Pressable>
               )}}
               />
             </View>

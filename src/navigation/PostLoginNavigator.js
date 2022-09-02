@@ -202,7 +202,7 @@ export const PostLoginNavigator = () => {
         name="MultiPackageDetails"
         component={MultiPackageDetails}
         options={{
-          title: I18n.t('MultiPackages'),
+          title: I18n.t('PackageDetails'),
           headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
         }}
       />

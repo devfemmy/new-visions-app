@@ -29,7 +29,7 @@ export default function MultiPackagesListItem({price, number_of_students, title,
                         <Text style={styles.subItemText}>{title}</Text>
                         <Text style={styles.subItemText}>{number_of_students}  {I18n.t("Students")}</Text>
                         <Text style={styles.subItemText}>{price}  {I18n.t("SAR")}</Text>
-                        <View style={{flexDirection:'row'}}>
+                        <View style={{flexDirection:'row', width: '90%', justifyContent: 'space-between'}}>
                             <TouchableWithoutFeedback onPress={()=>{shareClicked();}}>
                                 <View style={styles.itemBtn}>
                                 <Text style={styles.itemBtnTxt}>{I18n.t('Share')}</Text>
@@ -58,23 +58,25 @@ const styles = StyleSheet.create({
         marginTop:20,
         borderWidth:1,
         borderColor:'rgba(0, 0, 0, 0.3)',
-        paddingHorizontal: heightp(10)
+        paddingHorizontal: heightp(10),
+        marginVertical: heightp(20)
     },
     subItemText:{
         color:colors.dark,
         fontSize:heightp(16),
         fontWeight:'700',
-        fontFamily:'Cairo'
+        fontFamily:'Cairo',
+        // lineHeight: heightp(24)
     },
     itemBtn:{
         height:30,
-        width:'40%',
         // marginLeft:10,
         backgroundColor:colors.dark,
         alignItems:'center',
         justifyContent:'center',
         flexDirection:'row',
-        borderRadius:10
+        borderRadius:10,
+        width: heightp(80)
     },
     itemBtn2:{
         height:30,
