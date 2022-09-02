@@ -32,6 +32,8 @@ import I18n from 'i18n-js';
 import MultiPackageDetails from '../screens/MultiPackages/MultiPackageDetails';
 import PackagesList from '../screens/Packages/PackagesList';
 import MultiPackagesList from '../screens/MultiPackages/MultiPackagesList';
+import EducationalStage from '../screens/EducationalStages';
+import TeacherProfile from '../screens/Teachers/TeacherProfile';
 const MainStack = createStackNavigator();
 
 export const PostLoginNavigator = () => {
@@ -98,6 +100,22 @@ export const PostLoginNavigator = () => {
         options={() => ({
           headerShown: true,
           title: i18n.t('Calendar')
+        })}
+      />
+      <MainStack.Screen
+        name="EducationalStage"
+        component={EducationalStage}
+        options={() => ({
+          headerShown: true,
+          title: i18n.t('EducationalLevel')
+        })}
+      />
+      <MainStack.Screen
+        name="TeacherProfile"
+        component={TeacherProfile}
+        options={({route}) => ({
+          headerShown: true,
+          title: route.params.title
         })}
       />
       <MainStack.Screen

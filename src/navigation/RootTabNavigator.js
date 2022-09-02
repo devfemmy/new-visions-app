@@ -68,7 +68,7 @@ export const RootBottomTabNavigator = () => {
         headerShown: false,
         tabBarIcon: ({focused, color, size}) => {
           let iconName = '';
-          if (route.name === I18n.t("Home")) {
+          if (route.name === "HomePage") {
             iconName = focused ? 'ios-home' : 'ios-home-outline';
           } else if (route.name === I18n.t("Profile") || route.name === I18n.t("Sons")) {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
@@ -85,7 +85,7 @@ export const RootBottomTabNavigator = () => {
         tabBarInactiveTintColor: 'gray',
         tabBarHideOnKeyboard: true,
       })}>
-      <RootBottomTab.Screen name={I18n.t("Home")} component={HomeNavigation} 
+      <RootBottomTab.Screen name={"HomePage"} component={HomeNavigation} 
       options={{
         headerTitle:  (props) => <LogoTitle {...props} />,
         headerLeft: HeaderLeft,
@@ -97,13 +97,13 @@ export const RootBottomTabNavigator = () => {
       
       
       {Global.UserType == 3 &&
-        <RootBottomTab.Screen options={{headerShown: true, headerLeft: backRight}} name={I18n.t('Subjects')} component={Subject} />
+        <RootBottomTab.Screen options={{headerShown: true, headerLeft: backRight, unmountOnBlur: true}} name={I18n.t('Subjects')} component={Subject} />
       }
-      {Global.UserType == 3 &&
+      {/* {Global.UserType == 3 &&
         <RootBottomTab.Screen name={I18n.t("Subscriptions")} component={HomeNavigation} />
-      }
+      } */}
       {Global.UserType == 3 &&
-        <RootBottomTab.Screen name={I18n.t("Messages")} component={HomeNavigation} />
+        <RootBottomTab.Screen options={{headerShown: true, headerLeft: backRight, unmountOnBlur: true}} name={I18n.t("Messages")} component={Conversation} />
       }
       <RootBottomTab.Screen name={(Global.UserType == 3 ? I18n.t("Profile") : I18n.t("Sons"))} component={(Global.UserType == 4 ? ParentProfileNavigator : Profile)} />
     </RootBottomTab.Navigator>

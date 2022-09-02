@@ -25,14 +25,10 @@ const Teachers = () => {
   },[dispatch]);
 
   const navigateSubjectsDetails = useCallback((item) => {
-    // const {id, title, image} = item;
-    // const uri = `${IMAGEURL}/${image}`
-    // if (id)
-    //   navigation.navigate('DisplaySubject', {
-    //     subjectId: id,
-    //     title,
-    //     uri
-    //   });
+      navigation.navigate('TeacherProfile', {
+        item,
+        title: `${item?.first_name} ${item?.last_name}`
+      });
   }, [navigation]);
   const searchFilteredData = searchText
   ? teachersData?.data.filter((x) =>

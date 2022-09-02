@@ -23,6 +23,7 @@ const StageCard = ({
   withImg,
   groupNumber,
   reducedHeight,
+  eduPress,
   navigateSubjects,}) => {
     let isActive
   if (group) {
@@ -98,7 +99,7 @@ const StageCard = ({
     <View>
       {!dark ? 
       <Pressable    
-            onPress={() => {}} style={!dark ? styles.darkContainer : styles.container}>
+            onPress={eduPress} style={!dark ? styles.darkContainer : styles.container}>
             <FastImage
                   style={{width: heightp(50), height: heightp(40), borderRadius: 10}}
                   source={{

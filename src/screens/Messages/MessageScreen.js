@@ -13,7 +13,6 @@ const MessageScreen = () => {
   const { uri, items } = route.params;
   const [messages, setMessages] = useState('')
   const messgArr = items.messages;
-  console.log('items', items.messages);
   const sender = 'hello'
   LogBox.ignoreAllLogs();
   return (

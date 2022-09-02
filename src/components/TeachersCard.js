@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import FastImage from 'react-native-fast-image';
 import { heightp, widthp } from '../utils/responsiveDesign'
 import { Text } from './common'
 
-const TeachersCard = ({text, uri, lastName}) => (
-    <View>
+const TeachersCard = ({text, uri, lastName, pressed}) => (
+    <Pressable onPress={pressed}>
       <View style={styles.container}>
       <FastImage
         style={{width: heightp(121), height: heightp(100), borderRadius: 10}}
@@ -21,7 +21,7 @@ const TeachersCard = ({text, uri, lastName}) => (
         <Text style={styles.textColor} text={text} />
         <Text style={styles.textColor} text={lastName} />
       </View>
-    </View>
+    </Pressable>
   )
 
 const styles = StyleSheet.create({

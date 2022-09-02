@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-import React,{useContext, useEffect, useState} from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import React,{useCallback, useContext, useEffect, useState} from 'react';
+import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import i18n from "i18n-js";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Container, Text } from '../../components/common';
@@ -82,102 +82,110 @@ getPackages();
     }
     postNotificationToken();
   }, [dispatch])
+  const navigateTeacherProfile = useCallback((item) => {
+      navigation.navigate('TeacherProfile', {
+        item,
+        title: `${item?.first_name} ${item?.last_name}`
+      });
+  }, [navigation]);
   return (
     (
         <Container>
-          <HeaderTitle pressed={() => navigation.navigate('MultiPackagesList')} text={i18n.t('MultiPackages')} />
-          <View style={styles.containerFlex}>
-            <FlatList
-              horizontal
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={styles.flatlistContent}
-              ListEmptyComponent={() => <Text text="No Data" />}
-              data={packagesArray}
-              showsVerticalScrollIndicator={false}
-              onEndReachedThreshold={0.5}
-              renderItem={({item}) => {
-                const uri = `${IMAGEURL}/${item.image}`
-                return (
-                  <FastImage
-                  style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
-                  source={{
-                    uri,
-                    priority: FastImage.priority.normal,
-                  }}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-            )}}
-            />
-          </View>
-          <View style={globalStyles.horizontal} />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <HeaderTitle pressed={() => navigation.navigate('MultiPackagesList')} text={i18n.t('MultiPackages')} />
+            <View style={styles.containerFlex}>
+              <FlatList
+                horizontal
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.flatlistContent}
+                ListEmptyComponent={() => <Text text="No Data" />}
+                data={packagesArray}
+                showsVerticalScrollIndicator={false}
+                onEndReachedThreshold={0.5}
+                renderItem={({item}) => {
+                  const uri = `${IMAGEURL}/${item.image}`
+                  return (
+                    <FastImage
+                    style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
+                    source={{
+                      uri,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+              )}}
+              />
+            </View>
+            <View style={globalStyles.horizontal} />
 
-          <HeaderTitle pressed={() => navigation.navigate('PackagesList')} text={i18n.t('Packages')} />
-          <View style={styles.containerFlex}>
-            <FlatList
-              horizontal
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={styles.flatlistContent}
-              ListEmptyComponent={() => <Text text="No Data" />}
-              data={packages}
-              showsVerticalScrollIndicator={false}
-              onEndReachedThreshold={0.5}
-              renderItem={({item}) => {
-                const uri = `${IMAGEURL}/${item.image}`
-                return (
-                  <FastImage
-                  style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
-                  source={{
-                    uri,
-                    priority: FastImage.priority.normal,
-                  }}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-            )}}
-            />
-          </View>
-          <View style={globalStyles.horizontal} />
+            <HeaderTitle pressed={() => navigation.navigate('PackagesList')} text={i18n.t('Packages')} />
+            <View style={styles.containerFlex}>
+              <FlatList
+                horizontal
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.flatlistContent}
+                ListEmptyComponent={() => <Text text="No Data" />}
+                data={packages}
+                showsVerticalScrollIndicator={false}
+                onEndReachedThreshold={0.5}
+                renderItem={({item}) => {
+                  const uri = `${IMAGEURL}/${item.image}`
+                  return (
+                    <FastImage
+                    style={{width: heightp(210), height: heightp(130), borderRadius: 10, marginRight: heightp(20)}}
+                    source={{
+                      uri,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+              )}}
+              />
+            </View>
+            <View style={globalStyles.horizontal} />
 
-          {Global.UserType == 3 &&<>
-          <HeaderTitle pressed={() => navigation.navigate('Subjects')} text={i18n.t('EducationalLevel')} />
-          <View style={styles.containerFlex}>
-            <FlatList
-              horizontal
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={styles.flatlistContent}
-              ListEmptyComponent={() => <Text text="No Data" />}
-              data={stagesArray}
-              showsVerticalScrollIndicator={false}
-              onEndReachedThreshold={0.5}
-              renderItem={({item}) => {
-                const uri = `${IMAGEURL2}${item.image}`;
-               return (
-                  <StageCard uri={uri} text={item.name} />
-            )
-              }}
-            />
-          </View>
-          <View style={globalStyles.horizontal} />
-          </>
-            }
-          <HeaderTitle pressed={() => navigation.navigate('Teachers')} text={i18n.t('Teachers')} />
-          <View style={styles.containerFlex}>
-            <FlatList
-              horizontal
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={styles.flatlistContent}
-              ListEmptyComponent={() => <Text text="No Data" />}
-              data={teachersArray}
-              showsVerticalScrollIndicator={false}
-              onEndReachedThreshold={0.5}
-              renderItem={({item}) => {
-                const uri = `${IMAGEURL}/${item.image}`
-                return               (
-                  <TeachersCard uri={uri} lastName={item.last_name} text={item.first_name} />
-            )
+            {Global.UserType == 3 &&<>
+            <HeaderTitle pressed={() => navigation.navigate('Subjects')} text={i18n.t('EducationalLevel')} />
+            <View style={styles.containerFlex}>
+              <FlatList
+                horizontal
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.flatlistContent}
+                ListEmptyComponent={() => <Text text="No Data" />}
+                data={stagesArray}
+                showsVerticalScrollIndicator={false}
+                onEndReachedThreshold={0.5}
+                renderItem={({item}) => {
+                  const uri = `${IMAGEURL2}${item.image}`;
+                return (
+                    <StageCard eduPress={() => navigation.navigate('EducationalStage', {stage_id: item?.id})}  uri={uri} text={item.name} />
+              )
+                }}
+              />
+            </View>
+            <View style={globalStyles.horizontal} />
+            </>
               }
-          }
-            />
-          </View>
+            <HeaderTitle pressed={() => navigation.navigate('Teachers')} text={i18n.t('Teachers')} />
+            <View style={styles.containerFlex}>
+              <FlatList
+                horizontal
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.flatlistContent}
+                ListEmptyComponent={() => <Text text="No Data" />}
+                data={teachersArray}
+                showsVerticalScrollIndicator={false}
+                onEndReachedThreshold={0.5}
+                renderItem={({item}) => {
+                  const uri = `${IMAGEURL}/${item.image}`
+                  return               (
+                    <TeachersCard pressed={() => navigateTeacherProfile(item)} uri={uri} lastName={item.last_name} text={item.first_name} />
+              )
+                }
+            }
+              />
+            </View>
+          </ScrollView>
         </Container>
     )
   )

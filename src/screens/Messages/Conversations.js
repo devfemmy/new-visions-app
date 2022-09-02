@@ -6,6 +6,7 @@ import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
 import { Loader } from '../../components/Loader';
 import SelectTab from '../../components/SelectTab';
+import { AppContext } from '../../context/AppState';
 import { globalStyles } from '../../helpers/globalStyles';
 import HomePageService from '../../services/userServices';
 import { IMAGEURL } from '../../utils/functions';
@@ -13,6 +14,7 @@ import { heightp } from '../../utils/responsiveDesign';
 
 const Conversation = () => {
   const navigation = useNavigation()
+  const { onLogout} = useContext(AppContext);
   const [searchText, setSearchText] = useState();
   const [eventActive, setEventActive] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,11 +26,15 @@ const Conversation = () => {
       setLoading(true)
       try {
         const res = await HomePageService.getConversations()
-        console.log('res', res);
-        const data = res?.data;
-        setLoading(false)
-        setConversationMsgs(data);     
-        return res;
+        if (res.code === 403) {
+          setLoading(false)
+          onLogout();
+        }else {
+          const data = res?.data;
+          setLoading(false)
+          setConversationMsgs(data);     
+          return res;
+        }
       } catch (err) {
         console.log(err, 'error');
         setLoading(false)

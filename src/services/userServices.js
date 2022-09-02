@@ -80,5 +80,10 @@ export default class HomePageService {
     const res = await baseAxios.post('/getMessages', data)
     return res?.data || res;
   }
+
+  static async getTeacherProfile (data) {
+    const res = await baseAxios.post('/getTeacherProfile', data);
+    return res?.data || res;
+  }
   
 }

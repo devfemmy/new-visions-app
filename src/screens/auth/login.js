@@ -79,7 +79,7 @@ function Login({ navigation }) {
       <LoginForm submitLogin={submitLogin} />
       </View>
 
-      <SocialButtons />      
+      {/* <SocialButtons />       */}
       </ScrollView>
       </ImageBackground>
     </Screen>

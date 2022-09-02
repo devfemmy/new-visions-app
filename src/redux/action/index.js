@@ -1,9 +1,22 @@
 /* eslint-disable import/no-cycle */
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setError, stopLoad } from "../reducer/appSlice";
 
 export const handleError = (err, dispatch) => {
   // handle non-server based erorrs
-  console.log(err, 'error returned');
+  const removeValue = async () => {
+    try {
+      await AsyncStorage.removeItem('token')
+    } catch(e) {
+      // remove error
+    }
+  
+    console.log('Done.')
+  }
+  if (err.code === 403) {
+    // AsyncStorage.removeItem('token')
+    removeValue()
+  }
   if (!err.response && !err.data)
     dispatch(
       setError("There seems to be an issue currently, please try again")

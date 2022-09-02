@@ -99,11 +99,13 @@ export default function MultiPackagesList() {
     const renderItem = ({item})=>(
       <MultiPackagesListItem title={item.title}
       number_of_students={item.number_of_students}
-      price={item.price} 
+      price={item.price}
+      uri={item.image} 
       detailsClicked={()=>{openDetails(item);}}
       shareClicked = {()=>{shareDetails(item);}}
        />  
     );
+    console.log('multiPackages', multiPackages)
   return (
     <Screen>
         {multiPackages&&

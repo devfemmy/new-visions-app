@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Container, Text } from '../../components/common';
 import { Loader } from '../../components/Loader';
 import NotificationCard from '../../components/NotificationCard';
+import { AppContext } from '../../context/AppState';
 import HomePageService from '../../services/userServices';
 
 const Notification = () => {
@@ -11,6 +12,7 @@ const Notification = () => {
 
   const [notificationData, setNotificatioData] = useState([])
   const [loading, setLoading] = useState(false);
+  const { onLogout} = useContext(AppContext);
 
   useEffect(() => {
     // get Notification
@@ -18,10 +20,15 @@ const Notification = () => {
       setLoading(true)
       try {
         const res = await HomePageService.getNotificationData()
-        const data = res?.data;
-        setLoading(false)
-        setNotificatioData(data);     
-        return res;
+        if (res.code === 403) {
+          setLoading(false)
+          onLogout();
+        }else {
+          const data = res?.data;
+          setLoading(false)
+          setNotificatioData(data);     
+          return res;
+        }
       } catch (err) {
         console.log(err, 'error');
         setLoading(false)
