@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
     createDrawerNavigator,
     DrawerContentScrollView,
@@ -7,13 +7,13 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
-import { TouchableOpacity, View, StyleSheet } from 'react-native'
+import { TouchableOpacity, View, StyleSheet, Text } from 'react-native'
 import { RootBottomTabNavigator } from './RootTabNavigator'
 import Home from '../screens/Home/Home'
 import BackIcon from '../assets/img/back.svg'
 import Calendar from '../screens/Calendar'
 import defaultStyles from '../helpers/styles'
-import { Text } from '../components/common'
+// import { Text } from '../components/common'
 import { WINDOW_HEIGHT } from '../helpers/common'
 import colors from '../helpers/colors'
 import MeasurementQuiz from '../screens/MeasurementQuiz'
@@ -24,6 +24,7 @@ import Settings from '../screens/Settings'
 import WhoWeAre from '../screens/WhoWeAre'
 import DeleteMembership from '../screens/DeleteMembership'
 import Exit from '../screens/Exit'
+import { AppContext } from '../context/AppState'
 
 const Drawer = createDrawerNavigator()
 
@@ -40,6 +41,7 @@ const DrawerNavigator = () => {
         </TouchableOpacity>
     )
     const CustomDrawerContent = (props) => {
+        const { onLogout } = useContext(AppContext)
         return (
             <View style={{ flex: 1 }}>
                 <DrawerContentScrollView
@@ -60,23 +62,25 @@ const DrawerNavigator = () => {
                     >
                         <Text
                             style={{
-                                ...defaultStyles.text,
-                                color: colors.black,
+                                fontFamily: 'Cairo-Regular',
+                                color: colors.white,
                                 fontSize: 18,
                                 fontWeight: '300',
                                 paddingLeft: 5,
                                 paddingTop: 25,
+                                // backgroundColor: colors.green,
                             }}
                         >
                             Welcome
                         </Text>
                         <Text
                             style={{
-                                ...defaultStyles.text,
-                                color: colors.black,
+                                fontFamily: 'Cairo-Regular',
+                                color: colors.white,
                                 fontSize: 18,
                                 fontWeight: '600',
                                 paddingLeft: 5,
+                                lineHeight: 24,
                             }}
                         >
                             Guest
@@ -85,6 +89,37 @@ const DrawerNavigator = () => {
                     <View style={styles.itemList}>
                         <DrawerItemList {...props} />
                     </View>
+                    <TouchableOpacity
+                        onPress={() => {
+                            console.log('log out function')
+                            onLogout()
+                        }}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'flex-start',
+                            paddingHorizontal: 20,
+                            height: WINDOW_HEIGHT * 0.1,
+                            backgroundColor: colors.white,
+                        }}
+                    >
+                        <Ionicons
+                            name={'log-out'}
+                            size={20}
+                            color={colors.primary}
+                        />
+                        <Text
+                            style={{
+                                ...defaultStyles.text,
+                                fontSize: 14,
+                                color: colors.primary,
+                                fontWeight: '700',
+                                fontStyle: 'normal',
+                                paddingLeft: 35,
+                            }}
+                        >
+                            Exit
+                        </Text>
+                    </TouchableOpacity>
                 </DrawerContentScrollView>
             </View>
         )
@@ -257,24 +292,6 @@ const DrawerNavigator = () => {
                         drawerIcon: () => (
                             <MaterialIcons
                                 name={'delete'}
-                                size={20}
-                                color={colors.primary}
-                            />
-                        ),
-                    }}
-                />
-                <Drawer.Screen
-                    name="Exit"
-                    component={Exit}
-                    options={{
-                        // headerShown: true,
-                        // headerLeft: backRight,
-                        // unmountOnBlur: true,
-                        // headerTransparent: true,
-                        // headerTintColor: colors.white,
-                        drawerIcon: () => (
-                            <Ionicons
-                                name={'log-out'}
                                 size={20}
                                 color={colors.primary}
                             />
