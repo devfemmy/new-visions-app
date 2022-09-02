@@ -7,12 +7,25 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { TouchableWithoutFeedback } from 'react-native'
 import colors from '../../helpers/colors'
 import { StyleSheet } from 'react-native'
-export default function MultiPackagesListItem({price, number_of_students, title, detailsClicked, shareClicked}) {
+import { IMAGEURL, IMAGEURL2 } from '../../utils/functions';
+import FastImage from 'react-native-fast-image'
+import { heightp } from '../../utils/responsiveDesign'
+import { globalStyles } from '../../helpers/globalStyles'
+export default function MultiPackagesListItem({price, number_of_students, title, detailsClicked, shareClicked, uri}) {
+    const imageUrl = `${IMAGEURL}${uri}`
+    console.log('uri 222', imageUrl)
   return (
     <View style={styles.outContainer}>
-            <TouchableWithoutFeedback>
-                <ImageBackground source={require('../../assets/img/multiPackBG.png')} style={{flex:1}} >
-                    <View style={{width:'50%', height:'100%', alignItems:'center', justifyContent:'space-between', paddingVertical:'5%'}}>
+            <View style={globalStyles.rowBetween}>
+                <FastImage
+                    style={{width: heightp(150), height: heightp(150), borderRadius: 10,}}
+                    source={{
+                        uri: imageUrl,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                    <View style={{width:'65%',padding: heightp(10)}}>
                         <Text style={styles.subItemText}>{title}</Text>
                         <Text style={styles.subItemText}>{number_of_students}  {I18n.t("Students")}</Text>
                         <Text style={styles.subItemText}>{price}  {I18n.t("SAR")}</Text>
@@ -31,8 +44,7 @@ export default function MultiPackagesListItem({price, number_of_students, title,
                             </TouchableWithoutFeedback>
                         </View>
                     </View>
-                </ImageBackground>
-            </TouchableWithoutFeedback>
+            </View>
         </View>
   )
 }
@@ -40,25 +52,34 @@ export default function MultiPackagesListItem({price, number_of_students, title,
 const styles = StyleSheet.create({
     outContainer:{
         width:'95%',
-        height:180,
+        minHeight:180,
         alignSelf:'center',
-        borderBottomLeftRadius:15,
-        borderBottomRightRadius:15,
-        overflow:'hidden',
+        borderRadius: 15,
         marginTop:20,
-        borderWidth:5,
-        borderColor:colors.gray
+        borderWidth:1,
+        borderColor:'rgba(0, 0, 0, 0.3)',
+        paddingHorizontal: heightp(10)
     },
     subItemText:{
         color:colors.dark,
-        fontSize:20,
+        fontSize:heightp(16),
         fontWeight:'700',
         fontFamily:'Cairo'
     },
     itemBtn:{
         height:30,
         width:'40%',
-        marginLeft:10,
+        // marginLeft:10,
+        backgroundColor:colors.dark,
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection:'row',
+        borderRadius:10
+    },
+    itemBtn2:{
+        height:30,
+        width:'40%',
+        // marginLeft:10,
         backgroundColor:colors.dark,
         alignItems:'center',
         justifyContent:'center',

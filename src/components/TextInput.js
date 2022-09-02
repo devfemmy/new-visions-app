@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     height:50,
     color: colors.black,
     width:'100%'
-  },text: {
+  },
+  text: {
     color: colors.black,
     fontSize: 18,
     fontFamily: "Cairo-Regular",
