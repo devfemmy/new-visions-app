@@ -156,13 +156,13 @@ const MessageScreen = () => {
                         flexDirection: 'row',
                         justifyContent: 'center',
                         paddingHorizontal: heightp(10),
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor: 'rgba(255, 255, 255, 1)',
                     }}
                 >
                     <View
                         style={{
-                            // flex: 1,
                             width: '90%',
+                            height: '100%',
                             justifyContent: 'center',
                             alignSelf: 'flex-end',
                         }}
@@ -184,9 +184,11 @@ const MessageScreen = () => {
                     </View>
                     <TouchableOpacity
                         style={{
+                            height: '100%',
                             width: '10%',
                             justifyContent: 'center',
                             alignItems: 'center',
+                            alignSelf: 'center',
                             marginLeft: 5,
                         }}
                         onPress={() => {}}
