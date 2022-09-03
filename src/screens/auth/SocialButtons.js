@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { StyleSheet, View, Platform, TouchableOpacity, Text } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { signInGoogle, onAppleButtonPress } from '../../api/socialAuth';
+// import { signInGoogle, onAppleButtonPress } from '../../api/socialAuth';
 import I18n from 'i18n-js';
 
-export function SocialButtons() {
+export function SocialButtons({signInGoogle, onAppleButtonPress}) {
   const { lang } = I18n.locale;
   const isIOS = Platform.OS === 'ios';
 

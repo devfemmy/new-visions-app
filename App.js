@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Provider } from "react-redux";
 import { Alert } from 'react-native';
 import * as RNIap from 'react-native-iap';
+import SplashScreen from 'react-native-splash-screen';
 import messaging from '@react-native-firebase/messaging';
 import AppNavigator from './src/navigation/AppNavigator';
 import {AppState} from './src/context/AppState';
@@ -14,6 +15,7 @@ import { NotificationListener, requestUserPermission } from './utils/pushNotific
 import { usePlatform } from './src/utils/usePlatform';
 import { deviceStorage } from './src/services/deviceStorage';
 import { iapSkus } from './src/services/iap';
+import { googleSignInInit } from './src/services/googleSignInInit';
 
 initTranslate();
 setInterceptors();
@@ -22,6 +24,7 @@ export default function App() {
   const purchaseUpdateSubscription = useRef(null);
   const purchaseErrorSubscription = useRef(null);
   useEffect(() => {
+    googleSignInInit();
     requestUserPermission();
     NotificationListener();
     const unsubscribe = messaging().onMessage(async remoteMessage => {
@@ -34,9 +37,7 @@ export default function App() {
     try {
       const res = (await RNIap?.initConnection?.()) || false;
       if (res) {
-        console.log('update 222', RNIap.purchaseUpdatedListener )
         purchaseUpdateSubscription.current = RNIap.purchaseUpdatedListener(async (purchase) => {
-          console.log('purcase 222', purchase)
           const receipt = purchase.transactionReceipt;
           if (receipt) {
             deviceStorage
@@ -45,7 +46,6 @@ export default function App() {
               })
               .then((data) => {
                 console.log('data', data)
-                // validateReceiptIOS({ purchase, subscriptionInfo: data, setIsLoading });
               });
           } else {
             purchaseErrorSubscription.current = RNIap.purchaseErrorListener(
@@ -69,7 +69,9 @@ export default function App() {
     }
   };
    
-
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   useEffect(() => {
     if (isIOS) {
       iapInit();

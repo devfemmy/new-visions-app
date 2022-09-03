@@ -58,6 +58,14 @@ export const globalStyles = StyleSheet.create({
     paddingVertical: 2,
     marginBottom: 10
   },
+  subBtn2: {
+    backgroundColor: 'rgba(67, 72, 84, 1)',
+    paddingHorizontal: 20,
+    borderRadius: 15,
+    justifyContent: 'center',
+    paddingVertical: 2,
+    marginBottom: 10
+  },
   btnColor: {
     color: colors.white,
     fontWeight: 'bold'

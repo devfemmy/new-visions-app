@@ -117,11 +117,12 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     loginText:{
-        fontSize:20,
+    fontSize:20,
     fontFamily:'Cairo-Bold',
     alignSelf:'center',
     fontWeight:'bold',
-    marginRight:'35%'
+    marginRight:'35%',
+    color: colors.black
     },
 backgroundImage:{
     flex:1,

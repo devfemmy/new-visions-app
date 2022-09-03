@@ -59,11 +59,11 @@ function LoginForm({ submitLogin }) {
                             },
                         ]}
                     >
-                        {i18n.t('ForgotPassword')}
+                        {`${i18n.t('ForgotPassword')}?`}
                     </OtherText>
                 </TouchableOpacity>
 
-                <View style={{ height: 50 }}></View>
+                <View style={{ height: heightp(40) }}></View>
                 <SubmitButton style={styles.LoginBtn} title={i18n.t('login')} />
                 <View
                     style={{

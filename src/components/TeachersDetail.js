@@ -12,6 +12,7 @@ import colors from '../helpers/colors';
 
 const TeachersDetailCard = ({contents, title,
    uri, gender, city,lessonPrice,numberOfStudents, 
+   viewProfile,
    bookCourse,subjectCalendar,bookPrivateLesson,
   pressed, subjectDetails}) => {
   const styles = StyleSheet.create({
@@ -72,6 +73,7 @@ const TeachersDetailCard = ({contents, title,
       </View>
       <View style={{width: '60%'}}>
         <Text style={styles.textAlign} text={contents} />
+        <Text numberOfLines={1} style={styles.textAlign} text={title && title} />
         {subjectDetails ? 
           <IconText text={numberOfStudents && `${numberOfStudents} students`} children={<Ionicons name="ios-people" size={20} color={colors.primary} />} />:
           <IconText text={gender && gender === 1 ? 'Male' : 'Female'} children={<Ionicons name="ios-person" size={20} color={colors.primary} />} /> 
@@ -85,7 +87,9 @@ const TeachersDetailCard = ({contents, title,
     {subjectDetails ? 
   <View style={[styles.lowerContainer]}>
     <View style={globalStyles.rowBetween}>
-      <Text numberOfLines={1} style={styles.textAlign} text={title && title} />
+      <Pressable onPress={viewProfile} style={globalStyles.subBtn2}>
+        <Text style={globalStyles.btnColor} text="View Profile" />
+      </Pressable>
       <Pressable onPress={subjectCalendar} style={globalStyles.subBtn}>
         <Text style={globalStyles.btnColor} text="Subject Calendar" />
       </Pressable>

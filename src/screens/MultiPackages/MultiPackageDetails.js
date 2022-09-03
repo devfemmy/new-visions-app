@@ -74,7 +74,7 @@ useLayoutEffect(()=>{
 
   return (
     <Screen style={{marginBottom:20, paddingHorizontal: 20}}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
           <FastImage
             style={{width: '95%', height: 200, borderRadius: 10, alignSelf:'center', marginTop:10}}
             source={{

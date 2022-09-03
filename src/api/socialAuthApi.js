@@ -1,10 +1,11 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 //import analytics from '@react-native-firebase/analytics';
 
 import Global from '../../Global';
 import { navigate, replace } from '../../Navigator';
 
-export const socialAuthApi = ({ firstName, lastName, email, id, type }) => {
+export const socialAuthApi = ({ firstName, lastName, email, id, type, navigation }) => {
   axios
     .post('https://www.newvisions.sa/api/signupExternal', {
       first_name: firstName,
@@ -15,7 +16,6 @@ export const socialAuthApi = ({ firstName, lastName, email, id, type }) => {
     })
     .then(async (response) => {
       if (response.data.code === 200) {
-        console.log(response.data);
         Global.AuthenticationToken = response.data.data.remember_token;
         Global.UserName = response.data.data.first_name;
         Global.lastName = response.data.data.last_name;
@@ -32,13 +32,15 @@ export const socialAuthApi = ({ firstName, lastName, email, id, type }) => {
           Global.UserType = 'Parent';
         }
         Global.LoggedIn = true;
-        await analytics().logLogin({
-          method: 'gmail',
-        });
-
-        console.log(response.data.data.phone === '123456');
-
-        if (response.data.data.phone === '123456' || response.data.data.phone === 123456) {
+        // await analytics().logLogin({
+        //   method: 'gmail',
+        // });
+        const bearerToken = response?.data?.data?.remember_token;
+        
+        navigate('Home');
+        AsyncStorage.setItem('token', bearerToken);
+        return response.data.data;
+         if (response.data.data.phone === '123456' || response.data.data.phone === 123456) {
           navigate('CompleteProfile');
         } else {
           replace('Main');
