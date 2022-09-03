@@ -7,7 +7,7 @@ import { heightp } from "../../utils/responsiveDesign";
 
 function AppFormField({ name, width, ...otherProps }) {
   const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
-  console.log(useFormikContext());
+  // console.log(useFormikContext());
   return (
     <>
       <TextInput
