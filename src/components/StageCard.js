@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import React from 'react'
+import I18n from 'i18n-js';
 import { Pressable, StyleSheet, TouchableOpacity, View, } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import colors from '../helpers/colors'
@@ -156,7 +157,7 @@ const StageCard = ({
           {activeLevel ? (
             <TouchableOpacity activeOpacity={0.7} style={styles.continueBtn} onPress={navigateSubjects}>
               <Text
-                text="NEXT"
+                text={I18n.t('Next')}
                 style={{
                   textAlign: 'center',
                   fontWeight: '600',

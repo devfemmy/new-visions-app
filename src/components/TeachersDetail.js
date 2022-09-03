@@ -3,6 +3,7 @@
 import React from 'react'
 import { Pressable, StyleSheet, View,} from 'react-native'
 import FastImage from 'react-native-fast-image';
+import I18n from 'i18n-js';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { globalStyles } from '../helpers/globalStyles';
 import { heightp } from '../utils/responsiveDesign';
@@ -95,10 +96,10 @@ const TeachersDetailCard = ({contents, title,
       </Pressable>
     </View>
     <Pressable onPress={bookPrivateLesson} style={styles.bookBtn}>
-        <Text style={styles.textWhite} text="Book Private Lesson" />
+        <Text style={styles.textWhite} text={I18n.t('BookOneLesson')} />
     </Pressable>
     <Pressable onPress={bookCourse} style={styles.bookBtn2}>
-        <Text style={styles.textWhite} text="Book Full Course" />
+        <Text style={styles.textWhite} text={I18n.t('BookFullCourse')}/>
     </Pressable>
   </View> : null
   }

@@ -72,7 +72,7 @@ navigation.navigate("WelcomeStep");
                 <View style={styles.loginBtnView}>
                     
                     <View style={styles.arrowCont}>
-                        <MaterialIcons name={lang == 'ar'?'arrow-forward-ios':'arrow-back-ios'} size={20} color={colors.white} />
+                        <MaterialIcons name={lang != 'ar'?'arrow-forward-ios':'arrow-back-ios'} size={20} color={colors.white} />
                     </View>
                     <Text style={styles.loginText}>{I18n.t('Next')}</Text>
                 </View>
