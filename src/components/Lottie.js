@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "#00ff5590",
+    backgroundColor: "#fff",
     alignSelf: "center",
   },
   innerContent: {

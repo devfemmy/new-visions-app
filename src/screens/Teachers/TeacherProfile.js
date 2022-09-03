@@ -20,6 +20,7 @@ const TeacherProfile = () => {
     const playerRef = useRef()
     const { item } = route.params
     const [teachersData, setTeachersData] = useState({})
+    const [VideoUrl, setVideoUrl] = useState('')
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -31,17 +32,39 @@ const TeacherProfile = () => {
                 const res = await HomePageService.getTeacherProfile(payload)
                 const data = res?.data
                 // setLoading(false)
-                console.log('profile', data)
                 setTeachersData(data)
                 return res
             } catch (err) {
                 // setLoading(false)
             }
         }
+        async function fetchVideoLink() {
+            console.log(teachersData?.video)
+            try {
+                fetch(
+                    `https://player.vimeo.com/video/${teachersData?.video}/config`
+                )
+                    .then((res) => res.json())
+                    .then(
+                        (res) => console.log('ressssssssss', res)
+                        // this.setState({
+                        //     thumbnailUrl: res.video.thumbs['640'],
+                        //     videoUrl:
+                        //         res.request.files.hls.cdns[
+                        //             res.request.files.hls.default_cdn
+                        //         ].url,
+                        //     video: res.video,
+                        // })
+                    )
+                // return res
+            } catch (err) {
+                // setLoading(false)
+            }
+        }
         getTeacherProfile()
+        fetchVideoLink()
     }, [item?.id])
     const uri = `${IMAGEURL}/${teachersData?.image}`
-    console.log('uri', teachersData?.rates)
     return (
         <Container>
             <View style={[styles.container, globalStyles.rowBetween]}>
@@ -90,7 +113,9 @@ const TeacherProfile = () => {
                                     paddingBottom: heightp(7.5),
                                 },
                             ]}
-                            text={teachersData?.bio && `Bio: ${teachersData?.bio}`}
+                            text={
+                                teachersData?.bio && `Bio: ${teachersData?.bio}`
+                            }
                         />
                     </View>
                 </View>
@@ -100,17 +125,24 @@ const TeacherProfile = () => {
                     style={styles.header}
                     text="Explanation of the teachers experience"
                 />
-                {/* <Video
-                    source={{ uri: `${IMAGEURL}/${teachersData?.video}`}} // Can be a URL or a local file.
-                    ref={playerRef} // Store reference
-                    // onBuffer={this.onBuffer} // Callback when remote video is buffering
-                    // onError={this.videoError} // Callback when video cannot be loaded
-                    style={styles.teacherVideo}
-                /> */}
-                <Text
-                    style={styles.text}
-                    text="No Data Present at the moment"
-                />
+                {teachersData?.video?.length > 0 ? (
+                    <>
+                        {/* <Video
+                            source={{
+                                uri: `${IMAGEURL}/${teachersData?.video}`,
+                            }} // Can be a URL or a local file.
+                            ref={playerRef} // Store reference
+                            // onBuffer={this.onBuffer} // Callback when remote video is buffering
+                            // onError={this.videoError} // Callback when video cannot be loaded
+                            style={styles.teacherVideo}
+                        /> */}
+                    </>
+                ) : (
+                    <Text
+                        style={styles.text}
+                        text="No Data Present at the moment"
+                    />
+                )}
             </View>
             <View style={styles.borderContainer}>
                 <Text style={styles.header} text="Ratings and Comments" />
