@@ -1,459 +1,345 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  SafeAreaView,
-  Linking,
-  ActivityIndicator,
-} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import axios from 'axios';
-import {TextInput} from 'react-native-paper';
-import {Input, Button, Text, CheckBox, Icon} from 'react-native-elements';
-import {useTranslation} from 'react-i18next';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {StackActions} from '@react-navigation/native';
+    View,
+    StyleSheet,
+    ImageBackground,
+    SafeAreaView,
+    Linking,
+    ActivityIndicator,
+    KeyboardAvoidingView,
+    Platform,
+} from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import axios from 'axios'
+import { TextInput } from 'react-native-paper'
+import { Input, Button, Text, CheckBox, Icon } from 'react-native-elements'
+import i18n from 'i18n-js'
+// import { useTranslation } from 'react-i18next'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { StackActions } from '@react-navigation/native'
+import * as Yup from 'yup'
+import { useFormikContext } from 'formik'
+import colors from '../../helpers/colors'
+import defaultStyles from '../../helpers/styles'
+import { heightp } from '../../utils/responsiveDesign'
+import AppForm from '../../components/forms/Form'
+import AppFormField from '../../components/forms/FormField'
+import SubmitButton from '../../components/forms/SubmitButton'
 
-export default function Registration({navigation}) {
-  const {t, i18n} = useTranslation();
-  const lang = i18n.language;
-  const [loading, setLoading] = useState(false);
+function Registration({ navigation }) {
+    const lang = i18n.language
+    const [loading, setLoading] = useState(false)
 
+    const validateLoginForm = Yup.object().shape({
+        email: Yup.string().email().required('البريد الالكتروني الزامي'),
+        password: Yup.string().required('كلمة المرور الزامية'),
+        confirmPassword: Yup.string().required('كلمة المرور الزامية'),
+    })
 
-  // const [FirstNameInput, onChangeFirstNameInput] = useState('Ebrahim');
-  // const [LastNameInput, onChangeLastNameInput] = useState('Hanna');
-  // const [EmailInput, onChangeEmailInput] = useState('ebha@gmail.com');
-  // const [PasswordInput, onChangePasswordInput] = useState('123456789');
-  // const [PasswordConfrimInput, onChangePasswordConfrimInput] =
-  //   useState('123456789');
-  // const [PhoneInput, onChangePhoneInput] = useState('12345678911');
-
-
-  const [FirstNameInput, onChangeFirstNameInput] = useState('');
-  const [LastNameInput, onChangeLastNameInput] = useState('');
-  const [EmailInput, onChangeEmailInput] = useState('');
-  const [PasswordInput, onChangePasswordInput] = useState('');
-  const [PasswordConfrimInput, onChangePasswordConfrimInput] =
-    useState('');
-  const [PhoneInput, onChangePhoneInput] = useState('');
-  const [eye, seteye] = useState('eye-off');
-  const [termsAndServices, setTermsAndServices] = useState(false);
-  const [gender, setGender] = useState(0);
-  const [showhide, setshowhide] = useState(true);
-  const showPassword = () => {
-    if (eye === 'eye-off') {
-      seteye('eye');
-      setshowhide(false);
-    } else {
-      seteye('eye-off');
-      setshowhide(true);
-    }
-  };
-
-  const SignupAPI = () => {
-    setLoading(true);
-    axios
-      .post('https://www.newvisions.sa/api/signup', {
-        first_name: FirstNameInput,
-        last_name: LastNameInput,
-        email: EmailInput,
-        password: PasswordInput,
-        password_confirmation: PasswordConfrimInput,
-        phone: PhoneInput,
-        gender: gender ? 2 : 1,
-        type: 3,
-      })
-      .then(function (response) {
-        if (JSON.stringify(response.data.code) == 200) {
-          //   alert('Success, please verify via email');
-          setLoading(false);
-          navigation.navigate('VerifyAccount', {
-            email: EmailInput,
-          });
+    const [formValues, setFormValues] = useState({})
+    const [FirstNameInput, onChangeFirstNameInput] = useState('')
+    const [LastNameInput, onChangeLastNameInput] = useState('')
+    const [EmailInput, onChangeEmailInput] = useState('')
+    const [PasswordInput, onChangePasswordInput] = useState('')
+    const [PasswordConfrimInput, onChangePasswordConfrimInput] = useState('')
+    const [PhoneInput, onChangePhoneInput] = useState('')
+    const [eye, seteye] = useState('eye-off')
+    const [termsAndServices, setTermsAndServices] = useState(false)
+    const [gender, setGender] = useState(0)
+    const [showhide, setshowhide] = useState(true)
+    const showPassword = () => {
+        if (eye === 'eye-off') {
+            seteye('eye')
+            setshowhide(false)
         } else {
-          alert(JSON.stringify(response.data.message));
-          setLoading(false);
+            seteye('eye-off')
+            setshowhide(true)
         }
-      })
-      .catch(function (error) {
-        alert(error);
-        setLoading(false);
-      });
-  };
+    }
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <ActivityIndicator
-        animating={loading}
-        style={loading ? styles.loading : {display: 'none'}}
-        size="large"
-        color="#9bba52"
-      />
-      <ImageBackground
-        source={require('../../assets/img/BG.png')}
-        style={styles.backgroundImage}>
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
-          <View
-            style={{
-              alignItems: 'center',
-              marginVertical: 30,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.dispatch(StackActions.pop(1));
-              }}>
-              <MaterialIcons
-                name="arrow-back-ios"
-                size={20}
-                style={{paddingRight: 5}}
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontSize: 18,
-                color: 'black',
-                fontFamily: 'Tajawal-Regular',
-              }}>
-              {t('Registration')}
-            </Text>
-            <View></View>
-          </View>
-          <View>
-            <View style={[lang === 'ar' ? styles.labelAr : styles.label]}>
-              <Icon
-                name="user"
-                type="font-awesome"
-                style={{paddingRight: 5, paddingLeft: 5}}
-              />
-              <Text style={{fontSize: 16}}>{t('FirstName')}</Text>
-            </View>
-            <Input
-              textAlign={lang == 'ar' ? 'right' : 'left'}
-              style={{backgroundColor: 'white', borderRadius: 10}}
-              onChangeText={onChangeFirstNameInput}
-              value={FirstNameInput}
-            />
-            <View style={[lang === 'ar' ? styles.labelAr : styles.label]}>
-              <Icon
-                name="user"
-                type="font-awesome"
-                style={{paddingRight: 5, paddingLeft: 5}}
-              />
-              <Text style={{fontSize: 16}}>{t('LastName')}</Text>
-            </View>
-            <Input
-              textAlign={lang == 'ar' ? 'right' : 'left'}
-              style={{backgroundColor: 'white', borderRadius: 10}}
-              onChangeText={onChangeLastNameInput}
-              value={LastNameInput}
-            />
-
-            <View style={[lang === 'ar' ? styles.labelAr : styles.label]}>
-              <Icon
-                name="envelope"
-                type="font-awesome"
-                style={{paddingRight: 5, paddingLeft: 5}}
-              />
-              <Text style={{fontSize: 16}}>{t('Email')}</Text>
-            </View>
-            <Input
-              textAlign={lang == 'ar' ? 'right' : 'left'}
-              style={{backgroundColor: 'white', borderRadius: 10}}
-              keyboardType="email-address"
-              onChangeText={onChangeEmailInput}
-              value={EmailInput}
-            />
-
-            <View
-              style={{
-                flexDirection: lang == 'ar' ? 'row-reverse' : 'row',
-                marginHorizontal: 15,
-                marginBottom: 5,
-              }}>
-              <Icon name="lock" color="#000000" style={{paddingRight: 5}} />
-              <Text style={{fontSize: 16}}>{t('Password')}</Text>
-            </View>
-            {lang == 'ar' ? (
-              <TextInput
-                activeUnderlineColor="rgb(255,255,255)"
-                textAlign="right"
-                style={{
-                  textAlign: 'right',
-                  marginHorizontal: 10,
-                  marginBottom: 15,
-                  height: 50,
-                  backgroundColor: 'white',
-                }}
-                onChangeText={onChangePasswordInput}
-                value={PasswordInput}
-                secureTextEntry={showhide}
-                left={
-                  <TextInput.Icon
-                    onPress={() => {
-                      showPassword();
-                    }}
-                    name={eye}
-                  />
+    const SignupAPI = (values) => {
+        setLoading(true)
+        axios
+            .post('https://www.newvisions.sa/api/signup', {
+                first_name: values.firstName,
+                last_name: values.lastName,
+                email: values.email,
+                password: values.password,
+                password_confirmation: values.confirmPassword,
+                phone: values.phoneNumber,
+                gender: 1,
+                type: 3,
+            })
+            .then(function (response) {
+                console.log('yoooo', response.data)
+                if (JSON.stringify(response.data.code) == 200) {
+                    console.log('Clicked')
+                    //   alert('Success, please verify via email');
+                    setLoading(false)
+                    navigation.navigate('VerifyAccount', {
+                        phone: values.phoneNumber,
+                    })
+                } else {
+                    alert(JSON.stringify(response.data.message))
+                    console.log('Failed')
+                    setLoading(false)
                 }
-              />
-            ) : (
-              <TextInput
-                activeUnderlineColor="rgb(255,255,255)"
-                style={{
-                  marginHorizontal: 10,
-                  marginBottom: 15,
-                  height: 50,
-                  backgroundColor: 'white',
-                }}
-                onChangeText={onChangePasswordInput}
-                value={PasswordInput}
-                secureTextEntry={showhide}
-                right={
-                  <TextInput.Icon
-                    onPress={() => {
-                      showPassword();
-                    }}
-                    name={eye}
-                  />
-                }
-              />
-            )}
+            })
+            .catch(function (error) {
+                alert(error)
+                setLoading(false)
+            })
+    }
 
-            <View
-              style={{
-                flexDirection: lang == 'ar' ? 'row-reverse' : 'row',
-                marginHorizontal: 15,
-                marginBottom: 5,
-              }}>
-              <Icon name="lock" color="#000000" style={{paddingRight: 5}} />
-              <Text style={{fontSize: 16}}>{t('ConfirmPassword')}</Text>
-            </View>
+    const RenderButton = () => {
+        const { handleSubmit } = useFormikContext()
 
-            {lang == 'ar' ? (
-              <TextInput
-                activeUnderlineColor="rgb(255,255,255)"
-                textAlign="right"
-                style={{
-                  textAlign: 'right',
-                  marginHorizontal: 10,
-                  marginBottom: 15,
-                  height: 50,
-                  backgroundColor: 'white',
-                }}
-                onChangeText={onChangePasswordConfrimInput}
-                value={PasswordConfrimInput}
-                secureTextEntry={showhide}
-                left={
-                  <TextInput.Icon
-                    onPress={() => {
-                      showPassword();
-                    }}
-                    name={eye}
-                  />
-                }
-              />
-            ) : (
-              <TextInput
-                activeUnderlineColor="rgb(0,0,0)"
-                style={{
-                  marginHorizontal: 10,
-                  marginBottom: 15,
-                  height: 50,
-                  backgroundColor: 'white',
-                }}
-                onChangeText={onChangePasswordConfrimInput}
-                value={PasswordConfrimInput}
-                secureTextEntry={showhide}
-                right={
-                  <TextInput.Icon
-                    onPress={() => {
-                      showPassword();
-                    }}
-                    name={eye}
-                  />
-                }
-              />
-            )}
-            <View style={[lang === 'ar' ? styles.labelAr : styles.label]}>
-              <Icon
-                name="phone"
-                type="font-awesome"
-                style={{paddingRight: 5}}
-              />
-              <Text style={{fontSize: 16}}>{t('PhoneNumber')}</Text>
-            </View>
-            <Input
-              textAlign={lang == 'ar' ? 'right' : 'left'}
-              style={{backgroundColor: 'white', borderRadius: 10}}
-              keyboardType="phone-pad"
-              onChangeText={onChangePhoneInput}
-              value={PhoneInput}
-            />
-            <View style={[lang === 'ar' ? styles.labelAr : styles.label]}>
-              <Text style={{fontSize: 16, paddingHorizontal: 5}}>
-                {t('Gender')} :
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <CheckBox
-                    checked={!gender}
-                    onPress={() => {
-                      setGender(!gender);
-                    }}
-                  />
-                  <Text>{t('Male')}</Text>
-                  <Icon
-                    name="male"
-                    type="font-awesome"
-                    style={{paddingRight: 5, paddingLeft: 5}}
-                  />
-                  <Text style={{paddingRight: 5, paddingLeft: 5}}>|</Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <CheckBox
-                    checked={gender}
-                    onPress={() => {
-                      setGender(!gender);
-                    }}
-                  />
-                  <Text>{t('Female')}</Text>
-                  <Icon
-                    name="female"
-                    type="font-awesome"
-                    style={{paddingRight: 5, paddingLeft: 5}}
-                  />
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                justifyContent: 'center',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <CheckBox
-                checked={termsAndServices}
-                onPress={() => {
-                  setTermsAndServices(!termsAndServices);
-                }}
-              />
-              <Text style={{fontFamily: 'Tajawal-Medium', textAlign: 'center'}}>
-                <Text>{t('IHaveReadAndAgreedToThe')}</Text>
-                <Text
-                  style={{
-                    color: 'yellowgreen',
-                    fontFamily: 'Tajawal-Medium',
-                    textAlign: 'center',
-                  }}
-                  onPress={() => {
-                    Linking.openURL(
-                      'https://newvisions.sa/terms_and_conditions',
-                    );
-                  }}>
-                  {t('TermsOfService')}
-                </Text>
-                <Text> {t('And')} </Text>
-                <Text
-                  style={{
-                    color: 'yellowgreen',
-                    fontFamily: 'Tajawal-Medium',
-                    textAlign: 'center',
-                  }}
-                  onPress={() => {
-                    Linking.openURL('https://newvisions.sa/privacy_policy');
-                  }}>
-                  {t('PrivacyPolicy')}
-                </Text>
-              </Text>
-            </View>
-
+        return (
             <Button
-              disabled={!termsAndServices}
-              iconPosition="right"
-              icon={
-                <Icon
-                  style={{
-                    marginLeft: 120,
-                  }}
-                  type="font-awesome"
-                  name="angle-right"
-                  size={30}
-                  color="white"
-                />
-              }
-              buttonStyle={[
-                {
-                  backgroundColor: 'black',
-                  borderRadius: 20,
-                  marginHorizontal: 10,
-                  marginVertical: 20,
-                },
-              ]}
-              titleStyle={{fontSize: 18, marginLeft: 140, marginRight: 20}}
-              title={t('Next')}
-              onPress={() => {
-                SignupAPI();
-              }}
+                disabled={!termsAndServices}
+                iconPosition="right"
+                icon={
+                    <Icon
+                        style={{
+                            marginLeft: 120,
+                        }}
+                        type="font-awesome"
+                        name="angle-right"
+                        size={30}
+                        color="white"
+                    />
+                }
+                buttonStyle={[
+                    {
+                        backgroundColor: 'black',
+                        borderRadius: 20,
+                        marginHorizontal: 10,
+                        marginVertical: 20,
+                    },
+                ]}
+                titleStyle={{
+                    fontSize: 18,
+                    marginLeft: 140,
+                    marginRight: 20,
+                }}
+                title={i18n.t('Next')}
+                onPress={handleSubmit}
             />
-          </View>
-        </ScrollView>
-      </ImageBackground>
-    </SafeAreaView>
-  );
+        )
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <ActivityIndicator
+                animating={loading}
+                style={loading ? styles.loading : { display: 'none' }}
+                size="large"
+                color="#9bba52"
+            />
+            <ImageBackground
+                source={require('../../assets/img/BG.png')}
+                style={styles.backgroundImage}
+            >
+                <KeyboardAwareScrollView
+                    keyboardDismissMode="on-drag"
+                    contentContainerStyle={{
+                        flex: 1,
+                    }}
+                >
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        style={styles.content}
+                        keyboardShouldPersistTaps="handled"
+                    >
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                marginVertical: 30,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={() => {
+                                    navigation.dispatch(StackActions.pop(1))
+                                }}
+                            >
+                                <MaterialIcons
+                                    name="arrow-back-ios"
+                                    size={20}
+                                    style={{ paddingRight: 5 }}
+                                />
+                            </TouchableOpacity>
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    color: 'black',
+                                    fontFamily: 'Tajawal-Regular',
+                                }}
+                            >
+                                {i18n.t('Registration')}
+                            </Text>
+                            <View></View>
+                        </View>
+                        <View>
+                            <AppForm
+                                initialValues={{
+                                    firstName: '',
+                                    lastName: '',
+                                    email: '',
+                                    password: '',
+                                    confirmPassword: '',
+                                    phoneNumber: '',
+                                }}
+                                validationSchema={validateLoginForm}
+                                onSubmit={(values) => {
+                                    SignupAPI(values)
+                                }}
+                            >
+                                <AppFormField
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    AntDesignIcon="user"
+                                    name="firstName"
+                                    keyboardType="default"
+                                    labelName={i18n.t('FirstName')}
+                                />
+                                <AppFormField
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    AntDesignIcon="user"
+                                    name="lastName"
+                                    keyboardType="default"
+                                    labelName={i18n.t('LastName')}
+                                />
+                                <AppFormField
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    AntDesignIcon="mail"
+                                    name="email"
+                                    keyboardType="email-address"
+                                    labelName={i18n.t('Email')}
+                                />
+                                <AppFormField
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    AntDesignIcon="lock"
+                                    name="password"
+                                    secureTextEntry
+                                    labelName={i18n.t('Password')}
+                                />
+                                <AppFormField
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    AntDesignIcon="lock"
+                                    name="confirmPassword"
+                                    secureTextEntry
+                                    labelName={i18n.t('ConfirmPassword')}
+                                />
+                                <AppFormField
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    AntDesignIcon="phone"
+                                    name="phoneNumber"
+                                    keyboardType="numeric"
+                                    labelName={i18n.t('PhoneNumber')}
+                                />
+                                <View
+                                    style={{
+                                        justifyContent: 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        width: '100%',
+                                        paddingHorizontal: heightp(10),
+                                    }}
+                                >
+                                    <CheckBox
+                                        checked={termsAndServices}
+                                        onPress={() => {
+                                            setTermsAndServices(
+                                                !termsAndServices
+                                            )
+                                        }}
+                                    />
+                                    <Text
+                                        style={{
+                                            color: colors.black,
+                                            fontSize: heightp(12),
+                                            fontFamily:
+                                                defaultStyles.text.fontFamily,
+                                            fontWeight: '700',
+                                            lineHeight: heightp(16),
+                                            // textAlign: 'center',
+                                        }}
+                                    >
+                                        <Text>
+                                            {i18n.t('IHaveReadAndAgreedToThe')}
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                color: 'yellowgreen',
+                                                fontFamily: 'Tajawal-Medium',
+                                                textAlign: 'center',
+                                            }}
+                                            onPress={() => {
+                                                Linking.openURL(
+                                                    'https://newvisions.sa/terms_and_conditions'
+                                                )
+                                            }}
+                                        >
+                                            {i18n.t('TermsOfService')}
+                                        </Text>
+                                    </Text>
+                                </View>
+
+                                <RenderButton />
+                            </AppForm>
+                        </View>
+                    </ScrollView>
+                </KeyboardAwareScrollView>
+            </ImageBackground>
+        </SafeAreaView>
+    )
 }
 
+export default Registration
+
 const styles = StyleSheet.create({
-  loading: {
-    position: 'absolute',
-    zIndex: 999,
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#cccccc57',
-  },
-  container: {
-    flex: 1,
-  },
-  backgroundImage: {
-    flex: 1,
-  },
-  input: {
-    marginTop: 30,
-    justifyContent: 'space-between',
-  },
-  content: {
-    marginHorizontal: 15,
-  },
-  label: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 15,
-    marginBottom: 5,
-  },
-  labelAr: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    marginHorizontal: 15,
-    marginBottom: 5,
-  },
-});
+    loading: {
+        position: 'absolute',
+        zIndex: 999,
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#cccccc57',
+    },
+    container: {
+        flex: 1,
+    },
+    backgroundImage: {
+        flex: 1,
+    },
+    input: {
+        marginTop: 30,
+        justifyContent: 'space-between',
+    },
+    content: {
+        marginHorizontal: 15,
+    },
+    label: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 15,
+        marginBottom: 5,
+    },
+    labelAr: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        marginHorizontal: 15,
+        marginBottom: 5,
+    },
+})
