@@ -13,6 +13,8 @@ import defaultStyles from '../../helpers/styles'
 import HomePageService from '../../services/userServices'
 import { IMAGEURL, IMAGEURL2 } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
+import { Vimeo } from 'react-native-vimeo-iframe'
 // import Video from 'react-native-video'
 
 const TeacherProfile = () => {
@@ -21,6 +23,7 @@ const TeacherProfile = () => {
     const { item } = route.params
     const [teachersData, setTeachersData] = useState({})
     const [VideoUrl, setVideoUrl] = useState('')
+    const [vidId, setVideoId] = useState('')
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -33,28 +36,37 @@ const TeacherProfile = () => {
                 const data = res?.data
                 // setLoading(false)
                 setTeachersData(data)
+                const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
+                // fetchVideoLink(id)
+                setVideoId(id)
                 return res
             } catch (err) {
                 // setLoading(false)
             }
         }
-        async function fetchVideoLink() {
-            console.log(teachersData?.video)
+        async function fetchVideoLink(id) {
             try {
-                fetch(
-                    `https://player.vimeo.com/video/${teachersData?.video}/config`
-                )
+                fetch(`https://player.vimeo.com/video/${id}/config`, {
+                    headers: {
+                        'content-type': 'application/json',
+                        accept: 'application/json',
+                    },
+                })
                     .then((res) => res.json())
                     .then(
-                        (res) => console.log('ressssssssss', res)
-                        // this.setState({
-                        //     thumbnailUrl: res.video.thumbs['640'],
-                        //     videoUrl:
-                        //         res.request.files.hls.cdns[
-                        //             res.request.files.hls.default_cdn
-                        //         ].url,
-                        //     video: res.video,
-                        // })
+                        (res) => {
+                            console.log(
+                                'ressssssssss',
+                                res.request.files.hls.cdns[
+                                    res.request.files.hls.default_cdn
+                                ].url
+                            )
+                            setVideoUrl(
+                                res.request.files.hls.cdns[
+                                    res.request.files.hls.default_cdn
+                                ].url
+                            )
+                        }
                     )
                 // return res
             } catch (err) {
@@ -62,9 +74,18 @@ const TeacherProfile = () => {
             }
         }
         getTeacherProfile()
-        fetchVideoLink()
     }, [item?.id])
     const uri = `${IMAGEURL}/${teachersData?.image}`
+
+    const videoCallbacks = {
+        timeupdate: (data) => console.log('timeupdate: ', data),
+        play: (data) => console.log('play: ', data),
+        pause: (data) => console.log('pause: ', data),
+        fullscreenchange: (data) => console.log('fullscreenchange: ', data),
+        ended: (data) => console.log('ended: ', data),
+        controlschange: (data) => console.log('controlschange: ', data),
+    }
+
     return (
         <Container>
             <View style={[styles.container, globalStyles.rowBetween]}>
@@ -126,17 +147,19 @@ const TeacherProfile = () => {
                     text="Explanation of the teachers experience"
                 />
                 {teachersData?.video?.length > 0 ? (
-                    <>
-                        {/* <Video
-                            source={{
-                                uri: `${IMAGEURL}/${teachersData?.video}`,
-                            }} // Can be a URL or a local file.
-                            ref={playerRef} // Store reference
-                            // onBuffer={this.onBuffer} // Callback when remote video is buffering
-                            // onError={this.videoError} // Callback when video cannot be loaded
-                            style={styles.teacherVideo}
-                        /> */}
-                    </>
+                    <View
+                        style={{
+                            height: WINDOW_HEIGHT * 0.25,
+                            width: WINDOW_WIDTH * 0.9,
+                            marginVertical: heightp(10),
+                        }}
+                    >
+                        <Vimeo
+                            videoId={vidId}
+                            params={'api=1&autoplay=0'}
+                            handlers={videoCallbacks}
+                        />
+                    </View>
                 ) : (
                     <Text
                         style={styles.text}
@@ -207,8 +230,8 @@ const TeacherProfile = () => {
                             <Text
                                 style={styles.ratingsText}
                                 text={
-                                    // rate?.from?.message &&
-                                    `${rate?.from?.message} Theres a message here but empty string with ${rate?.rate} rating`
+                                    rate?.from?.message &&
+                                    `${rate?.from?.message}`
                                 }
                             />
                         </View>
@@ -248,7 +271,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'rgba(0, 0, 0, 0.5)',
         borderBottomWidth: 1,
         minHeight: heightp(120),
-        marginVertical: heightp(20),
+        // marginVertical: heightp(5),
     },
     text: {
         textAlign: 'center',

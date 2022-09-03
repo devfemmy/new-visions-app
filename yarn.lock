@@ -7564,7 +7564,7 @@
   dependencies:
     "lodash" "^4.17.15"
 
-"react-native-reanimated@^2.10.0":
+"react-native-reanimated@^2.4.1":
   "integrity" "sha512-jKm3xz5nX7ABtHzzuuLmawP0pFWP77lXNdIC6AWOceBs23OHUaJ29p4prxr/7Sb588GwTbkPsYkDqVFaE3ezNQ=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.10.0.tgz"
   "version" "2.10.0"
@@ -7725,6 +7725,11 @@
   dependencies:
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
+
+"react-native-vimeo-iframe@^1.2.0":
+  "integrity" "sha512-BCEPg0rMqW5RRRW3xO08jvuEr7upaf1uu1vrO9GR6IeFhb/cl0tNCayHt6n2jp6vyY+CR9Xzr3LZ2H3mvdRlYw=="
+  "resolved" "https://registry.npmjs.org/react-native-vimeo-iframe/-/react-native-vimeo-iframe-1.2.0.tgz"
+  "version" "1.2.0"
 
 "react-native-webview@^11.23.0":
   "integrity" "sha512-mGrgsMnYcQONvQy59xpBn87sKqkCsSkqIDRo+c2Ov4ISYl1j90wFBs+qViVJRWdoNHVuoCAZ4nZkJ65mhDpHhA=="
