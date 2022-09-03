@@ -17,6 +17,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { heightp } from '../../utils/responsiveDesign'
 import defaultStyles from '../../helpers/styles'
 import colors from '../../helpers/colors'
+import { StackActions } from '@react-navigation/native'
 
 export default function VerifyEnterEmail({ navigation }) {
     // const {t, i18n} = useTranslation();
@@ -29,6 +30,7 @@ export default function VerifyEnterEmail({ navigation }) {
                 phone: InputValue,
             })
             .then(function (response) {
+                console.log('response.data', response.data)
                 if (JSON.stringify(response.data.code) == 200) {
                     setLoading(false)
                     navigation.navigate('VerifyCode', {
@@ -139,7 +141,7 @@ export default function VerifyEnterEmail({ navigation }) {
                                 { fontSize: heightp(12), marginBottom: 0 },
                             ]}
                         >
-                            {i18n.t('EnterYourEmailToRestYourPassword')}
+                            {i18n.t('SendVerificationCodeByPhone')}
                         </Text>
                     </View>
                     <View style={styles.input}>
@@ -160,7 +162,7 @@ export default function VerifyEnterEmail({ navigation }) {
                                     marginBottom: 15,
                                     height: 50,
                                     backgroundColor: '#fff',
-                                    opacity: 0.5,
+                                    opacity: 1,
                                     borderRadius: 5,
                                     // borderBottomColor: 'white',
                                     width: '100%',
@@ -197,7 +199,7 @@ export default function VerifyEnterEmail({ navigation }) {
                             >
                                 <Text
                                     style={styles.buttontext}
-                                >{`Enter ${i18n.t(
+                                >{`${i18n.t(
                                     'SendVerificationCode'
                                 )}`}</Text>
                             </TouchableOpacity>

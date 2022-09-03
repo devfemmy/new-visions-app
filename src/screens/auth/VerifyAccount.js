@@ -9,7 +9,6 @@ import {
 import axios from 'axios'
 import { Icon, Button, Text } from 'react-native-elements'
 import { TextInput } from 'react-native-paper'
-import OTPInputView from '@twotalltotems/react-native-otp-input'
 import i18n from 'i18n-js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { heightp } from '../../utils/responsiveDesign'
@@ -110,28 +109,24 @@ export default function VerifyAccount({ route, navigation }) {
                         {i18n.t('PleaseEnterTheCode')}
                     </Text>
                     <View style={{ justifyContent: 'center' }}>
-                        <OTPInputView
-                            pinCount={6}
+                        <TextInput
+                            activeUnderlineColor="#fff"
                             style={{
-                                width: '100%',
-                                height: 50,
+                                marginHorizontal: 10,
                                 marginBottom: 50,
-                            }}
-                            codeInputFieldStyle={{
-                                width: 50,
                                 height: 50,
-                                borderRadius: 7,
-                                backgroundColor: colors.gray,
-                                color: colors.primary,
-                                fontFamily: defaultStyles.text.fontFamily,
-                                fontSize: 18,
-                                fontStyle: 'normal',
-                                fontWeight: 'bold',
+                                backgroundColor: '#fff',
+                                opacity: 1,
+                                borderBottomColor: 'white',
+                                width: '100%',
                             }}
-                            keyboardType="default"
-                            onCodeFilled={(code) => {
-                                console.log(code)
-                            }}
+                            keyboardType="decimal-pad"
+                            returnKeyType='done'
+                            onChangeText={setCodeInput}
+                            value={CodeInput}
+                            right={
+                                <TextInput.Icon color="white" name="phone" />
+                            }
                         />
                     </View>
                     <View

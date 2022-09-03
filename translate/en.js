@@ -17,7 +17,7 @@ const English = {
     ContinueWithApple: 'Login with Apple',
 
     // Forgot Password
-    EnterYourEmailToRestYourPassword: 'Enter your Email to rest your Password',
+    EnterYourEmailToRestYourPassword: 'Enter your Email to reset your Password',
     SendVerificationCode: 'Send Verification Code',
 
     UserName: 'User Name',
