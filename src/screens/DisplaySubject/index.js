@@ -28,9 +28,10 @@ const DisplaySubject = () => {
     const { subjectDetails } = useAppSelector(
         (state) => state.subjectDetailsPage
     )
+    console.log(subjectDetails)
     const number_of_hours = subjectDetails?.number_of_hours
     const number_of_students = subjectDetails?.number_of_students
-    const level = subjectDetails?.level_id
+    const level = subjectDetails?.level?.name
     const pdf_link = subjectDetails?.pdf_link
     const chaptersArray = subjectDetails?.chapters
     const lang = 'ar'
@@ -79,7 +80,7 @@ const DisplaySubject = () => {
                         />
                         <Text
                             style={styles.textColor}
-                            text={`${number_of_hours} hours`}
+                            text={`${number_of_hours} ${I18n.t('Hours')}`}
                         />
                     </View>
                     <View style={[globalStyles.rowBetween, styles.listing]}>
@@ -95,7 +96,7 @@ const DisplaySubject = () => {
                         />
                         <Text
                             style={styles.textColor}
-                            text={`${number_of_students} students`}
+                            text={`${number_of_students} ${I18n.t('Students')}`}
                         />
                     </View>
                     <View style={[globalStyles.rowBetween, styles.listing]}>
@@ -128,7 +129,7 @@ const DisplaySubject = () => {
                         >
                             <Text
                                 style={globalStyles.btnColor}
-                                text="Download"
+                                text={I18n.t('Download')}
                             />
                         </Pressable>
                     </View>
@@ -149,7 +150,7 @@ const DisplaySubject = () => {
                         >
                             <Text
                                 style={globalStyles.btnColor}
-                                text="Subscribe"
+                                text={I18n.t('Subscribe')}
                             />
                         </Pressable>
                     </View>
@@ -180,6 +181,7 @@ const DisplaySubject = () => {
                 titleStyle={{
                     color: 'rgb(59,63,73)',
                     fontFamily: 'Cairo-Regular',
+                    textAlign: 'left',
                 }}
                 position="right"
             />
@@ -207,6 +209,7 @@ const styles = StyleSheet.create({
     lessonProgress: {
         fontSize: heightp(18),
         marginBottom: heightp(5),
+        textAlign: 'left',
     },
 })
 
