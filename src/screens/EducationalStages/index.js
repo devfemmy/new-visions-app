@@ -6,6 +6,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Container, Text } from '../../components/common'
 import LessonCard from '../../components/LessonCard';
 import StageCard from '../../components/StageCard';
+import { AppContext } from '../../context/AppState';
 import colors from '../../helpers/colors';
 import { globalStyles } from '../../helpers/globalStyles';
 import { getSubjectLevels } from '../../redux/action';
@@ -14,6 +15,7 @@ import { heightp } from '../../utils/responsiveDesign';
 
 const EducationalStage = () => {
   const route = useRoute();
+  const {lang} = useContext(AppContext);
   // const { setDisabledProps } = useContext(SubContext);
   const [activeStage, setActiveStage] = useState(null);
   const [activeLevel, setActiveLevel] = useState(null);
@@ -21,7 +23,12 @@ const EducationalStage = () => {
   const {stage_id} = route.params;
   const navigation = useNavigation()
   const {levelData} = useAppSelector((state)=> state.levelPage);
-  const stagesArray = ["Primary School", "Middle School", "Secondary School"]
+  let stagesArray;
+  if (lang === 'ar') {
+    stagesArray = ["Primary School", "Middle School", "Secondary School"]
+  }else {
+    stagesArray = ["Primary School", "Middle School", "Secondary School"]
+  }
   useEffect(() => {
     const payload = {
       stage_id
