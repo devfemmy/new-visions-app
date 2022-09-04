@@ -11,25 +11,27 @@ import { IMAGEURL, IMAGEURL2 } from '../../utils/functions';
 import FastImage from 'react-native-fast-image'
 import { heightp } from '../../utils/responsiveDesign'
 import { globalStyles } from '../../helpers/globalStyles'
+// eslint-disable-next-line react/prop-types
 export default function MultiPackagesListItem({price, number_of_students, title, detailsClicked, shareClicked, uri}) {
     const imageUrl = `${IMAGEURL}${uri}`
-    console.log('uri 222', imageUrl)
   return (
     <View style={styles.outContainer}>
-            <View style={globalStyles.rowBetween}>
+            <View>
                 <FastImage
-                    style={{width: heightp(150), height: heightp(150), borderRadius: 10,}}
-                    source={{
-                        uri: imageUrl,
-                      priority: FastImage.priority.normal,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                    <View style={{width:'65%',padding: heightp(10)}}>
+                            style={{width: '100%', height: heightp(180), borderRadius: 10,}}
+                            source={{
+                                uri: imageUrl,
+                            priority: FastImage.priority.normal,
+                            }}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+            </View>
+            <View>
+                    <View style={{width:'100%',padding: heightp(10)}}>
                         <Text style={styles.subItemText}>{title}</Text>
                         <Text style={styles.subItemText}>{number_of_students}  {I18n.t("Students")}</Text>
                         <Text style={styles.subItemText}>{price}  {I18n.t("SAR")}</Text>
-                        <View style={{flexDirection:'row', width: '90%', justifyContent: 'space-between'}}>
+                        <View style={{flexDirection:'row', width: '100%', justifyContent: 'space-between'}}>
                             <TouchableWithoutFeedback onPress={()=>{shareClicked();}}>
                                 <View style={styles.itemBtn}>
                                 <Text style={styles.itemBtnTxt}>{I18n.t('Share')}</Text>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
         marginTop:20,
         // borderWidth:1,
         // borderColor:'rgba(0, 0, 0, 0.3)',
-        paddingHorizontal: heightp(25),
+        // paddingHorizontal: heightp(25),
         marginVertical: heightp(20),
         backgroundColor: 'white',
 
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         flexDirection:'row',
         borderRadius:10,
-        width: heightp(80)
+        width: heightp(150)
     },
     itemBtn2:{
         height:30,
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         flexDirection:'row',
         borderRadius:10,
-        width: heightp(80)
+        width: heightp(150)
     },
     itemBtnTxt:{
         color:colors.white,

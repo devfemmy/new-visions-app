@@ -16,22 +16,22 @@ export default function PackagesListItem({price, number_of_students, title, deta
     const imageUrl = `${IMAGEURL}${uri}`
   return (
     <View style={styles.outContainer}>
-            <View style={globalStyles.rowBetween}>
-                <View style={{width: '40%', backgroundColor: 'rgba(0, 0, 0, 0.05)', borderRadius: 10, height: heightp(150), alignItems: 'center', justifyContent: 'center'}}>
-                    <FastImage
-                        style={{width: '100%', height: heightp(120), borderRadius: 10,}}
-                        source={{
-                            uri: imageUrl,
-                        priority: FastImage.priority.normal,
-                        }}
-                        resizeMode={FastImage.resizeMode.contain}
-                    />
-                </View>
-                    <View style={{width:'68%',padding: heightp(10),}}>
+            <View>
+                <FastImage
+                            style={{width: '100%', height: heightp(150), borderRadius: 10,}}
+                            source={{
+                                uri: imageUrl,
+                            priority: FastImage.priority.normal,
+                            }}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+            </View>
+            <View>
+                    <View style={{width:'100%',padding: heightp(10)}}>
                         <Text style={styles.subItemText}>{title}</Text>
                         <Text style={styles.subItemText}>{number_of_students}  {I18n.t("Students")}</Text>
                         <Text style={styles.subItemText}>{price}  {I18n.t("SAR")}</Text>
-                        <View style={{flexDirection:'row', width: '90%', justifyContent: 'space-between'}}>
+                        <View style={{flexDirection:'row', width: '100%', justifyContent: 'space-between'}}>
                             <TouchableWithoutFeedback onPress={()=>{shareClicked();}}>
                                 <View style={styles.itemBtn}>
                                 <Text style={styles.itemBtnTxt}>{I18n.t('Share')}</Text>
@@ -52,6 +52,7 @@ export default function PackagesListItem({price, number_of_students, title, deta
 }
 
 
+
 const styles = StyleSheet.create({
     outContainer:{
         width:'95%',
@@ -61,9 +62,10 @@ const styles = StyleSheet.create({
         marginTop:20,
         // borderWidth:1,
         // borderColor:'rgba(0, 0, 0, 0.3)',
-        paddingHorizontal: heightp(25),
+        // paddingHorizontal: heightp(25),
         marginVertical: heightp(20),
         backgroundColor: 'white',
+
         shadowColor: 'rgba(0,0,0,0.2)',
         shadowOffset: {
           width: 0,
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
         fontSize:heightp(16),
         fontWeight:'700',
         fontFamily:'Cairo',
+        textAlign: 'left'
         // lineHeight: heightp(24)
     },
     itemBtn:{
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         flexDirection:'row',
         borderRadius:10,
-        width: heightp(80)
+        width: heightp(150)
     },
     itemBtn2:{
         height:30,
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         flexDirection:'row',
         borderRadius:10,
-        width: heightp(80)
+        width: heightp(150)
     },
     itemBtnTxt:{
         color:colors.white,

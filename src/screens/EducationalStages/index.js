@@ -25,7 +25,7 @@ const EducationalStage = () => {
   const {levelData} = useAppSelector((state)=> state.levelPage);
   let stagesArray;
   if (lang === 'ar') {
-    stagesArray = ["Primary School", "Middle School", "Secondary School"]
+    stagesArray = ["مدرسة إبتدائية", "المدرسة المتوسطة", "تَعْليم ثانَويّ"]
   }else {
     stagesArray = ["Primary School", "Middle School", "Secondary School"]
   }
