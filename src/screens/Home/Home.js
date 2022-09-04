@@ -17,6 +17,7 @@ import HomePageService from '../../services/userServices'
 import Global from '../../../Global'
 import { AppContext } from '../../context/AppState'
 import axios from 'axios'
+const defaultUri = require('../../assets/img/packages.jpg')
 
 const Home = () => {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
@@ -92,21 +93,22 @@ const Home = () => {
         <Container>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <HeaderTitle
-                    pressed={() => navigation.navigate('MultiPackagesStage')}
-                    text={i18n.t('MultiPackages')}
+                    pressed={() => navigation.navigate('PackagesStage')}
+                    text={i18n.t('Packages')}
                 />
                 <View style={styles.containerFlex}>
-                    <FlatList
+                    {/* <FlatList
                         horizontal
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => <Text text={i18n.t('NoData')} />}
-                        data={packagesArray}
+                        ListEmptyComponent={() => (
+                            <Text text={i18n.t('NoData')} />
+                        )}
+                        data={packages}
                         showsVerticalScrollIndicator={false}
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => {
                             const uri = `${IMAGEURL}/${item.image}`
-                            // navigation.navigate("MultiPackageDetails", item);
                             return (
                                 <Pressable
                                     onPress={() =>
@@ -118,7 +120,7 @@ const Home = () => {
                                 >
                                     <FastImage
                                         style={{
-                                            width: heightp(20),
+                                            width: heightp(210),
                                             height: heightp(130),
                                             borderRadius: 10,
                                             marginRight: heightp(20),
@@ -132,25 +134,41 @@ const Home = () => {
                                 </Pressable>
                             )
                         }}
-                    />
+                    /> */}
+                    <Pressable
+                        onPress={() => navigation.navigate('PackagesStage')}
+                    >
+                        <FastImage
+                            style={{
+                                width: '100%',
+                                height: heightp(180),
+                                borderRadius: 10,
+                            }}
+                            source={defaultUri}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                    </Pressable>
                 </View>
                 <View style={globalStyles.horizontal} />
 
                 <HeaderTitle
-                    pressed={() => navigation.navigate('PackagesStage')}
-                    text={i18n.t('Packages')}
+                    pressed={() => navigation.navigate('MultiPackagesStage')}
+                    text={i18n.t('MultiPackages')}
                 />
                 <View style={styles.containerFlex}>
                     <FlatList
                         horizontal
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => <Text text={i18n.t('NoData')} />}
-                        data={packages}
+                        ListEmptyComponent={() => (
+                            <Text text={i18n.t('NoData')} />
+                        )}
+                        data={packagesArray}
                         showsVerticalScrollIndicator={false}
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => {
                             const uri = `${IMAGEURL}/${item.image}`
+                            // navigation.navigate("MultiPackageDetails", item);
                             return (
                                 <Pressable
                                     onPress={() =>
@@ -226,7 +244,9 @@ const Home = () => {
                         horizontal
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => <Text text={i18n.t('NoData')} />}
+                        ListEmptyComponent={() => (
+                            <Text text={i18n.t('NoData')} />
+                        )}
                         data={teachersArray}
                         showsVerticalScrollIndicator={false}
                         onEndReachedThreshold={0.5}

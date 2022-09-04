@@ -4,6 +4,7 @@ const English = {
     Language: 'ع',
     // Login
     login: 'Login',
+    logout: 'Logout',
     Next: 'Next',
     Skip: 'Skip',
     Registration: 'Registration',

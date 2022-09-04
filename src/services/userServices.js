@@ -98,4 +98,9 @@ export default class HomePageService {
         const res = await baseAxios.post('/getTeacherProfile', data)
         return res?.data || res
     }
+
+    static async getAboutUs(data) {
+        const res = await baseAxios.get('about_us', data)
+        return res?.data || res
+    }
 }

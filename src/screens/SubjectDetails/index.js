@@ -7,83 +7,95 @@ import { Container, Text } from '../../components/common'
 import { Loader } from '../../components/Loader'
 import StageCard from '../../components/StageCard'
 import SubjectCard from '../../components/SubjectCard'
-import { getSubject, } from '../../redux/action/subjectPageAction'
+import { getSubject } from '../../redux/action/subjectPageAction'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
 
-LogBox.ignoreAllLogs();
+LogBox.ignoreAllLogs()
 const SubjectDetails = () => {
-  const dispatch = useAppDispatch();
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { level } = route.params;
-  // const data = useAppSelector((state)=> console.log(state, 'hello'));
-  const {subject} = useAppSelector((state)=> state.subPage);
-  const [searchText, setSearchText] = useState();
-  const subjectData = subject?.data;
-  useEffect(() => {
-    const payload = {
-      level
-    }
-    dispatch(getSubject(payload))
-  },[dispatch, level]);
+    const dispatch = useAppDispatch()
+    const navigation = useNavigation()
+    const route = useRoute()
+    const { level } = route.params
+    // const data = useAppSelector((state)=> console.log(state, 'hello'));
+    const { subject } = useAppSelector((state) => state.subPage)
+    const [searchText, setSearchText] = useState()
+    const subjectData = subject?.data
+    useEffect(() => {
+        const payload = {
+            level,
+        }
+        dispatch(getSubject(payload))
+    }, [dispatch, level])
 
-  const navigateSubjectsDetails = useCallback((item) => {
-    const {id, title, image} = item;
-    const uri = `${IMAGEURL}/${image}`
-    if (id)
-      navigation.navigate('DisplaySubject', {
-        subjectId: id,
-        title,
-        uri
-      });
-  }, [navigation]);
-  const searchFilteredData = searchText
-  ? subjectData?.filter((x) =>
-      x.title.toLowerCase().includes(searchText.toLowerCase()),
+    const navigateSubjectsDetails = useCallback(
+        (item) => {
+            const { id, title, image } = item
+            const uri = `${IMAGEURL}/${image}`
+            if (id)
+                navigation.navigate('DisplaySubject', {
+                    subjectId: id,
+                    title,
+                    uri,
+                })
+        },
+        [navigation]
     )
-  : subjectData;
+    const searchFilteredData = searchText
+        ? subjectData?.filter((x) =>
+              x.title.toLowerCase().includes(searchText.toLowerCase())
+          )
+        : subjectData
 
-  return (
-      <Container>
-         {/* <Loader visible={loading} />  */}
-        <View style={styles.containerFlex}>
-          <View style={{marginBottom: 15}}>
-            <SearchBar
-            placeholder="Search Subjects"
-            value={searchText}
-            onChangeText={(text) => setSearchText(text)}
-            style={styles.searchBar}
-            />
-          </View>
-            <FlatList
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={styles.flatlistContent}
-              ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
-              data={searchFilteredData}
-              showsVerticalScrollIndicator={false}
-              onEndReachedThreshold={0.5}
-              renderItem={({item}) => (
-                <SubjectCard 
-                pressed={() => navigateSubjectsDetails(item)}
-                numberOfStudents={item?.number_of_students} 
-                duration={item?.number_of_hours} 
-                uri={`${IMAGEURL}/${item?.image}`} contents={item?.title} />
-            )}
-            />
-          </View>
-      </Container>
-  )
+    return (
+        <Container>
+            {/* <Loader visible={loading} />  */}
+            <View style={styles.containerFlex}>
+                <View style={{ marginBottom: 15 }}>
+                    <SearchBar
+                        placeholder="Search Subjects"
+                        value={searchText}
+                        onChangeText={(text) => setSearchText(text)}
+                        style={styles.searchBar}
+                    />
+                </View>
+                <FlatList
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={styles.flatlistContent}
+                    ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
+                    ListFooterComponent={() => (
+                        <View
+                            style={{
+                                height: heightp(75),
+                            }}
+                        />
+                    )}
+                    data={searchFilteredData}
+                    showsVerticalScrollIndicator={false}
+                    onEndReachedThreshold={0.5}
+                    renderItem={({ item }) => (
+                        <SubjectCard
+                            pressed={() => navigateSubjectsDetails(item)}
+                            numberOfStudents={item?.number_of_students}
+                            duration={item?.number_of_hours}
+                            uri={`${IMAGEURL}/${item?.image}`}
+                            contents={item?.title}
+                        />
+                    )}
+                />
+            </View>
+        </Container>
+    )
 }
 const styles = StyleSheet.create({
-  flatlistContent: {
-    flexGrow: 1,
-  },
-  containerFlex: {
-    marginBottom: heightp(20)
-  }
+    flatlistContent: {
+        flexGrow: 1,
+    },
+    containerFlex: {
+        marginBottom: heightp(20),
+    },
 })
 
-export default SubjectDetails;
+export default SubjectDetails

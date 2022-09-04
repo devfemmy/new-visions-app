@@ -119,7 +119,7 @@ const DrawerNavigator = () => {
                                 paddingRight: 35,
                             }}
                         >
-                            {I18n.t('Exit')}
+                            {I18n.t('logout')}
                         </Text>
                     </TouchableOpacity>
                 </DrawerContentScrollView>
@@ -192,7 +192,7 @@ const DrawerNavigator = () => {
                         ),
                     }}
                 />
-                <Drawer.Screen
+                {/* <Drawer.Screen
                     name={I18n.t('MeasurementQuiz')}
                     component={MeasurementQuiz}
                     options={{
@@ -209,7 +209,7 @@ const DrawerNavigator = () => {
                             />
                         ),
                     }}
-                />
+                /> */}
                 <Drawer.Screen
                     name={I18n.t('MeasurementTestResult')}
                     component={MeasurementTestResults}
@@ -246,24 +246,7 @@ const DrawerNavigator = () => {
                         ),
                     }}
                 />
-                <Drawer.Screen
-                    name={I18n.t('Settings')}
-                    component={Settings}
-                    options={{
-                        // headerShown: true,
-                        // headerLeft: backRight,
-                        // unmountOnBlur: true,
-                        // headerTransparent: true,
-                        headerTintColor: colors.black,
-                        drawerIcon: () => (
-                            <Ionicons
-                                name={'settings-sharp'}
-                                size={20}
-                                color={colors.primary}
-                            />
-                        ),
-                    }}
-                />
+
                 <Drawer.Screen
                     name={I18n.t('WhoWeAre')}
                     component={WhoWeAre}
@@ -294,6 +277,24 @@ const DrawerNavigator = () => {
                         drawerIcon: () => (
                             <MaterialIcons
                                 name={'delete'}
+                                size={20}
+                                color={colors.primary}
+                            />
+                        ),
+                    }}
+                />
+                <Drawer.Screen
+                    name={I18n.t('AboutUs')}
+                    component={Settings}
+                    options={{
+                        // headerShown: true,
+                        // headerLeft: backRight,
+                        // unmountOnBlur: true,
+                        // headerTransparent: true,
+                        headerTintColor: colors.black,
+                        drawerIcon: () => (
+                            <Ionicons
+                                name={'help-circle'}
                                 size={20}
                                 color={colors.primary}
                             />

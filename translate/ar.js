@@ -4,6 +4,7 @@ const Arabic = {
     Language: 'En',
     //Login
     login: 'تسجيل الدخول',
+    logout: 'تسجيل خروج',
     Next: 'التالي',
     Skip: 'تخطى',
     Registration: 'انشاء حساب جديد',
