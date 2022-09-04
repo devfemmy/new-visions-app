@@ -103,7 +103,7 @@ const DisplaySubject = () => {
             showTime={false}
             separator
             data={chaptersArray}
-            titleStyle={{ color: 'rgb(59,63,73)', fontFamily: 'Cairo-Regular' }}
+            titleStyle={{ color: 'rgb(59,63,73)', fontFamily: 'Cairo-Regular', textAlign: 'left' }}
             position="right"
           />
       </Container>

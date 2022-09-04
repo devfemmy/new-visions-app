@@ -29,8 +29,8 @@ export default function MultiPackagesListItem({price, number_of_students, title,
             <View>
                     <View style={{width:'100%',padding: heightp(10)}}>
                         <Text style={styles.subItemText}>{title}</Text>
-                        <Text style={styles.subItemText}>{number_of_students}  {I18n.t("Students")}</Text>
-                        <Text style={styles.subItemText}>{price}  {I18n.t("SAR")}</Text>
+                        {/* <Text style={styles.subItemText}>{number_of_students}  {I18n.t("Students")}</Text> */}
+                        {/* <Text style={styles.subItemText}>{price}  {I18n.t("SAR")}</Text> */}
                         <View style={{flexDirection:'row', width: '100%', justifyContent: 'space-between'}}>
                             <TouchableWithoutFeedback onPress={()=>{shareClicked();}}>
                                 <View style={styles.itemBtn}>
