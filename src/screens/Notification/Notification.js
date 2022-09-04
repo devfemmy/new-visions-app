@@ -6,6 +6,7 @@ import { Loader } from '../../components/Loader';
 import NotificationCard from '../../components/NotificationCard';
 import { AppContext } from '../../context/AppState';
 import HomePageService from '../../services/userServices';
+import I18n from 'i18n-js'
 
 const Notification = () => {
   const navigation = useNavigation();
@@ -44,7 +45,7 @@ const Notification = () => {
             <FlatList
               keyboardShouldPersistTaps="handled"
               contentContainerStyle={styles.flatlistContent}
-              ListEmptyComponent={() => <Text text="No Data" />}
+              ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
               data={notificationData}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.5}

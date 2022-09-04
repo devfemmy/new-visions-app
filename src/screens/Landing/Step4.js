@@ -20,7 +20,7 @@ export default function Step4() {
                 <View style={styles.loginBtnView}>
                     
                     <View style={styles.arrowCont}>
-                        <MaterialIcons name={I18n.locale == 'ar'?'arrow-forward-ios':'arrow-back-ios'} size={20} color={colors.white} />
+                        <MaterialIcons name={I18n.locale != 'ar'?'arrow-forward-ios':'arrow-back-ios'} size={20} color={colors.white} />
                     </View>
                     <Text style={styles.loginText}>{I18n.t('login')}</Text>
                 </View>

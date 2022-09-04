@@ -119,7 +119,7 @@ export default function PackagesList({ route, navigation }) {
                     extraData={multiPackages}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
-                    // ListEmptyComponent={() => <Text text="No Data" />}
+                    // ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
                 />
             ) : (
                 <View
@@ -130,7 +130,7 @@ export default function PackagesList({ route, navigation }) {
                         justifyContent: 'center',
                     }}
                 >
-                    <Text text="No Data" />
+                    <Text text={I18n.t('NoData')} />
                 </View>
             )}
         </Screen>

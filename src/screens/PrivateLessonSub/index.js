@@ -57,7 +57,7 @@ const PrivateLessonSubscription = () => {
     };
     deviceStorage
       .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
-      .then(() => requestPurchase({ sku: 1618734692 }));
+      .then(() => requestPurchase({ sku: 'com.newtouch.newvisions_one_lesson' }));
   }
   return (
     <SubContext.Provider value={{ disabledProp, setDisabledProps, setGroupId }}>

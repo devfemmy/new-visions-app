@@ -128,7 +128,7 @@ export default function MultiPackagesList({ route, navigation }) {
                         justifyContent: 'center',
                     }}
                 >
-                    <Text text="No Data" />
+                    <Text text={I18n.t('NoData')} />
                 </View>
             )}
         </Screen>

@@ -100,7 +100,7 @@ const Home = () => {
                         horizontal
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => <Text text="No Data" />}
+                        ListEmptyComponent={() => <Text text={i18n.t('NoData')} />}
                         data={packagesArray}
                         showsVerticalScrollIndicator={false}
                         onEndReachedThreshold={0.5}
@@ -145,7 +145,7 @@ const Home = () => {
                         horizontal
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => <Text text="No Data" />}
+                        ListEmptyComponent={() => <Text text={i18n.t('NoData')} />}
                         data={packages}
                         showsVerticalScrollIndicator={false}
                         onEndReachedThreshold={0.5}
@@ -192,7 +192,7 @@ const Home = () => {
                                 keyboardShouldPersistTaps="handled"
                                 contentContainerStyle={styles.flatlistContent}
                                 ListEmptyComponent={() => (
-                                    <Text text="No Data" />
+                                    <Text text={i18n.t('NoData')} />
                                 )}
                                 data={stagesArray}
                                 showsVerticalScrollIndicator={false}
@@ -226,7 +226,7 @@ const Home = () => {
                         horizontal
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => <Text text="No Data" />}
+                        ListEmptyComponent={() => <Text text={i18n.t('NoData')} />}
                         data={teachersArray}
                         showsVerticalScrollIndicator={false}
                         onEndReachedThreshold={0.5}

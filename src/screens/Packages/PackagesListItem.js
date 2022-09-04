@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         marginTop:20,
         // borderWidth:1,
         // borderColor:'rgba(0, 0, 0, 0.3)',
-        paddingHorizontal: heightp(10),
+        paddingHorizontal: heightp(25),
         marginVertical: heightp(20),
         backgroundColor: 'white',
         shadowColor: 'rgba(0,0,0,0.2)',

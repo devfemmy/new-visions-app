@@ -62,7 +62,6 @@ const English = {
     // Subjects
     Students: 'Students',
     Hours: 'Hours',
-    Next: 'Next',
     Prev: 'Prev',
     Page: 'Page',
 
@@ -82,6 +81,7 @@ const English = {
     PerLecture: 'Per Lecture',
     PerCurriculum: 'Per Curriculum',
     BookOneLesson: 'Book One Lesson',
+
     BookFullCourse: 'Book Full Course',
 
     // Book One Lesson
@@ -91,7 +91,6 @@ const English = {
 
     // Teachers
     Courses: 'Courses',
-    Students: 'Students',
     Stars: 'Stars',
 
     // Messages
@@ -195,6 +194,8 @@ const English = {
     Group: 'Group',
     People: 'People',
     SearchForMassage: 'Search For Message',
+    NoData: 'No Data',
+    Welcome: 'Welcome',
 }
 
 export default English

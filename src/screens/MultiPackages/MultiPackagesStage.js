@@ -11,6 +11,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL2 } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
+import I18n from 'i18n-js'
 
 LogBox.ignoreAllLogs()
 const MultiPackagesStage = () => {
@@ -43,7 +44,7 @@ const MultiPackagesStage = () => {
                 <FlatList
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => <Text text="No Data" />}
+                    ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
                     data={subjectData}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}

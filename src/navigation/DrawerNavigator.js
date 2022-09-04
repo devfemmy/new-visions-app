@@ -72,7 +72,7 @@ const DrawerNavigator = () => {
                                 // backgroundColor: colors.green,
                             }}
                         >
-                            Welcome
+                            {I18n.t('Welcome')}
                         </Text>
                         <Text
                             style={{
@@ -107,6 +107,7 @@ const DrawerNavigator = () => {
                             name={'log-out'}
                             size={20}
                             color={colors.primary}
+                            // style={{ paddingRight: 15 }}
                         />
                         <Text
                             style={{
@@ -115,7 +116,7 @@ const DrawerNavigator = () => {
                                 color: colors.primary,
                                 fontWeight: '700',
                                 fontStyle: 'normal',
-                                paddingLeft: 35,
+                                paddingRight: 35,
                             }}
                         >
                             {I18n.t('Exit')}

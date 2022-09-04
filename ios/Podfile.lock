@@ -15,19 +15,11 @@ PODS:
     - React-Core (= 0.69.4)
     - React-jsi (= 0.69.4)
     - ReactCommon/turbomodule/core (= 0.69.4)
-  - Firebase/Auth (9.5.0):
-    - Firebase/CoreOnly
-    - FirebaseAuth (~> 9.5.0)
   - Firebase/CoreOnly (9.5.0):
     - FirebaseCore (= 9.5.0)
   - Firebase/Messaging (9.5.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 9.5.0)
-  - FirebaseAuth (9.5.0):
-    - FirebaseCore (~> 9.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.7)
   - FirebaseCore (9.5.0):
     - FirebaseCoreDiagnostics (~> 9.0)
     - FirebaseCoreInternal (~> 9.0)
@@ -418,10 +410,6 @@ PODS:
   - RNFBApp (15.4.0):
     - Firebase/CoreOnly (= 9.5.0)
     - React-Core
-  - RNFBAuth (15.4.0):
-    - Firebase/Auth (= 9.5.0)
-    - React-Core
-    - RNFBApp
   - RNFBMessaging (15.4.0):
     - Firebase/Messaging (= 9.5.0)
     - FirebaseCoreExtension (= 9.5.0)
@@ -522,7 +510,6 @@ DEPENDENCIES:
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
-  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
@@ -536,7 +523,6 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - Firebase
-    - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreExtension
@@ -649,8 +635,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fast-image"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
-  RNFBAuth:
-    :path: "../node_modules/@react-native-firebase/auth"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
@@ -675,7 +659,6 @@ SPEC CHECKSUMS:
   FBLazyVector: c71b8c429a8af2aff1013934a7152e9d9d0c937d
   FBReactNativeSpec: cb0df4f0084281b394f76bb9b4d1d9540f35963f
   Firebase: 800f16f07af493d98d017446a315c27af0552f41
-  FirebaseAuth: 741918f1fa62ed23246a509279f91d42d79a713f
   FirebaseCore: 25c0400b670fd1e2f2104349cd3b5dcce8d9418f
   FirebaseCoreDiagnostics: 17cbf4e72b1dbd64bfdc33d4b1f07bce4f16f1d8
   FirebaseCoreExtension: 2904492b693a6871ddbd1088c9d1fe6e54384050
@@ -734,7 +717,6 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 04b805a3cb4d386e5e6aff54b47ace7bad706fda
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBApp: 1b3411b5134a4e27e92fbf9df7f97603f6c7029a
-  RNFBAuth: e57caa96cb0eae8809a959c438af24a632a84aad
   RNFBMessaging: 3df81ace965865da6ce0be05b70726aeb84465f5
   RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
   RNGoogleSignin: d7f8368b82d94f1dec964785d496387ca7f19092

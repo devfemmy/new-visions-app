@@ -201,6 +201,8 @@ const Arabic = {
     Group: 'المجموعات الدراسية',
     People: 'الاشخاص',
     SearchForMassage: 'لا توجد رسائل',
+    NoData: 'لا توجد رسائل',
+    Welcome: 'مرحبا',
 }
 
 export default Arabic
