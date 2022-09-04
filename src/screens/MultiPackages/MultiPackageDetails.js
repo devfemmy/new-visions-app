@@ -71,7 +71,6 @@ useEffect(()=>{
 useLayoutEffect(()=>{
   showLoadingSpinner(true);
 },[]);
-
   return (
     <Screen style={{marginBottom:20, paddingHorizontal: 20}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -110,6 +109,10 @@ useLayoutEffect(()=>{
         <ScrollView nestedScrollEnabled={true}>
           {description && 
           <HTML 
+          tagsStyles={{
+            div: { textAlign: 'left' },
+
+          }}
           source={{html:description.description}}
           imagesMaxWidth={Dimensions.get("window").width}
            />}
@@ -140,6 +143,7 @@ const styles = StyleSheet.create({
     color:colors.dark,
     fontSize:heightp(16),
     fontWeight:'700',
+    textAlign: 'left',
     fontFamily:'Cairo', alignSelf:'center'
 },
 countContainer:{

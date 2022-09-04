@@ -14,11 +14,12 @@ import LogoIcon from '../assets/img/logo_new.svg'
 import MenuIcon from '../assets/img/menu.svg'
 import NotificationIcon from '../assets/img/notification.svg'
 import BackIcon from '../assets/img/back.svg'
+import ForwardIcon from '../assets/img/forward.svg'
 import Subject from '../screens/Subject'
 import Profile from '../screens/Profile/Profile'
 import ParentProfile from '../screens/Parent/Profile'
 import ParentProfileNavigator from '../navigation/ParentProfileNavigator'
-import { AppState } from '../context/AppState'
+import { AppContext, AppState } from '../context/AppState'
 import Global from '../../Global'
 import Conversation from '../screens/Messages/Conversations'
 import HomeNavigation from './HomeNavigation'
@@ -26,6 +27,7 @@ import HomeNavigation from './HomeNavigation'
 const RootBottomTab = createBottomTabNavigator()
 
 export const RootBottomTabNavigator = () => {
+    const {lang} = useContext(AppContext)
     const navigation = useNavigation()
     const HeaderLeft = () => (
         <TouchableOpacity
@@ -55,7 +57,10 @@ export const RootBottomTabNavigator = () => {
                 marginLeft: 16,
             }}
         >
-            <BackIcon width={20} height={20} />
+            {lang === 'ar' ? 
+              <ForwardIcon width={20} height={20} />:
+              <BackIcon width={20} height={20} />  
+        }
         </TouchableOpacity>
     )
     return (

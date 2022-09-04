@@ -6,7 +6,7 @@ import { heightp, widthp } from '../utils/responsiveDesign'
 import { Text } from './common'
 const defaultUri = require('../assets/img/default-profile-picture.jpeg')
 
-const TeachersCard = ({ text, uri, lastName, pressed, image }) => (
+const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
     <Pressable onPress={pressed}>
         <View
             style={[
@@ -33,8 +33,9 @@ const TeachersCard = ({ text, uri, lastName, pressed, image }) => (
             />
         </View>
         <View style={styles.lowerContainer}>
-            <Text style={styles.textColor} text={text} />
-            <Text style={styles.textColor} text={lastName} />
+            <Text numberOfLines={1} style={styles.textColor} text={text} />
+            <Text numberOfLines={1} style={styles.textColor} text={lastName} />
+            <Text numberOfLines={1} style={styles.textColor} text={ratings && ratings} />
         </View>
     </Pressable>
 )
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     },
     lowerContainer: {
         backgroundColor: 'rgba(67, 72, 84, 1)',
-        height: heightp(61),
+        height: heightp(90),
         marginRight: heightp(20),
         width: widthp(121),
         alignItems: 'center',

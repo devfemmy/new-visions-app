@@ -206,7 +206,7 @@ export const PostLoginNavigator = () => {
                 component={SubjectTeachers}
                 options={({ route }) => ({
                     headerShown: true,
-                    title: 'Subject Teachers',
+                    title: i18n.t('SubjectTeachers'),
                 })}
             />
             <MainStack.Screen
@@ -214,7 +214,7 @@ export const PostLoginNavigator = () => {
                 component={FullLessonSubscription}
                 options={({ route }) => ({
                     headerShown: true,
-                    title: 'Full Lessons Subscription',
+                    title: i18n.t('FullLessonSubscription'),
                 })}
             />
             <MainStack.Screen
@@ -222,7 +222,7 @@ export const PostLoginNavigator = () => {
                 component={PrivateLessonSubscription}
                 options={({ route }) => ({
                     headerShown: true,
-                    title: 'Private Lessons Subscription',
+                    title: i18n.t('PrivateLessonsSubscriptions'),
                 })}
             />
             <MainStack.Screen

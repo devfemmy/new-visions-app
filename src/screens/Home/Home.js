@@ -256,6 +256,7 @@ const Home = () => {
                                 <TeachersCard
                                     pressed={() => navigateTeacherProfile(item)}
                                     uri={uri}
+                                    ratings={item?.avg_rating.length === 0 ? null : item?.avg_rating[0].rateAVG}
                                     lastName={item.last_name}
                                     text={item.first_name}
                                     image={item.image}

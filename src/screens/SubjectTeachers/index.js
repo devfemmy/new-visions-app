@@ -83,7 +83,7 @@ const SubjectTeachers = () => {
                 <FlatList
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
+                    ListEmptyComponent={() => <Text text={I18n.t('UnavailableTeacher')} />}
                     data={searchFilteredData}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}

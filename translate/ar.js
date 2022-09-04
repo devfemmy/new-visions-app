@@ -205,9 +205,15 @@ const Arabic = {
     NoData: 'لا توجد رسائل',
     Welcome: 'مرحبا',
     SearchTeachers: 'ابحث عن المعلمين',
+    SearchSubjects: 'ابحث عن مادة',
     Bio: 'Bio',
     RatingsAndComments: 'التقييمات والتعليقات',
     ContactUs: 'اتصل بنا',
+    NoClasses: 'لا يوجد حصص',
+    SubjectTeachers: 'معلمين المادة',
+    UnavailableTeacher: 'لا يوجد معلمين',
+    ChooseDay: 'اختر اليوم',
+    ChooseClass: 'اختر الدرس'
 }
 
 export default Arabic

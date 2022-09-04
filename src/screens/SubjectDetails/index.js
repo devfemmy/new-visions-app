@@ -55,7 +55,7 @@ const SubjectDetails = () => {
             <View style={styles.containerFlex}>
                 <View style={{ marginBottom: 15 }}>
                     <SearchBar
-                        placeholder="Search Subjects"
+                        placeholder={I18n.t('SearchSubjects')}
                         value={searchText}
                         onChangeText={(text) => setSearchText(text)}
                         style={styles.searchBar}

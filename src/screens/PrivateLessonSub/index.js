@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { deviceStorage } from '../../services/deviceStorage';
 import { getInAppPurchaseProducts } from '../../services/getInAppPurchase';
 import { requestPurchase } from '../../services/iap';
+import I18n from 'i18n-js';
 import ChooseGroup from '../FullLessonSubscription/ChooseGroup';
 import SelectGroup from '../FullLessonSubscription/SelectGroup';
 import ChooseFreeDay from './ChooseFreeday';
@@ -68,13 +69,13 @@ const PrivateLessonSubscription = () => {
           activeStepIconBorderColor={colors.primary} 
           completedProgressBarColor={colors.primary} 
           activeLabelColor={colors.primary} removeBtnRow>
-              <ProgressStep  nextBtnDisabled={!disabledProp} label="Choose Class">
+              <ProgressStep  nextBtnDisabled={!disabledProp} label={I18n.t('ChooseDay')}>
                   <View>
                     {/* <SelectGroup /> */}
                     <ChooseLesson lessons={getSubjectChaptersAndLessonData} />
                   </View>
               </ProgressStep>
-              <ProgressStep  nextBtnText="Subscribe" onSubmit={subscribeToLesson} nextBtnDisabled={!disabledProp}  label="Choose the day">
+              <ProgressStep  nextBtnText="Subscribe" onSubmit={subscribeToLesson} nextBtnDisabled={!disabledProp}  label={I18n.t('ChooseClass')}>
                 <View>
                     {/* <ChooseGroup subjectGroupData={subjectGroupData} /> */}
                     <ChooseFreeDay freeDays={teachersFreeDaysData} />
