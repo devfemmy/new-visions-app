@@ -203,6 +203,9 @@ const Arabic = {
     SearchForMassage: 'لا توجد رسائل',
     NoData: 'لا توجد رسائل',
     Welcome: 'مرحبا',
+    SearchTeachers: 'ابحث عن المعلمين',
+    Bio: 'Bio',
+    RatingsAndComments: 'التقييمات والتعليقات',
 }
 
 export default Arabic

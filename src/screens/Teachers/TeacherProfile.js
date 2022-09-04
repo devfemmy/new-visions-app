@@ -15,6 +15,7 @@ import { IMAGEURL, IMAGEURL2 } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
 import { Vimeo } from 'react-native-vimeo-iframe'
+import I18n from 'i18n-js'
 // import Video from 'react-native-video'
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
@@ -124,7 +125,8 @@ const TeacherProfile = () => {
                                 },
                             ]}
                             text={
-                                teachersData?.bio && `Bio: ${teachersData?.bio}`
+                                teachersData?.bio &&
+                                `${I18n.t('Bio')}: ${teachersData?.bio}`
                             }
                         />
                     </View>
@@ -134,7 +136,7 @@ const TeacherProfile = () => {
                 {teachersData?.video?.length > 0 ? (
                     <View
                         style={{
-                            height: WINDOW_HEIGHT * 0.25,
+                            height: WINDOW_HEIGHT * 0.35,
                             width: WINDOW_WIDTH * 0.9,
                             marginVertical: heightp(10),
                         }}
@@ -153,7 +155,15 @@ const TeacherProfile = () => {
                 )}
             </View>
             <View style={styles.borderContainer}>
-                <Text style={styles.header} text="Ratings and Comments" />
+                <Text
+                    style={[
+                        styles.header,
+                        {
+                            textAlign: 'left',
+                        },
+                    ]}
+                    text={I18n.t('RatingsAndComments')}
+                />
 
                 {teachersData?.rates?.length > 0 ? (
                     teachersData?.rates.map((rate) => (
@@ -247,11 +257,11 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: 'bold',
         fontSize: heightp(18),
-        textAlign: 'left'
+        textAlign: 'left',
     },
     header: {
         fontWeight: 'bold',
-        fontSize: heightp(16),
+        fontSize: heightp(18),
     },
     borderContainer: {
         borderBottomColor: 'rgba(0, 0, 0, 0.5)',
@@ -277,6 +287,7 @@ const styles = StyleSheet.create({
     ratingsName: {
         color: colors.black,
         fontSize: heightp(12),
+        textAlign: 'left',
     },
     ratingsText: {
         color: colors.black,
@@ -285,6 +296,7 @@ const styles = StyleSheet.create({
         lineHeight: heightp(16),
         paddingTop: heightp(10),
         paddingBottom: heightp(20),
+        textAlign: 'left',
     },
 })
 

@@ -196,6 +196,9 @@ const English = {
     SearchForMassage: 'Search For Message',
     NoData: 'No Data',
     Welcome: 'Welcome',
+    SearchTeachers: 'Search Teachers',
+    Bio: 'Bio',
+    RatingsAndComments: 'Ratings and Comments',
 }
 
 export default English

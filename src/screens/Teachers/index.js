@@ -47,7 +47,7 @@ const Teachers = () => {
         <Container>
             <View style={{ marginBottom: 15 }}>
                 <SearchBar
-                    placeholder="Search Teachers"
+                    placeholder={I18n.t('SearchTeachers')}
                     value={searchText}
                     onChangeText={(text) => setSearchText(text)}
                     style={styles.searchBar}
