@@ -16,6 +16,7 @@ import { heightp } from '../../utils/responsiveDesign'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
 import { Vimeo } from 'react-native-vimeo-iframe'
 // import Video from 'react-native-video'
+const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
 const TeacherProfile = () => {
     const route = useRoute()
@@ -53,21 +54,19 @@ const TeacherProfile = () => {
                     },
                 })
                     .then((res) => res.json())
-                    .then(
-                        (res) => {
-                            console.log(
-                                'ressssssssss',
-                                res.request.files.hls.cdns[
-                                    res.request.files.hls.default_cdn
-                                ].url
-                            )
-                            setVideoUrl(
-                                res.request.files.hls.cdns[
-                                    res.request.files.hls.default_cdn
-                                ].url
-                            )
-                        }
-                    )
+                    .then((res) => {
+                        console.log(
+                            'ressssssssss',
+                            res.request.files.hls.cdns[
+                                res.request.files.hls.default_cdn
+                            ].url
+                        )
+                        setVideoUrl(
+                            res.request.files.hls.cdns[
+                                res.request.files.hls.default_cdn
+                            ].url
+                        )
+                    })
                 // return res
             } catch (err) {
                 // setLoading(false)
@@ -96,10 +95,14 @@ const TeacherProfile = () => {
                         borderRadius: 10,
                         marginRight: heightp(20),
                     }}
-                    source={{
-                        uri,
-                        priority: FastImage.priority.normal,
-                    }}
+                    source={
+                        teachersData?.image === null
+                            ? defaultUri
+                            : {
+                                  uri,
+                                  priority: FastImage.priority.normal,
+                              }
+                    }
                     resizeMode={FastImage.resizeMode.cover}
                 />
                 <View style={styles.widthContainer}>
@@ -109,20 +112,6 @@ const TeacherProfile = () => {
                             text={
                                 teachersData?.first_name &&
                                 `${teachersData?.first_name} ${teachersData?.last_name}`
-                            }
-                        />
-                        <IconText
-                            textColor={colors.white}
-                            text={
-                                teachersData?.city?.name &&
-                                teachersData?.city?.name
-                            }
-                            children={
-                                <Ionicons
-                                    name="ios-home"
-                                    size={25}
-                                    color={colors.white}
-                                />
                             }
                         />
                         <Text
@@ -142,10 +131,6 @@ const TeacherProfile = () => {
                 </View>
             </View>
             <View style={styles.borderContainer}>
-                <Text
-                    style={styles.header}
-                    text="Explanation of the teachers experience"
-                />
                 {teachersData?.video?.length > 0 ? (
                     <View
                         style={{

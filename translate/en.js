@@ -165,6 +165,36 @@ const English = {
     //-----------Errors-----------------------------
     userLoggedOut: 'This Account is Logged in from another Device.',
     appUpdate: 'kindly update mobile application to be able to use it',
+
+    // New Translation
+
+    Calendar: 'Calendar',
+
+    MeasurementQuiz: 'Measurement Quiz',
+
+    MeasurementTestResult: 'Measurement Test Result',
+
+    JointCourses: 'Joint Courses',
+
+    Settings: 'Settings',
+
+    WhoWeAre: 'Who We Are',
+
+    DeleteMembership: 'Delete Membership',
+
+    Exit: 'Exit',
+
+    TimeOfSubject: 'Time Of Subject',
+
+    NoOfStudents: 'No Of Students',
+
+    Download: 'Download',
+
+    LessonProgress: 'Lesson Progress',
+
+    Group: 'Group',
+    People: 'People',
+    SearchForMassage: 'Search For Message',
 }
 
 export default English

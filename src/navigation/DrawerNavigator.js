@@ -25,6 +25,7 @@ import WhoWeAre from '../screens/WhoWeAre'
 import DeleteMembership from '../screens/DeleteMembership'
 import Exit from '../screens/Exit'
 import { AppContext } from '../context/AppState'
+import I18n from 'i18n-js'
 
 const Drawer = createDrawerNavigator()
 
@@ -117,7 +118,7 @@ const DrawerNavigator = () => {
                                 paddingLeft: 35,
                             }}
                         >
-                            Exit
+                            {I18n.t('Exit')}
                         </Text>
                     </TouchableOpacity>
                 </DrawerContentScrollView>
@@ -157,7 +158,7 @@ const DrawerNavigator = () => {
                 }}
             >
                 <Drawer.Screen
-                    name="Home"
+                    name={I18n.t('Home')}
                     component={RootBottomTabNavigator}
                     options={{
                         headerShown: false,
@@ -173,7 +174,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="Calendar"
+                    name={I18n.t('Calendar')}
                     component={Calendar}
                     options={{
                         headerShown: true,
@@ -191,7 +192,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="Measurement Quiz"
+                    name={I18n.t('MeasurementQuiz')}
                     component={MeasurementQuiz}
                     options={{
                         // headerShown: true,
@@ -209,7 +210,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="Measurement Test Results"
+                    name={I18n.t('MeasurementTestResult')}
                     component={MeasurementTestResults}
                     options={{
                         // headerShown: true,
@@ -227,7 +228,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="Joint Courses"
+                    name={I18n.t('JointCourses')}
                     component={JointCourses}
                     options={{
                         // headerShown: true,
@@ -245,7 +246,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="Settings"
+                    name={I18n.t('Settings')}
                     component={Settings}
                     options={{
                         // headerShown: true,
@@ -263,7 +264,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="Who We Are"
+                    name={I18n.t('WhoWeAre')}
                     component={WhoWeAre}
                     options={{
                         // headerShown: true,
@@ -281,7 +282,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="Delete Membership"
+                    name={I18n.t('DeleteMembership')}
                     component={DeleteMembership}
                     options={{
                         // headerShown: true,

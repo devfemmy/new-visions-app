@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import I18n from 'i18n-js'
 import React, { useContext, useEffect, useState } from 'react'
 import { FlatList, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
@@ -54,11 +55,11 @@ const Conversation = () => {
             <SelectTab
                 eventActive={eventActive}
                 pressed={() => setEventActive(!eventActive)}
-                header1="People"
-                header2="Groups"
+                header1={I18n.t('People')}
+                header2={I18n.t('Group')}
             />
             <SearchBar
-                placeholder="Search for Messages"
+                placeholder={I18n.t('SearchForMassage')}
                 value={searchText}
                 onChangeText={(text) => setSearchText(text)}
                 style={globalStyles.searchBar}
