@@ -47,7 +47,7 @@ const Arabic = {
     Quizzes: 'الإختبارات',
     QuizzesResults: 'نتائج الاختبارات',
     Subscribtions: 'الاشتراكات',
-    AboutUs: 'معلومات عنا',
+    AboutUs: 'معلومات',
     SignOut: 'خروج',
 
     //Home
@@ -207,6 +207,7 @@ const Arabic = {
     SearchTeachers: 'ابحث عن المعلمين',
     Bio: 'Bio',
     RatingsAndComments: 'التقييمات والتعليقات',
+    ContactUs: 'اتصل بنا',
 }
 
 export default Arabic

@@ -45,7 +45,7 @@ const English = {
     Quizzes: 'Quizzes',
     QuizzesResults: 'Quizzes Results',
     Subscribtions: 'Subscribtions',
-    AboutUs: 'About Us',
+    AboutUs: 'About',
     SignOut: 'SignOut',
 
     // Home
@@ -200,6 +200,7 @@ const English = {
     SearchTeachers: 'Search Teachers',
     Bio: 'Bio',
     RatingsAndComments: 'Ratings and Comments',
+    ContactUs: 'Contact Us',
 }
 
 export default English

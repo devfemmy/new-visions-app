@@ -37,7 +37,8 @@ const TeacherProfile = () => {
                 const res = await HomePageService.getTeacherProfile(payload)
                 const data = res?.data
                 // setLoading(false)
-                setTeachersData(data)
+                setTeachersData('wwwwwwwwww data', data)
+                console.log(data)
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                 // fetchVideoLink(id)
                 setVideoId(id)
@@ -87,7 +88,15 @@ const TeacherProfile = () => {
     }
 
     return (
-        <Container>
+        <Container
+            contentContainerStyle={
+                {
+                    // flexGrow: 2,
+                    // backgroundColor: '#f0f',
+                    // paddingBottom: heightp(1000),
+                }
+            }
+        >
             <View style={[styles.container, globalStyles.rowBetween]}>
                 <FastImage
                     style={{
@@ -154,7 +163,14 @@ const TeacherProfile = () => {
                     />
                 )}
             </View>
-            <View style={styles.borderContainer}>
+            <View
+                style={[
+                    styles.borderContainer,
+                    {
+                        paddingBottom: heightp(500),
+                    },
+                ]}
+            >
                 <Text
                     style={[
                         styles.header,
@@ -164,6 +180,37 @@ const TeacherProfile = () => {
                     ]}
                     text={I18n.t('RatingsAndComments')}
                 />
+                <View
+                    style={{
+                        height: WINDOW_HEIGHT * 0.2,
+                        width: WINDOW_WIDTH * 0.9,
+                        backgroundColor: '#000',
+                        flexDirection: 'row',
+                    }}
+                >
+                    <View
+                        style={{
+                            width: '40%',
+                            backgroundColor: '#f0f',
+                        }}
+                    >
+                        <Text
+                            style={[
+                                styles.header,
+                                {
+                                    textAlign: 'left',
+                                },
+                            ]}
+                            text={teachersData?.rates_count}
+                        />
+                    </View>
+                    <View
+                        style={{
+                            width: '60%',
+                            backgroundColor: '#0ff',
+                        }}
+                    ></View>
+                </View>
 
                 {teachersData?.rates?.length > 0 ? (
                     teachersData?.rates.map((rate) => (
@@ -199,6 +246,7 @@ const TeacherProfile = () => {
                                         }
                                     />
                                 </View>
+                                <>{console.log('yessss', rate?.rate)}</>
                                 <AirbnbRating
                                     size={12}
                                     imageSize={10}
