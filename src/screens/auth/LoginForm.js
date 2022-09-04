@@ -13,13 +13,14 @@ import AppButton from '../../components/Button'
 import { Text } from '../../components/common'
 import { Text as OtherText } from 'react-native-elements'
 import defaultStyles from '../../helpers/styles'
+import { SocialButtons } from './SocialButtons'
 
 const validateLoginForm = Yup.object().shape({
     email: Yup.string().email().required('البريد الالكتروني الزامي'),
     password: Yup.string().required('كلمة المرور الزامية'),
 })
 
-function LoginForm({ submitLogin }) {
+function LoginForm({ submitLogin, onAppleButtonPress, signInGoogle }) {
     const navigation = useNavigation()
     return (
         <View style={styles.container}>
@@ -69,7 +70,27 @@ function LoginForm({ submitLogin }) {
                     style={{
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginTop: heightp(110),
+                        borderColor: '#434854',
+                        borderTopWidth: 1,
+                        marginVertical: heightp(15),
+                        marginHorizontal: heightp(90),
+                    }}
+                />
+                <View style={styles.socialLogin}>
+                    <SocialButtons
+                        onAppleButtonPress={onAppleButtonPress}
+                        signInGoogle={signInGoogle}
+                    />
+                    {/* <AppleButton />  */}
+                </View>
+                <View
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: heightp(90),
+                        marginBottom: heightp(20),
+                        borderColor: '#434854',
+                        borderTopWidth: 1,
                     }}
                 >
                     <Text
@@ -105,6 +126,9 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontFamily: defaultStyles.text.fontFamily,
         // lineHeight: heightp(16),
+    },
+    socialLogin: {
+        paddingHorizontal: heightp(25),
     },
 })
 

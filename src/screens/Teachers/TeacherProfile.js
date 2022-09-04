@@ -13,6 +13,8 @@ import defaultStyles from '../../helpers/styles'
 import HomePageService from '../../services/userServices'
 import { IMAGEURL, IMAGEURL2 } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
+import { Vimeo } from 'react-native-vimeo-iframe'
 // import Video from 'react-native-video'
 
 const TeacherProfile = () => {
@@ -20,6 +22,8 @@ const TeacherProfile = () => {
     const playerRef = useRef()
     const { item } = route.params
     const [teachersData, setTeachersData] = useState({})
+    const [VideoUrl, setVideoUrl] = useState('')
+    const [vidId, setVideoId] = useState('')
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -31,9 +35,40 @@ const TeacherProfile = () => {
                 const res = await HomePageService.getTeacherProfile(payload)
                 const data = res?.data
                 // setLoading(false)
-                console.log('profile', data)
                 setTeachersData(data)
+                const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
+                // fetchVideoLink(id)
+                setVideoId(id)
                 return res
+            } catch (err) {
+                // setLoading(false)
+            }
+        }
+        async function fetchVideoLink(id) {
+            try {
+                fetch(`https://player.vimeo.com/video/${id}/config`, {
+                    headers: {
+                        'content-type': 'application/json',
+                        accept: 'application/json',
+                    },
+                })
+                    .then((res) => res.json())
+                    .then(
+                        (res) => {
+                            console.log(
+                                'ressssssssss',
+                                res.request.files.hls.cdns[
+                                    res.request.files.hls.default_cdn
+                                ].url
+                            )
+                            setVideoUrl(
+                                res.request.files.hls.cdns[
+                                    res.request.files.hls.default_cdn
+                                ].url
+                            )
+                        }
+                    )
+                // return res
             } catch (err) {
                 // setLoading(false)
             }
@@ -41,7 +76,16 @@ const TeacherProfile = () => {
         getTeacherProfile()
     }, [item?.id])
     const uri = `${IMAGEURL}/${teachersData?.image}`
-    console.log('uri', teachersData?.rates)
+
+    const videoCallbacks = {
+        timeupdate: (data) => console.log('timeupdate: ', data),
+        play: (data) => console.log('play: ', data),
+        pause: (data) => console.log('pause: ', data),
+        fullscreenchange: (data) => console.log('fullscreenchange: ', data),
+        ended: (data) => console.log('ended: ', data),
+        controlschange: (data) => console.log('controlschange: ', data),
+    }
+
     return (
         <Container>
             <View style={[styles.container, globalStyles.rowBetween]}>
@@ -90,7 +134,9 @@ const TeacherProfile = () => {
                                     paddingBottom: heightp(7.5),
                                 },
                             ]}
-                            text={teachersData?.bio && `Bio: ${teachersData?.bio}`}
+                            text={
+                                teachersData?.bio && `Bio: ${teachersData?.bio}`
+                            }
                         />
                     </View>
                 </View>
@@ -100,17 +146,26 @@ const TeacherProfile = () => {
                     style={styles.header}
                     text="Explanation of the teachers experience"
                 />
-                {/* <Video
-                    source={{ uri: `${IMAGEURL}/${teachersData?.video}`}} // Can be a URL or a local file.
-                    ref={playerRef} // Store reference
-                    // onBuffer={this.onBuffer} // Callback when remote video is buffering
-                    // onError={this.videoError} // Callback when video cannot be loaded
-                    style={styles.teacherVideo}
-                /> */}
-                <Text
-                    style={styles.text}
-                    text="No Data Present at the moment"
-                />
+                {teachersData?.video?.length > 0 ? (
+                    <View
+                        style={{
+                            height: WINDOW_HEIGHT * 0.25,
+                            width: WINDOW_WIDTH * 0.9,
+                            marginVertical: heightp(10),
+                        }}
+                    >
+                        <Vimeo
+                            videoId={vidId}
+                            params={'api=1&autoplay=0'}
+                            handlers={videoCallbacks}
+                        />
+                    </View>
+                ) : (
+                    <Text
+                        style={styles.text}
+                        text="No Data Present at the moment"
+                    />
+                )}
             </View>
             <View style={styles.borderContainer}>
                 <Text style={styles.header} text="Ratings and Comments" />
@@ -175,8 +230,8 @@ const TeacherProfile = () => {
                             <Text
                                 style={styles.ratingsText}
                                 text={
-                                    // rate?.from?.message &&
-                                    `${rate?.from?.message} Theres a message here but empty string with ${rate?.rate} rating`
+                                    rate?.from?.message &&
+                                    `${rate?.from?.message}`
                                 }
                             />
                         </View>
@@ -216,7 +271,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'rgba(0, 0, 0, 0.5)',
         borderBottomWidth: 1,
         minHeight: heightp(120),
-        marginVertical: heightp(20),
+        // marginVertical: heightp(5),
     },
     text: {
         textAlign: 'center',

@@ -10,48 +10,45 @@ import Step4 from './Step4'
 import I18n from 'i18n-js'
 
 export default function WelcomeStep() {
-  return (
-    <Screen>
-        <Swiper
-          
-          dot={
-            <View
-              style={{
-                backgroundColor: 'rgba(255,255,255,.3)',
-                width: 15,
-                height: 5,
-                borderRadius: 7,
-                marginLeft: 1,
-                marginRight: 1,
-borderWidth:1,
-borderColor:colors.dark,
-              }}
-            />
-          }
-          activeDot={
-            <View
-              style={{
-                backgroundColor: colors.dark,
-                width: 30,
-                height: 5,
-                borderRadius: 7,
-                marginLeft: 1,
-                marginRight: 1
-              }}
-            />
-          }
-          paginationStyle={{
-            bottom: 30,
-          }}
-          loop={false}
-        >
-          
-          <Step4 />
-          <Step3 />
-          <Step2 />
-          <Step1 />
-         
-        </Swiper>
-    </Screen>
-  )
+    return (
+        <Screen>
+            <Swiper
+                dot={
+                    <View
+                        style={{
+                            backgroundColor: 'rgba(255,255,255,.3)',
+                            width: 15,
+                            height: 5,
+                            borderRadius: 7,
+                            marginLeft: 1,
+                            marginRight: 1,
+                            borderWidth: 1,
+                            borderColor: colors.dark,
+                        }}
+                    />
+                }
+                activeDot={
+                    <View
+                        style={{
+                            backgroundColor: colors.dark,
+                            width: 30,
+                            height: 5,
+                            borderRadius: 7,
+                            marginLeft: 1,
+                            marginRight: 1,
+                        }}
+                    />
+                }
+                paginationStyle={{
+                    bottom: 30,
+                }}
+                loop={false}
+            >
+                <Step4 />
+                <Step3 />
+                <Step2 />
+                <Step1 />
+            </Swiper>
+        </Screen>
+    )
 }

@@ -7,7 +7,7 @@ import Lottie from './Lottie';
 import Toast from 'react-native-toast-message';
 function Screen({children, style}) {
   const {loadingSpinner} = useContext(AppContext);
-  const sourceLot = require('../assets/Lottie/rotating-dots-preloader.json');
+  const sourceLot = require('../assets/Lottie/green-dots-loader.json');
   return (
     <SafeAreaView style={[styles.screen, style]}>
       {!loadingSpinner && <View style={[styles.view, style]}>{children}</View>}

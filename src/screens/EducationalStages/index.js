@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { useNavigation, useRoute } from '@react-navigation/native';
+import I18n from 'i18n-js';
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Container, Text } from '../../components/common'
@@ -55,7 +56,7 @@ const EducationalStage = () => {
         {activeStage != null ? (
             <TouchableOpacity activeOpacity={0.7} style={styles.continueBtn} onPress={navigateSubjects}>
               <Text
-                text="NEXT"
+                text={I18n.t('Next')}
                 style={{
                   textAlign: 'center',
                   fontWeight: '600',
@@ -81,7 +82,8 @@ const styles = StyleSheet.create({
     height: heightp(45),
     justifyContent: 'center',
     borderRadius: 20,
-    marginTop: heightp(20)
+    marginTop: heightp(20),
+    marginBottom: heightp(25),
 },
 })
 

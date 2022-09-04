@@ -17,7 +17,7 @@ const English = {
     ContinueWithApple: 'Login with Apple',
 
     // Forgot Password
-    EnterYourEmailToRestYourPassword: 'Enter your Email to rest your Password',
+    EnterYourEmailToRestYourPassword: 'Enter your Email to reset your Password',
     SendVerificationCode: 'Send Verification Code',
 
     UserName: 'User Name',
@@ -62,7 +62,6 @@ const English = {
     // Subjects
     Students: 'Students',
     Hours: 'Hours',
-    Next: 'Next',
     Prev: 'Prev',
     Page: 'Page',
 
@@ -92,7 +91,6 @@ const English = {
 
     // Teachers
     Courses: 'Courses',
-    Students: 'Students',
     Stars: 'Stars',
 
     // Messages
@@ -166,6 +164,21 @@ const English = {
     //-----------Errors-----------------------------
     userLoggedOut: 'This Account is Logged in from another Device.',
     appUpdate: 'kindly update mobile application to be able to use it',
+
+    // New Translation
+    Calendar: "Calendar",
+    MeasurementQuiz: "Measurement Quiz",
+    MeasurementTestResult: "Measurement Test Result",
+    JointCourses: "Joint Courses",
+    Settings: "Settings",
+    WhoWeAre: "Who we are",
+    DeleteMembership: "Delete Membership",
+    Exit: "Exit",
+    TimeOfSubject: "Time of Subject",
+    NoOfStudents: "No of Students",
+    Download: "Download",
+    LessonProgress: "Lesson Progress"
+
 }
 
 export default English

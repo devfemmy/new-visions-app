@@ -30,7 +30,7 @@ const SubjectCard = ({contents, uri, duration, numberOfStudents, pressed}) => {
       // elevation: 5,
     },
     textAlign: {
-      
+      textAlign: 'left',
     }
   })
   return (

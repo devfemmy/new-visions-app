@@ -41,6 +41,8 @@ import Settings from '../screens/Settings'
 import WhoWeAre from '../screens/WhoWeAre'
 import DeleteMembership from '../screens/DeleteMembership'
 import Exit from '../screens/Exit'
+import PackagesStage from '../screens/Packages/PackagesStage'
+import MultiPackagesStage from '../screens/MultiPackages/MultiPackagesStage'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -251,36 +253,57 @@ export const PostLoginNavigator = () => {
                     headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
                 }}
             />
+            <MainStack.Screen
+                name="PackagesStage"
+                component={PackagesStage}
+                options={{
+                    title: I18n.t('EducationalLevel'),
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
+            />
 
-<MainStack.Screen
-        name="MultiPackagesList"
-        component={MultiPackagesList}
-        options={{
-          title: I18n.t('MultiPackages'),
-          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
-        }}
-      />
+            <MainStack.Screen
+                name="MultiPackagesList"
+                component={MultiPackagesList}
+                options={{
+                    title: I18n.t('MultiPackages'),
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
+            />
 
-<MainStack.Screen
-        name="MultiPackageDetails"
-        component={MultiPackageDetails}
-        options={{
-          title: I18n.t('Details'),
-          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
-        }}
-      />
-      <MainStack.Screen
-       options={{
-          title: I18n.t("Subscriptions"),
-          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
-        }}
-        name={"Subscriptions"} component={Subscriptions} />
-      <MainStack.Screen
-       options={{
-          title: I18n.t("Attendace"),
-          headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
-        }}
-         name={"Attendance"} component={Attendance} />			   
-    </MainStack.Navigator>
-  );
+            <MainStack.Screen
+                name="MultiPackagesStage"
+                component={MultiPackagesStage}
+                options={{
+                    title: I18n.t('EducationalLevel'),
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
+            />
+
+            <MainStack.Screen
+                name="MultiPackageDetails"
+                component={MultiPackageDetails}
+                options={{
+                    title: I18n.t('Details'),
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
+            />
+            <MainStack.Screen
+                options={{
+                    title: I18n.t('Subscriptions'),
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
+                name={'Subscriptions'}
+                component={Subscriptions}
+            />
+            <MainStack.Screen
+                options={{
+                    title: I18n.t('Attendace'),
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
+                name={'Attendance'}
+                component={Attendance}
+            />
+        </MainStack.Navigator>
+    )
 }

@@ -13,7 +13,6 @@ import i18n from 'i18n-js'
 import { TextInput } from 'react-native-paper'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { heightp } from '../../utils/responsiveDesign'
-import OTPInputView from '@twotalltotems/react-native-otp-input'
 import colors from '../../helpers/colors'
 import defaultStyles from '../../helpers/styles'
 import { StackActions } from '@react-navigation/native'
@@ -167,29 +166,24 @@ export default function VerifyConfirmPassword({ route, navigation }) {
                             // width: '90%',
                         }}
                     >
-                        <OTPInputView
-                            pinCount={6}
+                        <TextInput
+                            activeUnderlineColor="#fff"
                             style={{
-                                width: '100%',
-                                height: 50,
+                                marginHorizontal: 10,
                                 marginBottom: 50,
-                            }}
-                            codeInputFieldStyle={{
-                                width: 50,
                                 height: 50,
-                                borderRadius: 7,
-                                backgroundColor: colors.gray,
-                                color: colors.primary,
-                                fontFamily: defaultStyles.text.fontFamily,
-                                fontSize: 18,
-                                fontStyle: 'normal',
-                                fontWeight: 'bold',
+                                backgroundColor: '#fff',
+                                opacity: 1,
+                                borderBottomColor: 'white',
+                                width: '100%',
                             }}
-                            keyboardType="default"
-                            onCodeFilled={(code) => {
-                                console.log(code)
-                                onChangeCode(code)
-                            }}
+                            keyboardType="decimal-pad"
+                            returnKeyType="done"
+                            onChangeText={onChangeCode}
+                            value={CodeInput}
+                            right={
+                                <TextInput.Icon color="white" name="phone" />
+                            }
                         />
                     </View>
                     <View
