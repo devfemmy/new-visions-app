@@ -66,6 +66,7 @@ const Teachers = () => {
                             pressed={() => navigateSubjectsDetails(item)}
                             city={item?.city?.name}
                             gender={item?.gender}
+                            ratings={item?.avg_rating.length === 0 ? null : item?.avg_rating[0].rateAVG}
                             uri={`${IMAGEURL}/${item?.image}`}
                             contents={`${item?.first_name} ${item?.last_name}`}
                         />

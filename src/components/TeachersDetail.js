@@ -20,6 +20,7 @@ const TeachersDetailCard = ({
     lessonPrice,
     numberOfStudents,
     viewProfile,
+    ratings,
     bookCourse,
     subjectCalendar,
     bookPrivateLesson,
@@ -39,6 +40,7 @@ const TeachersDetailCard = ({
         textAlign: {
             fontWeight: 'bold',
             textAlign: 'left',
+
             // textTransform: 'uppercase'
         },
         lowerContainer: {
@@ -112,16 +114,32 @@ const TeachersDetailCard = ({
                             }
                         />
                     ) : (
-                        <IconText
-                            text={gender && gender === 1 ? 'Male' : 'Female'}
-                            children={
-                                <Ionicons
-                                    name="ios-person"
-                                    size={20}
-                                    color={colors.primary}
-                                />
-                            }
-                        />
+                        <View>
+                            <IconText
+                                text={
+                                    gender && gender === 1 ? 'Male' : 'Female'
+                                }
+                                children={
+                                    <Ionicons
+                                        name="ios-person"
+                                        size={20}
+                                        color={colors.primary}
+                                    />
+                                }
+                            />
+                            <IconText
+                                text={ratings && ratings}
+                                children={
+                                    ratings && (
+                                        <Ionicons
+                                            name="ios-star"
+                                            size={20}
+                                            color={colors.primary}
+                                        />
+                                    )
+                                }
+                            />
+                        </View>
                     )}
                     {subjectDetails ? (
                         <IconText
@@ -138,15 +156,17 @@ const TeachersDetailCard = ({
                         <IconText
                             text={city && city}
                             children={
-                                <Ionicons
-                                    name={
-                                        subjectDetails
-                                            ? 'ios-pricetag'
-                                            : 'ios-home'
-                                    }
-                                    size={20}
-                                    color={colors.primary}
-                                />
+                                city && (
+                                    <Ionicons
+                                        name={
+                                            subjectDetails
+                                                ? 'ios-pricetag'
+                                                : 'ios-home'
+                                        }
+                                        size={20}
+                                        color={colors.primary}
+                                    />
+                                )
                             }
                         />
                     )}
