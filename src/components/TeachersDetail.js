@@ -13,7 +13,7 @@ import colors from '../helpers/colors';
 
 const TeachersDetailCard = ({contents, title,
    uri, gender, city,lessonPrice,numberOfStudents, 
-   viewProfile,
+   viewProfile,ratings,
    bookCourse,subjectCalendar,bookPrivateLesson,
   pressed, subjectDetails}) => {
   const styles = StyleSheet.create({
@@ -29,6 +29,7 @@ const TeachersDetailCard = ({contents, title,
     textAlign: {
       fontWeight: 'bold',
       textAlign: 'left',
+
       // textTransform: 'uppercase'
     },
     lowerContainer: {
@@ -78,11 +79,16 @@ const TeachersDetailCard = ({contents, title,
         <Text numberOfLines={1} style={styles.textAlign} text={title && title} />
         {subjectDetails ? 
           <IconText text={numberOfStudents && `${numberOfStudents} students`} children={<Ionicons name="ios-people" size={20} color={colors.primary} />} />:
-          <IconText text={gender && gender === 1 ? 'Male' : 'Female'} children={<Ionicons name="ios-person" size={20} color={colors.primary} />} /> 
+          (
+            <View>
+              <IconText text={gender && gender === 1 ? 'Male' : 'Female'} children={<Ionicons name="ios-person" size={20} color={colors.primary} />} /> 
+              <IconText text={ratings && ratings} children={ratings &&<Ionicons name="ios-star" size={20} color={colors.primary} />} /> 
+            </View>
+          )
       }
     {subjectDetails ? 
           <IconText text={lessonPrice && `${lessonPrice} SAR`} children={<Ionicons name="ios-pricetag" size={20} color={colors.primary} />} />:
-          <IconText text={city && city} children={<Ionicons name={subjectDetails ? "ios-pricetag" : "ios-home"} size={20} color={colors.primary} />} />
+          <IconText text={city && city} children={city && <Ionicons name={subjectDetails ? "ios-pricetag" : "ios-home"} size={20} color={colors.primary} />} />
       }
       </View>
     </Pressable>

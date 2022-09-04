@@ -54,14 +54,18 @@ const Teachers = () => {
               data={searchFilteredData}
               showsVerticalScrollIndicator={false}
               onEndReachedThreshold={0.5}
-              renderItem={({item}) => (
-                <TeachersDetailCard 
-                pressed={() => navigateSubjectsDetails(item)}
-                city={item?.city?.name} 
-                gender={item?.gender} 
-                uri={`${IMAGEURL}/${item?.image}`} 
-                contents={`${item?.first_name} ${item?.last_name}`} />
-            )}
+              renderItem={({item}) => {
+                return (
+                  <TeachersDetailCard 
+                  pressed={() => navigateSubjectsDetails(item)}
+                  city={item?.city?.name} 
+                  ratings={item?.avg_rating.length === 0 ? null : item?.avg_rating[0].rateAVG}
+                  gender={item?.gender} 
+                  uri={`${IMAGEURL}/${item?.image}`} 
+                  contents={`${item?.first_name} ${item?.last_name}`} />
+              )
+              }
+          }
             />
           </View>
       </Container>
