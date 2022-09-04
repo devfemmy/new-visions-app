@@ -28,6 +28,7 @@ const TeachersDetailCard = ({contents, title,
     },
     textAlign: {
       fontWeight: 'bold',
+      textAlign: 'left',
       // textTransform: 'uppercase'
     },
     lowerContainer: {
@@ -89,11 +90,11 @@ const TeachersDetailCard = ({contents, title,
   <View style={[styles.lowerContainer]}>
     <View style={globalStyles.rowBetween}>
       <Pressable onPress={viewProfile} style={globalStyles.subBtn2}>
-        <Text style={globalStyles.btnColor} text="View Profile" />
+        <Text style={globalStyles.btnColor} text={I18n.t('BookOneLesson')} />
       </Pressable>
-      <Pressable onPress={subjectCalendar} style={globalStyles.subBtn}>
+      {/* <Pressable onPress={subjectCalendar} style={globalStyles.subBtn}>
         <Text style={globalStyles.btnColor} text="Subject Calendar" />
-      </Pressable>
+      </Pressable> */}
     </View>
     <Pressable onPress={bookPrivateLesson} style={styles.bookBtn}>
         <Text style={styles.textWhite} text={I18n.t('BookOneLesson')} />

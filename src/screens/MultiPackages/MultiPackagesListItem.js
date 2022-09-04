@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
         fontSize:heightp(16),
         fontWeight:'700',
         fontFamily:'Cairo',
+        textAlign: 'left'
         // lineHeight: heightp(24)
     },
     itemBtn:{
