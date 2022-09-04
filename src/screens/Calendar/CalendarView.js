@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import Modal from "react-native-modal";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import I18n from 'i18n-js';
 import { heightp } from '../../utils/responsiveDesign'
 import { globalStyles } from '../../helpers/globalStyles'
 import IconText from '../../components/IconText';
@@ -20,13 +21,11 @@ export default function CalendarView({text, data}) {
   const [statusInfo, setStatusInfo] = useState('');
   const [itemDetails, setItemDetails] = useState({});
   const checkStatus = async (item) => {
-    console.log('CLICKED')
     setLoading(true);
     const payload = {
       id: item?.id.toString(),
       type: item?.type.toString()
     }
-    console.log(payload, 'payload')
     try {
       const res = await HomePageService.checkLive(payload);
       setItemDetails(item);
@@ -111,7 +110,7 @@ export default function CalendarView({text, data}) {
               keyboardShouldPersistTaps="handled"
               contentContainerStyle={styles.flatlistContent}
               ListEmptyComponent={() =>  <View style={styles.noData}>
-                <Text style={styles.noClass} text="There are no classes" />
+                <Text style={styles.noClass} text={I18n.t('Parent')} />
               </View>}
               data={data}
               showsVerticalScrollIndicator={false}

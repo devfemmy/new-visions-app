@@ -198,8 +198,14 @@ const English = {
     NoData: 'No Data',
     Welcome: 'Welcome',
     SearchTeachers: 'Search Teachers',
+    SearchSubjects: 'Search Subjects',
     Bio: 'Bio',
     RatingsAndComments: 'Ratings and Comments',
+    NoClasses: 'There are no Classes',
+    SubjectTeachers: 'Subject Teachers',
+    UnavailableTeacher: 'No Teacher Available',
+    ChooseDay: 'Choose the lesson',
+    ChooseClass: 'Choose the class'
 }
 
 export default English

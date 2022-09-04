@@ -103,7 +103,7 @@ const TeachersDetailCard = ({
                         <IconText
                             text={
                                 numberOfStudents &&
-                                `${numberOfStudents} students`
+                                `${numberOfStudents} ${I18n.t('Students')}`
                             }
                             children={
                                 <Ionicons
@@ -143,7 +143,7 @@ const TeachersDetailCard = ({
                     )}
                     {subjectDetails ? (
                         <IconText
-                            text={lessonPrice && `${lessonPrice} SAR`}
+                            text={lessonPrice && `${lessonPrice} ${I18n.t('SAR')}`}
                             children={
                                 <Ionicons
                                     name="ios-pricetag"

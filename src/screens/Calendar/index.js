@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Container, SafeAreaView, Text } from '../../components/common'
 import { Loader } from '../../components/Loader';
 import { AppContext } from '../../context/AppState';
@@ -44,7 +44,7 @@ const Calendar = () => {
   return (
       <Container>
         <Loader visible={loading} /> 
-      <View>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {daysOfWeek?.map((item, index) => {
           const specialIndex = `${index + 1}`;
           let  calendarArray;
@@ -57,7 +57,7 @@ const Calendar = () => {
             <CalendarView data={calendarArray} key={index} text={item} />
           )
         })}
-      </View>
+      </ScrollView>
     </Container>
   )
 };

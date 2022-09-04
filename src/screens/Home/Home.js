@@ -252,6 +252,7 @@ const Home = () => {
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => {
                             const uri = `${IMAGEURL}/${item.image}`
+                            console.log('itemmss', item)
                             return (
                                 <TeachersCard
                                     pressed={() => navigateTeacherProfile(item)}
