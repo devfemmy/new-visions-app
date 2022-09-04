@@ -8,10 +8,15 @@ import HomePageService from '../../services/userServices';
 import CalendarView from './CalendarView';
 
 const Calendar = () => {
-  const daysOfWeek = ["SAT", "SUN", "MON", "TUES", "WED", "THUR", "FRI"];
+  const { onLogout, lang} = useContext(AppContext);
+  let daysOfWeek;
+  if (lang === 'ar') {
+    daysOfWeek = ["السبت", "الاحد", "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة"]
+  }else {
+    daysOfWeek = ["SAT", "SUN", "MON", "TUES", "WED", "THUR", "FRI"];
+  }
   const [calendarData, setCalendarData] = useState([])
   const [loading, setLoading] = useState(false);
-  const { onLogout} = useContext(AppContext);
 
   useEffect(() => {
     // get Notification

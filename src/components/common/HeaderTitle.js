@@ -14,14 +14,16 @@ import { AppContext } from '../../context/AppState';
 
 
 const HeaderTitle = ({text, icon, pressed}) => {
-  const { changeLang, lang, showLoadingSpinner } = useContext(AppContext);
-  console.log(lang, 'lang')
+  const {lang} = useContext(AppContext);
   return (
     <View style={[globalStyles.rowBetween, styles.centered]}>
       <Text style={styles.headerText} fontSize={heightp(13)} text={text} />
       <View style={[globalStyles.rowCenter, styles.lowerBox]}>
         <Text onPress={pressed} style={styles.text}  fontSize={heightp(13)} text={i18n.t('SeeAll')} />
-        <ArabIcon width={15} height={15}/>
+        {lang === 'ar' ? 
+        <ArabIcon width={15} height={15}/> : 
+        <ArrowIcon width={15} height={15}/>
+      }
       </View>
     </View>
   );

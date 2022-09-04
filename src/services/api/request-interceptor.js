@@ -7,7 +7,7 @@ export const reqInterceptor = async (req) => {
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
     req.headers.version = '2';
-    req.headers.lang = 'en';
+    req.headers.lang = 'ar';
 
   }
   // req.headers['content-type'] = 'application/json';

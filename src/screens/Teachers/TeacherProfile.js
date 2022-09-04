@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: 'bold',
         fontSize: heightp(18),
+        textAlign: 'left'
     },
     header: {
         fontWeight: 'bold',
