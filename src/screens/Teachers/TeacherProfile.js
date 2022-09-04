@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     ratingsName: {
         color: colors.black,
         fontSize: heightp(12),
+        textAlign: 'left'
     },
     ratingsText: {
         color: colors.black,
