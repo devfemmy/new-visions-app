@@ -213,7 +213,11 @@ const Arabic = {
     SubjectTeachers: 'معلمين المادة',
     UnavailableTeacher: 'لا يوجد معلمين',
     ChooseDay: 'اختر اليوم',
-    ChooseClass: 'اختر الدرس'
+    ChooseClass: 'اختر الدرس',
+    ViewProfile: 'عرض الصفحة الشخصية',
+    Edit: 'يحرر',
+    EditProfile: 'تعديل الملف الشخصي',
+    Save: 'يحفظ',
 }
 
 export default Arabic

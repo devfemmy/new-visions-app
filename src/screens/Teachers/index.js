@@ -1,7 +1,14 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import {
+    FlatList,
+    StyleSheet,
+    View,
+    Pressable,
+    ActivityIndicator,
+    Text as RNText,
+} from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
 import TeachersDetailCard from '../../components/TeachersDetail'
@@ -17,6 +24,7 @@ const Teachers = () => {
     const navigation = useNavigation()
     const [searchText, setSearchText] = useState()
     const route = useRoute()
+    const [isLoading, setIsLoading] = useState('')
     // const { level } = route.params;
     // const data = useAppSelector((state)=> console.log(state, 'hello'));
     const {
@@ -25,7 +33,8 @@ const Teachers = () => {
     } = useAppSelector((state) => state)
     const teachersData = teachersPage?.teachersData
     useEffect(() => {
-        dispatch(getTeachers())
+        const res = dispatch(getTeachers())
+        console.log('res', res)
     }, [dispatch])
 
     const navigateSubjectsDetails = useCallback(
@@ -43,6 +52,47 @@ const Teachers = () => {
           )
         : teachersData?.data
 
+    const fetchTeachers = async () => {
+        console.log('here to fetch')
+        setIsLoading(true)
+        dispatch(getTeachers())
+        // console.log('res', res)
+        // if (res.requestId.length > 0) {
+        setIsLoading(false)
+        // }
+    }
+
+    const renderFooter = () => {
+        return (
+            <View
+                style={{
+                    marginBottom: heightp(60),
+                }}
+            >
+                <View style={styles.footer}>
+                    <Pressable
+                        activeOpacity={0.9}
+                        onPress={() => {
+                            fetchTeachers()
+                        }}
+                        style={styles.loadMoreBtn}
+                    >
+                        <RNText style={styles.btnText}>
+                            {isLoading ? 'Loading...' : 'Load More'}
+                        </RNText>
+                        {isLoading ? (
+                            <ActivityIndicator
+                                color="white"
+                                size="small"
+                                style={{ marginLeft: 8 }}
+                            />
+                        ) : null}
+                    </Pressable>
+                </View>
+            </View>
+        )
+    }
+
     return (
         <Container>
             <View style={{ marginBottom: 15 }}>
@@ -58,18 +108,28 @@ const Teachers = () => {
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
                     ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
+                    ListFooterComponent={renderFooter}
                     data={searchFilteredData}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => (
-                        <TeachersDetailCard
-                            pressed={() => navigateSubjectsDetails(item)}
-                            city={item?.city?.name}
-                            gender={item?.gender}
-                            ratings={item?.avg_rating.length === 0 ? null : item?.avg_rating[0].rateAVG}
-                            uri={`${IMAGEURL}/${item?.image}`}
-                            contents={`${item?.first_name} ${item?.last_name}`}
-                        />
+                        <>
+                            {/* <>{console.log(item)}</> */}
+                            <TeachersDetailCard
+                                // subjectDetails
+                                pressed={() => navigateSubjectsDetails(item)}
+                                city={item?.city?.name}
+                                gender={item?.gender}
+                                rates_count={item?.rates_count}
+                                ratings={
+                                    item?.avg_rating.length === 0
+                                        ? null
+                                        : item?.avg_rating[0].rateAVG
+                                }
+                                uri={`${IMAGEURL}/${item?.image}`}
+                                contents={`${item?.first_name} ${item?.last_name}`}
+                            />
+                        </>
                     )}
                 />
             </View>
@@ -82,6 +142,25 @@ const styles = StyleSheet.create({
     },
     containerFlex: {
         marginBottom: heightp(20),
+    },
+    footer: {
+        // paddingVertical: heightp(10),
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    loadMoreBtn: {
+        padding: 7.5,
+        backgroundColor: 'rgba(155, 186, 82, 1)',
+        borderRadius: 4,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btnText: {
+        color: 'white',
+        fontSize: 12,
+        textAlign: 'center',
     },
 })
 

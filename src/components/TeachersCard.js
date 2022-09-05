@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image'
 import { heightp, widthp } from '../utils/responsiveDesign'
 import { Text } from './common'
 const defaultUri = require('../assets/img/default-profile-picture.jpeg')
+import { Rating, AirbnbRating } from 'react-native-ratings'
 
 const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
     <Pressable onPress={pressed}>
@@ -14,7 +15,6 @@ const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
                 { height: image === null && heightp(90) },
             ]}
         >
-            <>{console.log(image)}</>
             <FastImage
                 style={{
                     width: image === null ? heightp(80) : heightp(121),
@@ -35,7 +35,34 @@ const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
         <View style={styles.lowerContainer}>
             <Text numberOfLines={1} style={styles.textColor} text={text} />
             <Text numberOfLines={1} style={styles.textColor} text={lastName} />
-            <Text numberOfLines={1} style={styles.textColor} text={ratings && ratings} />
+            {/* <Text
+                numberOfLines={1}
+                style={styles.textColor}
+                text={ratings && ratings}
+            /> */}
+            <AirbnbRating
+                size={12}
+                imageSize={10}
+                defaultRating={ratings ? ratings : 0}
+                reviews={
+                    [
+                        // 'Terrible',
+                        // 'Bad',
+                        // 'Okay',
+                        // 'Swift & quick pickup',
+                        // 'Excellent',
+                    ]
+                }
+                reviewSize={10}
+                type="star"
+                ratingColor="#3498db"
+                ratingContainerStyle={{
+                    flexDirection: 'row',
+                    backgroundColor: 'inherit',
+                    height: '40%',
+                    paddingRight: heightp(12),
+                }}
+            />
         </View>
     </Pressable>
 )

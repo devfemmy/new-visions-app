@@ -1,25 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getTeachers } from "../action";
-
+import { createSlice } from '@reduxjs/toolkit'
+import { getTeachers } from '../action'
 
 const initialState = {
-  teachersData: null,
-};
+    teachersData: null,
+}
 
 const teachersPageSlice = createSlice({
-  name: "teachersPageSlice",
-  initialState,
-  reducers: {
-  },
-  extraReducers: {
-    [getTeachers.fulfilled]: (state, { payload }) => {
-      state.teachersData = payload.data;
+    name: 'teachersPageSlice',
+    initialState,
+    reducers: {},
+    extraReducers: {
+        [getTeachers.fulfilled]: (state, { payload }) => {
+            state.teachersData = payload.data
+        },
     },
+})
 
-  },
-});
+const { reducer } = teachersPageSlice
 
-const { reducer } = teachersPageSlice;
-
-
-export default reducer;
+export default reducer

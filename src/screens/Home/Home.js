@@ -17,7 +17,7 @@ import HomePageService from '../../services/userServices'
 import Global from '../../../Global'
 import { AppContext } from '../../context/AppState'
 import axios from 'axios'
-const defaultUri = require('../../assets/img/packages.jpg')
+const defaultUri = require('../../assets/img/HOME_BG_NEW.jpg')
 
 const Home = () => {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
@@ -252,11 +252,16 @@ const Home = () => {
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => {
                             const uri = `${IMAGEURL}/${item.image}`
+                            console.log('Loading teacgerrrrrrrrrr', item)
                             return (
                                 <TeachersCard
                                     pressed={() => navigateTeacherProfile(item)}
                                     uri={uri}
-                                    ratings={item?.avg_rating.length === 0 ? null : item?.avg_rating[0].rateAVG}
+                                    ratings={
+                                        item?.avg_rating.length === 0
+                                            ? null
+                                            : item?.avg_rating[0].rateAVG
+                                    }
                                     lastName={item.last_name}
                                     text={item.first_name}
                                     image={item.image}

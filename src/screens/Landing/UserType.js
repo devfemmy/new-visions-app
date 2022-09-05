@@ -19,6 +19,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Global from '../../../Global'
 import Toast from 'react-native-toast-message'
+import { heightp } from '../../utils/responsiveDesign'
 
 export default function UserType({ navigation }) {
     const { changeLang, lang, showLoadingSpinner } = useContext(AppContext)
@@ -30,7 +31,7 @@ export default function UserType({ navigation }) {
     const stepOneClicked = () => {
         //alert(Global.UserType);
         if (focusPar === true || focusSt === true) {
-            navigation.navigate('WelcomeStep')
+            navigation.navigate('Login')
         } else {
             Toast.show({
                 text1: 'Select Type',
@@ -40,7 +41,7 @@ export default function UserType({ navigation }) {
         }
     }
     return (
-        <Screen style={{ height: '100%' }}>
+        <View style={styles.container}>
             <ImageBackground
                 source={require('../../assets/img/BG-Dark.png')}
                 style={styles.backgroundImage}
@@ -187,10 +188,11 @@ export default function UserType({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
-        </Screen>
+        </View>
     )
 }
 const styles = StyleSheet.create({
+    container: { flex: 1, height: '100%' },
     screen: {
         flex: 1,
         justifyContent: 'space-between',
@@ -238,6 +240,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 0,
+        paddingTop: heightp(20),
     },
     lang: {
         margin: 20,

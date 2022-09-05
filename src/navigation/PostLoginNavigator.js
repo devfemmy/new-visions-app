@@ -43,6 +43,7 @@ import DeleteMembership from '../screens/DeleteMembership'
 import Exit from '../screens/Exit'
 import PackagesStage from '../screens/Packages/PackagesStage'
 import MultiPackagesStage from '../screens/MultiPackages/MultiPackagesStage'
+import EditProfile from '../screens/Parent/EditProfile'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -242,6 +243,14 @@ export const PostLoginNavigator = () => {
                 options={{
                     title: 'Profile',
                     headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
+            />
+            <MainStack.Screen
+                name="EditProfile"
+                component={EditProfile}
+                options={{
+                    title: I18n.t('EditProfile'),
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
                 }}
             />
 

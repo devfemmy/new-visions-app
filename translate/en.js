@@ -206,7 +206,11 @@ const English = {
     SubjectTeachers: 'Subject Teachers',
     UnavailableTeacher: 'No Teacher Available',
     ChooseDay: 'Choose the lesson',
-    ChooseClass: 'Choose the class'
+    ChooseClass: 'Choose the class',
+    ViewProfile: 'View profile',
+    Edit: 'Edit',
+    EditProfile: 'Edit Profile',
+    Save: 'Save',
 }
 
 export default English
