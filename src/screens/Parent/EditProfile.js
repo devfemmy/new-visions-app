@@ -151,11 +151,19 @@ class EditProfile extends Component {
     uploadAvatar = async (photo) => {
         let { firstname, lastname, phone, email, avatarUrl, toggleTypePicker } =
             this.state
-        this.setState({ loading: true })
+        console.log(
+            'uploadAvatar',
+            firstname,
+            lastname,
+            phone,
+            email,
+            avatarUrl
+        )
+        // this.setState({ loading: true })
 
         console.log('<<<PHOTO>>>', photo)
         const data = new FormData()
-        data.append('image', photo)
+        data.append('image', photo ? photo : avatarUrl)
         data.append('first_name', firstname)
         data.append('last_name', lastname)
         data.append('email', email)
@@ -163,13 +171,13 @@ class EditProfile extends Component {
         const res = updateProfile(data)
 
         console.log('res', res)
-        if (res === 200) {
-            this.setState({ loading: false })
-        } else if (!res) {
-            this.setState({ loading: false })
-        } else {
-            this.setState({ loading: false })
-        }
+        // if (res === 200) {
+        //     this.setState({ loading: false })
+        // } else if (!res) {
+        //     this.setState({ loading: false })
+        // } else {
+        //     this.setState({ loading: false })
+        // }
     }
 
     getSession = async () => {

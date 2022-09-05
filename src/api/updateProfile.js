@@ -46,14 +46,22 @@ export const updateProfile = ({ data }) => {
                 // console.log(BroadcastData);
             } else if (response.data.code === -2) {
                 alert(response.data.message)
-                console.log('<<<<<<<<<<DATA>>>>>>>>>>>>>>')
+                console.log(
+                    '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
+                    response.data.message
+                )
+                return response.data.code
             } else if (response.data.code !== 200) {
                 console.log('request failed')
                 console.log(response.data)
+                return response.data.code
+
                 // console.log(JSON.stringify(response.data.message));
             } else {
                 console.log(response)
+                return response.data.code
             }
+            return response.data.code
         })
         .catch((error) => {
             alert(error)
