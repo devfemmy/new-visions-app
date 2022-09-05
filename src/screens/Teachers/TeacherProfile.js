@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import { useRoute } from '@react-navigation/native'
 import React, { useEffect, useState, useRef } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text as RNText } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Rating, AirbnbRating } from 'react-native-ratings'
@@ -16,7 +16,7 @@ import { heightp } from '../../utils/responsiveDesign'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
 import { Vimeo } from 'react-native-vimeo-iframe'
 import I18n from 'i18n-js'
-// import Video from 'react-native-video'
+import * as Progress from 'react-native-progress'
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
 const TeacherProfile = () => {
@@ -26,6 +26,7 @@ const TeacherProfile = () => {
     const [teachersData, setTeachersData] = useState({})
     const [VideoUrl, setVideoUrl] = useState('')
     const [vidId, setVideoId] = useState('')
+    const [rateArray, setRateArray] = useState('')
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -38,6 +39,15 @@ const TeacherProfile = () => {
                 const data = res?.data
                 // setLoading(false)
                 setTeachersData(data)
+                const arrayResult = Object.keys(data?.rate_numbers).map(
+                    (room) => {
+                        return { id: room, val: data?.rate_numbers[room] }
+                    }
+                )
+                setRateArray(arrayResult)
+                console.log('wwwwwwwwww data', data?.rate_numbers)
+                console.log('wwwwwwwwww data', arrayResult)
+
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                 // fetchVideoLink(id)
                 setVideoId(id)
@@ -87,7 +97,15 @@ const TeacherProfile = () => {
     }
 
     return (
-        <Container>
+        <Container
+            contentContainerStyle={
+                {
+                    // flexGrow: 2,
+                    // backgroundColor: '#f0f',
+                    // paddingBottom: heightp(1000),
+                }
+            }
+        >
             <View style={[styles.container, globalStyles.rowBetween]}>
                 <FastImage
                     style={{
@@ -132,13 +150,115 @@ const TeacherProfile = () => {
                     </View>
                 </View>
             </View>
+            <View
+                style={[
+                    styles.borderContainer,
+                    { minHeight: WINDOW_HEIGHT * 0.125 },
+                ]}
+            >
+                <View
+                    style={{
+                        height: WINDOW_HEIGHT * 0.125,
+                        width: WINDOW_WIDTH * 0.9,
+                        flexDirection: 'row',
+                    }}
+                >
+                    <View
+                        style={{
+                            width: '40%',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <RNText
+                            style={[
+                                styles.header,
+                                {
+                                    textAlign: 'center',
+                                    fontSize: heightp(32),
+                                },
+                            ]}
+                        >
+                            {teachersData?.rates_count?.toFixed(1)}
+                        </RNText>
+                        <AirbnbRating
+                            size={16}
+                            imageSize={17}
+                            defaultRating={teachersData?.rates_count}
+                            reviews={
+                                [
+                                    // 'Terrible',
+                                    // 'Bad',
+                                    // 'Okay',
+                                    // 'Swift & quick pickup',
+                                    // 'Excellent',
+                                ]
+                            }
+                            reviewSize={10}
+                            type="star"
+                            ratingColor="#3498db"
+                            ratingContainerStyle={{
+                                flexDirection: 'row',
+                                backgroundColor: 'inherit',
+                                // height: '40%',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                paddingRight: heightp(12),
+                            }}
+                        />
+                    </View>
+                    <View
+                        style={{
+                            width: '60%',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {rateArray.length > 0 ? (
+                            rateArray.map((rate) => (
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                    key={rate.id}
+                                >
+                                    <RNText
+                                        style={[
+                                            styles.header,
+                                            {
+                                                textAlign: 'center',
+                                                fontSize: heightp(12),
+                                                paddingHorizontal: heightp(10),
+                                            },
+                                        ]}
+                                    >
+                                        {rate.id}
+                                    </RNText>
+                                    <Progress.Bar
+                                        progress={rate.val}
+                                        width={150}
+                                        color={colors.primary}
+                                    />
+                                </View>
+                            ))
+                        ) : (
+                            <Text
+                                style={styles.text}
+                                text="No Ratings Present at the moment"
+                            />
+                        )}
+                    </View>
+                </View>
+            </View>
             <View style={styles.borderContainer}>
                 {teachersData?.video?.length > 0 ? (
                     <View
                         style={{
-                            height: WINDOW_HEIGHT * 0.35,
+                            height: WINDOW_HEIGHT * 0.30,
                             width: WINDOW_WIDTH * 0.9,
-                            marginVertical: heightp(10),
                         }}
                     >
                         <Vimeo
@@ -154,7 +274,14 @@ const TeacherProfile = () => {
                     />
                 )}
             </View>
-            <View style={styles.borderContainer}>
+            <View
+                style={[
+                    styles.borderContainer,
+                    {
+                        paddingBottom: heightp(500),
+                    },
+                ]}
+            >
                 <Text
                     style={[
                         styles.header,
@@ -199,6 +326,7 @@ const TeacherProfile = () => {
                                         }
                                     />
                                 </View>
+                                <>{console.log('yessss', rate?.rate)}</>
                                 <AirbnbRating
                                     size={12}
                                     imageSize={10}

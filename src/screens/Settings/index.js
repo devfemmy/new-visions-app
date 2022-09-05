@@ -113,6 +113,33 @@ const Settings = () => {
                     )}
                 </View>
             </Pressable>
+            <Pressable
+                style={styles.modalDetails}
+                onPress={() => {
+                    Linking.openURL('https://newvisions.sa/contact_us')
+                }}
+            >
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        width: WINDOW_WIDTH * 0.8,
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginVertical: 10,
+                        paddingHorizontal: 20,
+                    }}
+                >
+                    <Ionicons name={'call'} size={20} color={colors.primary} />
+                    <RNText style={styles.detailCategory}>
+                        {I18n.t('ContactUs')}{' '}
+                    </RNText>
+                    {lang === 'ar' ? (
+                        <ArabIcon width={15} height={15} />
+                    ) : (
+                        <ArrowIcon width={15} height={15} />
+                    )}
+                </View>
+            </Pressable>
         </View>
     )
 }
