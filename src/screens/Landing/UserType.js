@@ -18,11 +18,12 @@ import { AppContext } from '../../context/AppState'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Global from '../../../Global'
-import Toast from 'react-native-toast-message'
 import { heightp } from '../../utils/responsiveDesign'
+import Toast from 'react-native-toast-message'
 
 export default function UserType({ navigation }) {
-    const { changeLang, lang, showLoadingSpinner } = useContext(AppContext)
+    const { changeLang, lang, showLoadingSpinner } =
+        useContext(AppContext)
     console.log(`UserType`, lang)
     const langTo = lang === 'ar' ? 'en' : 'ar'
     const [focusSt, setFocusSt] = useState(false)
@@ -41,154 +42,159 @@ export default function UserType({ navigation }) {
         }
     }
     return (
-        <View style={styles.container}>
-            <ImageBackground
-                source={require('../../assets/img/BG-Dark.png')}
-                style={styles.backgroundImage}
-            >
-                <View style={styles.screen}>
-                    <TouchableOpacity
-                        style={styles.touchLang}
-                        onPress={() => {
-                            changeLang(langTo)
-                            console.log(
-                                'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx langTo xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                langTo
-                            )
-                        }}
-                    >
-                        <View style={styles.lang}>
-                            <Text style={styles.langText}>
-                                {I18n.t('Language')}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <View style={styles.content}>
-                        <Image
-                            style={styles.logo}
-                            source={require('../../assets/img/logo-white.png')}
-                        ></Image>
-                        <Text style={styles.textLbl}>
-                            {I18n.t('RegisterAs')}
-                        </Text>
-                        <View style={styles.UserType}>
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    setFocusPar(true)
-                                    setFocusSt(false)
-                                    Global.UserType = '4'
-                                }}
-                            >
-                                <View
-                                    style={[
-                                        styles.UserTypeContainer,
-                                        focusPar
-                                            ? styles.UserTypeContainerFocus
-                                            : styles.UserTypeContainerBlure,
-                                    ]}
-                                >
-                                    <FontAwesome
-                                        name="group"
-                                        size={50}
-                                        color={
-                                            focusPar
-                                                ? colors.white
-                                                : colors.dark
-                                        }
-                                    />
-                                    <View
-                                        style={[
-                                            styles.HorizSeperator,
-                                            {
-                                                borderColor: focusPar
-                                                    ? colors.white
-                                                    : colors.dark,
-                                            },
-                                        ]}
-                                    ></View>
-                                    <Text
-                                        style={
-                                            focusPar
-                                                ? styles.focusText
-                                                : styles.blureText
-                                        }
-                                    >
-                                        {I18n.t('Parent')}
-                                    </Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <View style={[styles.Seperator, {}]}></View>
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    setFocusPar(false)
-                                    setFocusSt(true)
-                                    Global.UserType = '3'
-                                }}
-                            >
-                                <View
-                                    style={[
-                                        styles.UserTypeContainer,
-                                        focusSt
-                                            ? styles.UserTypeContainerFocus
-                                            : styles.UserTypeContainerBlure,
-                                    ]}
-                                >
-                                    <Ionicons
-                                        name="person-sharp"
-                                        size={50}
-                                        color={
-                                            focusSt ? colors.white : colors.dark
-                                        }
-                                    />
-                                    <View
-                                        style={[
-                                            styles.HorizSeperator,
-                                            {
-                                                borderColor: focusSt
-                                                    ? colors.white
-                                                    : colors.dark,
-                                            },
-                                        ]}
-                                    ></View>
-                                    <Text
-                                        style={
-                                            focusSt
-                                                ? styles.focusText
-                                                : styles.blureText
-                                        }
-                                    >
-                                        {I18n.t('Student')}
-                                    </Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </View>
-
-                    <TouchableOpacity
-                        style={styles.loginBtn}
-                        onPress={() => stepOneClicked()}
-                    >
-                        <View style={styles.loginBtnView}>
-                            <View style={styles.arrowCont}>
-                                <MaterialIcons
-                                    name={
-                                        lang == 'ar'
-                                            ? 'arrow-forward-ios'
-                                            : 'arrow-back-ios'
-                                    }
-                                    size={20}
-                                    color={colors.white}
-                                />
+        <>
+            <View style={styles.container}>
+                <ImageBackground
+                    source={require('../../assets/img/BG-Dark.png')}
+                    style={styles.backgroundImage}
+                >
+                    <View style={styles.screen}>
+                        <TouchableOpacity
+                            style={styles.touchLang}
+                            onPress={() => {
+                                changeLang(langTo)
+                                console.log(
+                                    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx langTo xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                    langTo
+                                )
+                            }}
+                        >
+                            <View style={styles.lang}>
+                                <Text style={styles.langText}>
+                                    {I18n.t('Language')}
+                                </Text>
                             </View>
-                            <Text style={styles.loginText}>
-                                {I18n.t('Next')}
+                        </TouchableOpacity>
+
+                        <View style={styles.content}>
+                            <Image
+                                style={styles.logo}
+                                source={require('../../assets/img/logo-white.png')}
+                            ></Image>
+                            <Text style={styles.textLbl}>
+                                {I18n.t('RegisterAs')}
                             </Text>
+                            <View style={styles.UserType}>
+                                <TouchableWithoutFeedback
+                                    onPress={() => {
+                                        setFocusPar(true)
+                                        setFocusSt(false)
+                                        Global.UserType = '4'
+                                    }}
+                                >
+                                    <View
+                                        style={[
+                                            styles.UserTypeContainer,
+                                            focusPar
+                                                ? styles.UserTypeContainerFocus
+                                                : styles.UserTypeContainerBlure,
+                                        ]}
+                                    >
+                                        <FontAwesome
+                                            name="group"
+                                            size={50}
+                                            color={
+                                                focusPar
+                                                    ? colors.white
+                                                    : colors.dark
+                                            }
+                                        />
+                                        <View
+                                            style={[
+                                                styles.HorizSeperator,
+                                                {
+                                                    borderColor: focusPar
+                                                        ? colors.white
+                                                        : colors.dark,
+                                                },
+                                            ]}
+                                        ></View>
+                                        <Text
+                                            style={
+                                                focusPar
+                                                    ? styles.focusText
+                                                    : styles.blureText
+                                            }
+                                        >
+                                            {I18n.t('Parent')}
+                                        </Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                <View style={[styles.Seperator, {}]}></View>
+                                <TouchableWithoutFeedback
+                                    onPress={() => {
+                                        setFocusPar(false)
+                                        setFocusSt(true)
+                                        Global.UserType = '3'
+                                    }}
+                                >
+                                    <View
+                                        style={[
+                                            styles.UserTypeContainer,
+                                            focusSt
+                                                ? styles.UserTypeContainerFocus
+                                                : styles.UserTypeContainerBlure,
+                                        ]}
+                                    >
+                                        <Ionicons
+                                            name="person-sharp"
+                                            size={50}
+                                            color={
+                                                focusSt
+                                                    ? colors.white
+                                                    : colors.dark
+                                            }
+                                        />
+                                        <View
+                                            style={[
+                                                styles.HorizSeperator,
+                                                {
+                                                    borderColor: focusSt
+                                                        ? colors.white
+                                                        : colors.dark,
+                                                },
+                                            ]}
+                                        ></View>
+                                        <Text
+                                            style={
+                                                focusSt
+                                                    ? styles.focusText
+                                                    : styles.blureText
+                                            }
+                                        >
+                                            {I18n.t('Student')}
+                                        </Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            </View>
                         </View>
-                    </TouchableOpacity>
-                </View>
-            </ImageBackground>
-        </View>
+
+                        <TouchableOpacity
+                            style={styles.loginBtn}
+                            onPress={() => stepOneClicked()}
+                        >
+                            <View style={styles.loginBtnView}>
+                                <View style={styles.arrowCont}>
+                                    <MaterialIcons
+                                        name={
+                                            lang == 'ar'
+                                                ? 'arrow-forward-ios'
+                                                : 'arrow-back-ios'
+                                        }
+                                        size={20}
+                                        color={colors.white}
+                                    />
+                                </View>
+                                <Text style={styles.loginText}>
+                                    {I18n.t('Next')}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </View>
+            <Toast />
+        </>
     )
 }
 const styles = StyleSheet.create({
