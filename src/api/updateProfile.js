@@ -5,7 +5,8 @@ import Global from '../../Global'
 import { replace } from '../../Navigator'
 
 // eslint-disable-next-line import/prefer-default-export
-export const updateProfile = ({ data }) => {
+export const updateProfile = ({ data, lang }) => {
+    console.log('data', data, 'lang', lang)
     // setIsLoading(true)
     axios
         .post(
@@ -14,10 +15,12 @@ export const updateProfile = ({ data }) => {
             {
                 // config
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data;',
                     'Access-Control-Allow-Origin': '*',
                     Authorization: `Bearer ${Global.AuthenticationToken}`,
                     Accept: 'application/json',
+                    lang: lang,
+                    version: 2,
                 },
             }
         )
