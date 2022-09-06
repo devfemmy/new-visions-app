@@ -2,14 +2,15 @@
 /* eslint-disable import/no-cycle */
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { createContext, useEffect, useState } from 'react'
-import { View } from 'react-native';
-import { requestPurchase } from 'react-native-iap/src/iap';
+import { Platform, View } from 'react-native';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { Container,} from '../../components/common'
 import colors from '../../helpers/colors';
 import { getGroupDays, getSubjectGroups } from '../../redux/action';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { deviceStorage } from '../../services/deviceStorage';
+import { getInAppPurchaseProducts } from '../../services/getInAppPurchase';
+import { requestPurchase } from '../../services/iap';
 import ChooseGroup from './ChooseGroup';
 import ChooseTime from './ChooseTime';
 import SelectGroup from './SelectGroup';
@@ -35,7 +36,14 @@ const FullLessonSubscription = () => {
       group_id: groupId
     }
     dispatch(getGroupDays(payload))
+
   }, [dispatch, groupId]);
+
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      getInAppPurchaseProducts();
+    }
+  }, []);
   const subscribeToFullLesson = () => {
     //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
       const subscriptionInfo = {
@@ -68,7 +76,7 @@ const FullLessonSubscription = () => {
                     <ChooseGroup subjectGroupData={subjectGroupData} />
                   </View>
               </ProgressStep>
-              <ProgressStep nextBtnText="Subscribe" onSubmit={() => {}} label="Group Days">
+              <ProgressStep nextBtnText="Subscribe" onSubmit={subscribeToFullLesson} label="Group Days">
                 <View>
                     <ChooseTime getGroupDaysData={getGroupDaysData} />
                   </View>

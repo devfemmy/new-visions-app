@@ -26,15 +26,17 @@ const ChooseGroup = (subjectGroupData) => {
   })
   return(
     <View style={styles.container}>
-      {items?.map((item, index) => <StageCard group show
+      {items?.map((item, index) => (
+          <StageCard group show
       navigateSubjects={() => {}}
         stage={item}
-        groupNumber={item && `Group Number ${item.id}`}
+        groupNumber={item && `Group Number ${index + 1}`}
         activeLevel={activeLevel}
         setActiveLevel={setActiveLevel}
         activeStage={activeStage}
         setActiveStage={setActiveStage}
-        dark text={item.start && `${item.start} - ${item.end}`} />)}
+        dark text={item.start && `${item.start} - ${item.end}`} />
+        ))}
     </View>
   )
 };

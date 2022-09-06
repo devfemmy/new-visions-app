@@ -28,6 +28,7 @@ const TeachersDetailCard = ({
     bookCourse,
     subjectCalendar,
     bookPrivateLesson,
+    bookOneLesson,
     pressed,
     subjectDetails,
 }) => {
@@ -349,7 +350,7 @@ const TeachersDetailCard = ({
                 <View style={[styles.lowerContainer]}>
                     <View style={globalStyles.rowBetween}>
                         <Pressable
-                            onPress={() => {}}
+                            onPress={bookOneLesson}
                             style={globalStyles.subBtn2}
                         >
                             <Text

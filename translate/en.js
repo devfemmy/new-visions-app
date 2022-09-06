@@ -44,7 +44,7 @@ const English = {
     StudySubjectList: 'Study Subject List',
     Quizzes: 'Quizzes',
     QuizzesResults: 'Quizzes Results',
-    Subscribtions: 'Subscribtions',
+    Subscribtions: 'Subscriptions',
     AboutUs: 'About',
     SignOut: 'SignOut',
 
@@ -150,7 +150,7 @@ const English = {
 
     MultiPackages: 'MultiPackages',
     MultiPackageBrief: 'Brief about the course',
-    SubscripePackage: 'Subscripe Now',
+    SubscripePackage: 'Subscribe Now',
     PackageDetails: 'Package Details',
 
     Packages: 'Packages',

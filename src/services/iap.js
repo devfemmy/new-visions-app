@@ -16,9 +16,10 @@ export const restorePurchase = async () => {};
 export const iapSkus = Platform.select({
   ios: [
     'com.newtouch.newvisions_one_lesson',
-    'com.newtouch.newvisions_full_course',
-    'com.newtouch.newvisions_multi_package',
     'com.newtouch.newvisions_curriculum',
+    'com.newtouch.newvisions_multi_package',
+    'com.newtouch.newvisions_multi_package_1',
+    'com.newtouch.newvisions_multi_package_2',
   ],
   android: [''],
 });
