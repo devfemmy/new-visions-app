@@ -82,7 +82,7 @@ const English = {
     PerLecture: 'Per Lecture',
     PerCurriculum: 'Per Curriculum',
     BookOneLesson: 'Book One Lesson',
-
+    BookPrivateLesson: 'Book Private Lesson',
     BookFullCourse: 'Book Full Course',
 
     // Book One Lesson
