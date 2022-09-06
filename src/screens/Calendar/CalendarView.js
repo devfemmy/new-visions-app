@@ -110,7 +110,8 @@ export default function CalendarView({text, data}) {
               keyboardShouldPersistTaps="handled"
               contentContainerStyle={styles.flatlistContent}
               ListEmptyComponent={() =>  <View style={styles.noData}>
-                <Text style={styles.noClass} text={I18n.t('Parent')} />
+                <Text style={styles.noClass} text={I18n.t('NoClasses')} />
+
               </View>}
               data={data}
               showsVerticalScrollIndicator={false}

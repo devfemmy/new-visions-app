@@ -349,7 +349,7 @@ const TeachersDetailCard = ({
                 <View style={[styles.lowerContainer]}>
                     <View style={globalStyles.rowBetween}>
                         <Pressable
-                            onPress={viewProfile}
+                            onPress={() => {}}
                             style={globalStyles.subBtn2}
                         >
                             <Text
@@ -367,7 +367,7 @@ const TeachersDetailCard = ({
                     >
                         <Text
                             style={styles.textWhite}
-                            text={I18n.t('BookOneLesson')}
+                            text={I18n.t('BookPrivateLesson')}
                         />
                     </Pressable>
                     <Pressable onPress={bookCourse} style={styles.bookBtn2}>

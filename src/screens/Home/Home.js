@@ -258,9 +258,9 @@ const Home = () => {
                                     pressed={() => navigateTeacherProfile(item)}
                                     uri={uri}
                                     ratings={
-                                        item?.avg_rating.length === 0
+                                        item?.rate === 0
                                             ? null
-                                            : item?.avg_rating[0].rateAVG
+                                            : item?.rate
                                     }
                                     lastName={item.last_name}
                                     text={item.first_name}

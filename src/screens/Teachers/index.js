@@ -122,9 +122,9 @@ const Teachers = () => {
                                 gender={item?.gender}
                                 rates_count={item?.rates_count}
                                 ratings={
-                                    item?.avg_rating.length === 0
+                                    item?.rate === 0
                                         ? null
-                                        : item?.avg_rating[0].rateAVG
+                                        : item?.rate
                                 }
                                 uri={`${IMAGEURL}/${item?.image}`}
                                 contents={`${item?.first_name} ${item?.last_name}`}
