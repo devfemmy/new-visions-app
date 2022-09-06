@@ -3,11 +3,13 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { createContext, useEffect, useState } from 'react'
 import { View } from 'react-native';
+import { requestPurchase } from 'react-native-iap/src/iap';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { Container,} from '../../components/common'
 import colors from '../../helpers/colors';
 import { getGroupDays, getSubjectGroups } from '../../redux/action';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { deviceStorage } from '../../services/deviceStorage';
 import ChooseGroup from './ChooseGroup';
 import ChooseTime from './ChooseTime';
 import SelectGroup from './SelectGroup';
@@ -22,7 +24,7 @@ const FullLessonSubscription = () => {
   const {getGroupDaysData} = useAppSelector((state)=> state.groupDaysPage);
   useEffect(() => {
     const payload = {
-      subject_id: '1'
+      subject_id
     }
     dispatch(getSubjectGroups(payload))
   }, [dispatch, subject_id]);
@@ -30,10 +32,23 @@ const FullLessonSubscription = () => {
   const [groupId, setGroupId] = useState(null);
   useEffect(() => {
     const payload = {
-      group_id: '1'
+      group_id: groupId
     }
     dispatch(getGroupDays(payload))
   }, [dispatch, groupId]);
+  const subscribeToFullLesson = () => {
+    //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+      const subscriptionInfo = {
+        billNumber: 'ios_bill',
+        paymentFor: 'FullLesson',
+        lessonId: '1258',
+        subjectId: subject_id,
+        price: 200,
+      };
+      deviceStorage
+        .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
+        .then(() => requestPurchase({ sku: 'com.newtouch.newvisions_curriculum' }));
+    }
   return (
     <SubContext.Provider value={{ disabledProp, setDisabledProps, setGroupId }}>
       <Container>
@@ -53,7 +68,7 @@ const FullLessonSubscription = () => {
                     <ChooseGroup subjectGroupData={subjectGroupData} />
                   </View>
               </ProgressStep>
-              <ProgressStep nextBtnText="Subscribe" onSubmit={() => navigation.navigate('SuccessSub', {name: 'Full Lesson'})} label="Group Days">
+              <ProgressStep nextBtnText="Subscribe" onSubmit={() => {}} label="Group Days">
                 <View>
                     <ChooseTime getGroupDaysData={getGroupDaysData} />
                   </View>

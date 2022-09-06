@@ -18,6 +18,7 @@ export const iapSkus = Platform.select({
     'com.newtouch.newvisions_one_lesson',
     'com.newtouch.newvisions_full_course',
     'com.newtouch.newvisions_multi_package',
+    'com.newtouch.newvisions_curriculum',
   ],
   android: [''],
 });
