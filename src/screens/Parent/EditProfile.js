@@ -82,30 +82,13 @@ class EditProfile extends Component {
         } else if (result.error) {
             console.log('ImagePicker Error: ', result.error)
         } else {
-            // const uri = response.uri;
-
-            // const uri = result.uri
-            // const type = result.type
-            // const name = result.fileName || result.uri.substring(-10)
-
-            // source = {
-            //     uri,
-            //     type,
-            //     name,
-            // }
-            // console.log(source)
-            // console.log('PICKERRESPONSE', result)
-            // pickerResponse = result
-
-            // this.setState({
-            //     avatar: source,
-            // })
-
+            console.log('<<<PHOTO>>>sssssss', result)
             this.uploadAvatar(result)
         }
     }
 
     selectCameraTapped = async () => {
+        console.log('selectCameraTapped')
         const options = {
             quality: 1.0,
             maxWidth: 500,
@@ -116,30 +99,12 @@ class EditProfile extends Component {
         }
 
         const result = await launchCamera(options)
+        console.log('response', result)
         if (result.didCancel) {
             console.log('User cancelled photo picker')
         } else if (result.error) {
             console.log('ImagePicker Error: ', result.error)
         } else {
-            // const uri = response.uri;
-
-            // const uri = result.uri
-            // const type = result.type
-            // const name = result.fileName || result.uri.substring(-10)
-
-            // source = {
-            //     uri,
-            //     type,
-            //     name,
-            // }
-            // console.log(source)
-            // console.log('PICKERRESPONSE', result)
-            // pickerResponse = result
-
-            // this.setState({
-            //     avatar: source,
-            // })
-
             this.uploadAvatar(result)
         }
     }
@@ -151,14 +116,7 @@ class EditProfile extends Component {
     uploadAvatar = async (photo) => {
         let { firstname, lastname, phone, email, avatarUrl, toggleTypePicker } =
             this.state
-        console.log(
-            'uploadAvatar',
-            firstname,
-            lastname,
-            phone,
-            email,
-            avatarUrl
-        )
+        const { user, lang } = this.context
         // this.setState({ loading: true })
 
         console.log('<<<PHOTO>>>', photo)
@@ -166,9 +124,9 @@ class EditProfile extends Component {
         data.append('image', photo ? photo : avatarUrl)
         data.append('first_name', firstname)
         data.append('last_name', lastname)
-        data.append('email', email)
         data.append('phone', phone)
-        const res = updateProfile(data)
+        data.append('gender', user?.gender)
+        const res = updateProfile({ data, lang })
 
         console.log('res', res)
         // if (res === 200) {
@@ -358,7 +316,7 @@ class EditProfile extends Component {
                                 <View style={styles.formContainer}>
                                     <View style={globalStyles.rowBetween}>
                                         <Text style={styles.inputTitle}>
-                                            {I18n.t('UserName')}
+                                            {I18n.t('FirstName')}
                                         </Text>
                                         <Ionicons
                                             name="create-outline"
@@ -379,7 +337,7 @@ class EditProfile extends Component {
                                 <View style={styles.formContainer}>
                                     <View style={globalStyles.rowBetween}>
                                         <Text style={styles.inputTitle}>
-                                            {I18n.t('UserName')}
+                                            {I18n.t('LastName')}
                                         </Text>
                                         <Ionicons
                                             name="create-outline"

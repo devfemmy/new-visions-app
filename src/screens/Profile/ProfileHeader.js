@@ -13,34 +13,34 @@ export default function ProfileHeader() {
     const navigation = useNavigation()
     return (
         <View style={styles.outContainer}>
-            <Pressable
-                onPress={() => {
-                    navigation.navigate('EditProfile')
-                }}
-                style={{
-                    backgroundColor: colors.primary,
-                    width: '100%',
-                    opacity: 0.8,
-                    justifyContent: 'flex-end',
-                    alignItems: 'flex-end',
-                    paddingHorizontal: 20,
-                    // paddingBottom: 20,
-                }}
-            >
-                <IconText
-                    style={styles.textAlign}
-                    text={I18n.t('Edit')}
-                    textColor={colors.white}
-                    children={
-                        <Ionicons
-                            name="create-outline"
-                            size={20}
-                            color={'#fff'}
-                        />
-                    }
-                />
-            </Pressable>
             <View style={styles.container}>
+                <Pressable
+                    onPress={() => {
+                        navigation.navigate('EditProfile')
+                    }}
+                    style={{
+                        backgroundColor: 'inherit',
+                        width: '100%',
+                        opacity: 0.8,
+                        justifyContent: 'flex-end',
+                        alignItems: 'flex-end',
+                        paddingHorizontal: 20,
+                        // paddingBottom: 20,
+                    }}
+                >
+                    <IconText
+                        style={styles.textAlign}
+                        text={I18n.t('Edit')}
+                        textColor={colors.white}
+                        children={
+                            <Ionicons
+                                name="create-outline"
+                                size={28}
+                                color={'#fff'}
+                            />
+                        }
+                    />
+                </Pressable>
                 <Image
                     style={styles.BG}
                     source={require('../../assets/img/profileHeader.png')}

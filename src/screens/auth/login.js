@@ -29,10 +29,19 @@ import Global from '../../../Global'
 import { SocialButtons } from './SocialButtons'
 import { heightp } from '../../utils/responsiveDesign'
 // import { socialAuthApi } from "../../api/socialAuthApi";
+import Toast from 'react-native-toast-message'
+import Lottie from '../../components/Lottie'
 
 function Login({ navigation }) {
-    const { changeLang, lang, showLoadingSpinner, initUUID, onLogin } =
-        useContext(AppContext)
+    const {
+        changeLang,
+        lang,
+        showLoadingSpinner,
+        initUUID,
+        onLogin,
+        loadingSpinner,
+    } = useContext(AppContext)
+    const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const socialAuthApi = ({ givenName, familyName, email, id, type }) => {
         axios
             .post('https://www.newvisions.sa/api/signupExternal', {
@@ -140,6 +149,7 @@ function Login({ navigation }) {
 
     const setUserInfo = (userData) => {
         showLoadingSpinner(false)
+        console.log('yoooooooooooo', userData.remember_token)
         Global.AuthenticationToken = userData.remember_token
         AsyncStorage.setItem('token', Global.AuthenticationToken)
         Global.Image = userData.image
@@ -151,31 +161,38 @@ function Login({ navigation }) {
     }
 
     return (
-        <View style={styles.container}>
-            <ImageBackground
-                source={require('../../assets/img/BG.png')}
-                style={styles.backgroundImage}
-                imageStyle={{ tintColor: 'rgba(255, 255, 255, 1)' }}
-            >
-                <ScrollView
-                    keyboardShouldPersistTaps="handled"
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={styles.center}>
-                        <Image
-                            style={styles.logo}
-                            source={require('../../assets/img/logo-light.png')}
-                        ></Image>
+        <>
+            {!loadingSpinner && (
+                <View style={styles.container}>
+                    <ImageBackground
+                        source={require('../../assets/img/BG.png')}
+                        style={styles.backgroundImage}
+                        imageStyle={{ tintColor: 'rgba(255, 255, 255, 1)' }}
+                    >
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <View style={styles.center}>
+                                <Image
+                                    style={styles.logo}
+                                    source={require('../../assets/img/logo-light.png')}
+                                ></Image>
 
-                        <LoginForm
-                            submitLogin={submitLogin}
-                            signInGoogle={signInGoogle}
-                            onAppleButtonPress={onAppleButtonPress}
-                        />
-                    </View>
-                </ScrollView>
-            </ImageBackground>
-        </View>
+                                <LoginForm
+                                    submitLogin={submitLogin}
+                                    signInGoogle={signInGoogle}
+                                    onAppleButtonPress={onAppleButtonPress}
+                                />
+                            </View>
+                        </ScrollView>
+                    </ImageBackground>
+                </View>
+            )}
+
+            {loadingSpinner && <Lottie fileSource={sourceLot} />}
+            <Toast />
+        </>
     )
 }
 
