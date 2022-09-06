@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/prop-types */
-import React from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import React, { useContext } from 'react'
+import { Pressable, StyleSheet, View, Text as RNText } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import I18n from 'i18n-js'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -10,12 +10,16 @@ import { heightp } from '../utils/responsiveDesign'
 import { Text } from './common'
 import IconText from './IconText'
 import colors from '../helpers/colors'
+import { AppContext } from '../context/AppState'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { AirbnbRating } from 'react-native-ratings'
 
 const TeachersDetailCard = ({
     contents,
     title,
     uri,
     gender,
+    rates_count,
     city,
     lessonPrice,
     numberOfStudents,
@@ -71,106 +75,275 @@ const TeachersDetailCard = ({
             color: 'white',
             fontWeight: 'bold',
         },
+
+        loginBtn: {
+            width: '100%',
+            flexDirection: 'row',
+            height: 35,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            marginVertical: heightp(5),
+        },
+        loginBtnView: {
+            flex: 1,
+            borderRadius: 40,
+            backgroundColor: 'rgba(238, 238, 239, 1)',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 10,
+        },
+        arrowCont: {
+            width: 30,
+            height: 30,
+            borderRadius: 15,
+            justifyContent: 'center',
+            backgroundColor: 'rgba(238, 238, 239, 1)',
+            overflow: 'hidden',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
     })
+    const { lang } = useContext(AppContext)
     return (
         <>
             <Pressable
-                onPress={pressed}
-                style={[styles.container, globalStyles.rowBetween]}
+                onPress={() => {
+                    console.log('pressed')
+                }}
+                style={[
+                    styles.container,
+                    // globalStyles.rowBetween,
+                    { flexDirection: 'column' },
+                ]}
             >
-                <View>
-                    <FastImage
-                        style={{
-                            width: heightp(100),
-                            height: heightp(90),
-                            borderRadius: 10,
-                        }}
-                        source={{
-                            uri,
-                            priority: FastImage.priority.normal,
-                        }}
-                        resizeMode={FastImage.resizeMode.cover}
-                    />
-                </View>
-                <View style={{ width: '60%' }}>
-                    <Text style={styles.textAlign} text={contents} />
-                    <Text
-                        numberOfLines={1}
-                        style={styles.textAlign}
-                        text={title && title}
-                    />
-                    {subjectDetails ? (
-                        <IconText
-                            text={
-                                numberOfStudents &&
-                                `${numberOfStudents} ${I18n.t('Students')}`
-                            }
-                            children={
-                                <Ionicons
-                                    name="ios-people"
-                                    size={20}
-                                    color={colors.primary}
-                                />
-                            }
+                <View style={globalStyles.rowBetween}>
+                    <View>
+                        <FastImage
+                            style={{
+                                width: heightp(100),
+                                height: heightp(90),
+                                borderRadius: 10,
+                            }}
+                            source={{
+                                uri,
+                                priority: FastImage.priority.normal,
+                            }}
+                            resizeMode={FastImage.resizeMode.cover}
                         />
-                    ) : (
-                        <View>
+                    </View>
+                    <View style={{ width: '60%' }}>
+                        <View style={globalStyles.rowBetween}>
                             <IconText
-                                text={
-                                    gender && gender === 1 ? 'Male' : 'Female'
-                                }
+                                style={styles.textAlign}
+                                text={contents && contents}
                                 children={
-                                    <Ionicons
-                                        name="ios-person"
-                                        size={20}
-                                        color={colors.primary}
-                                    />
+                                    <View style={globalStyles.rowBetween}>
+                                        <Ionicons
+                                            name="person-circle-outline"
+                                            size={20}
+                                            color={'rgba(67, 72, 84, 1)'}
+                                        />
+                                        <View
+                                            style={{
+                                                height: heightp(20),
+                                                backgroundColor:
+                                                    'rgba(67, 72, 84, 1)',
+                                                width: 1,
+                                                marginHorizontal: 6,
+                                            }}
+                                        />
+                                    </View>
                                 }
                             />
-                            <IconText
-                                text={ratings && ratings}
-                                children={
-                                    ratings && (
-                                        <Ionicons
-                                            name="ios-star"
-                                            size={20}
-                                            color={colors.primary}
-                                        />
-                                    )
-                                }
+                            <Ionicons
+                                name="arrow-forward-circle"
+                                size={20}
+                                color={'rgba(155, 186, 82, 1)'}
                             />
                         </View>
-                    )}
-                    {subjectDetails ? (
-                        <IconText
-                            text={lessonPrice && `${lessonPrice} ${I18n.t('SAR')}`}
-                            children={
-                                <Ionicons
-                                    name="ios-pricetag"
-                                    size={20}
-                                    color={colors.primary}
+                        {/* <Text
+                            numberOfLines={1}
+                            style={styles.textAlign}
+                            text={title && title}
+                        /> */}
+                        {subjectDetails ? (
+                            <IconText
+                                text={
+                                    numberOfStudents &&
+                                    `${numberOfStudents} ${I18n.t('Students')}`
+                                }
+                                children={
+                                    <View style={globalStyles.rowBetween}>
+                                        <Ionicons
+                                            name="ios-people"
+                                            size={20}
+                                            color={'rgba(67, 72, 84, 1)'}
+                                        />
+                                        <View
+                                            style={{
+                                                height: heightp(20),
+                                                backgroundColor:
+                                                    'rgba(67, 72, 84, 1)',
+                                                width: 1,
+                                                marginHorizontal: 6,
+                                            }}
+                                        />
+                                    </View>
+                                }
+                            />
+                        ) : (
+                            <View style={globalStyles.rowBetween}>
+                                <IconText
+                                    text={
+                                        gender && gender === 1
+                                            ? 'Male'
+                                            : 'Female'
+                                    }
+                                    children={
+                                        <View style={globalStyles.rowBetween}>
+                                            <Ionicons
+                                                name="ios-person"
+                                                size={20}
+                                                color={'rgba(67, 72, 84, 1)'}
+                                            />
+                                            <View
+                                                style={{
+                                                    height: heightp(20),
+                                                    backgroundColor:
+                                                        'rgba(67, 72, 84, 1)',
+                                                    width: 1,
+                                                    marginHorizontal: 6,
+                                                }}
+                                            />
+                                        </View>
+                                    }
                                 />
-                            }
-                        />
-                    ) : (
-                        <IconText
-                            text={city && city}
-                            children={
-                                city && (
-                                    <Ionicons
-                                        name={
-                                            subjectDetails
-                                                ? 'ios-pricetag'
-                                                : 'ios-home'
+                                {rates_count && (
+                                    <AirbnbRating
+                                        size={12}
+                                        imageSize={17}
+                                        defaultRating={rates_count}
+                                        reviews={
+                                            [
+                                                // 'Terrible',
+                                                // 'Bad',
+                                                // 'Okay',
+                                                // 'Swift & quick pickup',
+                                                // 'Excellent',
+                                            ]
                                         }
-                                        size={20}
-                                        color={colors.primary}
+                                        reviewSize={10}
+                                        type="star"
+                                        ratingColor="rgba(155, 186, 82, 1)'"
+                                        ratingContainerStyle={{
+                                            flexDirection: 'row',
+                                            backgroundColor: 'inherit',
+                                            // height: '40%',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            paddingRight: heightp(12),
+                                        }}
                                     />
-                                )
-                            }
-                        />
-                    )}
+                                )}
+
+                                {/* <IconText
+                                    text={ratings && ratings}
+                                    children={
+                                        ratings && (
+                                            <Ionicons
+                                                name="ios-star"
+                                                size={20}
+                                                color={colors.primary}
+                                            />
+                                        )
+                                    }
+                                /> */}
+                            </View>
+                        )}
+                        {subjectDetails ? (
+                            <View style={globalStyles.rowBetween}>
+                                <IconText
+                                    text={
+                                        lessonPrice &&
+                                        `${lessonPrice} ${I18n.t('SAR')}`
+                                    }
+                                    children={
+                                        <View style={globalStyles.rowBetween}>
+                                            <Ionicons
+                                                name="ios-pricetag"
+                                                size={20}
+                                                color={'rgba(67, 72, 84, 1)'}
+                                            />
+                                            <View
+                                                style={{
+                                                    height: heightp(20),
+                                                    backgroundColor:
+                                                        'rgba(67, 72, 84, 1)',
+                                                    width: 1,
+                                                    marginHorizontal: 6,
+                                                }}
+                                            />
+                                        </View>
+                                    }
+                                />
+                            </View>
+                        ) : (
+                            <View style={globalStyles.rowBetween}>
+                                <IconText
+                                    text={city && city}
+                                    children={
+                                        city && (
+                                            <View
+                                                style={globalStyles.rowBetween}
+                                            >
+                                                <Ionicons
+                                                    name={
+                                                        subjectDetails
+                                                            ? 'ios-pricetag'
+                                                            : 'business'
+                                                    }
+                                                    size={20}
+                                                    color={
+                                                        'rgba(67, 72, 84, 1)'
+                                                    }
+                                                />
+                                                <View
+                                                    style={{
+                                                        height: heightp(20),
+                                                        backgroundColor:
+                                                            'rgba(67, 72, 84, 1)',
+                                                        width: 1,
+                                                        marginHorizontal: 6,
+                                                    }}
+                                                />
+                                            </View>
+                                        )
+                                    }
+                                />
+                            </View>
+                        )}
+                    </View>
                 </View>
+                <Pressable style={styles.loginBtn} onPress={pressed}>
+                    <View style={styles.loginBtnView}>
+                        <View />
+                        <RNText style={styles.loginText}>
+                            {I18n.t('ViewProfile')}
+                        </RNText>
+                        <View style={styles.arrowCont}>
+                            <MaterialIcons
+                                name={
+                                    lang == 'ar'
+                                        ? 'arrow-back'
+                                        : 'arrow-forward'
+                                }
+                                size={16}
+                                color={colors.black}
+                            />
+                        </View>
+                    </View>
+                </Pressable>
             </Pressable>
             {subjectDetails ? (
                 <View style={[styles.lowerContainer]}>

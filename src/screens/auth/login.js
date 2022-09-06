@@ -151,10 +151,11 @@ function Login({ navigation }) {
     }
 
     return (
-        <Screen>
+        <View style={styles.container}>
             <ImageBackground
                 source={require('../../assets/img/BG.png')}
                 style={styles.backgroundImage}
+                imageStyle={{ tintColor: 'rgba(255, 255, 255, 1)' }}
             >
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
@@ -174,11 +175,12 @@ function Login({ navigation }) {
                     </View>
                 </ScrollView>
             </ImageBackground>
-        </Screen>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: { flex: 1 },
     center: {
         justifyContent: 'center',
         alignItems: 'center',

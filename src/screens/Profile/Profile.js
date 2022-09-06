@@ -9,48 +9,65 @@ import I18n from 'i18n-js'
 import colors from '../../helpers/colors'
 import Global from '../../../Global'
 
-export default function Profile({navigation}) {
+export default function Profile({ navigation }) {
+    function SubscriptionsClicked(item) {
+        navigation.navigate('Subscriptions', item)
+    }
 
-  function SubscriptionsClicked(item) {
-    navigation.navigate("Subscriptions",item);
-}
+    function AttendanceClicked(item) {
+        navigation.navigate('Attendance', item)
+    }
 
-function AttendanceClicked(item) {
-    navigation.navigate("Attendance",item);
-}
-
-  return (
-    <Screen>
-        <ProfileHeader />
-        <View style={{flexDirection:'row', width:'100%', justifyContent:'space-around', alignItems:'center', marginBottom:10}}>
-          <TouchableWithoutFeedback onPress={()=>{SubscriptionsClicked({id:Global.UserId});}}>
-            <View style={styles.btnContainer}>
-            <Text style={styles.title}>{I18n.t('Subscriptions')}</Text>
+    return (
+        <Screen>
+            <ProfileHeader />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    width: '100%',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                }}
+            >
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        SubscriptionsClicked({ id: Global.UserId })
+                    }}
+                >
+                    <View style={styles.btnContainer}>
+                        <Text style={styles.title}>
+                            {I18n.t('Subscriptions')}
+                        </Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        AttendanceClicked({ id: Global.UserId })
+                    }}
+                >
+                    <View style={styles.btnContainer}>
+                        <Text style={styles.title}>{I18n.t('Attendance')}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={()=>{AttendanceClicked({id:Global.UserId});}}>
-          <View style={styles.btnContainer}>
-            <Text style={styles.title}>{I18n.t('Attendance')}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      <Parents navigation={navigation} />
-    </Screen>
-  )
+            <Parents navigation={navigation} />
+        </Screen>
+    )
 }
 const styles = StyleSheet.create({
-  title:{
-    fontSize:18,
-    color:colors.white,
-    fontWeight:'700',
-    fontFamily:'Cairo',
-},
-btnContainer:{
-  width:150,
-  height:40,
-  justifyContent:'center',
-  alignItems:'center',
-  backgroundColor:colors.primary,
-  borderRadius:10
-}
-});
+    title: {
+        fontSize: 18,
+        color: colors.white,
+        fontWeight: '700',
+        fontFamily: 'Cairo',
+    },
+    btnContainer: {
+        width: 150,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.primary,
+        borderRadius: 10,
+    },
+})

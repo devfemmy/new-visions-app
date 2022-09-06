@@ -45,7 +45,7 @@ const TeacherProfile = () => {
                     }
                 )
                 setRateArray(arrayResult)
-                console.log('wwwwwwwwww data', data?.rate_numbers)
+                console.log('wwwwwwwwww data', data)
                 console.log('wwwwwwwwww data', arrayResult)
 
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
@@ -150,115 +150,119 @@ const TeacherProfile = () => {
                     </View>
                 </View>
             </View>
-            <View
-                style={[
-                    styles.borderContainer,
-                    { minHeight: WINDOW_HEIGHT * 0.125 },
-                ]}
-            >
+            {rateArray.length > 0 && (
                 <View
-                    style={{
-                        height: WINDOW_HEIGHT * 0.125,
-                        width: WINDOW_WIDTH * 0.9,
-                        flexDirection: 'row',
-                    }}
+                    style={[
+                        styles.borderContainer,
+                        {
+                            minHeight: WINDOW_HEIGHT * 0.125,
+                            backgroundColor: 'rgba(67, 72, 84, 0.1)',
+                            borderBottomWidth: 0,
+                            marginBottom: heightp(2),
+                            borderRadius: heightp(4),
+                        },
+                    ]}
                 >
                     <View
                         style={{
-                            width: '40%',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            height: WINDOW_HEIGHT * 0.125,
+                            width: WINDOW_WIDTH * 0.9,
+                            flexDirection: 'row',
                         }}
                     >
-                        <RNText
-                            style={[
-                                styles.header,
-                                {
-                                    textAlign: 'center',
-                                    fontSize: heightp(32),
-                                },
-                            ]}
-                        >
-                            {teachersData?.rates_count?.toFixed(1)}
-                        </RNText>
-                        <AirbnbRating
-                            size={16}
-                            imageSize={17}
-                            defaultRating={teachersData?.rates_count}
-                            reviews={
-                                [
-                                    // 'Terrible',
-                                    // 'Bad',
-                                    // 'Okay',
-                                    // 'Swift & quick pickup',
-                                    // 'Excellent',
-                                ]
-                            }
-                            reviewSize={10}
-                            type="star"
-                            ratingColor="#3498db"
-                            ratingContainerStyle={{
-                                flexDirection: 'row',
-                                backgroundColor: 'inherit',
-                                // height: '40%',
+                        <View
+                            style={{
+                                width: '40%',
+                                flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                paddingRight: heightp(12),
                             }}
-                        />
-                    </View>
-                    <View
-                        style={{
-                            width: '60%',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        {rateArray.length > 0 ? (
-                            rateArray.map((rate) => (
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                    key={rate.id}
-                                >
-                                    <RNText
-                                        style={[
-                                            styles.header,
-                                            {
-                                                textAlign: 'center',
-                                                fontSize: heightp(12),
-                                                paddingHorizontal: heightp(10),
-                                            },
-                                        ]}
-                                    >
-                                        {rate.id}
-                                    </RNText>
-                                    <Progress.Bar
-                                        progress={rate.val}
-                                        width={150}
-                                        color={colors.primary}
-                                    />
-                                </View>
-                            ))
-                        ) : (
-                            <Text
-                                style={styles.text}
-                                text="No Ratings Present at the moment"
+                        >
+                            <RNText
+                                style={[
+                                    styles.header,
+                                    {
+                                        textAlign: 'center',
+                                        fontSize: heightp(32),
+                                    },
+                                ]}
+                            >
+                                {teachersData?.rates_count?.toFixed(1)}
+                            </RNText>
+                            <AirbnbRating
+                                size={16}
+                                imageSize={17}
+                                defaultRating={teachersData?.rates_count}
+                                reviews={
+                                    [
+                                        // 'Terrible',
+                                        // 'Bad',
+                                        // 'Okay',
+                                        // 'Swift & quick pickup',
+                                        // 'Excellent',
+                                    ]
+                                }
+                                reviewSize={10}
+                                type="star"
+                                ratingColor="#3498db"
+                                ratingContainerStyle={{
+                                    flexDirection: 'row',
+                                    backgroundColor: 'inherit',
+                                    // height: '40%',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    paddingRight: heightp(12),
+                                }}
                             />
-                        )}
+                        </View>
+                        <View
+                            style={{
+                                width: '60%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            {rateArray.length > 0 &&
+                                rateArray.map((rate) => (
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                        key={rate.id}
+                                    >
+                                        <RNText
+                                            style={[
+                                                styles.header,
+                                                {
+                                                    textAlign: 'center',
+                                                    fontSize: heightp(12),
+                                                    paddingHorizontal:
+                                                        heightp(10),
+                                                },
+                                            ]}
+                                        >
+                                            {rate.id}
+                                        </RNText>
+                                        <Progress.Bar
+                                            progress={rate.val}
+                                            width={150}
+                                            color={colors.primary}
+                                        />
+                                    </View>
+                                ))}
+                        </View>
                     </View>
                 </View>
-            </View>
+            )}
             <View style={styles.borderContainer}>
                 {teachersData?.video?.length > 0 ? (
                     <View
                         style={{
-                            height: WINDOW_HEIGHT * 0.30,
+                            height: WINDOW_HEIGHT * 0.3,
                             width: WINDOW_WIDTH * 0.9,
+                            marginVertical: heightp(10),
                         }}
                     >
                         <Vimeo
