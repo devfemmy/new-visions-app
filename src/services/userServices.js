@@ -21,6 +21,11 @@ export default class HomePageService {
         return res?.data || res
     }
 
+    static async deleteUser(data) {
+        const res = await baseAxios.post('/changeUserStatus', data)
+        return res?.data || res
+    }
+
     static async getSubjectDetails(data) {
         const res = await baseAxios.post('/getSubjectDetails', data)
         return res?.data || res
