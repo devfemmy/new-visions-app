@@ -46,14 +46,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires access to photo library to pick users profile picture</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires camera to take users profile picture </string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires camera to take users profile picture </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires access to photo library to pick users profile picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Cairo-Black.ttf</string>

@@ -85,7 +85,7 @@ const Arabic = {
     PerLecture: 'لكل محاضرة',
     PerCurriculum: 'لكل منهج',
     BookOneLesson: 'كتاب درس واحد',
-    BookFullCourse: 'احجز دورة كاملة',
+    BookFullCourse: 'حجز ترم كامل',
 
     //Book One Lesson
     PleaseChoosetheLessonYouWanttoSuscribeto:
@@ -190,8 +190,20 @@ const Arabic = {
     DeleteMembership: 'حذف حسابي',
 
     Exit: 'Exit',
-    
+
     Back: 'الى الخلف',
+
+    Quiz: 'اختبار',
+
+    Rate: 'معدل',
+
+    Publish: 'ينشر',
+
+    SendQuiz: 'إرسال اختبار',
+
+    AddYourReview: 'إضافة تقييمك',
+
+    WriteHere: 'اكتب هنا.....',
 
     TimeOfSubject: 'عدد ساعات المادة',
 
@@ -200,6 +212,7 @@ const Arabic = {
     Download: 'تحميل الكتاب',
 
     LessonProgress: 'دروس المادة',
+    BookPrivateLesson: 'حجز حصة واحدة',
 
     Group: 'المجموعات الدراسية',
     People: 'الاشخاص',

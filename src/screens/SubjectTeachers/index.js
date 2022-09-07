@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
+import { deviceStorage } from '../../services/deviceStorage'
+import { requestPurchase } from '../../services/iap'
 
 const SubjectTeachers = () => {
     const dispatch = useAppDispatch()
@@ -22,7 +24,7 @@ const SubjectTeachers = () => {
         subjectTeachersPage,
         app: { loading },
     } = useAppSelector((state) => state)
-    const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
+    const subjectTeachersData = subjectTeachersPage?.subjectTeachersData;
     useEffect(() => {
         const payload = {
             subject_id,
@@ -34,13 +36,25 @@ const SubjectTeachers = () => {
         (item) => {
             navigation.navigate('FullLesson', {
                 subject_id,
+                iap_id: item?.iap_id
             })
         },
         [navigation, subject_id]
     )
+    const bookOneLesson = (item) => {
+        const subscriptionInfo = {
+            billNumber: 'ios_bill',
+            paymentFor: 'OneLesson',
+            lessonId: '1258',
+            subjectId: subject_id,
+            price: 200,
+          };
+          deviceStorage
+            .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
+            .then(() => requestPurchase({ sku:  item?.lesson_iap_id}));
+    }
     const navigateTeachersProfile = useCallback(
         (item) => {
-            console.log('item', item)
             const teacherItem = item?.user
             navigation.navigate('TeacherProfile', {
                 item: teacherItem,
@@ -50,13 +64,14 @@ const SubjectTeachers = () => {
         [navigation]
     )
     const navigatePivateLesson = useCallback(
-        (teacher_id) => {
+        (item) => {
             // const {id, title, image} = item;
             // const uri = `${IMAGEURL}/${image}`
             // if (id)
             navigation.navigate('PrivateLesson', {
                 subject_id,
-                teacher_id,
+                teacher_id: item?.teacher_id,
+                iap_id: item?.iap_id
             })
         },
         [navigation, subject_id]
@@ -90,13 +105,14 @@ const SubjectTeachers = () => {
                     renderItem={({ item }) => {
                         return (
                             <TeachersDetailCard
+                                bookOneLesson={() => bookOneLesson(item)}
                                 subjectDetails
                                 viewProfile={() =>
                                     navigateTeachersProfile(item)
                                 }
-                                bookCourse={navigateFullSubscription}
+                                bookCourse={() => navigateFullSubscription(item)}
                                 bookPrivateLesson={() =>
-                                    navigatePivateLesson(item.id)
+                                    navigatePivateLesson(item)
                                 }
                                 title={item?.subject?.title}
                                 lessonPrice={item?.lesson_price}

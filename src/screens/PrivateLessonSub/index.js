@@ -30,7 +30,7 @@ const PrivateLessonSubscription = () => {
   const {teachersFreeDaysData} = useAppSelector((state)=> state.teacherFreeDaysPage);
   useEffect(() => {
     const payload = {
-      subject_id: '8'
+      subject_id,
     }
     dispatch(getSubjectChaptersAndLessons(payload))
   }, [dispatch, subject_id]);
@@ -38,7 +38,7 @@ const PrivateLessonSubscription = () => {
   const [groupId, setGroupId] = useState(null);
   useEffect(() => {
     const payload = {
-      teacher_id: '5'
+      teacher_id,
     }
     dispatch(getTeacherFreeDays(payload))
   }, [dispatch, teacher_id]);

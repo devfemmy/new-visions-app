@@ -28,6 +28,7 @@ const TeachersDetailCard = ({
     bookCourse,
     subjectCalendar,
     bookPrivateLesson,
+    bookOneLesson,
     pressed,
     subjectDetails,
 }) => {
@@ -325,7 +326,7 @@ const TeachersDetailCard = ({
                         )}
                     </View>
                 </View>
-                <Pressable style={styles.loginBtn} onPress={pressed}>
+                <Pressable style={styles.loginBtn} onPress={viewProfile}>
                     <View style={styles.loginBtnView}>
                         <View />
                         <RNText style={styles.loginText}>
@@ -334,7 +335,7 @@ const TeachersDetailCard = ({
                         <View style={styles.arrowCont}>
                             <MaterialIcons
                                 name={
-                                    lang == 'ar'
+                                    lang === 'ar'
                                         ? 'arrow-back'
                                         : 'arrow-forward'
                                 }
@@ -347,9 +348,9 @@ const TeachersDetailCard = ({
             </Pressable>
             {subjectDetails ? (
                 <View style={[styles.lowerContainer]}>
-                    <View style={globalStyles.rowBetween}>
+                    {/* <View style={globalStyles.rowBetween}>
                         <Pressable
-                            onPress={() => {}}
+                            onPress={bookOneLesson}
                             style={globalStyles.subBtn2}
                         >
                             <Text
@@ -357,10 +358,10 @@ const TeachersDetailCard = ({
                                 text={I18n.t('BookOneLesson')}
                             />
                         </Pressable>
-                        {/* <Pressable onPress={subjectCalendar} style={globalStyles.subBtn}>
+                        <Pressable onPress={subjectCalendar} style={globalStyles.subBtn}>
         <Text style={globalStyles.btnColor} text="Subject Calendar" />
-      </Pressable> */}
-                    </View>
+      </Pressable>
+                    </View> */}
                     <Pressable
                         onPress={bookPrivateLesson}
                         style={styles.bookBtn}

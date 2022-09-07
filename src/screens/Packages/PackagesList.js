@@ -63,7 +63,7 @@ export default function PackagesList({ route, navigation }) {
     }, [])
 
     function openDetails(item) {
-        navigation.navigate('MultiPackageDetails', item)
+        navigation.navigate('MultiPackageDetails', {item, packageType: 'single'})
     }
 
     const shareDetails = async (item) => {

@@ -1,4 +1,5 @@
-import { View, Text, ImageBackground } from 'react-native'
+/* eslint-disable react/prop-types */
+import { View, Text, ImageBackground, Platform } from 'react-native'
 import React from 'react'
 import { IMAGEURL } from '../../utils/functions';
 import FastImage from 'react-native-fast-image';
@@ -22,6 +23,9 @@ import HTML from 'react-native-render-html';
 import { Dimensions } from 'react-native';
 import Screen from '../../components/Screen';
 import { heightp } from '../../utils/responsiveDesign';
+import { getInAppPurchaseProducts } from '../../services/getInAppPurchase';
+import { deviceStorage } from '../../services/deviceStorage';
+import { requestPurchase } from '../../services/iap';
 
 export default function MultiPackageDetails({route}) {
 
@@ -29,15 +33,23 @@ export default function MultiPackageDetails({route}) {
   const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
     useContext(AppContext);
 
+  const [iapId, setIapId] = useState('')
+  const {packageType, item} = route.params;
+
+  console.log(packageType, 'packageType');
+  console.log(item, 'items')
+
   const uri = `${IMAGEURL}/${description.image}`;
   
 
   function getMultiPackageDetails(params) {
+
     axios
   .post('https://newvisions.sa/api/getMultiPackageDetails', {
-    'package_id':route.params.id
+    'package_id':item?.id
   })
   .then(response => {
+    console.log('response', response?.data)
     if (
       response != undefined &&
       response.data != undefined &&
@@ -45,7 +57,8 @@ export default function MultiPackageDetails({route}) {
     ) {
       if (response.data.code == 200) {
         const data = response.data.data;
-        console.log("multi Package Details: "+data);
+        const iapIdInit = response?.data?.data?.iap_id;
+        setIapId(iapIdInit)
         setDescription(data);
         showLoadingSpinner(false);
         console.log(description);
@@ -67,6 +80,39 @@ export default function MultiPackageDetails({route}) {
 useEffect(()=>{
     getMultiPackageDetails();
 },[]);
+useEffect(() => {
+  if (Platform.OS === 'ios') {
+    getInAppPurchaseProducts();
+  }
+}, []);
+const subscribeMultiPackage = () => {
+  //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+    const subscriptionInfo = {
+      billNumber: 'ios_bill',
+      paymentFor: 'Multipackage',
+      lessonId: '1258',
+      subjectId: 12345,
+      price: 200,
+    };
+    deviceStorage
+      .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
+      .then(() => requestPurchase({ sku: iapId }));
+  }
+  const subscribeSinglePackage = () => {
+    console.log('SUBCRIBE', iapId)
+    //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+      const subscriptionInfo = {
+        billNumber: 'ios_bill',
+        paymentFor: 'Singlepackage',
+        lessonId: '1258',
+        subjectId: 12345,
+        price: 200,
+      };
+      deviceStorage
+        .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
+        .then(() => requestPurchase({ sku: iapId }));
+    }
+
 
 useLayoutEffect(()=>{
   showLoadingSpinner(true);
@@ -125,7 +171,8 @@ useLayoutEffect(()=>{
       { description && <DetailsTeachers data={description.content} />}
 
       <View style={{backgroundColor:colors.primary, width:'90%', height:45, alignSelf:'center', justifyContent:'center', alignItems:'center', marginTop:20, borderRadius:20}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={packageType === 'multi' ? subscribeMultiPackage : subscribeSinglePackage}>
+
         <View style={{flexDirection:'row'}}>
             
             <Text style={[styles.subItemText,{marginHorizontal:20, color:colors.white}]}>{I18n.t('SubscripePackage')}</Text>

@@ -1,14 +1,18 @@
-import { View, Text, Image, FlatList, StyleSheet } from 'react-native'
-import React from 'react'
+/* eslint-disable react/prop-types */
+import { View, Text, Image, FlatList, StyleSheet, Pressable } from 'react-native'
+import React, { useCallback } from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import I18n from 'i18n-js';
 import FastImage from 'react-native-fast-image';
+import { useNavigation } from '@react-navigation/native';
 import colors from '../../helpers/colors';
 import { IMAGEURL } from '../../utils/functions';
 import { heightp } from '../../utils/responsiveDesign';
 
-export default function DetailsTeacherItem({image, teacherName, subjectName, calender}) {
+export default function DetailsTeacherItem({image, teacherName, subjectName, calender, itemData}) {
+
+  const navigation = useNavigation()
 
     const dateArr = ["السبت","الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعه"];
     const dateArrEn = ["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"];
@@ -18,10 +22,18 @@ export default function DetailsTeacherItem({image, teacherName, subjectName, cal
             <Text style={[styles.subItemText, {fontWeight:'100'}]}>{(I18n.locale == 'ar'? dateArr[item.day_id - 1] : dateArrEn[item.day_id - 1])}</Text>
         </View>
     );
-
+    const navigateTeacherProfile = useCallback(
+      (item) => {
+          navigation.navigate('TeacherProfile', {
+              item,
+              title: `${item?.first_name} ${item?.last_name}`,
+          })
+      },
+      [navigation]
+  )
     const uri = (image ? `${IMAGEURL}/${image}` : '../../assets/img/teacherDefaultpng.png');
   return (
-    <View style={styles.container}>
+    <Pressable onPress={() => navigateTeacherProfile(itemData)} style={styles.container}>
       <FastImage
       style={{width: heightp(100), height: heightp(100), borderRadius: 10, marginRight: heightp(20)}}
       source={{
@@ -50,7 +62,7 @@ export default function DetailsTeacherItem({image, teacherName, subjectName, cal
             />
         </View>
     </View>
-    </View>
+    </Pressable>
   )
 }
 const styles = StyleSheet.create({
