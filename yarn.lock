@@ -7387,6 +7387,11 @@
   dependencies:
     "prop-types" "^15.7.2"
 
+"react-native-circular-progress-indicator@^2.0.6":
+  "integrity" "sha512-YrOQP6rZxKJycXBQcZbNgJJN5AX4d/+JpcXULbHyjfer4fZpLJd8kbVMFCgRboIzbo/0cwoLfyWHIFhKO4kW3w=="
+  "resolved" "https://registry.npmjs.org/react-native-circular-progress-indicator/-/react-native-circular-progress-indicator-2.0.10.tgz"
+  "version" "2.0.10"
+
 "react-native-codegen@^0.69.1":
   "integrity" "sha512-yPcgMHD4mqLbckqnWjFBaxomDnBREfRjDi2G/WxNyPBQLD+PXUEmZTkDx6QoOXN+Bl2SkpnNOSsLE2+/RUHoPw=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.69.2.tgz"

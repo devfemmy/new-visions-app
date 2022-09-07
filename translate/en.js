@@ -183,6 +183,8 @@ const English = {
     DeleteMembership: 'Delete Membership',
 
     Exit: 'Exit',
+    
+    Back: 'Back',
 
     TimeOfSubject: 'Time Of Subject',
 

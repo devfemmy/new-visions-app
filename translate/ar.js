@@ -190,6 +190,8 @@ const Arabic = {
     DeleteMembership: 'حذف حسابي',
 
     Exit: 'Exit',
+    
+    Back: 'الى الخلف',
 
     TimeOfSubject: 'عدد ساعات المادة',
 
