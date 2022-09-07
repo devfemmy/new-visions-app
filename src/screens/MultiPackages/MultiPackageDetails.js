@@ -58,7 +58,6 @@ export default function MultiPackageDetails({route}) {
       if (response.data.code == 200) {
         const data = response.data.data;
         const iapIdInit = response?.data?.data?.iap_id;
-        console.log(iapIdInit, 'hhshjssj')
         setIapId(iapIdInit)
         setDescription(data);
         showLoadingSpinner(false);

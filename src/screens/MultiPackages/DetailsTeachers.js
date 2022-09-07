@@ -5,7 +5,7 @@ import DetailsTeacherItem from './DetailsTeacherItem';
 
 export default function DetailsTeachers({data}) {
     const renderItem = ({item})=>(
-        <DetailsTeacherItem image={item.teacher.image}
+        <DetailsTeacherItem itemData={item.teacher} image={item.teacher.image}
         teacherName={item.teacher.first_name}
         subjectName={item.subject.title}
         calender={item.calendar} />
