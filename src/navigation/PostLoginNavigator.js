@@ -44,6 +44,7 @@ import Exit from '../screens/Exit'
 import PackagesStage from '../screens/Packages/PackagesStage'
 import MultiPackagesStage from '../screens/MultiPackages/MultiPackagesStage'
 import EditProfile from '../screens/Parent/EditProfile'
+import WebViewComponent from '../screens/WebView'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -236,6 +237,14 @@ export const PostLoginNavigator = () => {
                         backgroundColor: colors.primary,
                     },
                 })}
+            />
+            <MainStack.Screen
+                name="WebView"
+                component={WebViewComponent}
+                options={{
+                    title: '',
+                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                }}
             />
             <MainStack.Screen
                 name="Profile"

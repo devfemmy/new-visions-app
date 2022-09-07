@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/prop-types */
@@ -14,12 +15,15 @@ import colors from '../../helpers/colors'
 import CalendarItem from './CalendarItem'
 import { Loader } from '../../components/Loader'
 import HomePageService from '../../services/userServices'
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CalendarView({text, data}) {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [statusInfo, setStatusInfo] = useState('');
   const [itemDetails, setItemDetails] = useState({});
+  const navigation = useNavigation();
   const checkStatus = async (item) => {
     setLoading(true);
     const payload = {
@@ -40,6 +44,26 @@ export default function CalendarView({text, data}) {
       return res;
     } catch (err) {
       console.log(err, 'error');
+      setLoading(false);
+    } 
+  }
+  const joinLive = async () => {
+    setIsVisible(false)
+    setLoading(true);
+    const payload = {
+      id: itemDetails?.id.toString(),
+      type: itemDetails?.type.toString()
+    }
+    try {
+      const res = await HomePageService.joinLive(payload);
+      const live_url = res?.data?.live_url;
+      const lesson_id = res?.data?.lesson_id;
+      await AsyncStorage.setItem('lessonId', lesson_id)
+      navigation.navigate('WebView', {live_url})
+
+
+      return res;
+    } catch (err) {
       setLoading(false);
     } 
   }
@@ -132,7 +156,7 @@ export default function CalendarView({text, data}) {
             <IconText modal text={itemDetails?.start} 
             children={<Ionicons name="ios-time-outline" size={24} color={colors.white} />} />
           </View>
-          <Pressable style={styles.btn}>
+          <Pressable onPress={statusInfo === 'start' ? joinLive : joinLive} style={styles.btn}>
             <Text style={styles.textColor} text={statusInfo === 'start' ? 'Start Now' : 'Not Available Now'} />
           </Pressable>
         </View>

@@ -76,6 +76,11 @@ export default class HomePageService {
         return res?.data || res
     }
 
+    static async joinLive(data) {
+        const res = await baseAxios.post('/joinLive', data)
+        return res?.data || res
+    }
+
     static async getConversations(data) {
         const res = await baseAxios.post('/getMessages', data)
         return res?.data || res
