@@ -191,6 +191,20 @@ const Arabic = {
 
     Exit: 'Exit',
 
+    Back: 'الى الخلف',
+
+    Quiz: 'اختبار',
+
+    Rate: 'معدل',
+
+    Publish: 'ينشر',
+
+    SendQuiz: 'إرسال اختبار',
+
+    AddYourReview: 'إضافة تقييمك',
+
+    WriteHere: 'اكتب هنا.....',
+
     TimeOfSubject: 'عدد ساعات المادة',
 
     NoOfStudents: 'لا يوجد طلاب',

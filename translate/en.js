@@ -184,6 +184,20 @@ const English = {
 
     Exit: 'Exit',
 
+    Back: 'Back',
+
+    Quiz: 'Quiz',
+
+    Rate: 'Rate',
+
+    Publish: 'Publish',
+
+    SendQuiz: 'Send Quiz',
+
+    WriteHere: 'Write here.....',
+
+    AddYourReview: 'Add your review',
+
     TimeOfSubject: 'Time Of Subject',
 
     NoOfStudents: 'No Of Students',

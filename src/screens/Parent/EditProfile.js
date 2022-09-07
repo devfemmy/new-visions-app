@@ -22,9 +22,14 @@ import AppButton from '../../components/Button'
 import I18n from 'i18n-js'
 import { heightp } from '../../utils/responsiveDesign'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { updateProfile } from '../../api/updateProfile'
+// import { updateProfile } from '../../api/updateProfile'
 import FastImage from 'react-native-fast-image'
 import { IMAGEURL } from '../../utils/functions'
+import Global from '../../../Global'
+import axios from 'axios'
+import { Alert } from 'react-native'
+import RNRestart from 'react-native-restart'
+import { replace } from '../../../Navigator'
 
 const Layout = {
     height: Dimensions.get('window').height,
@@ -82,8 +87,19 @@ class EditProfile extends Component {
         } else if (result.error) {
             console.log('ImagePicker Error: ', result.error)
         } else {
-            console.log('<<<PHOTO>>>sssssss', result)
-            this.uploadAvatar(result)
+            console.log('<<<PHOTO>>>sssssss', result?.assets[0])
+            let response = result.assets[0]
+            const uri = response.uri
+            const type = response.type
+            const name = response.fileName || response.uri.substring(-10)
+
+            source = {
+                uri,
+                type,
+                name,
+            }
+            console.log('<<<PHOTO>>>sssssss source', source)
+            this.uploadAvatar(source)
         }
     }
 
@@ -105,7 +121,19 @@ class EditProfile extends Component {
         } else if (result.error) {
             console.log('ImagePicker Error: ', result.error)
         } else {
-            this.uploadAvatar(result)
+            console.log('<<<PHOTO>>>sssssss', result?.assets[0])
+            let response = result.assets[0]
+            const uri = response.uri
+            const type = response.type
+            const name = response.fileName || response.uri.substring(-10)
+
+            source = {
+                uri,
+                type,
+                name,
+            }
+            console.log('<<<PHOTO>>>sssssss source', source)
+            this.uploadAvatar(source)
         }
     }
 
@@ -113,29 +141,159 @@ class EditProfile extends Component {
         this.getSession()
     }
 
+    updateProfile = ({ data, lang, onLogin }) => {
+        console.log('data', data, 'lang', lang)
+        // setIsLoading(true)
+        axios
+            .post(
+                'https://www.newvisions.sa/api/editUserProfile', // URL
+                data,
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'multipart/form-data;',
+                        'Access-Control-Allow-Origin': '*',
+                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 2,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.data.code === 200) {
+                    if (Global.UserName) {
+                        alert('Your data has been updated Succssfully!')
+                        replace('Main')
+                        this.getUpdatedProfile({ lang, onLogin })
+                        return response.data.code
+                    } else {
+                        Alert.alert(
+                            'Your data has been updated Succssfully!',
+                            'To synchronize your data we will need to restart the app',
+                            [
+                                {
+                                    text: 'Ok',
+                                    onPress: () => {
+                                        RNRestart.Restart()
+                                    },
+                                    style: 'cancel',
+                                },
+                            ],
+                            {
+                                cancelable: false,
+                            }
+                        )
+                        return response.data.code
+                    }
+                    // console.log(BroadcastData);
+                } else if (response.data.code === -2) {
+                    alert(response.data.message)
+                    console.log(
+                        '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
+                        response.data.message
+                    )
+                    return response.data.code
+                } else if (response.data.code !== 200) {
+                    console.log('request failed')
+                    console.log(response.data)
+                    return response.data.code
+
+                    // console.log(JSON.stringify(response.data.message));
+                } else {
+                    console.log(response)
+                    return response.data.code
+                }
+            })
+            .catch((error) => {
+                alert(error)
+            })
+            .finally(() => {
+                // setIsLoading(false)
+                console.log('done')
+            })
+    }
+
+    getUpdatedProfile = ({ lang, onLogin }) => {
+        axios
+            .post(
+                'https://www.newvisions.sa/api/getUserProfile', // URL
+                // data,
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json;',
+                        'Access-Control-Allow-Origin': '*',
+                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 2,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.data.code === 200) {
+                    if (Global.UserName) {
+                        onLogin(response.data.data, true)
+                        this.onReload()
+                        this.setState({ loading: false })
+                    } else {
+                        console.log(response.data)
+                        return response.data.code
+                    }
+                    // console.log(BroadcastData);
+                } else if (response.data.code === -2) {
+                    console.log(
+                        '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
+                        response.data.message
+                    )
+                    return response.data.code
+                } else if (response.data.code !== 200) {
+                    console.log('request failed')
+                    console.log(response.data)
+                    return response.data.code
+                    // console.log(JSON.stringify(response.data.message));
+                } else {
+                    console.log(response)
+                    return response.data.code
+                }
+            })
+            .catch((error) => {
+                // alert(error)
+                console.log(error)
+            })
+            .finally(() => {
+                // setIsLoading(false)
+                console.log('done')
+            })
+    }
+
     uploadAvatar = async (photo) => {
-        let { firstname, lastname, phone, email, avatarUrl, toggleTypePicker } =
-            this.state
-        const { user, lang } = this.context
-        // this.setState({ loading: true })
+        try {
+            let {
+                firstname,
+                lastname,
+                phone,
+                email,
+                avatarUrl,
+                toggleTypePicker,
+            } = this.state
+            const { user, lang, onLogin } = this.context
+            this.setState({ loading: true })
 
-        console.log('<<<PHOTO>>>', photo)
-        const data = new FormData()
-        data.append('image', photo ? photo : avatarUrl)
-        data.append('first_name', firstname)
-        data.append('last_name', lastname)
-        data.append('phone', phone)
-        data.append('gender', user?.gender)
-        const res = updateProfile({ data, lang })
+            console.log('<<<PHOTO>>>', photo)
+            const data = new FormData()
+            data.append('image', photo ? photo : avatarUrl)
+            data.append('first_name', firstname)
+            data.append('last_name', lastname)
+            data.append('phone', phone)
+            data.append('gender', user?.gender)
+            const res = this.updateProfile({ data, lang, onLogin })
 
-        console.log('res', res)
-        // if (res === 200) {
-        //     this.setState({ loading: false })
-        // } else if (!res) {
-        //     this.setState({ loading: false })
-        // } else {
-        //     this.setState({ loading: false })
-        // }
+            console.log('res', res)
+        } catch (error) {
+            console.log('error', error)
+        }
     }
 
     getSession = async () => {

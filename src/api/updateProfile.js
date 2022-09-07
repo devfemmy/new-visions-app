@@ -5,7 +5,7 @@ import Global from '../../Global'
 import { replace } from '../../Navigator'
 
 // eslint-disable-next-line import/prefer-default-export
-export const updateProfile = ({ data, lang }) => {
+export const updateProfile = ({ data, lang, onLogin }) => {
     console.log('data', data, 'lang', lang)
     // setIsLoading(true)
     axios
@@ -29,6 +29,8 @@ export const updateProfile = ({ data, lang }) => {
                 if (Global.UserName) {
                     alert('Your data has been updated Succssfully!')
                     replace('Main')
+                    getUpdatedProfile({ lang, onLogin })
+                    return response.data.code
                 } else {
                     Alert.alert(
                         'Your data has been updated Succssfully!',
@@ -36,7 +38,9 @@ export const updateProfile = ({ data, lang }) => {
                         [
                             {
                                 text: 'Ok',
-                                onPress: () => RNRestart.Restart(),
+                                onPress: () => {
+                                    RNRestart.Restart()
+                                },
                                 style: 'cancel',
                             },
                         ],
@@ -64,10 +68,61 @@ export const updateProfile = ({ data, lang }) => {
                 console.log(response)
                 return response.data.code
             }
-            return response.data.code
         })
         .catch((error) => {
             alert(error)
+        })
+        .finally(() => {
+            // setIsLoading(false)
+            console.log('done')
+        })
+}
+
+export const getUpdatedProfile = ({ lang, onLogin }) => {
+    axios
+        .post(
+            'https://www.newvisions.sa/api/getUserProfile', // URL
+            // data,
+            {
+                // config
+                headers: {
+                    'Content-Type': 'application/json;',
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: `Bearer ${Global.AuthenticationToken}`,
+                    Accept: 'application/json',
+                    lang: lang,
+                    version: 2,
+                },
+            }
+        )
+        .then((response) => {
+            if (response.data.code === 200) {
+                if (Global.UserName) {
+                    onLogin(response.data.data, true)
+                } else {
+                    console.log(response.data)
+                    return response.data.code
+                }
+                // console.log(BroadcastData);
+            } else if (response.data.code === -2) {
+                console.log(
+                    '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
+                    response.data.message
+                )
+                return response.data.code
+            } else if (response.data.code !== 200) {
+                console.log('request failed')
+                console.log(response.data)
+                return response.data.code
+                // console.log(JSON.stringify(response.data.message));
+            } else {
+                console.log(response)
+                return response.data.code
+            }
+        })
+        .catch((error) => {
+            // alert(error)
+            console.log(error)
         })
         .finally(() => {
             // setIsLoading(false)

@@ -44,6 +44,7 @@ import Exit from '../screens/Exit'
 import PackagesStage from '../screens/Packages/PackagesStage'
 import MultiPackagesStage from '../screens/MultiPackages/MultiPackagesStage'
 import EditProfile from '../screens/Parent/EditProfile'
+import LiveNowQuiz from '../screens/LiveNowQuiz'
 import WebViewComponent from '../screens/WebView'
 const MainStack = createStackNavigator()
 
@@ -316,11 +317,20 @@ export const PostLoginNavigator = () => {
             />
             <MainStack.Screen
                 options={{
-                    title: I18n.t('Attendace'),
+                    title: I18n.t('LiveNowQuiz'),
                     headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
                 }}
                 name={'Attendance'}
                 component={Attendance}
+            />
+            <MainStack.Screen
+                name={'LiveNowQuiz'}
+                component={LiveNowQuiz}
+                options={{
+                    title: I18n.t('MeasurementQuiz'),
+                    headerShown: true,
+                    headerLeft: backRight,
+                }}
             />
         </MainStack.Navigator>
     )
