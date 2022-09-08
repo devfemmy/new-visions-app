@@ -247,7 +247,7 @@ const DrawerNavigator = () => {
                     }}
                 />
 
-                <Drawer.Screen
+                {/* <Drawer.Screen
                     name={I18n.t('WhoWeAre')}
                     component={WhoWeAre}
                     options={{
@@ -264,7 +264,7 @@ const DrawerNavigator = () => {
                             />
                         ),
                     }}
-                />
+                /> */}
                 <Drawer.Screen
                     name={I18n.t('DeleteMembership')}
                     component={DeleteMembership}

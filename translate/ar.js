@@ -14,7 +14,7 @@ const Arabic = {
     ForgotPassword: 'هل نسيت كلمة السر؟',
     CreateANewAccount: 'انشاء حساب جديد',
     ContinueWithGoogle: 'الدخول بحساب جوجل',
-    ContinueWithApple: 'الدخول بحساب أبل',
+    ContinueWithApple: 'تسجيل الدخول باستخدام.',
 
     //Forgot Password
     EnterYourEmailToRestYourPassword:

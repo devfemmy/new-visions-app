@@ -26,7 +26,6 @@ const DeleteMembership = () => {
         setLoading(true);
         try {
           const res = await HomePageService.deleteUser();
-          console.log('res', res)
           setLoading(false);
           onLogout();
         return res;

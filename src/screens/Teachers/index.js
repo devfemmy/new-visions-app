@@ -61,6 +61,15 @@ const Teachers = () => {
         setIsLoading(false)
         // }
     }
+    const navigateTeachersProfile = useCallback(
+        (item) => {
+            navigation.navigate('TeacherProfile', {
+                item,
+                title: `${item?.first_name} ${item?.last_name}`,
+            })
+        },
+        [navigation]
+    )
 
     const renderFooter = () => {
         return (
@@ -117,6 +126,9 @@ const Teachers = () => {
                             {/* <>{console.log(item)}</> */}
                             <TeachersDetailCard
                                 // subjectDetails
+                                viewProfile={() =>
+                                    navigateTeachersProfile(item)
+                                }
                                 pressed={() => navigateSubjectsDetails(item)}
                                 city={item?.city?.name}
                                 gender={item?.gender}
