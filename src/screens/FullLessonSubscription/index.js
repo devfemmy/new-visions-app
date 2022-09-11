@@ -3,6 +3,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { createContext, useEffect, useState } from 'react'
 import { Platform, View } from 'react-native';
+import I18n from 'i18n-js';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { Container,} from '../../components/common'
 import colors from '../../helpers/colors';
@@ -66,17 +67,17 @@ const FullLessonSubscription = () => {
           activeStepIconBorderColor={colors.primary} 
           completedProgressBarColor={colors.primary} 
           activeLabelColor={colors.primary} removeBtnRow>
-              <ProgressStep  nextBtnDisabled={!disabledProp} label="Select Group">
+              <ProgressStep  nextBtnText={I18n.t('Next')}  nextBtnDisabled={!disabledProp} label={I18n.t('SelectGroup')}>
                   <View>
                     <SelectGroup />
                   </View>
               </ProgressStep>
-              <ProgressStep nextBtnDisabled={!disabledProp}  label="Choose the group">
+              <ProgressStep previousBtnText={I18n.t('Previous')} nextBtnText={I18n.t('Next')} nextBtnDisabled={!disabledProp}  label={I18n.t('ChooseGroup')}>
                 <View>
                     <ChooseGroup subjectGroupData={subjectGroupData} />
                   </View>
               </ProgressStep>
-              <ProgressStep nextBtnText="Subscribe" onSubmit={subscribeToFullLesson} label="Group Days">
+              <ProgressStep previousBtnText={I18n.t('Previous')} finishBtnText={I18n.t('Subscribe')} onSubmit={subscribeToFullLesson} label={I18n.t('GroupDays')}>
                 <View>
                     <ChooseTime getGroupDaysData={getGroupDaysData} />
                   </View>

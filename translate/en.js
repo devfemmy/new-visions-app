@@ -225,6 +225,15 @@ const English = {
     Edit: 'Edit',
     EditProfile: 'Edit Profile',
     Save: 'Save',
+    MorningSession: 'Morning Session',
+    EveningSession: 'Evening Session',
+    SpecialDate: 'Special Date',
+    GroupNumber: 'Group Number',
+    Previous: 'Previous',
+    NextNew: 'Next',
+    SelectGroup: 'Select Group',
+    ChooseGroup: 'Choose the Group',
+    GroupDays: 'Group Days'
 }
 
 export default English

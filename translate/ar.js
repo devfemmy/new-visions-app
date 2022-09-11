@@ -14,7 +14,9 @@ const Arabic = {
     ForgotPassword: 'هل نسيت كلمة السر؟',
     CreateANewAccount: 'انشاء حساب جديد',
     ContinueWithGoogle: 'الدخول بحساب جوجل',
-    ContinueWithApple: 'تسجيل الدخول باستخدام.',
+    ContinueWithApple: 'الدخول بحساب Apple',
+    Gmail: 'جيميل',
+    Apple: 'ابل',
 
     //Forgot Password
     EnterYourEmailToRestYourPassword:
@@ -233,6 +235,15 @@ const Arabic = {
     Edit: 'يحرر',
     EditProfile: 'تعديل الملف الشخصي',
     Save: 'يحفظ',
+    MorningSession: 'الفترة الصباحية',
+    EveningSession: 'الفتره المسائية',
+    SpecialDate: 'موعد خاص',
+    GroupNumber: 'مجموعة رقم ',
+    Previous: 'السابق',
+    NextNew: 'التالي',
+    SelectGroup: 'اختيار التوقيت',
+    ChooseGroup: 'اختار المجموعة',
+    GroupDays: 'مواعيد الحضور'
 }
 
 export default Arabic

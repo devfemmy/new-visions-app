@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import I18n from 'i18n-js';
 import { SubContext } from '.';
 import StageCard from '../../components/StageCard'
 
@@ -30,7 +31,7 @@ const ChooseGroup = (subjectGroupData) => {
           <StageCard group show
       navigateSubjects={() => {}}
         stage={item}
-        groupNumber={item && `Group Number ${index + 1}`}
+        groupNumber={item && `${I18n.t('GroupNumber')} ${index + 1}`}
         activeLevel={activeLevel}
         setActiveLevel={setActiveLevel}
         activeStage={activeStage}

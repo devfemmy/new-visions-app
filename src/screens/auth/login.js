@@ -178,7 +178,7 @@ function Login({ navigation }) {
                                     style={styles.logo}
                                     source={require('../../assets/img/logo-light.png')}
                                 ></Image>
-
+                                <AppleButton />
                                 <LoginForm
                                     submitLogin={submitLogin}
                                     signInGoogle={signInGoogle}

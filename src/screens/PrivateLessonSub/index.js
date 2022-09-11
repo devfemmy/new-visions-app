@@ -69,13 +69,13 @@ const PrivateLessonSubscription = () => {
           activeStepIconBorderColor={colors.primary} 
           completedProgressBarColor={colors.primary} 
           activeLabelColor={colors.primary} removeBtnRow>
-              <ProgressStep  nextBtnDisabled={!disabledProp} label={I18n.t('ChooseDay')}>
+              <ProgressStep nextBtnText={I18n.t('Next')}   nextBtnDisabled={!disabledProp} label={I18n.t('ChooseDay')}>
                   <View>
                     {/* <SelectGroup /> */}
                     <ChooseLesson lessons={getSubjectChaptersAndLessonData} />
                   </View>
               </ProgressStep>
-              <ProgressStep  nextBtnText="Subscribe" onSubmit={subscribeToLesson} nextBtnDisabled={!disabledProp}  label={I18n.t('ChooseClass')}>
+              <ProgressStep previousBtnText={I18n.t('Previous')} finishBtnText={I18n.t('Subscribe')}  onSubmit={subscribeToLesson} nextBtnDisabled={!disabledProp}  label={I18n.t('ChooseClass')}>
                 <View>
                     {/* <ChooseGroup subjectGroupData={subjectGroupData} /> */}
                     <ChooseFreeDay freeDays={teachersFreeDaysData} />
