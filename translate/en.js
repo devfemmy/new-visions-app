@@ -131,6 +131,12 @@ const English = {
     NameOfTeacher: 'Name Of Teacher',
     Date: 'Date',
     Cost: 'Cost',
+    Price: 'Price',
+    FullPrice: 'Full Price',
+    Discount: 'Discount',
+    VAT: 'VAT',
+    Title: 'Title',
+    BillNumber: 'Bill Number',
 
     languageSelector: 'أختر اللغة',
     And: ' و ',

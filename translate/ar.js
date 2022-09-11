@@ -132,6 +132,12 @@ const Arabic = {
     NameOfTeacher: 'اسم المعلم',
     Date: 'تاريخ',
     Cost: 'كلفة',
+    Price: 'سعر',
+    FullPrice: 'السعر الكامل',
+    Discount: 'تخفيض',
+    VAT: 'ضريبة القيمة المضافة',
+    Title: 'عنوان',
+    BillNumber: 'رقم الفاتوره',
 
     languageSelector: 'Select Language',
     And: ' و ',

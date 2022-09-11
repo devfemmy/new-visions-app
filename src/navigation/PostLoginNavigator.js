@@ -317,7 +317,7 @@ export const PostLoginNavigator = () => {
             />
             <MainStack.Screen
                 options={{
-                    title: I18n.t('LiveNowQuiz'),
+                    title: I18n.t('Attendance'),
                     headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
                 }}
                 name={'Attendance'}
