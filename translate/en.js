@@ -131,6 +131,12 @@ const English = {
     NameOfTeacher: 'Name Of Teacher',
     Date: 'Date',
     Cost: 'Cost',
+    Price: 'Price',
+    FullPrice: 'Full Price',
+    Discount: 'Discount',
+    VAT: 'VAT',
+    Title: 'Title',
+    BillNumber: 'Bill Number',
 
     languageSelector: 'أختر اللغة',
     And: ' و ',
@@ -194,6 +200,21 @@ const English = {
 
     SendQuiz: 'Send Quiz',
 
+    QuestionNumber: 'Question number',
+
+    PleaseAnswerAll: 'Please Answer All Questions',
+
+    PleaseReadYourQuestionsWell:
+        'Please Read And Be Sure Of Your Answers Before Selecting',
+
+    CompletedAllQuestions: 'Completed all questions!',
+
+    SubmitQuiz: 'Time up, Submit Quiz!',
+
+    YouHave: 'You Have',
+
+    ForThis: 'For This',
+
     WriteHere: 'Write here.....',
 
     AddYourReview: 'Add your review',
@@ -233,7 +254,14 @@ const English = {
     NextNew: 'Next',
     SelectGroup: 'Select Group',
     ChooseGroup: 'Choose the Group',
-    GroupDays: 'Group Days'
+    GroupDays: 'Group Days',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday',
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
 }
 
 export default English

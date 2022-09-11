@@ -134,6 +134,12 @@ const Arabic = {
     NameOfTeacher: 'اسم المعلم',
     Date: 'تاريخ',
     Cost: 'كلفة',
+    Price: 'سعر',
+    FullPrice: 'السعر الكامل',
+    Discount: 'تخفيض',
+    VAT: 'ضريبة القيمة المضافة',
+    Title: 'عنوان',
+    BillNumber: 'رقم الفاتوره',
 
     languageSelector: 'Select Language',
     And: ' و ',
@@ -203,6 +209,20 @@ const Arabic = {
 
     SendQuiz: 'إرسال اختبار',
 
+    QuestionNumber: 'رقم السؤال',
+
+    PleaseAnswerAll: 'الرجاء الإجابة على جميع الأسئلة',
+
+    PleaseReadYourQuestionsWell: 'يرجى القراءة والتأكد من إجاباتك قبل الاختيار',
+
+    CompletedAllQuestions: 'أكملت جميع الأسئلة!',
+
+    SubmitQuiz: 'انتهى الوقت ، إرسال الاختبار!',
+
+    YouHave: 'عندك',
+
+    ForThis: 'لهذا',
+
     AddYourReview: 'إضافة تقييمك',
 
     WriteHere: 'اكتب هنا.....',
@@ -243,7 +263,14 @@ const Arabic = {
     NextNew: 'التالي',
     SelectGroup: 'اختيار التوقيت',
     ChooseGroup: 'اختار المجموعة',
-    GroupDays: 'مواعيد الحضور'
+    GroupDays: 'مواعيد الحضور',
+    Saturday: 'سبت ',
+    Sunday: 'الاحد',
+    Monday: 'الاثنين',
+    Tuesday: 'الثلاثاء',
+    Wednesday: 'الاربع',
+    Thursday: 'الخميس ',
+    Friday: 'الجمعة',
 }
 
 export default Arabic
