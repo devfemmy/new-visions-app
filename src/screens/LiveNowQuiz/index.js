@@ -1,44 +1,54 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useRoute, useNavigation, StackActions } from '@react-navigation/native'
 import {
     FlatList,
     StyleSheet,
     Text,
-    TouchableWithoutFeedback,
     View,
     Pressable,
     TextInput,
+    Alert,
+    TouchableWithoutFeedback,
 } from 'react-native'
 import CircularProgress from 'react-native-circular-progress-indicator'
 import { Loader } from '../../components/Loader'
 import HomePageService from '../../services/userServices'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp, widthp } from '../../utils/responsiveDesign'
 import { globalStyles } from '../../helpers/globalStyles'
 import I18n from 'i18n-js'
 import colors from '../../helpers/colors'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
-import { Container, Text as CustomText } from '../../components/common'
+import {
+    Container,
+    KeyboardAwareScrollView,
+    Text as CustomText,
+} from '../../components/common'
 import { AirbnbRating } from 'react-native-ratings'
 import * as Progress from 'react-native-progress'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const LiveNowQuiz = () => {
     const route = useRoute()
-    const { item } = route.params
+    const { item, lesson_id } = route.params
     const navigation = useNavigation()
-    const [quizData, setQuizData] = useState([
-        '',
-        '',
-    ])
+    const [quizData, setQuizData] = useState([])
     const [loading, setLoading] = useState(true)
     const [review, setReview] = useState('')
-    // console.log('item in live quiz', item, quizData)
+    const [answersInput, setAnswersInput] = useState([])
+    const [answer, setAnswer] = useState('')
+    const [numOfMins, setNumOfMins] = useState('')
+    console.log(
+        'answer to be submitted in live quiz',
+        numOfMins,
+        numOfMins.length
+    )
     useEffect(() => {
         // get Questions and answers
         async function getQuiz() {
             setLoading(true)
+            console.log('answer to be submitted in live quiz', lesson_id, item)
             const payload = {
-                lesson_id: item?.data?.lesson.toString(),
-                lesson_id: '1289',
+                lesson_id: lesson_id,
             }
             console.log(payload)
             try {
@@ -46,12 +56,52 @@ const LiveNowQuiz = () => {
                 if (res.code === -2) {
                     setLoading(false)
                     console.log('false data', res)
+                    Alert.alert(
+                        `${I18n.t('Quiz')}`,
+                        res?.message,
+                        [
+                            {
+                                text: 'Ok',
+                                onPress: () => {
+                                    navigation.navigate('Home')
+                                },
+                                style: 'cancel',
+                            },
+                        ],
+                        {
+                            cancelable: false,
+                        }
+                    )
                 } else {
                     console.log('quiz res', res)
                     const data = res?.data
                     setLoading(false)
-                    setQuizData(data)
+                    setQuizData(data?.questions)
+                    const filledArray = Array.from(
+                        Array(data?.questions.length),
+                        () => {
+                            return { answer: '', question_id: '' }
+                        }
+                    )
+                    setAnswersInput(filledArray)
+                    setNumOfMins(data?.number_of_minutes)
                     console.log('quiz data', data)
+                    Alert.alert(
+                        `${I18n.t('Quiz')}`,
+                        `${I18n.t('PleaseReadYourQuestionsWell')}`,
+                        [
+                            {
+                                text: 'Ok',
+                                onPress: () => {
+                                    // navigation.navigate('Home')
+                                },
+                                style: 'cancel',
+                            },
+                        ],
+                        {
+                            cancelable: false,
+                        }
+                    )
                     return res
                 }
             } catch (err) {
@@ -62,14 +112,35 @@ const LiveNowQuiz = () => {
         getQuiz()
     }, [])
 
-    const timeTaken = 4 * 86400
+    async function submitLessonQuiz() {
+        setLoading(true)
+        const payload = {
+            lesson_id: lesson_id,
+            answers: answersInput,
+        }
+        console.log(payload)
+        try {
+            const res = await HomePageService.submitLessonQuiz(payload)
+            if (res.code === 200) {
+                console.log('submitLessonQuiz res', res)
+                setLoading(false)
+                navigation.navigate('Home')
+            } else {
+                setLoading(false)
+                console.log('false data', res)
+            }
+        } catch (err) {
+            setLoading(false)
+            console.log('err', err)
+        }
+    }
 
     const renderFooter = () => {
         return (
             <View
                 style={{
                     marginBottom: heightp(60),
-                    marginHorizontal: heightp(20),
+                    // marginHorizontal: heightp(10),
                 }}
             >
                 <View
@@ -80,9 +151,14 @@ const LiveNowQuiz = () => {
                         },
                     ]}
                 >
-                    <TouchableWithoutFeedback
+                    <Pressable
                         onPress={() => {
                             console.log('pressed')
+                            if (answersInput.length !== quizData.length) {
+                                alert(`${I18n.t('PleaseAnswerAll')}`)
+                            } else {
+                                submitLessonQuiz()
+                            }
                         }}
                     >
                         <View
@@ -104,7 +180,7 @@ const LiveNowQuiz = () => {
                                 {I18n.t('SendQuiz')}
                             </Text>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </Pressable>
                 </View>
                 <Text style={styles.footerTitle}>{I18n.t('Rate')}</Text>
                 <View
@@ -230,7 +306,7 @@ const LiveNowQuiz = () => {
                     />
                 </View>
                 <View style={styles.footer}>
-                    <TouchableWithoutFeedback
+                    <Pressable
                         onPress={() => {
                             console.log('pressed')
                         }}
@@ -255,42 +331,249 @@ const LiveNowQuiz = () => {
                                 {I18n.t('Publish')}
                             </Text>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </Pressable>
                 </View>
             </View>
         )
     }
 
-    return (
-        <>
-            <View style={{ flex: 1 }}>
-                <View style={styles.container}>
-                    <CircularProgress
-                        value={0}
-                        maxValue={100}
-                        initialValue={100}
-                        radius={100}
-                        duration={timeTaken}
-                        progressValueColor={'rgba(155, 186, 82, 1)'}
-                        titleFontSize={16}
-                        titleColor={'rgba(67, 72, 84, 1)'}
-                        titleStyle={{ fontWeight: 'bold' }}
-                        progressValueStyle={{
-                            fontWeight: '100',
-                            color: 'rgba(67, 72, 84, 1)',
-                            fontSize: 36,
-                        }}
-                        circleBackgroundColor={'#fff'}
-                        inActiveStrokeColor={'rgba(233, 233, 233, 1)'}
-                        activeStrokeColor={'rgba(155, 186, 82, 1)'}
-                        progressFormatter={(value) => {
-                            'worklet'
-                            return value.toFixed(2) // 2 decimal places
-                        }}
-                        onAnimationComplete={() => {
-                            alert('callback')
+    const AnswersInfo = ({ item, index, answersInput, setAnswersInput }) => {
+        const _handleSubmit = (i, question_id, answer) => {
+            console.log('each next', i, question_id, answer)
+            let updatedList = answersInput.map((item, index) => {
+                if (i === index) {
+                    return { question_id: question_id, answer: answer } //gets what was already in item, and updates them
+                }
+                return item // else return unmodified item not particularly needed to run this function
+            })
+            setAnswersInput(updatedList)
+        }
+
+        return (
+            <>
+                <View style={styles.containerFlex} key={item?.id}>
+                    <Text
+                        style={[
+                            styles.inputTitle,
+                            {
+                                color: 'rgba(155, 186, 82, 1)',
+                            },
+                        ]}
+                    >
+                        {I18n.t('QuestionNumber')} {item?.id}
+                    </Text>
+                    <Text style={[styles.inputTitle]}>{item?.title}</Text>
+
+                    <View
+                        style={{
+                            borderBottomColor: 'rgba(112, 112, 112, 0.5)',
+                            borderBottomWidth: 1,
+                            width: '60%',
+                            marginVertical: heightp(10),
                         }}
                     />
+                    <View>
+                        <Pressable
+                            style={[
+                                styles.btnContainer,
+                                {
+                                    backgroundColor:
+                                        answersInput[index]?.answer === '1'
+                                            ? colors.primary
+                                            : '#D9D9D9',
+                                },
+                            ]}
+                            onPressIn={() => {
+                                console.log('pressed first In')
+                                _handleSubmit(index, item?.id, '1')
+                            }}
+                            onPress={() => {
+                                console.log('pressed first In')
+                                _handleSubmit(index, item?.id, '1')
+                            }}
+                        >
+                            <Text
+                                style={[
+                                    styles.title,
+                                    {
+                                        color: colors.white,
+                                    },
+                                ]}
+                            >
+                                {item?.first_answer}
+                            </Text>
+                        </Pressable>
+                    </View>
+                    <View>
+                        <Pressable
+                            style={[
+                                styles.btnContainer,
+                                {
+                                    backgroundColor:
+                                        answersInput[index]?.answer === '2'
+                                            ? colors.primary
+                                            : '#D9D9D9',
+                                },
+                            ]}
+                            onPressIn={() => {
+                                console.log('pressed second In')
+                                _handleSubmit(index, item?.id, '2')
+                            }}
+                            onPress={() => {
+                                console.log('pressed second In')
+                                _handleSubmit(index, item?.id, '2')
+                            }}
+                        >
+                            <Text
+                                style={[
+                                    styles.title,
+                                    {
+                                        color: colors.white,
+                                    },
+                                ]}
+                            >
+                                {item?.second_answer}
+                            </Text>
+                        </Pressable>
+                    </View>
+                    <View>
+                        <Pressable
+                            style={[
+                                styles.btnContainer,
+                                {
+                                    backgroundColor:
+                                        answersInput[index]?.answer === '3'
+                                            ? colors.primary
+                                            : '#D9D9D9',
+                                },
+                            ]}
+                            onPressIn={() => {
+                                console.log('pressed third In')
+                                _handleSubmit(index, item?.id, '3')
+                            }}
+                            onPress={() => {
+                                console.log('pressed third In')
+                                _handleSubmit(index, item?.id, '3')
+                            }}
+                        >
+                            <Text
+                                style={[
+                                    styles.title,
+                                    {
+                                        color: colors.white,
+                                    },
+                                ]}
+                            >
+                                {item?.third_answer}
+                            </Text>
+                        </Pressable>
+                    </View>
+                    <View>
+                        <Pressable
+                            style={[
+                                styles.btnContainer,
+                                {
+                                    backgroundColor:
+                                        answersInput[index]?.answer === '4'
+                                            ? colors.primary
+                                            : '#D9D9D9',
+                                },
+                            ]}
+                            onPressIn={() => {
+                                console.log('pressed fourth In')
+                                _handleSubmit(index, item?.id, '4')
+                            }}
+                            onPress={() => {
+                                console.log('pressed fourth In')
+                                _handleSubmit(index, item?.id, '4')
+                            }}
+                        >
+                            <Text
+                                style={[
+                                    styles.title,
+                                    {
+                                        color: colors.white,
+                                    },
+                                ]}
+                            >
+                                {item?.fourth_answer}
+                            </Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </>
+        )
+    }
+
+    return (
+        <>
+            <KeyboardAwareScrollView style={{ flex: 1 }}>
+                <View style={styles.container}>
+                    {numOfMins.length > 0 ? (
+                        <>
+                            <CircularProgress
+                                value={0}
+                                maxValue={100}
+                                initialValue={100}
+                                radius={100}
+                                duration={
+                                    numOfMins.length > 0
+                                        ? parseInt(numOfMins) * 86400
+                                        : 0
+                                }
+                                delay={1000}
+                                progressValueColor={'rgba(155, 186, 82, 1)'}
+                                titleFontSize={16}
+                                titleColor={'rgba(67, 72, 84, 1)'}
+                                titleStyle={{ fontWeight: 'bold' }}
+                                progressValueStyle={{
+                                    fontWeight: '100',
+                                    color: 'rgba(67, 72, 84, 1)',
+                                    fontSize: 36,
+                                }}
+                                circleBackgroundColor={'#fff'}
+                                inActiveStrokeColor={'rgba(233, 233, 233, 1)'}
+                                activeStrokeColor={'rgba(155, 186, 82, 1)'}
+                                progressFormatter={(value) => {
+                                    'worklet'
+                                    return value.toFixed(2) // 2 decimal places
+                                }}
+                                onAnimationComplete={() => {
+                                    Alert.alert(
+                                        `${I18n.t('Quiz')}`,
+                                        `${I18n.t('SubmitQuiz')}`,
+                                        [
+                                            {
+                                                text: 'Ok',
+                                                onPress: () => {
+                                                    submitLessonQuiz()
+                                                },
+                                                style: 'cancel',
+                                            },
+                                        ],
+                                        {
+                                            cancelable: false,
+                                        }
+                                    )
+                                }}
+                            />
+                            <Text
+                                style={[
+                                    styles.title,
+                                    {
+                                        color: '#000',
+                                        textAlign: 'center',
+                                    },
+                                ]}
+                            >
+                                {I18n.t('YouHave')} {numOfMins}{' '}
+                                {I18n.t('Minutes')} {I18n.t('ForThis')}{' '}
+                                {I18n.t('Quiz')}
+                            </Text>
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </View>
                 <FlatList
                     // nestedScrollEnabled
@@ -332,136 +615,17 @@ const LiveNowQuiz = () => {
                     data={quizData}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
-                    renderItem={({ item }) => (
-                        <View style={styles.containerFlex}>
-                            <Text
-                                style={[
-                                    styles.inputTitle,
-                                    {
-                                        color: 'rgba(155, 186, 82, 1)',
-                                    },
-                                ]}
-                            >
-                                Question number 1
-                            </Text>
-                            <Text style={[styles.inputTitle]}>
-                                It is not classified as a main memory type
-                            </Text>
-
-                            <View
-                                style={{
-                                    borderBottomColor:
-                                        'rgba(112, 112, 112, 0.5)',
-                                    borderBottomWidth: 1,
-                                    width: '60%',
-                                    marginVertical: heightp(10),
-                                }}
-                            />
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    console.log('pressed')
-                                }}
-                            >
-                                <View
-                                    style={[
-                                        styles.btnContainer,
-                                        {
-                                            backgroundColor: colors.primary,
-                                        },
-                                    ]}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.title,
-                                            {
-                                                color: colors.white,
-                                            },
-                                        ]}
-                                    >
-                                        {I18n.t('Attendance')}
-                                    </Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    console.log('pressed')
-                                }}
-                            >
-                                <View
-                                    style={[
-                                        styles.btnContainer,
-                                        {
-                                            backgroundColor: colors.primary,
-                                        },
-                                    ]}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.title,
-                                            {
-                                                color: colors.white,
-                                            },
-                                        ]}
-                                    >
-                                        {I18n.t('Attendance')}
-                                    </Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    console.log('pressed')
-                                }}
-                            >
-                                <View
-                                    style={[
-                                        styles.btnContainer,
-                                        {
-                                            backgroundColor: colors.primary,
-                                        },
-                                    ]}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.title,
-                                            {
-                                                color: colors.white,
-                                            },
-                                        ]}
-                                    >
-                                        {I18n.t('Attendance')}
-                                    </Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    console.log('pressed')
-                                }}
-                            >
-                                <View
-                                    style={[
-                                        styles.btnContainer,
-                                        {
-                                            backgroundColor: colors.primary,
-                                        },
-                                    ]}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.title,
-                                            {
-                                                color: colors.white,
-                                            },
-                                        ]}
-                                    >
-                                        {I18n.t('Attendance')}
-                                    </Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
+                    renderItem={({ item, index }) => (
+                        <AnswersInfo
+                            item={item}
+                            index={index}
+                            answersInput={answersInput}
+                            setAnswersInput={setAnswersInput}
+                        />
                     )}
                     keyExtractor={(item, index) => index.toString()}
                 />
-            </View>
+            </KeyboardAwareScrollView>
             <Loader visible={loading} />
         </>
     )
@@ -479,8 +643,12 @@ const styles = StyleSheet.create({
     containerFlex: {
         // flex: 1,
         marginBottom: heightp(20),
+        // flex: 1,
+        // paddingHorizontal: widthp(20),
+        // paddingTop: heightp(10),
         justifyContent: 'center',
         alignItems: 'center',
+        // width: WINDOW_WIDTH * 0.92,
     },
     inputTitle: {
         fontSize: heightp(15),
@@ -543,5 +711,19 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         height: heightp(120),
         backgroundColor: 'rgba(70, 79, 84, 0.091)',
+    },
+    completedContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    completedTitle: {
+        textAlign: 'center',
+        width: widthp(218),
+        fontFamily: 'Cairo-Bold',
+        fontSize: 22,
+        lineHeight: 33,
+        letterSpacing: 0.31,
+        color: '#3F3B3E',
     },
 })

@@ -201,6 +201,20 @@ const Arabic = {
 
     SendQuiz: 'إرسال اختبار',
 
+    QuestionNumber: 'رقم السؤال',
+
+    PleaseAnswerAll: 'الرجاء الإجابة على جميع الأسئلة',
+
+    PleaseReadYourQuestionsWell: 'يرجى القراءة والتأكد من إجاباتك قبل الاختيار',
+
+    CompletedAllQuestions: 'أكملت جميع الأسئلة!',
+
+    SubmitQuiz: 'انتهى الوقت ، إرسال الاختبار!',
+
+    YouHave: 'عندك',
+
+    ForThis: 'لهذا',
+
     AddYourReview: 'إضافة تقييمك',
 
     WriteHere: 'اكتب هنا.....',

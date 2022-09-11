@@ -194,6 +194,21 @@ const English = {
 
     SendQuiz: 'Send Quiz',
 
+    QuestionNumber: 'Question number',
+
+    PleaseAnswerAll: 'Please Answer All Questions',
+
+    PleaseReadYourQuestionsWell:
+        'Please Read And Be Sure Of Your Answers Before Selecting',
+
+    CompletedAllQuestions: 'Completed all questions!',
+
+    SubmitQuiz: 'Time up, Submit Quiz!',
+
+    YouHave: 'You Have',
+
+    ForThis: 'For This',
+
     WriteHere: 'Write here.....',
 
     AddYourReview: 'Add your review',

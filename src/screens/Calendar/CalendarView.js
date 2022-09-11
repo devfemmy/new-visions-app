@@ -30,6 +30,7 @@ export default function CalendarView({ text, data }) {
             id: item?.id.toString(),
             type: item?.type.toString(),
         }
+        console.log(payload)
         try {
             const res = await HomePageService.checkLive(payload)
             setItemDetails(item)
@@ -60,10 +61,11 @@ export default function CalendarView({ text, data }) {
             if (res.code === 200) {
                 console.log('join ed live already', res)
                 const live_url = res?.data?.live_url
-                const lesson_id = res?.data?.lesson_id
+                const lesson_id = res?.data?.lesson
                 // await AsyncStorage.setItem('lessonId', lesson_id)
                 navigation.navigate('WebView', {
                     live_url,
+                    lesson_id,
                     liveNow: 'liveNow',
                     item: itemDetails,
                 })

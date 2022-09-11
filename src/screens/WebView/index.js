@@ -11,12 +11,13 @@ import I18n from 'i18n-js'
 const WebViewComponent = () => {
     const route = useRoute()
     const navigation = useNavigation()
-    const { live_url, liveNow, item } = route.params
+    const { live_url, liveNow, item, lesson_id } = route.params
     console.log('iteeeem', item)
     const navigateLiveNowQuiz = useCallback(
         (item) => {
             navigation.navigate('LiveNowQuiz', {
-                item, // title: `${item?.first_name} ${item?.last_name}`,
+                item,
+                lesson_id, // title: `${item?.first_name} ${item?.last_name}`,
             })
         },
 
