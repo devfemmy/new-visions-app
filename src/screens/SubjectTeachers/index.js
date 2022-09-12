@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { Alert, FlatList, StyleSheet, View } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
 import TeachersDetailCard from '../../components/TeachersDetail'
@@ -13,11 +13,14 @@ import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
 import { deviceStorage } from '../../services/deviceStorage'
 import { requestPurchase } from '../../services/iap'
+import HomePageService from '../../services/userServices'
+import { Loader } from '../../components/Loader'
 
 const SubjectTeachers = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
-    const [searchText, setSearchText] = useState()
+    const [searchText, setSearchText] = useState();
+    const [loader, setLoading] = useState(false);
     const route = useRoute()
     const { subject_id } = route.params
     const {
@@ -36,22 +39,60 @@ const SubjectTeachers = () => {
         (item) => {
             navigation.navigate('FullLesson', {
                 subject_id,
-                iap_id: item?.iap_id
+                iap_id: item?.iap_id,
+                iap_activation: item?.iap_activation
             })
         },
         [navigation, subject_id]
     )
+    const subscribeExternal = async (item) => {
+        setLoading(true)
+        const payload = {
+            id: item?.id.toString(),
+            type: 3,
+            lesson_id: '',
+            day_id: '',
+        }
+        try {
+            const res = await HomePageService.subscribeExternal(payload)
+            if (res.code === 200) {
+                setLoading(false)
+                Alert.alert(
+                  "Alert",
+                  res?.message,
+                  [
+                    {
+                      text: "Cancel",
+                      onPress: () => navigation.popToTop(),
+                      style: "cancel"
+                    },
+                    { text: "OK", onPress: () => navigation.navigate('HomePage') }
+                  ]
+                );
+            } else {
+                setLoading(false)
+            }
+            return res
+        } catch (err) {
+            setLoading(false)
+        }
+      }
     const bookOneLesson = (item) => {
-        const subscriptionInfo = {
-            billNumber: 'ios_bill',
-            paymentFor: 'OneLesson',
-            lessonId: '1258',
-            subjectId: subject_id,
-            price: 200,
-          };
-          deviceStorage
-            .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
-            .then(() => requestPurchase({ sku:  item?.lesson_iap_id}));
+        const iap_activation = item?.iap_activation;
+        if(!iap_activation) {
+            subscribeExternal(item)
+        }else {
+            const subscriptionInfo = {
+                billNumber: 'ios_bill',
+                paymentFor: 'OneLesson',
+                lessonId: '1258',
+                subjectId: subject_id,
+                price: 200,
+              };
+              deviceStorage
+                .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
+                .then(() => requestPurchase({ sku:  item?.lesson_iap_id}));
+        }
     }
     const navigateTeachersProfile = useCallback(
         (item) => {
@@ -71,7 +112,8 @@ const SubjectTeachers = () => {
             navigation.navigate('PrivateLesson', {
                 subject_id,
                 teacher_id: item?.teacher_id,
-                iap_id: item?.iap_id
+                iap_id: item?.iap_id,
+                iap_activation: item?.iap_activation
             })
         },
         [navigation, subject_id]
@@ -86,6 +128,7 @@ const SubjectTeachers = () => {
 
     return (
         <Container>
+            <Loader visible={loader} />
             <View style={{ marginBottom: 15 }}>
                 {/* <SearchBar
           placeholder="Search Subject Teachers"
@@ -103,7 +146,6 @@ const SubjectTeachers = () => {
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => {
-                        
                         return (
                             <TeachersDetailCard
                                 bookOneLesson={() => bookOneLesson(item)}

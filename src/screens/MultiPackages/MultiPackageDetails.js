@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
-import { View, Text, ImageBackground, Platform } from 'react-native'
+import { View, Text, ImageBackground, Platform, Alert } from 'react-native'
 import React from 'react'
 import { IMAGEURL } from '../../utils/functions';
 import FastImage from 'react-native-fast-image';
@@ -26,18 +27,22 @@ import { heightp } from '../../utils/responsiveDesign';
 import { getInAppPurchaseProducts } from '../../services/getInAppPurchase';
 import { deviceStorage } from '../../services/deviceStorage';
 import { requestPurchase } from '../../services/iap';
+import HomePageService from '../../services/userServices';
+import { Loader } from '../../components/Loader';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MultiPackageDetails({route}) {
+  const navigation = useNavigation()
 
   const [description, setDescription] = useState({});
   const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
     useContext(AppContext);
 
-  const [iapId, setIapId] = useState('')
+  const [iapId, setIapId] = useState('');
+  const [iap_activation, setIapActivation] = useState(false);
   const {packageType, item} = route.params;
-
-  console.log(packageType, 'packageType');
-  console.log(item, 'items')
+  const [uniqueId, setUniqueId] = useState('');
+  const [loading, setLoading] = useState(false)
 
   const uri = `${IMAGEURL}/${description.image}`;
   
@@ -58,10 +63,13 @@ export default function MultiPackageDetails({route}) {
       if (response.data.code == 200) {
         const data = response.data.data;
         const iapIdInit = response?.data?.data?.iap_id;
+        const signaling = response?.data?.data?.iap_activation;
+        const uniqueIdentifier = response?.data?.data?.id;
+        setIapActivation(signaling);
+        setUniqueId(uniqueIdentifier)
         setIapId(iapIdInit)
         setDescription(data);
         showLoadingSpinner(false);
-        console.log(description);
       }else if(response.data.code == 403){
         onLogout();
         showLoadingSpinner(false);
@@ -85,8 +93,44 @@ useEffect(() => {
     getInAppPurchaseProducts();
   }
 }, []);
+const subscribeExternal = async () => {
+  setLoading(true)
+  const payload = {
+      id: uniqueId.toString(),
+      type: 2,
+      lesson_id: '',
+      day_id: '',
+  }
+  try {
+      const res = await HomePageService.subscribeExternal(payload)
+      if (res.code === 200) {
+          setLoading(false)
+          Alert.alert(
+            "Alert",
+            res?.message,
+            [
+              {
+                text: "Cancel",
+                onPress: () => navigation.popToTop(),
+                style: "cancel"
+              },
+              { text: "OK", onPress: () => navigation.popToTop() }
+            ]
+          );
+      } else {
+          console.log('failed', res)
+          setLoading(false)
+      }
+      return res
+  } catch (err) {
+      setLoading(false)
+  }
+}
 const subscribeMultiPackage = () => {
   //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+  if (!iap_activation) {
+    subscribeExternal()
+  }else {
     const subscriptionInfo = {
       billNumber: 'ios_bill',
       paymentFor: 'Multipackage',
@@ -98,9 +142,11 @@ const subscribeMultiPackage = () => {
       .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
       .then(() => requestPurchase({ sku: iapId }));
   }
+  }
   const subscribeSinglePackage = () => {
-    console.log('SUBCRIBE', iapId)
-    //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+    if (!iap_activation) {
+      subscribeExternal()
+    }else {
       const subscriptionInfo = {
         billNumber: 'ios_bill',
         paymentFor: 'Singlepackage',
@@ -112,6 +158,8 @@ const subscribeMultiPackage = () => {
         .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
         .then(() => requestPurchase({ sku: iapId }));
     }
+    //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+    }
 
 
 useLayoutEffect(()=>{
@@ -119,6 +167,7 @@ useLayoutEffect(()=>{
 },[]);
   return (
     <Screen style={{marginBottom:20, paddingHorizontal: 20}}>
+      <Loader visible={loading} />
       <ScrollView showsVerticalScrollIndicator={false}>
           <FastImage
             style={{width: '95%', height: 200, borderRadius: 10, alignSelf:'center', marginTop:10}}

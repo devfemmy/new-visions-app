@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { createContext, useEffect, useState } from 'react'
-import { Platform, View } from 'react-native';
+import { Alert, Platform, View } from 'react-native';
 import I18n from 'i18n-js';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { Container,} from '../../components/common'
@@ -15,13 +15,16 @@ import { requestPurchase } from '../../services/iap';
 import ChooseGroup from './ChooseGroup';
 import ChooseTime from './ChooseTime';
 import SelectGroup from './SelectGroup';
+import HomePageService from '../../services/userServices';
+import { Loader } from '../../components/Loader';
 
 export const SubContext = createContext(null)
 const FullLessonSubscription = () => {
-    const route = useRoute()
+    const route = useRoute();
+    const [loading, setLoading] = useState(false)
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
-    const { subject_id } = route.params
+    const { subject_id, iap_id, iap_activation } = route.params
     const { subjectGroupData } = useAppSelector(
         (state) => state.subjectGroupPage
     )
@@ -45,10 +48,45 @@ const FullLessonSubscription = () => {
         if (Platform.OS === 'ios') {
             getInAppPurchaseProducts()
         }
-    }, [])
+    }, []);
+    const subscribeExternal = async () => {
+      setLoading(true)
+      const payload = {
+          id: subject_id.toString(),
+          type: 1,
+          lesson_id: '',
+          day_id: '',
+      }
+      try {
+          const res = await HomePageService.subscribeExternal(payload)
+          if (res.code === 200) {
+              setLoading(false)
+              Alert.alert(
+                "Alert",
+                res?.message,
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => navigation.popToTop(),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => navigation.navigate('HomePage') }
+                ]
+              );
+          } else {
+              setLoading(false)
+          }
+          return res
+      } catch (err) {
+          setLoading(false)
+      }
+    }
     const subscribeToFullLesson = () => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        const subscriptionInfo = {
+        if (!iap_activation) {
+          subscribeExternal()
+        }else {
+          const subscriptionInfo = {
             billNumber: 'ios_bill',
             paymentFor: 'FullLesson',
             lessonId: '1258',
@@ -61,11 +99,13 @@ const FullLessonSubscription = () => {
                 value: subscriptionInfo,
             })
             .then(() =>
-                requestPurchase({ sku: 'com.newtouch.newvisions_curriculum' })
+                requestPurchase({ sku:  iap_id})
             )
+        }
     }
   return (
     <SubContext.Provider value={{ disabledProp, setDisabledProps, setGroupId }}>
+      <Loader visible={loading} />
       <Container>
         <View style={{flex: 1}}>
           <ProgressSteps 

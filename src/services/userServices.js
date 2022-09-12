@@ -91,6 +91,11 @@ export default class HomePageService {
         return res?.data || res
     }
 
+    static async subscribeExternal(data) {
+        const res = await baseAxios.post('/subscribeExternal', data)
+        return res?.data || res
+    }
+
     static async startLessonQuiz(data) {
         const res = await baseAxios.post('/startLessonQuiz', data)
         return res?.data || res

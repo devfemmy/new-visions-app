@@ -199,14 +199,14 @@ export default function CalendarView({ text, data }) {
                         />
                     </View>
                     <Pressable
-                        onPress={statusInfo === 'start' ? joinLive : joinLive}
+                        onPress={statusInfo === 'start' ? joinLive : null}
                         style={styles.btn}
                     >
                         <Text
                             style={styles.textColor}
                             text={
                                 statusInfo === 'start'
-                                    ? 'Start Now'
+                                    ? I18n.t('Start')
                                     : 'Not Available Now'
                             }
                         />
