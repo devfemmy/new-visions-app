@@ -129,6 +129,11 @@ export default class HomePageService {
         return res?.data || res
     }
 
+    static async upDateUserProfile(data) {
+        const res = await baseAxios.post('/completeData', data)
+        return res?.data || res
+    }
+
     static async getAboutUs(data) {
         const res = await baseAxios.get('about_us', data)
         return res?.data || res

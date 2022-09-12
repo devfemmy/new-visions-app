@@ -252,7 +252,7 @@ const Arabic = {
     ChooseDay: 'اختر اليوم',
     ChooseClass: 'اختر الدرس',
     ViewProfile: 'عرض الصفحة الشخصية',
-    Edit: 'يحرر',
+    Edit: 'تعديل',
     EditProfile: 'تعديل الملف الشخصي',
     Save: 'يحفظ',
     MorningSession: 'الفترة الصباحية',

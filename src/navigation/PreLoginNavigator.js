@@ -8,6 +8,7 @@ import VerifyAccount from '../screens/auth/VerifyAccount'
 import VerifyEnterEmail from '../screens/auth/SendVerificationCodeByEmail'
 import VerifyConfirmPassword from '../screens/auth/VerifyCode'
 import  ResetPassword from '../screens/auth/ResetPassword'
+import { CompleteProfile } from '../screens/auth/CompleteProfile'
 
 const Stack = createNativeStackNavigator()
 
@@ -74,6 +75,14 @@ const PreLoginNavigator = () => (
             component={ResetPassword}
             options={{
                 title: 'ResetPassword',
+                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+            }}
+        />
+        <Stack.Screen
+            name="CompleteProfile"
+            component={CompleteProfile}
+            options={{
+                title: 'CompleteProfile',
                 headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
             }}
         />

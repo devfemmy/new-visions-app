@@ -47,6 +47,9 @@ import EditProfile from '../screens/Parent/EditProfile'
 import LiveNowQuiz from '../screens/LiveNowQuiz'
 import WebViewComponent from '../screens/WebView'
 import PrivateSubjectSubscribe from '../screens/PrivateSubjectSubscribe'
+import { Loader } from '../components/Loader'
+import { useAppSelector } from '../redux/hooks'
+import { CompleteProfile } from '../screens/auth/CompleteProfile'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -61,8 +64,11 @@ export const PostLoginNavigator = () => {
             <BackIcon width={20} height={20} />
         </TouchableOpacity>
     )
+    const {loading} = useAppSelector(state => state.app)
     return (
-        <MainStack.Navigator
+        <>
+        {/* <Loader visible={loading}/> */}
+                <MainStack.Navigator
             initialRouteName="Home"
             screenOptions={() => ({
                 headerShown: true,
@@ -90,6 +96,14 @@ export const PostLoginNavigator = () => {
                 options={() => ({
                     headerShown: true,
                     title: i18n.t('Notification'),
+                })}
+            />
+            <MainStack.Screen
+                name="CompleteProfile"
+                component={CompleteProfile}
+                options={() => ({
+                    headerShown: true,
+                    title: i18n.t('Profile'),
                 })}
             />
             <MainStack.Screen
@@ -343,5 +357,6 @@ export const PostLoginNavigator = () => {
                 }}
             />
         </MainStack.Navigator>
+        </>
     )
 }

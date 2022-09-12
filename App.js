@@ -16,11 +16,15 @@ import { usePlatform } from './src/utils/usePlatform';
 import { deviceStorage } from './src/services/deviceStorage';
 import { iapSkus } from './src/services/iap';
 import { googleSignInInit } from './src/services/googleSignInInit';
+import { Loader } from './src/components/Loader';
+import { useAppSelector } from './src/redux/hooks';
 
 initTranslate();
 setInterceptors();
 export default function App() {
   const { isIOS } = usePlatform();
+  // const {app: {loading}} = useAppSelector(state => state)
+  // const { levelData } = useAppSelector((state) => state.levelPage)
   const purchaseUpdateSubscription = useRef(null);
   const purchaseErrorSubscription = useRef(null);
   useEffect(() => {
@@ -94,6 +98,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <AppState>
+        {/* <Loader visible={loading} /> */}
         <AppNavigator />
       </AppState>
     </Provider>
