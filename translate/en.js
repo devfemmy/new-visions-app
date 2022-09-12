@@ -256,6 +256,7 @@ const English = {
     Wednesday: 'Wednesday',
     Thursday: 'Thursday',
     Friday: 'Friday',
+    
 }
 
 export default English

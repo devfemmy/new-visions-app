@@ -8,6 +8,7 @@ import {
     Pressable,
     ActivityIndicator,
     Text as RNText,
+    Alert,
 } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
@@ -18,13 +19,16 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
+import HomePageService from '../../services/userServices'
 
 const Teachers = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
     const [searchText, setSearchText] = useState()
     const route = useRoute()
-    const [isLoading, setIsLoading] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(0)
+    const [dataForTeachers, setDataForTeachers] = useState([])
     // const { level } = route.params;
     // const data = useAppSelector((state)=> console.log(state, 'hello'));
     const {
@@ -33,9 +37,61 @@ const Teachers = () => {
     } = useAppSelector((state) => state)
     const teachersData = teachersPage?.teachersData
     useEffect(() => {
-        const res = dispatch(getTeachers())
-        console.log('res', res)
-    }, [dispatch])
+        // const res = dispatch(getTeachers({ page: page }))
+        // console.log('res', res)
+        // setDataForTeachers(...teachersData, teachersData)
+        async function getTeachers() {
+            setIsLoading(true)
+            console.log('answer to be submitted in live quiz', lesson_id, item)
+            const payload = {
+                lesson_id: lesson_id,
+            }
+            console.log(payload)
+            try {
+                const res = await HomePageService.getTeachers(payload)
+                if (res.code === -2) {
+                    setIsLoading(false)
+                    console.log('false data', res)
+                    Alert.alert(
+                        `${I18n.t('Quiz')}`,
+                        res?.message,
+                        [
+                            {
+                                text: 'Ok',
+                                onPress: () => {
+                                    navigation.navigate('Home')
+                                },
+                                style: 'cancel',
+                            },
+                        ],
+                        {
+                            cancelable: false,
+                        }
+                    )
+                } else {
+                    console.log('getTeachers res', res)
+                    const data = res?.data
+                    // setIsLoading(false)
+                    // setQuizData(data?.questions)
+                    // const filledArray = Array.from(
+                    //     Array(data?.questions.length),
+                    //     () => {
+                    //         return { answer: '', question_id: '' }
+                    //     }
+                    // )
+                    // setAnswersInput(filledArray)
+                    // setNumOfMins(data?.number_of_minutes)
+                    // console.log('quiz data', data)
+                    
+                    return res
+                }
+            } catch (err) {
+                setIsLoading(false)
+                console.log('err', err)
+            }
+        }
+        getTeachers()
+    }, [dispatch, teachersData])
 
     const navigateSubjectsDetails = useCallback(
         (item) => {
@@ -47,15 +103,16 @@ const Teachers = () => {
         [navigation]
     )
     const searchFilteredData = searchText
-        ? teachersData?.data.filter((x) =>
+        ? dataForTeachers?.data.filter((x) =>
               x.first_name.toLowerCase().includes(searchText.toLowerCase())
           )
-        : teachersData?.data
+        : dataForTeachers?.data
 
     const fetchTeachers = async () => {
-        console.log('here to fetch')
         setIsLoading(true)
-        dispatch(getTeachers())
+        setPage(page + 1)
+        dispatch(getTeachers({ page: page + 1 }))
+        console.log('here to fetch', page)
         // console.log('res', res)
         // if (res.requestId.length > 0) {
         setIsLoading(false)
@@ -121,11 +178,7 @@ const Teachers = () => {
                                 city={item?.city?.name}
                                 gender={item?.gender}
                                 rates_count={item?.rates_count}
-                                ratings={
-                                    item?.rate === 0
-                                        ? null
-                                        : item?.rate
-                                }
+                                ratings={item?.rate === 0 ? null : item?.rate}
                                 uri={`${IMAGEURL}/${item?.image}`}
                                 contents={`${item?.first_name} ${item?.last_name}`}
                             />

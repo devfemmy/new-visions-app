@@ -18,13 +18,13 @@ import moment from 'moment'
 import { Loader } from '../../components/Loader'
 
 const dayOptions = [
-    { value: '1', label: I18n.t('Saturday') },
-    { value: '2', label: I18n.t('Sunday') },
-    { value: '3', label: I18n.t('Monday') },
-    { value: '4', label: I18n.t('Tuesday') },
-    { value: '5', label: I18n.t('Wednesday') },
-    { value: '6', label: I18n.t('Thursday') },
-    { value: '7', label: I18n.t('Friday') },
+    { value: '1', label: `${I18n.t('Saturday')}` },
+    { value: '2', label: `${I18n.t('Sunday')}` },
+    { value: '3', label: `${I18n.t('Monday')}` },
+    { value: '4', label: `${I18n.t('Tuesday')}` },
+    { value: '5', label: `${I18n.t('Wednesday')}` },
+    { value: '6', label: `${I18n.t('Thursday')}` },
+    { value: '7', label: `${I18n.t('Friday')}` },
 ]
 
 const PrivateSubjectSubscribe = ({ navigation, route }) => {
