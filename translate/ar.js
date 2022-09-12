@@ -14,7 +14,9 @@ const Arabic = {
     ForgotPassword: 'هل نسيت كلمة السر؟',
     CreateANewAccount: 'انشاء حساب جديد',
     ContinueWithGoogle: 'الدخول بحساب جوجل',
-    ContinueWithApple: 'الدخول بحساب أبل',
+    ContinueWithApple: 'الدخول بحساب Apple',
+    Gmail: 'جيميل',
+    Apple: 'ابل',
 
     //Forgot Password
     EnterYourEmailToRestYourPassword:
@@ -253,16 +255,25 @@ const Arabic = {
     Edit: 'يحرر',
     EditProfile: 'تعديل الملف الشخصي',
     Save: 'يحفظ',
+    MorningSession: 'الفترة الصباحية',
+    EveningSession: 'الفتره المسائية',
+    SpecialDate: 'موعد خاص',
+    GroupNumber: 'مجموعة رقم ',
+    Previous: 'السابق',
+    NextNew: 'التالي',
+    SelectGroup: 'اختيار التوقيت',
+    ChooseGroup: 'اختار المجموعة',
+    GroupDays: 'مواعيد الحضور',
+    Saturday: 'سبت ',
+    Sunday: 'الاحد',
+    Monday: 'الاثنين',
+    Tuesday: 'الثلاثاء',
+    Wednesday: 'الاربع',
+    Thursday: 'الخميس ',
+    Friday: 'الجمعة',
     PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
     ChooseTheRightDate: 'اختر التاريخ الصحيح',
     AddAnotherDate: 'أضف تاريخًا آخر',
-    Saturday: 'Saturday',
-    Sunday: 'Sunday',
-    Monday: 'Monday',
-    Tuesday: 'Tuesday',
-    Wednesday: 'Wednesday',
-    Thursday: 'Thursday',
-    Friday: 'Friday',
 }
 
 export default Arabic

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import I18n from 'i18n-js'
 import {
     StyleSheet,
@@ -8,27 +8,38 @@ import {
     ScrollView,
     Alert,
 } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import moment from 'moment'
 import { Container, Text } from '../../components/common'
 import { heightp, widthp } from '../../utils/responsiveDesign'
 import colors from '../../helpers/colors'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import CustomDateTimePicker from '../../components/DateTimePicker'
 import HomePageService from '../../services/userServices'
-import moment from 'moment'
 import { Loader } from '../../components/Loader'
+import { AppContext } from '../../context/AppState'
 
 const dayOptions = [
-    { value: '1', label: `${I18n.t('Saturday')}` },
-    { value: '2', label: `${I18n.t('Sunday')}` },
-    { value: '3', label: `${I18n.t('Monday')}` },
-    { value: '4', label: `${I18n.t('Tuesday')}` },
-    { value: '5', label: `${I18n.t('Wednesday')}` },
-    { value: '6', label: `${I18n.t('Thursday')}` },
-    { value: '7', label: `${I18n.t('Friday')}` },
+    { value: '1', label: 'Saturday' },
+    { value: '2', label: 'Sunday' },
+    { value: '3', label: 'Monday' },
+    { value: '4', label: 'Tuesday' },
+    { value: '5', label: 'Wednesday' },
+    { value: '6', label: 'Thursday' },
+    { value: '7', label: 'Friday' },
+]
+const dayArrOptions = [
+    { value: '1', label: 'سبت ' },
+    { value: '2', label: 'الاحد' },
+    { value: '3', label: 'الاثنين' },
+    { value: '4', label: 'الثلاثاء' },
+    { value: '5', label: 'الاربع' },
+    { value: '6', label: 'الخميس ' },
+    { value: '7', label: 'الجمعة' },
 ]
 
 const PrivateSubjectSubscribe = ({ navigation, route }) => {
     const { subject_id } = route.params
+    const { lang } = useContext(AppContext)
     const inputArr = [
         {
             day_id: '',
@@ -99,7 +110,7 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
             allDayTimeFormatRemodelled.push(res)
         })
         const payload = {
-            lesson_id: subject_id,
+            subject_id: subject_id,
             days: allDayTimeFormatRemodelled,
         }
         console.log('payload', payload)
@@ -154,7 +165,11 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
                                     label="Choose the day"
                                     timeLabel="Choose the time"
                                     dropdownTitle="Select day"
-                                    data={dayOptions}
+                                    data={
+                                        lang === 'ar'
+                                            ? dayArrOptions
+                                            : dayOptions
+                                    }
                                     dataRoute="label"
                                     value={inputArray[index]?.day_id}
                                     timeValue={inputArray[index]?.time}

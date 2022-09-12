@@ -3,6 +3,7 @@
 import React from 'react'
 import { Pressable, StyleSheet, TouchableOpacity, View, } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import I18n from 'i18n-js';
 import colors from '../helpers/colors'
 import { globalStyles } from '../helpers/globalStyles'
 import { heightp, widthp } from '../utils/responsiveDesign'
@@ -23,7 +24,7 @@ const LessonCard = ({
   }else {
     isActive = activeStage?.title === stage?.title;
   }
-  const daysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const daysOfWeek = [I18n.t('Saturday'), I18n.t('Sunday'),I18n.t('Monday'),I18n.t('Tuesday'),I18n.t('Wednesday'),I18n.t('Thursday'),I18n.t('Friday'), ];
   const specialIndex = `${stage?.day_id - 1}`;
   const dayOfWeek = daysOfWeek[specialIndex]
   const styles = StyleSheet.create({

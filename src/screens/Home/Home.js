@@ -182,7 +182,7 @@ const Home = () => {
                                     onPress={() =>
                                         navigation.navigate(
                                             'MultiPackageDetails',
-                                            item
+                                            {item, packageType: 'multi'}
                                         )
                                     }
                                 >
@@ -209,6 +209,7 @@ const Home = () => {
                 {Global.UserType == 3 && (
                     <>
                         <HeaderTitle
+                            deleteIcon
                             pressed={() => navigation.navigate('Subjects')}
                             text={i18n.t('EducationalLevel')}
                         />

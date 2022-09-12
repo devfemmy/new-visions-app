@@ -1,8 +1,9 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
+import I18n from 'i18n-js';
 import { StyleSheet, View } from 'react-native'
-import { SubContext } from '.'
+import { SubContext } from '.';
 import StageCard from '../../components/StageCard'
 
 const SelectGroup = ({ subject_id }) => {
@@ -10,9 +11,9 @@ const SelectGroup = ({ subject_id }) => {
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
     const items = [
-        { id: 1, name: 'Morning Session' },
-        { id: 2, name: 'Evening Session' },
-        { id: 3, name: 'Special Date' },
+        { id: 1, name: I18n.t('MorningSession') },
+        { id: 2, name: I18n.t('EveningSession')  },
+        { id: 3, name: I18n.t('SpecialDate')  },
     ]
     useEffect(() => {
         if (activeStage == null) {
@@ -46,4 +47,4 @@ const SelectGroup = ({ subject_id }) => {
     )
 }
 
-export default SelectGroup
+export default SelectGroup;
