@@ -246,6 +246,16 @@ const English = {
     Edit: 'Edit',
     EditProfile: 'Edit Profile',
     Save: 'Save',
+    PrivateSubjectSubscribe: 'Private Lesson Subscriptions',
+    ChooseTheRightDate: 'Choose the right date',
+    AddAnotherDate: 'Add another date',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday',
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
 }
 
 export default English

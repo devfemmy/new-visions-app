@@ -253,6 +253,16 @@ const Arabic = {
     Edit: 'يحرر',
     EditProfile: 'تعديل الملف الشخصي',
     Save: 'يحفظ',
+    PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
+    ChooseTheRightDate: 'اختر التاريخ الصحيح',
+    AddAnotherDate: 'أضف تاريخًا آخر',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday',
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
 }
 
 export default Arabic

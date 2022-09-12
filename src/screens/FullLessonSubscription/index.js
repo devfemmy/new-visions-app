@@ -81,7 +81,7 @@ const FullLessonSubscription = () => {
                             label="Select Group"
                         >
                             <View>
-                                <SelectGroup />
+                                <SelectGroup subject_id={subject_id} />
                             </View>
                         </ProgressStep>
                         <ProgressStep
