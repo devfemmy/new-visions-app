@@ -27,7 +27,7 @@ import HomeNavigation from './HomeNavigation'
 const RootBottomTab = createBottomTabNavigator()
 
 export const RootBottomTabNavigator = () => {
-    const {lang} = useContext(AppContext)
+    const { lang } = useContext(AppContext)
     const navigation = useNavigation()
     const HeaderLeft = () => (
         <TouchableOpacity
@@ -57,10 +57,11 @@ export const RootBottomTabNavigator = () => {
                 marginLeft: 16,
             }}
         >
-            {lang === 'ar' ? 
-              <ForwardIcon width={20} height={20} />:
-              <BackIcon width={20} height={20} />  
-        }
+            {lang === 'ar' ? (
+                <ForwardIcon width={20} height={20} />
+            ) : (
+                <BackIcon width={20} height={20} />
+            )}
         </TouchableOpacity>
     )
     return (
@@ -84,13 +85,13 @@ export const RootBottomTabNavigator = () => {
                         iconName = focused ? 'ios-book' : 'ios-book-outline'
                     } else if (route.name === I18n.t('Messages')) {
                         iconName = focused ? 'ios-mail' : 'ios-mail-outline'
-                    }else if (route.name === I18n.t('Teachers')) {
+                    } else if (route.name === I18n.t('Teachers')) {
                         iconName = focused ? 'ios-people' : 'ios-people-outline'
-                    } 
-                    else if (route.name === I18n.t('LiveNow')) {
-                        iconName = focused ? 'ios-videocam' : 'ios-videocam-outline'
-                    }
-                    else if (route.name === I18n.t('Subscriptions')) {
+                    } else if (route.name === I18n.t('LiveNow')) {
+                        iconName = focused
+                            ? 'ios-videocam'
+                            : 'ios-videocam-outline'
+                    } else if (route.name === I18n.t('Subscriptions')) {
                         iconName = focused
                             ? 'ios-receipt'
                             : 'ios-receipt-outline'
@@ -138,7 +139,7 @@ export const RootBottomTabNavigator = () => {
                     component={Teachers}
                 />
             )}
-        {Global.UserType == 3 && (
+            {Global.UserType == 3 && (
                 <RootBottomTab.Screen
                     options={{
                         headerShown: true,

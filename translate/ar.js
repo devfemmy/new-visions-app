@@ -271,6 +271,9 @@ const Arabic = {
     Wednesday: 'الاربع',
     Thursday: 'الخميس ',
     Friday: 'الجمعة',
+    PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
+    ChooseTheRightDate: 'اختر التاريخ الصحيح',
+    AddAnotherDate: 'أضف تاريخًا آخر',
 }
 
 export default Arabic

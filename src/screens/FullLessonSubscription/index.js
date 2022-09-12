@@ -75,7 +75,7 @@ const FullLessonSubscription = () => {
           activeLabelColor={colors.primary} removeBtnRow>
               <ProgressStep  nextBtnText={I18n.t('Next')}  nextBtnDisabled={!disabledProp} label={I18n.t('SelectGroup')}>
                   <View>
-                    <SelectGroup />
+                    <SelectGroup subject_id={subject_id} />
                   </View>
               </ProgressStep>
               <ProgressStep previousBtnText={I18n.t('Previous')} nextBtnText={I18n.t('Next')} nextBtnDisabled={!disabledProp}  label={I18n.t('ChooseGroup')}>

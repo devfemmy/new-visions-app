@@ -36,6 +36,11 @@ export default class HomePageService {
         return res?.data || res
     }
 
+    static async subscribeToPrivateCourse(data) {
+        const res = await baseAxios.post('/subscribeToPrivateCourse', data)
+        return res?.data || res
+    }
+
     static async getSubjectTeachers(data) {
         const res = await baseAxios.post('/getSubjectTeachers', data)
         return res?.data || res

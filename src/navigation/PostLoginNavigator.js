@@ -46,6 +46,7 @@ import MultiPackagesStage from '../screens/MultiPackages/MultiPackagesStage'
 import EditProfile from '../screens/Parent/EditProfile'
 import LiveNowQuiz from '../screens/LiveNowQuiz'
 import WebViewComponent from '../screens/WebView'
+import PrivateSubjectSubscribe from '../screens/PrivateSubjectSubscribe'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -218,6 +219,15 @@ export const PostLoginNavigator = () => {
                 options={({ route }) => ({
                     headerShown: true,
                     title: i18n.t('FullLessonSubscription'),
+                })}
+            />
+            <MainStack.Screen
+                name="PrivateSubjectSubscribe"
+                component={PrivateSubjectSubscribe}
+                options={({ route }) => ({
+                    headerShown: true,
+                    headerLeft: backRight,
+                    title: i18n.t('PrivateSubjectSubscribe'),
                 })}
             />
             <MainStack.Screen
