@@ -148,10 +148,10 @@ export const PostLoginNavigator = () => {
             />
             <MainStack.Screen
                 name="JointCourses"
-                component={JointCourses}
+                component={MultiPackagesStage}
                 options={() => ({
                     headerShown: true,
-                    title: i18n.t('JointCourses'),
+                    title: i18n.t('EducationalLevel'),
                 })}
             />
             <MainStack.Screen

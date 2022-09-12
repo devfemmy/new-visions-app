@@ -239,7 +239,7 @@ const Arabic = {
     Group: 'المجموعات الدراسية',
     People: 'الاشخاص',
     SearchForMassage: 'لا توجد رسائل',
-    NoData: 'لا توجد رسائل',
+    NoData: 'لا يوجد',
     Welcome: 'مرحبا',
     SearchTeachers: 'ابحث عن المعلمين',
     SearchSubjects: 'ابحث عن مادة',

@@ -113,7 +113,7 @@ export function CompleteProfile() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.Background}
     >
-      <SafeAreaView>
+      {/* <SafeAreaView> */}
       {isLoading ? <Loader visible /> : null}
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -236,7 +236,7 @@ export function CompleteProfile() {
       >
         <Text style={{ color: 'white' }}>{I18n.t('Save')}</Text>
       </TouchableOpacity>
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </KeyboardAvoidingView>
   );
 }

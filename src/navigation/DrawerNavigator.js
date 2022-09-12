@@ -229,7 +229,7 @@ const DrawerNavigator = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name={I18n.t('JointCourses')}
+                    name={I18n.t('EducationalLevel')}
                     component={JointCourses}
                     options={{
                         // headerShown: true,

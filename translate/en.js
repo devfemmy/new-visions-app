@@ -265,7 +265,7 @@ const English = {
     SelectGroup: 'Select Group',
     ChooseGroup: 'Choose the Group',
     GroupDays: 'Group Days',
-    
+
 }
 
 export default English

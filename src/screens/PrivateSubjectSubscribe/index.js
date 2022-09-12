@@ -15,31 +15,31 @@ import { heightp, widthp } from '../../utils/responsiveDesign'
 import colors from '../../helpers/colors'
 import CustomDateTimePicker from '../../components/DateTimePicker'
 import HomePageService from '../../services/userServices'
-import { Loader } from '../../components/Loader';
-import { AppContext } from '../../context/AppState';
+import { Loader } from '../../components/Loader'
+import { AppContext } from '../../context/AppState'
 
 const dayOptions = [
-    { value: '1', label: 'Saturday'},
+    { value: '1', label: 'Saturday' },
     { value: '2', label: 'Sunday' },
-    { value: '3', label: 'Monday'},
-    { value: '4', label: 'Tuesday'},
-    { value: '5', label: 'Wednesday'},
-    { value: '6', label: 'Thursday'},
-    { value: '7', label: 'Friday'},
+    { value: '3', label: 'Monday' },
+    { value: '4', label: 'Tuesday' },
+    { value: '5', label: 'Wednesday' },
+    { value: '6', label: 'Thursday' },
+    { value: '7', label: 'Friday' },
 ]
 const dayArrOptions = [
-    { value: '1', label: 'سبت '},
+    { value: '1', label: 'سبت ' },
     { value: '2', label: 'الاحد' },
-    { value: '3', label: 'الاثنين'},
-    { value: '4', label: 'الثلاثاء'},
-    { value: '5', label: 'الاربع'},
-    { value: '6', label: 'الخميس '},
-    { value: '7', label: 'الجمعة'},
+    { value: '3', label: 'الاثنين' },
+    { value: '4', label: 'الثلاثاء' },
+    { value: '5', label: 'الاربع' },
+    { value: '6', label: 'الخميس ' },
+    { value: '7', label: 'الجمعة' },
 ]
 
 const PrivateSubjectSubscribe = ({ navigation, route }) => {
     const { subject_id } = route.params
-    const {lang} = useContext(AppContext)
+    const { lang } = useContext(AppContext)
     const inputArr = [
         {
             day_id: '',
@@ -165,7 +165,11 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
                                     label="Choose the day"
                                     timeLabel="Choose the time"
                                     dropdownTitle="Select day"
-                                    data={lang === 'ar' ? dayArrOptions: dayOptions}
+                                    data={
+                                        lang === 'ar'
+                                            ? dayArrOptions
+                                            : dayOptions
+                                    }
                                     dataRoute="label"
                                     value={inputArray[index]?.day_id}
                                     timeValue={inputArray[index]?.time}

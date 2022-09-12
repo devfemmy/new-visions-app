@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Login from '../screens/auth/login'
 import UserType from '../screens/Landing/UserType'
@@ -7,7 +7,8 @@ import Registration from '../screens/auth/SignUp'
 import VerifyAccount from '../screens/auth/VerifyAccount'
 import VerifyEnterEmail from '../screens/auth/SendVerificationCodeByEmail'
 import VerifyConfirmPassword from '../screens/auth/VerifyCode'
-import  ResetPassword from '../screens/auth/ResetPassword'
+import ResetPassword from '../screens/auth/ResetPassword'
+import SplashScreen from 'react-native-splash-screen'
 import { CompleteProfile } from '../screens/auth/CompleteProfile'
 
 const Stack = createNativeStackNavigator()

@@ -44,7 +44,16 @@ const MultiPackagesStage = () => {
                 <FlatList
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
+                    ListEmptyComponent={() => (
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text text={I18n.t('NoData')} />
+                        </View>
+                    )}
                     data={subjectData}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}

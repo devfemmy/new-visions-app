@@ -8,6 +8,7 @@ import {
     Pressable,
     ActivityIndicator,
     Text as RNText,
+    Alert,
 } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
@@ -18,23 +19,77 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
+import HomePageService from '../../services/userServices'
 
 const Teachers = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
     const [searchText, setSearchText] = useState()
     const route = useRoute()
-    const [isLoading, setIsLoading] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(0)
+    const [dataForTeachers, setDataForTeachers] = useState([])
+    console.log('quiz data', dataForTeachers.length)
     // const { level } = route.params;
     // const data = useAppSelector((state)=> console.log(state, 'hello'));
-    const {
-        teachersPage,
-        app: { loading },
-    } = useAppSelector((state) => state)
-    const teachersData = teachersPage?.teachersData
+    // const {
+    //     teachersPage,
+    //     app: { loading },
+    // } = useAppSelector((state) => state)
+    // const teachersData = teachersPage?.teachersData
+    async function getTeachers(page) {
+        setIsLoading(true)
+        const payload = { page: page }
+        console.log(payload)
+        try {
+            const res = await HomePageService.getTeachers(payload)
+            if (res.code === -2) {
+                setIsLoading(false)
+                console.log('false data', res)
+                Alert.alert(
+                    `${I18n.t('Teachers')}`,
+                    res?.message,
+                    [
+                        {
+                            text: 'Ok',
+                            onPress: () => {
+                                // navigation.navigate('Home')
+                            },
+                            style: 'cancel',
+                        },
+                    ],
+                    {
+                        cancelable: false,
+                    }
+                )
+            } else {
+                const data = res?.data?.data
+                console.log('getTeachers res', data)
+                setIsLoading(false)
+                setDataForTeachers(data)
+                // const filledArray = Array.from(
+                //     Array(data?.questions.length),
+                //     () => {
+                //         return { answer: '', question_id: '' }
+                //     }
+                // )
+                // setAnswersInput(filledArray)
+                // setNumOfMins(data?.number_of_minutes)
+                // console.log('quiz data', data)
+
+                return data
+            }
+        } catch (err) {
+            setIsLoading(false)
+            console.log('err', err)
+        }
+    }
     useEffect(() => {
-        const res = dispatch(getTeachers())
-        console.log('res', res)
+        // const res = dispatch(getTeachers())
+        // console.log('res', res)
+        // setDataForTeachers(...teachersData, teachersData)
+
+        getTeachers(page)
     }, [dispatch])
 
     const navigateSubjectsDetails = useCallback(
@@ -47,19 +102,48 @@ const Teachers = () => {
         [navigation]
     )
     const searchFilteredData = searchText
-        ? teachersData?.data.filter((x) =>
+        ? dataForTeachers?.filter((x) =>
               x.first_name.toLowerCase().includes(searchText.toLowerCase())
           )
-        : teachersData?.data
+        : dataForTeachers
 
     const fetchTeachers = async () => {
         console.log('here to fetch')
         setIsLoading(true)
-        dispatch(getTeachers())
-        // console.log('res', res)
-        // if (res.requestId.length > 0) {
-        setIsLoading(false)
-        // }
+        setPage(page + 1)
+        const payload = { page: page + 1 }
+        try {
+            const res = await HomePageService.getTeachers(payload)
+            if (res.code === -2) {
+                setIsLoading(false)
+                console.log('false data', res)
+                Alert.alert(
+                    `${I18n.t('Teachers')}`,
+                    res?.message,
+                    [
+                        {
+                            text: 'Ok',
+                            onPress: () => {
+                                // navigation.navigate('Home')
+                            },
+                            style: 'cancel',
+                        },
+                    ],
+                    {
+                        cancelable: false,
+                    }
+                )
+            } else {
+                const data = res?.data?.data
+                setIsLoading(false)
+                setDataForTeachers([...dataForTeachers, ...data])
+                console.log('getTeachers res for fetch', data)
+                return data
+            }
+        } catch (err) {
+            setIsLoading(false)
+            console.log('err', err)
+        }
     }
     const navigateTeachersProfile = useCallback(
         (item) => {
@@ -116,7 +200,16 @@ const Teachers = () => {
                 <FlatList
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
+                    ListEmptyComponent={() => (
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text text={I18n.t('NoData')} />
+                        </View>
+                    )}
                     ListFooterComponent={renderFooter}
                     data={searchFilteredData}
                     showsVerticalScrollIndicator={false}
@@ -133,11 +226,7 @@ const Teachers = () => {
                                 city={item?.city?.name}
                                 gender={item?.gender}
                                 rates_count={item?.rates_count}
-                                ratings={
-                                    item?.rate === 0
-                                        ? null
-                                        : item?.rate
-                                }
+                                ratings={item?.rate === 0 ? null : item?.rate}
                                 uri={`${IMAGEURL}/${item?.image}`}
                                 contents={`${item?.first_name} ${item?.last_name}`}
                             />

@@ -32,7 +32,8 @@ export default class HomePageService {
     }
 
     static async getTeachers(data) {
-        const res = await baseAxios.post('/getTeachers', data)
+        console.log('getTeachers', `/getTeachers?page=${data.page}`)
+        const res = await baseAxios.post(`/getTeachers?page=${data.page}`, data)
         return res?.data || res
     }
 

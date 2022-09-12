@@ -39,7 +39,7 @@ const StageCard = ({
     const styles = StyleSheet.create({
         container: {
             minHeight: reducedHeight ? heightp(80) : heightp(110),
-            backgroundColor: isActive ? colors.primary : colors.dark,
+            backgroundColor: isActive ? colors.primary : colors.darkGray,
             borderRadius: 8,
             width: dark ? '100%' : widthp(121),
             marginRight: heightp(25),
@@ -50,7 +50,7 @@ const StageCard = ({
         },
         darkContainer: {
             minHeight: heightp(110),
-            backgroundColor: !dark ? colors.primary : colors.dark,
+            backgroundColor: !dark ? colors.primary : colors.darkGray,
             borderRadius: 8,
             width: dark ? '100%' : widthp(121),
             marginRight: heightp(25),
@@ -177,13 +177,16 @@ const StageCard = ({
                                 <TouchableOpacity
                                     key={level.id}
                                     activeOpacity={0.7}
-                                    onPress={() => setActiveLevel(level)}
+                                    onPress={() => {
+                                        setActiveLevel(level)
+                                        navigateSubjects()
+                                    }}
                                     style={[
                                         styles.levelBox,
                                         {
                                             backgroundColor: isActiveLevel
                                                 ? colors.primary
-                                                : colors.black,
+                                                : colors.darkGray,
                                         },
                                     ]}
                                 >
@@ -197,11 +200,11 @@ const StageCard = ({
                         })}
                     </View>
 
-                    {activeLevel ? (
+                    {/* {activeLevel ? (
                         <TouchableOpacity
                             activeOpacity={0.7}
                             style={styles.continueBtn}
-                            onPress={navigateSubjects}
+                            onPress={() => navigateSubjects()}
                         >
                             <Text
                                 text={I18n.t('Next')}
@@ -214,7 +217,7 @@ const StageCard = ({
                                 }}
                             />
                         </TouchableOpacity>
-                    ) : null}
+                    ) : null} */}
                 </>
             ) : null}
             <View style={!dark ? null : globalStyles.horizontalMargin} />
