@@ -71,7 +71,16 @@ const Conversation = () => {
                     style={{ padding: 5 }}
                     keyExtractor={(_, index) => index.toString()}
                     ListHeaderComponent={null}
-                    ListEmptyComponent={() => <Text text={i18n.t('NoData')} />}
+                    ListEmptyComponent={() => (
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text text={i18n.t('NoData')} />
+                        </View>
+                    )}
                     renderItem={({ item }) => {
                         const uri = `${IMAGEURL}/1640081198.webP`
                         return (

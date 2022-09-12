@@ -17,6 +17,7 @@ import HomePageService from '../../services/userServices'
 import Global from '../../../Global'
 import { AppContext } from '../../context/AppState'
 import axios from 'axios'
+import colors from '../../helpers/colors'
 const defaultUri = require('../../assets/img/HOME_BG_NEW.jpg')
 
 const Home = () => {
@@ -161,7 +162,14 @@ const Home = () => {
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
                         ListEmptyComponent={() => (
-                            <Text text={i18n.t('NoData')} />
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text text={i18n.t('NoData')} />
+                            </View>
                         )}
                         data={packagesArray}
                         showsVerticalScrollIndicator={false}
@@ -210,7 +218,14 @@ const Home = () => {
                                 keyboardShouldPersistTaps="handled"
                                 contentContainerStyle={styles.flatlistContent}
                                 ListEmptyComponent={() => (
-                                    <Text text={i18n.t('NoData')} />
+                                    <View
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Text text={i18n.t('NoData')} />
+                                    </View>
                                 )}
                                 data={stagesArray}
                                 showsVerticalScrollIndicator={false}
@@ -245,7 +260,14 @@ const Home = () => {
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
                         ListEmptyComponent={() => (
-                            <Text text={i18n.t('NoData')} />
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text text={i18n.t('NoData')} />
+                            </View>
                         )}
                         data={teachersArray}
                         showsVerticalScrollIndicator={false}
@@ -258,9 +280,7 @@ const Home = () => {
                                     pressed={() => navigateTeacherProfile(item)}
                                     uri={uri}
                                     ratings={
-                                        item?.rate === 0
-                                            ? null
-                                            : item?.rate
+                                        item?.rate === 0 ? null : item?.rate
                                     }
                                     lastName={item.last_name}
                                     text={item.first_name}
