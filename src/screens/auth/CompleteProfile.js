@@ -57,7 +57,7 @@ export function CompleteProfile() {
         const res = await HomePageService.upDateUserProfile(payload)
         if (res.code === 200) {
             setIsLoading(false)
-            setUserInfo(userData);
+            setUserInfo();
 
         } else {
             console.log('failed', res)
@@ -70,15 +70,15 @@ export function CompleteProfile() {
     }
   }
 
-  const setUserInfo = (userData) => {
+  const setUserInfo = () => {
     showLoadingSpinner(false)
     Global.AuthenticationToken = userData.remember_token
-    AsyncStorage.setItem('token', Global.AuthenticationToken)
-    Global.Image = userData.image
-    Global.UserName = userData.first_name + userData.last_name
-    Global.phone = userData.phone
-    Global.email = userData.email
-    Global.UserId = userData.id
+    AsyncStorage.setItem('token', Global?.AuthenticationToken)
+    Global.Image = userData?.image
+    Global.UserName = userData?.first_name + userData?.last_name
+    Global.phone = userData?.phone
+    Global.email = userData?.email
+    Global.UserId = userData?.id
     onLogin(userData, true)
 }
 
@@ -113,7 +113,7 @@ export function CompleteProfile() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.Background}
     >
-      {/* <SafeAreaView> */}
+      <SafeAreaView>
       {isLoading ? <Loader visible /> : null}
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -236,7 +236,7 @@ export function CompleteProfile() {
       >
         <Text style={{ color: 'white' }}>{I18n.t('Save')}</Text>
       </TouchableOpacity>
-      {/* </SafeAreaView> */}
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
