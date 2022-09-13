@@ -27,6 +27,7 @@ const TeacherProfile = () => {
     const [VideoUrl, setVideoUrl] = useState('')
     const [vidId, setVideoId] = useState('')
     const [rateArray, setRateArray] = useState('')
+    console.log('setVideo teachersData', teachersData)
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -187,12 +188,12 @@ const TeacherProfile = () => {
                                     },
                                 ]}
                             >
-                                {teachersData?.rates_count?.toFixed(1)}
+                                {teachersData?.rate?.toFixed(1)}
                             </RNText>
                             <AirbnbRating
                                 size={16}
                                 imageSize={17}
-                                defaultRating={teachersData?.rates_count}
+                                defaultRating={teachersData?.rate}
                                 reviews={
                                     [
                                         // 'Terrible',

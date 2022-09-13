@@ -265,7 +265,8 @@ const English = {
     SelectGroup: 'Select Group',
     ChooseGroup: 'Choose the Group',
     GroupDays: 'Group Days',
-
+    Error407Display:
+        'Your request to subscribe for private subject has been approved by the teacher. Please complete the payment process',
 }
 
 export default English
