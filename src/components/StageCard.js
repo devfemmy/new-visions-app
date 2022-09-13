@@ -41,7 +41,7 @@ const StageCard = ({
     const styles = StyleSheet.create({
         container: {
             minHeight: reducedHeight ? heightp(80) : heightp(110),
-            backgroundColor: isActive ? colors.primary : colors.darkGray,
+            backgroundColor: isActive ? colors.primary : colors.dark,
             borderRadius: 8,
             width: dark ? '100%' : widthp(121),
             marginRight: heightp(25),
@@ -52,7 +52,7 @@ const StageCard = ({
         },
         darkContainer: {
             minHeight: heightp(110),
-            backgroundColor: !dark ? colors.primary : colors.darkGray,
+            backgroundColor: !dark ? colors.primary : colors.dark,
             borderRadius: 8,
             width: dark ? '100%' : widthp(121),
             marginRight: heightp(25),
@@ -197,7 +197,7 @@ const StageCard = ({
                                         {
                                             backgroundColor: isActiveLevel
                                                 ? colors.primary
-                                                : colors.darkGray,
+                                                : colors.dark,
                                         },
                                     ]}
                                 >
