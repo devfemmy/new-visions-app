@@ -29,6 +29,7 @@ const StageCard = ({
     eduPress,
     navigateSubjects,
     subject_id,
+    text2
 }) => {
     let isActive
     if (group) {
@@ -61,6 +62,11 @@ const StageCard = ({
             marginTop: dark ? heightp(20) : 0,
         },
         textColor: {
+            color: 'white',
+            fontWeight: 'bold',
+        },
+        text2: {
+            textAlign: 'center',
             color: 'white',
             fontWeight: 'bold',
         },
@@ -128,7 +134,7 @@ const StageCard = ({
                     onPress={() => {
                         setActiveStage(stage)
                         if (stage.name === I18n.t('SpecialDate')) {
-                            console.log('pressed', stage, activeStage)
+
                             navigation.navigate('PrivateSubjectSubscribe', {
                                 subject_id: subject_id,
                             })
@@ -165,8 +171,11 @@ const StageCard = ({
                                 text={text}
                             />
                         </View>
-                    ) : (
-                        <Text style={styles.textColor} text={text} />
+                    ) : ( <View>
+                        {text2 && <Text style={styles.text2} text={text2} />}
+                         <Text style={styles.textColor} text={text} />
+                    </View>
+                    
                     )}
                 </Pressable>
             )}
