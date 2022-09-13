@@ -31,8 +31,9 @@ import { heightp } from '../../utils/responsiveDesign'
 // import { socialAuthApi } from "../../api/socialAuthApi";
 import Toast from 'react-native-toast-message'
 import Lottie from '../../components/Lottie'
+import { useNavigation } from '@react-navigation/native'
 
-function Login({ navigation }) {
+function Login() {
     const {
         changeLang,
         lang,
@@ -42,7 +43,9 @@ function Login({ navigation }) {
         loadingSpinner,
     } = useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
+    const navigation = useNavigation();
     const socialAuthApi = ({ givenName, familyName, email, id, type }) => {
+        console.log('I AM HERE')
         axios
             .post('https://www.newvisions.sa/api/signupExternal', {
                 first_name: givenName,
@@ -53,7 +56,24 @@ function Login({ navigation }) {
             })
             .then(async (response) => {
                 if (response.data.code === 200) {
-                    setUserInfo(response.data.data)
+                    console.log('response hereee', response.data)
+                    if (response.data.data?.type === 2) {
+                        Global.UserType = 'Teacher';
+                      }
+                      if (response.data.data.type === 3) {
+                        Global.UserType = 'Student';
+                      }
+                      if (response.data.data.type === 4) {
+                        Global.UserType = 'Parent';
+                      }
+                      Global.LoggedIn = true;                            
+                      if (response.data.data.phone === '123456' || response.data.data.phone === 123456) {
+                        const responseData = response?.data?.data;
+                        navigation.navigate('CompleteProfile', {userData: responseData })
+                      } else {
+                        // replace('Main');
+                        setUserInfo(response.data.data)
+                      }
                 } else {
                     alert(JSON.stringify(response.data.message))
                 }

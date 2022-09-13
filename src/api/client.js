@@ -59,7 +59,7 @@ export const setInterceptors = (axios) => {
                                     // useLogsHook()
                                     console.log('onLogout => ')
                                     AsyncStorage.removeItem('user')
-                                    navigate('UserType')
+                                    navigate('Login')
                                 },
                                 style: 'cancel',
                             },

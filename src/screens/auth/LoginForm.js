@@ -7,11 +7,6 @@ import SubmitButton from '../../components/forms/SubmitButton'
 import i18n from 'i18n-js'
 import { AppContext } from '../../context/AppState'
 import { useNavigation } from '@react-navigation/native'
-import {
-    appleAuth,
-    appleAuthAndroid,
-    AppleButton,
-} from '@invertase/react-native-apple-authentication'
 import colors from '../../helpers/colors'
 import { heightp } from '../../utils/responsiveDesign'
 import AppButton from '../../components/Button'
