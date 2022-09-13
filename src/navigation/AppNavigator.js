@@ -8,6 +8,7 @@ import { AppContext } from '../context/AppState'
 import navigationTheme from './navigationTheme'
 import { PostLoginNavigator } from './PostLoginNavigator'
 import Global from '../../Global'
+import { navigationRef } from './RootNavigation'
 
 export default function AppNavigator() {
     const { isLoading, user, initUUID, onLogout } = useContext(AppContext)
@@ -19,7 +20,7 @@ export default function AppNavigator() {
     return isLoading ? (
         <LoadingScreen />
     ) : (
-        <NavigationContainer theme={navigationTheme}>
+        <NavigationContainer theme={navigationTheme} ref={navigationRef}>
             {user === null ? <PreLoginNavigator /> : <PostLoginNavigator />}
         </NavigationContainer>
     )

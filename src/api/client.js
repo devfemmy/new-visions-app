@@ -5,6 +5,7 @@ import { Alert, Platform } from 'react-native'
 import { AppContext } from '../context/AppState'
 import { API_URL_Prod } from '../helpers/common'
 import useLogsHook from './Login/useLogsHook'
+import { navigate } from '../navigation/RootNavigation'
 
 export const setInterceptors = (axios) => {
     // const { onLogout, lang } = useContext(AppContext)
@@ -58,6 +59,7 @@ export const setInterceptors = (axios) => {
                                     // useLogsHook()
                                     console.log('onLogout => ')
                                     AsyncStorage.removeItem('user')
+                                    navigate('UserType')
                                 },
                                 style: 'cancel',
                             },

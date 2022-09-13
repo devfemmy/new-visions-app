@@ -20,10 +20,11 @@ import { deviceStorage } from './src/services/deviceStorage'
 import { iapSkus } from './src/services/iap'
 import { googleSignInInit } from './src/services/googleSignInInit'
 import axios from 'axios'
+import errorHandler from './src/components/Errorhandler'
 
 initTranslate()
 setInterceptors(axios)
-export default function App() {
+function App() {
     const { onLogout, lang } = useContext(AppContext)
     const { isIOS } = usePlatform()
     const purchaseUpdateSubscription = useRef(null)
@@ -117,3 +118,5 @@ export default function App() {
         </Provider>
     )
 }
+
+export default App
