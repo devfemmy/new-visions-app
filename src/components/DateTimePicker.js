@@ -157,6 +157,7 @@ const CustomDateTimePicker = (props) => {
                             is24Hour={false}
                             style={styles.datePicker}
                             onChange={props.onChangeTime}
+                            textColor="black"
                         />
                     </View>
                 </Modal>
@@ -236,6 +237,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         borderRadius: 10,
         padding: 20,
+        backgroundColor: colors.white,
     },
     datePicker: {
         justifyContent: 'center',
@@ -243,6 +245,7 @@ const styles = StyleSheet.create({
         width: widthp(320),
         height: heightp(260),
         display: 'flex',
+        color: '#000',
     },
 })
 
