@@ -7,6 +7,7 @@ import { SubContext } from '.';
 import StageCard from '../../components/StageCard'
 
 const SelectGroup = ({ subject_id }) => {
+    console.log(subject_id, 'hello')
     const { setDisabledProps } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)

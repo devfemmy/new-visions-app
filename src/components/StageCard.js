@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import React from 'react'
@@ -100,6 +101,7 @@ const StageCard = ({
             flexDirection: 'row',
         },
     })
+    console.log(stage?.name, 'Hello');
     return (
         <View>
             {!dark ? (
@@ -125,7 +127,7 @@ const StageCard = ({
                 <Pressable
                     onPress={() => {
                         setActiveStage(stage)
-                        if (stage.name === 'Special Date') {
+                        if (stage.name === I18n.t('SpecialDate')) {
                             console.log('pressed', stage, activeStage)
                             navigation.navigate('PrivateSubjectSubscribe', {
                                 subject_id: subject_id,
