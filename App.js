@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Provider } from 'react-redux'
 import { Alert } from 'react-native'
 import * as RNIap from 'react-native-iap'
 import SplashScreen from 'react-native-splash-screen'
 import messaging from '@react-native-firebase/messaging'
 import AppNavigator from './src/navigation/AppNavigator'
-import { AppState } from './src/context/AppState'
+import { AppContext, AppState } from './src/context/AppState'
 import { initTranslate } from './translate/translate'
 import 'react-native-gesture-handler'
 import { setInterceptors } from './src/api/client'
@@ -19,10 +19,12 @@ import { usePlatform } from './src/utils/usePlatform'
 import { deviceStorage } from './src/services/deviceStorage'
 import { iapSkus } from './src/services/iap'
 import { googleSignInInit } from './src/services/googleSignInInit'
+import axios from 'axios'
 
 initTranslate()
-setInterceptors()
+setInterceptors(axios)
 export default function App() {
+    const { onLogout, lang } = useContext(AppContext)
     const { isIOS } = usePlatform()
     const purchaseUpdateSubscription = useRef(null)
     const purchaseErrorSubscription = useRef(null)

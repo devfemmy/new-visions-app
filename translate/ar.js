@@ -274,6 +274,8 @@ const Arabic = {
     PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
     ChooseTheRightDate: 'اختر التاريخ الصحيح',
     AddAnotherDate: 'أضف تاريخًا آخر',
+    Error407Display:
+        'تم الموافقة من قبل المعلم على طلبك للاشتراك بالمنهج الخاص يرجى اتمام عملية الدفع',
 }
 
 export default Arabic

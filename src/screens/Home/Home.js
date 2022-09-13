@@ -31,34 +31,43 @@ const Home = () => {
     const stagesArray = data?.homeData?.stages
     const teachersArray = data?.homeData?.teachers
 
+    console.log('packages on home page', data)
+
     const [packages, setPackages] = useState([])
     function getPackages(params) {
         axios
             .post('https://newvisions.sa/api/getPackages', {})
             .then((response) => {
+                console.log('success message xxxxx', response)
                 if (
                     response != undefined &&
                     response.data != undefined &&
                     response.data.code != undefined
                 ) {
-                    if (response.data.code == 200) {
-                        const data = response.data.data.data
+                    if (response?.data?.code == 200) {
+                        const data = response?.data?.data?.data
                         console.log('multi Packages: ' + data)
                         setPackages(data)
                         showLoadingSpinner(false)
                         console.log(packages)
-                    } else if (response.data.code == 403) {
+                    } else if (response?.data?.code == 403) {
                         onLogout()
+                        showLoadingSpinner(false)
+                    } else if (response?.data?.code == 407) {
+                        onLogout()
+                        console.log('response 3')
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)
-                        alert(response.data.message)
+                        console.log('response 1')
+                        // alert(response.data.message)
                     }
                 }
             })
             .catch((error) => {
                 showLoadingSpinner(false)
-                alert(error)
+                console.log('response 2', error)
+                // alert(error)
             })
     }
 
@@ -182,7 +191,7 @@ const Home = () => {
                                     onPress={() =>
                                         navigation.navigate(
                                             'MultiPackageDetails',
-                                            {item, packageType: 'multi'}
+                                            { item, packageType: 'multi' }
                                         )
                                     }
                                 >

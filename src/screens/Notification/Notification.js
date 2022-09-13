@@ -24,6 +24,9 @@ const Notification = () => {
                 if (res.code === 403) {
                     setLoading(false)
                     onLogout()
+                } else if (res.code === 407) {
+                    setLoading(false)
+                    // onLogout()
                 } else {
                     const data = res?.data
                     setLoading(false)
