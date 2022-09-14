@@ -272,10 +272,11 @@ const Arabic = {
     Thursday: 'الخميس ',
     Friday: 'الجمعة',
     PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
-    ChooseTheRightDate: 'اختر التاريخ الصحيح',
+    ChooseTheRightDate: 'اختر المواعيد المناسبك لك',
     AddAnotherDate: 'أضف تاريخًا آخر',
     Error407Display:
         'تم الموافقة من قبل المعلم على طلبك للاشتراك بالمنهج الخاص يرجى اتمام عملية الدفع',
+    SendRequest: 'ارسل الطلب',
 }
 
 export default Arabic

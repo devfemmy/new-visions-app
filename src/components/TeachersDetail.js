@@ -32,6 +32,7 @@ const TeachersDetailCard = ({
     pressed,
     subjectDetails,
 }) => {
+    console.log('ratings', ratings)
     const styles = StyleSheet.create({
         container: {
             minHeight: heightp(100),
@@ -169,30 +170,34 @@ const TeachersDetailCard = ({
                             text={title && title}
                         /> */}
                         {subjectDetails ? (
-                            <IconText
-                                text={
-                                    numberOfStudents &&
-                                    `${numberOfStudents} ${I18n.t('Students')}`
-                                }
-                                children={
-                                    <View style={globalStyles.rowBetween}>
-                                        <Ionicons
-                                            name="ios-people"
-                                            size={20}
-                                            color={'rgba(67, 72, 84, 1)'}
-                                        />
-                                        <View
-                                            style={{
-                                                height: heightp(20),
-                                                backgroundColor:
-                                                    'rgba(67, 72, 84, 1)',
-                                                width: 1,
-                                                marginHorizontal: 6,
-                                            }}
-                                        />
-                                    </View>
-                                }
-                            />
+                            <>
+                                <IconText
+                                    text={
+                                        numberOfStudents &&
+                                        `${numberOfStudents} ${I18n.t(
+                                            'Students'
+                                        )}`
+                                    }
+                                    children={
+                                        <View style={globalStyles.rowBetween}>
+                                            <Ionicons
+                                                name="ios-people"
+                                                size={20}
+                                                color={'rgba(67, 72, 84, 1)'}
+                                            />
+                                            <View
+                                                style={{
+                                                    height: heightp(20),
+                                                    backgroundColor:
+                                                        'rgba(67, 72, 84, 1)',
+                                                    width: 1,
+                                                    marginHorizontal: 6,
+                                                }}
+                                            />
+                                        </View>
+                                    }
+                                />
+                            </>
                         ) : (
                             <View style={globalStyles.rowBetween}>
                                 <IconText
@@ -220,46 +225,31 @@ const TeachersDetailCard = ({
                                         </View>
                                     }
                                 />
-                                {rates_count && (
-                                    <AirbnbRating
-                                        size={12}
-                                        imageSize={17}
-                                        defaultRating={rates_count}
-                                        reviews={
-                                            [
-                                                // 'Terrible',
-                                                // 'Bad',
-                                                // 'Okay',
-                                                // 'Swift & quick pickup',
-                                                // 'Excellent',
-                                            ]
+                                {ratings && (
+                                    <IconText
+                                        text={ratings}
+                                        children={
+                                            <View
+                                                style={globalStyles.rowBetween}
+                                            >
+                                                <Ionicons
+                                                    name="ribbon-outline"
+                                                    size={20}
+                                                    color={colors.black}
+                                                />
+                                                <View
+                                                    style={{
+                                                        height: heightp(20),
+                                                        backgroundColor:
+                                                            'rgba(67, 72, 84, 1)',
+                                                        width: 1,
+                                                        marginHorizontal: 6,
+                                                    }}
+                                                />
+                                            </View>
                                         }
-                                        reviewSize={10}
-                                        type="star"
-                                        ratingColor="rgba(155, 186, 82, 1)'"
-                                        ratingContainerStyle={{
-                                            flexDirection: 'row',
-                                            backgroundColor: 'inherit',
-                                            // height: '40%',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            paddingRight: heightp(12),
-                                        }}
                                     />
                                 )}
-
-                                {/* <IconText
-                                    text={ratings && ratings}
-                                    children={
-                                        ratings && (
-                                            <Ionicons
-                                                name="ios-star"
-                                                size={20}
-                                                color={colors.primary}
-                                            />
-                                        )
-                                    }
-                                /> */}
                             </View>
                         )}
                         {subjectDetails ? (

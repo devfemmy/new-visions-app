@@ -258,7 +258,7 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
                 >
                     <View style={styles.loginBtnView}>
                         <RNText style={styles.loginText}>
-                            {I18n.t('Save')}
+                            {I18n.t('SendRequest')}
                         </RNText>
                         <View style={styles.arrowCont}>
                             <MaterialIcons

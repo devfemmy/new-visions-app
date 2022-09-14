@@ -247,7 +247,7 @@ const English = {
     EditProfile: 'Edit Profile',
     Save: 'Save',
     PrivateSubjectSubscribe: 'Private Lesson Subscriptions',
-    ChooseTheRightDate: 'Choose the right date',
+    ChooseTheRightDate: 'Choose your right time',
     AddAnotherDate: 'Add another date',
     Saturday: 'Saturday',
     Sunday: 'Sunday',
@@ -267,6 +267,7 @@ const English = {
     GroupDays: 'Group Days',
     Error407Display:
         'Your request to subscribe for private subject has been approved by the teacher. Please complete the payment process',
+    SendRequest: 'Send request',
 }
 
 export default English

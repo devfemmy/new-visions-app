@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
-import { useRoute } from '@react-navigation/native'
-import React, { useEffect, useState, useRef } from 'react'
-import { StyleSheet, View, Text as RNText } from 'react-native'
+import { useRoute, useNavigation } from '@react-navigation/native'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { StyleSheet, View, Text as RNText, ScrollView } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Rating, AirbnbRating } from 'react-native-ratings'
@@ -17,17 +17,20 @@ import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
 import { Vimeo } from 'react-native-vimeo-iframe'
 import I18n from 'i18n-js'
 import * as Progress from 'react-native-progress'
+import TeachersCourseCard from '../../components/TeachersCourseCard'
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
 const TeacherProfile = () => {
     const route = useRoute()
+    const navigation = useNavigation()
     const playerRef = useRef()
     const { item } = route.params
     const [teachersData, setTeachersData] = useState({})
+    const [courses, setCourses] = useState([])
     const [VideoUrl, setVideoUrl] = useState('')
     const [vidId, setVideoId] = useState('')
     const [rateArray, setRateArray] = useState('')
-    console.log('setVideo teachersData', teachersData)
+    console.log('setVideo teachersData', item)
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -46,7 +49,8 @@ const TeacherProfile = () => {
                     }
                 )
                 setRateArray(arrayResult)
-                console.log('wwwwwwwwww data', data)
+                setCourses(data?.courses)
+                console.log('wwwwwwwwww data zooooooooooooooom', data?.courses)
                 console.log('wwwwwwwwww data', arrayResult)
 
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
@@ -97,6 +101,32 @@ const TeacherProfile = () => {
         controlschange: (data) => console.log('controlschange: ', data),
     }
 
+    const subscribeToLessons = useCallback(
+        (subjectId) => {
+            if (subjectId)
+                navigation.navigate('SubjectTeachers', {
+                    subject_id: subjectId,
+                    teacher_id: item?.id,
+                })
+        },
+        [navigation, item]
+    )
+
+    const navigatePivateLesson = useCallback(
+        (course) => {
+            // const {id, title, image} = item;
+            // const uri = `${IMAGEURL}/${image}`
+            // if (id)
+            navigation.navigate('PrivateLesson', {
+                subject_id: course?.subject?.id,
+                teacher_id: item?.id,
+                iap_id: item?.iap_id,
+                iap_activation: item?.iap_activation,
+            })
+        },
+        [navigation, item]
+    )
+
     return (
         <Container
             contentContainerStyle={
@@ -107,235 +137,113 @@ const TeacherProfile = () => {
                 }
             }
         >
-            <View style={[styles.container, globalStyles.rowBetween]}>
-                <FastImage
-                    style={{
-                        width: heightp(70),
-                        height: heightp(70),
-                        borderRadius: 10,
-                        marginRight: heightp(20),
-                    }}
-                    source={
-                        teachersData?.image === null
-                            ? defaultUri
-                            : {
-                                  uri,
-                                  priority: FastImage.priority.normal,
-                              }
-                    }
-                    resizeMode={FastImage.resizeMode.cover}
-                />
-                <View style={styles.widthContainer}>
-                    <View>
-                        <Text
-                            style={styles.name}
-                            text={
-                                teachersData?.first_name &&
-                                `${teachersData?.first_name} ${teachersData?.last_name}`
-                            }
-                        />
-                        <Text
-                            style={[
-                                styles.ratingsName,
-                                {
-                                    color: colors.white,
-                                    width: '90%',
-                                    paddingBottom: heightp(7.5),
-                                },
-                            ]}
-                            text={
-                                teachersData?.bio &&
-                                `${I18n.t('Bio')}: ${teachersData?.bio}`
-                            }
-                        />
-                    </View>
-                </View>
-            </View>
-            {rateArray.length > 0 && (
-                <View
-                    style={[
-                        styles.borderContainer,
-                        {
-                            minHeight: WINDOW_HEIGHT * 0.125,
-                            backgroundColor: 'rgba(67, 72, 84, 0.1)',
-                            borderBottomWidth: 0,
-                            marginBottom: heightp(2),
-                            borderRadius: heightp(4),
-                        },
-                    ]}
-                >
-                    <View
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={[styles.container, globalStyles.rowBetween]}>
+                    <FastImage
                         style={{
-                            height: WINDOW_HEIGHT * 0.125,
-                            width: WINDOW_WIDTH * 0.9,
-                            flexDirection: 'row',
+                            width: heightp(70),
+                            height: heightp(70),
+                            borderRadius: 10,
+                            marginRight: heightp(20),
                         }}
-                    >
-                        <View
-                            style={{
-                                width: '40%',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <RNText
+                        source={
+                            teachersData?.image === null
+                                ? defaultUri
+                                : {
+                                      uri,
+                                      priority: FastImage.priority.normal,
+                                  }
+                        }
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <View style={styles.widthContainer}>
+                        <View>
+                            <Text
+                                style={styles.name}
+                                text={
+                                    teachersData?.first_name &&
+                                    `${teachersData?.first_name} ${teachersData?.last_name}`
+                                }
+                            />
+                            <Text
                                 style={[
-                                    styles.header,
+                                    styles.ratingsName,
                                     {
-                                        textAlign: 'center',
-                                        fontSize: heightp(32),
+                                        color: colors.white,
+                                        width: '90%',
+                                        paddingBottom: heightp(7.5),
                                     },
                                 ]}
-                            >
-                                {teachersData?.rate?.toFixed(1)}
-                            </RNText>
-                            <AirbnbRating
-                                size={16}
-                                imageSize={17}
-                                defaultRating={teachersData?.rate}
-                                reviews={
-                                    [
-                                        // 'Terrible',
-                                        // 'Bad',
-                                        // 'Okay',
-                                        // 'Swift & quick pickup',
-                                        // 'Excellent',
-                                    ]
+                                text={
+                                    teachersData?.bio &&
+                                    `${I18n.t('Bio')}: ${teachersData?.bio}`
                                 }
-                                reviewSize={10}
-                                type="star"
-                                ratingColor="#3498db"
-                                ratingContainerStyle={{
-                                    flexDirection: 'row',
-                                    backgroundColor: 'inherit',
-                                    // height: '40%',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    paddingRight: heightp(12),
-                                }}
                             />
-                        </View>
-                        <View
-                            style={{
-                                width: '60%',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            {rateArray.length > 0 &&
-                                rateArray.map((rate) => (
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                        key={rate.id}
-                                    >
-                                        <RNText
-                                            style={[
-                                                styles.header,
-                                                {
-                                                    textAlign: 'center',
-                                                    fontSize: heightp(12),
-                                                    paddingHorizontal:
-                                                        heightp(10),
-                                                },
-                                            ]}
-                                        >
-                                            {rate.id}
-                                        </RNText>
-                                        <Progress.Bar
-                                            progress={rate.val}
-                                            width={150}
-                                            color={colors.primary}
-                                        />
-                                    </View>
-                                ))}
                         </View>
                     </View>
                 </View>
-            )}
-            <View style={styles.borderContainer}>
-                {teachersData?.video?.length > 0 ? (
-                    <View
-                        style={{
-                            height: WINDOW_HEIGHT * 0.3,
-                            width: WINDOW_WIDTH * 0.9,
-                            marginVertical: heightp(10),
-                        }}
-                    >
-                        <Vimeo
-                            videoId={vidId}
-                            params={'api=1&autoplay=0'}
-                            handlers={videoCallbacks}
+                {courses.length > 0 &&
+                    courses.map((course, index) => (
+                        <TeachersCourseCard
+                            pressed={() => {
+                                // navigateSubjectsDetails(item)
+                            }}
+                            students={course?.subject?.number_of_students}
+                            duration={course?.subject?.number_of_hours}
+                            uri={`${IMAGEURL}/${course?.subject?.image}`}
+                            contents={course?.subject?.title}
+                            key={index}
+                            onPressSubscribeTeachers={() => {
+                                subscribeToLessons(course?.subject?.id)
+                            }}
+                            onPressSubscribePrivateTeachers={() => {
+                                navigatePivateLesson(course)
+                            }}
                         />
-                    </View>
-                ) : (
-                    <Text
-                        style={styles.text}
-                        text="No Data Present at the moment"
-                    />
-                )}
-            </View>
-            <View
-                style={[
-                    styles.borderContainer,
-                    {
-                        paddingBottom: heightp(500),
-                    },
-                ]}
-            >
-                <Text
-                    style={[
-                        styles.header,
-                        {
-                            textAlign: 'left',
-                        },
-                    ]}
-                    text={I18n.t('RatingsAndComments')}
-                />
-
-                {teachersData?.rates?.length > 0 ? (
-                    teachersData?.rates.map((rate) => (
+                    ))}
+                {rateArray.length > 0 && (
+                    <View
+                        style={[
+                            styles.borderContainer,
+                            {
+                                minHeight: WINDOW_HEIGHT * 0.125,
+                                backgroundColor: 'rgba(67, 72, 84, 0.1)',
+                                borderBottomWidth: 0,
+                                marginBottom: heightp(2),
+                                borderRadius: heightp(4),
+                            },
+                        ]}
+                    >
                         <View
-                            style={[
-                                styles.ratingsContainer,
-                                globalStyles.rowBetweenNoCenter,
-                                {
-                                    flexDirection: 'column',
-                                },
-                            ]}
+                            style={{
+                                height: WINDOW_HEIGHT * 0.125,
+                                width: WINDOW_WIDTH * 0.9,
+                                flexDirection: 'row',
+                            }}
                         >
-                            <View style={[globalStyles.rowBetweenNoCenter]}>
-                                <View style={globalStyles.rowBetweenNoCenter}>
-                                    <FastImage
-                                        style={{
-                                            width: heightp(30),
-                                            height: heightp(30),
-                                            borderRadius: heightp(30),
-                                            marginRight: heightp(10),
-                                        }}
-                                        source={{
-                                            uri: `${IMAGEURL}/${rate?.from?.image}`,
-                                            priority: FastImage.priority.normal,
-                                        }}
-                                        resizeMode={FastImage.resizeMode.cover}
-                                    />
-                                    <Text
-                                        style={styles.ratingsName}
-                                        text={
-                                            rate?.from?.first_name &&
-                                            `${rate?.from?.first_name} ${rate?.from?.last_name}`
-                                        }
-                                    />
-                                </View>
-                                <>{console.log('yessss', rate?.rate)}</>
+                            <View
+                                style={{
+                                    width: '40%',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <RNText
+                                    style={[
+                                        styles.header,
+                                        {
+                                            textAlign: 'center',
+                                            fontSize: heightp(32),
+                                        },
+                                    ]}
+                                >
+                                    {teachersData?.rate?.toFixed(1)}
+                                </RNText>
                                 <AirbnbRating
-                                    size={12}
-                                    imageSize={10}
-                                    defaultRating={rate?.rate}
+                                    size={16}
+                                    imageSize={17}
+                                    defaultRating={teachersData?.rate}
                                     reviews={
                                         [
                                             // 'Terrible',
@@ -351,26 +259,174 @@ const TeacherProfile = () => {
                                     ratingContainerStyle={{
                                         flexDirection: 'row',
                                         backgroundColor: 'inherit',
-                                        height: '40%',
+                                        // height: '40%',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        paddingRight: heightp(12),
                                     }}
                                 />
                             </View>
-                            <Text
-                                style={styles.ratingsText}
-                                text={
-                                    rate?.from?.message &&
-                                    `${rate?.from?.message}`
-                                }
+                            <View
+                                style={{
+                                    width: '60%',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                {rateArray.length > 0 &&
+                                    rateArray.map((rate) => (
+                                        <View
+                                            style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                            key={rate.id}
+                                        >
+                                            <RNText
+                                                style={[
+                                                    styles.header,
+                                                    {
+                                                        textAlign: 'center',
+                                                        fontSize: heightp(12),
+                                                        paddingHorizontal:
+                                                            heightp(10),
+                                                    },
+                                                ]}
+                                            >
+                                                {rate.id}
+                                            </RNText>
+                                            <Progress.Bar
+                                                progress={rate.val}
+                                                width={150}
+                                                color={colors.primary}
+                                            />
+                                        </View>
+                                    ))}
+                            </View>
+                        </View>
+                    </View>
+                )}
+                <View style={styles.borderContainer}>
+                    {teachersData?.video?.length > 0 ? (
+                        <View
+                            style={{
+                                height: WINDOW_HEIGHT * 0.3,
+                                width: WINDOW_WIDTH * 0.9,
+                                marginVertical: heightp(10),
+                            }}
+                        >
+                            <Vimeo
+                                videoId={vidId}
+                                params={'api=1&autoplay=0'}
+                                handlers={videoCallbacks}
                             />
                         </View>
-                    ))
-                ) : (
+                    ) : (
+                        <Text
+                            style={styles.text}
+                            text="No Data Present at the moment"
+                        />
+                    )}
+                </View>
+                <View
+                    style={[
+                        styles.borderContainer,
+                        {
+                            marginBottom: heightp(50),
+                        },
+                    ]}
+                >
                     <Text
-                        style={styles.text}
-                        text="No Ratings Present at the moment"
+                        style={[
+                            styles.header,
+                            {
+                                textAlign: 'left',
+                            },
+                        ]}
+                        text={I18n.t('RatingsAndComments')}
                     />
-                )}
-            </View>
+
+                    {teachersData?.rates?.length > 0 ? (
+                        teachersData?.rates.map((rate) => (
+                            <View
+                                style={[
+                                    styles.ratingsContainer,
+                                    globalStyles.rowBetweenNoCenter,
+                                    {
+                                        flexDirection: 'column',
+                                    },
+                                ]}
+                            >
+                                <View style={[globalStyles.rowBetweenNoCenter]}>
+                                    <View
+                                        style={globalStyles.rowBetweenNoCenter}
+                                    >
+                                        <FastImage
+                                            style={{
+                                                width: heightp(30),
+                                                height: heightp(30),
+                                                borderRadius: heightp(30),
+                                                marginRight: heightp(10),
+                                            }}
+                                            source={{
+                                                uri: `${IMAGEURL}/${rate?.from?.image}`,
+                                                priority:
+                                                    FastImage.priority.normal,
+                                            }}
+                                            resizeMode={
+                                                FastImage.resizeMode.cover
+                                            }
+                                        />
+                                        <Text
+                                            style={styles.ratingsName}
+                                            text={
+                                                rate?.from?.first_name &&
+                                                `${rate?.from?.first_name} ${rate?.from?.last_name}`
+                                            }
+                                        />
+                                    </View>
+                                    <>{console.log('yessss', rate?.rate)}</>
+                                    <AirbnbRating
+                                        size={12}
+                                        imageSize={10}
+                                        defaultRating={rate?.rate}
+                                        reviews={
+                                            [
+                                                // 'Terrible',
+                                                // 'Bad',
+                                                // 'Okay',
+                                                // 'Swift & quick pickup',
+                                                // 'Excellent',
+                                            ]
+                                        }
+                                        reviewSize={10}
+                                        type="star"
+                                        ratingColor="#3498db"
+                                        ratingContainerStyle={{
+                                            flexDirection: 'row',
+                                            backgroundColor: 'inherit',
+                                            height: '40%',
+                                        }}
+                                    />
+                                </View>
+                                <Text
+                                    style={styles.ratingsText}
+                                    text={
+                                        rate?.from?.message &&
+                                        `${rate?.from?.message}`
+                                    }
+                                />
+                            </View>
+                        ))
+                    ) : (
+                        <Text
+                            style={styles.text}
+                            text="No Ratings Present at the moment"
+                        />
+                    )}
+                </View>
+            </ScrollView>
         </Container>
     )
 }

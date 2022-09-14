@@ -1,0 +1,206 @@
+/* eslint-disable react/no-children-prop */
+/* eslint-disable react/prop-types */
+import React, { useContext } from 'react'
+import { Pressable, StyleSheet, View, Text as RNText } from 'react-native'
+import FastImage from 'react-native-fast-image'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { globalStyles } from '../helpers/globalStyles'
+import { heightp } from '../utils/responsiveDesign'
+import { Text } from './common'
+import TimeIcon from '../assets/img/time.svg'
+import IconText from './IconText'
+import colors from '../helpers/colors'
+import I18n from 'i18n-js'
+import { AppContext } from '../context/AppState'
+
+const TeachersCourseCard = ({
+    contents,
+    uri,
+    duration,
+    students,
+    pressed,
+    onPressSubscribeTeachers,
+    onPressSubscribePrivateTeachers,
+    key,
+}) => {
+    const styles = StyleSheet.create({
+        container: {
+            minHeight: heightp(100),
+            paddingHorizontal: heightp(10),
+            paddingVertical: heightp(7.5),
+            borderRadius: 10,
+            backgroundColor: 'rgba(249, 249, 249, 1)',
+            marginVertical: heightp(7.5),
+        },
+        textAlign: {
+            textAlign: 'left',
+        },
+        //
+        loginBtn: {
+            width: '48%',
+            flexDirection: 'row',
+            height: 25,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            marginVertical: heightp(5),
+        },
+        loginBtnView: {
+            flex: 1,
+            borderRadius: 40,
+            backgroundColor: colors.primary,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 10,
+        },
+        arrowCont: {
+            width: 15,
+            height: 15,
+            borderRadius: 15,
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+            overflow: 'hidden',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        loginText: {
+            fontSize: 13,
+            color: colors.white,
+        },
+    })
+    const { lang } = useContext(AppContext)
+    return (
+        <Pressable
+            key={key}
+            onPress={pressed}
+            style={[styles.container, globalStyles.rowBetween]}
+        >
+            <View>
+                <FastImage
+                    style={{
+                        width: heightp(70),
+                        height: heightp(70),
+                        borderRadius: 10,
+                    }}
+                    source={{
+                        uri,
+                        priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                />
+            </View>
+            <View
+                style={{
+                    width: '75%',
+                }}
+            >
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <View
+                        style={{
+                            width: '48%',
+                        }}
+                    >
+                        <IconText
+                            calender
+                            text={duration && `${duration} ${I18n.t('Hours')}`}
+                            children={<TimeIcon width={20} height={20} />}
+                        />
+                        <Text style={styles.textAlign} text={contents} />
+                    </View>
+                    <View
+                        style={{
+                            width: '48%',
+                        }}
+                    >
+                        {/* <Text style={styles.textAlign} text={contents} /> */}
+                        <IconText
+                            calender
+                            text={duration && `${duration} ${I18n.t('Hours')}`}
+                            children={<TimeIcon width={20} height={20} />}
+                        />
+                        <IconText
+                            calender
+                            text={
+                                students && `${students} ${I18n.t('Students')}`
+                            }
+                            children={
+                                <Ionicons
+                                    name="ios-people"
+                                    size={20}
+                                    color={colors.primary}
+                                />
+                            }
+                        />
+                    </View>
+                </View>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <Pressable
+                        style={styles.loginBtn}
+                        onPress={() => {
+                            console.log(
+                                'pressed onPressSubscribePrivateTeachers'
+                            )
+                            onPressSubscribePrivateTeachers()
+                        }}
+                    >
+                        <View style={styles.loginBtnView}>
+                            <View />
+                            <RNText style={styles.loginText}>
+                                {I18n.t('ViewProfile')}
+                            </RNText>
+                            <View style={styles.arrowCont}>
+                                <MaterialIcons
+                                    name={
+                                        lang === 'ar'
+                                            ? 'arrow-back'
+                                            : 'arrow-forward'
+                                    }
+                                    size={16}
+                                    color={colors.white}
+                                />
+                            </View>
+                        </View>
+                    </Pressable>
+                    <Pressable
+                        style={styles.loginBtn}
+                        onPress={() => {
+                            console.log('pressed onPressSubscribeTeachers')
+                            onPressSubscribeTeachers()
+                        }}
+                    >
+                        <View style={styles.loginBtnView}>
+                            <View />
+                            <RNText style={styles.loginText}>
+                                {I18n.t('ViewProfile')}
+                            </RNText>
+                            <View style={styles.arrowCont}>
+                                <MaterialIcons
+                                    name={
+                                        lang === 'ar'
+                                            ? 'arrow-back'
+                                            : 'arrow-forward'
+                                    }
+                                    size={16}
+                                    color={colors.white}
+                                />
+                            </View>
+                        </View>
+                    </Pressable>
+                </View>
+            </View>
+        </Pressable>
+    )
+}
+
+export default TeachersCourseCard

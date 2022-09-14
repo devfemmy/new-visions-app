@@ -19,18 +19,19 @@ import { Loader } from '../../components/Loader'
 const SubjectTeachers = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
-    const [searchText, setSearchText] = useState();
-    const [loader, setLoading] = useState(false);
+    const [searchText, setSearchText] = useState()
+    const [loader, setLoading] = useState(false)
     const route = useRoute()
-    const { subject_id } = route.params
+    const { subject_id, teacher_id } = route.params
     const {
         subjectTeachersPage,
         app: { loading },
     } = useAppSelector((state) => state)
-    const subjectTeachersData = subjectTeachersPage?.subjectTeachersData;
+    const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
     useEffect(() => {
         const payload = {
             subject_id,
+            teacher_id: teacher_id ? teacher_id : '',
         }
         dispatch(getSubjectTeachers(payload))
     }, [dispatch, subject_id])
@@ -40,7 +41,7 @@ const SubjectTeachers = () => {
             navigation.navigate('FullLesson', {
                 subject_id,
                 iap_id: item?.iap_id,
-                iap_activation: item?.iap_activation
+                iap_activation: item?.iap_activation,
             })
         },
         [navigation, subject_id]
@@ -57,18 +58,17 @@ const SubjectTeachers = () => {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
-                Alert.alert(
-                  "Alert",
-                  res?.message,
-                  [
+                Alert.alert('Alert', res?.message, [
                     {
-                      text: "Cancel",
-                      onPress: () => navigation.popToTop(),
-                      style: "cancel"
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
                     },
-                    { text: "OK", onPress: () => navigation.navigate('HomePage') }
-                  ]
-                );
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.navigate('HomePage'),
+                    },
+                ])
             } else {
                 setLoading(false)
             }
@@ -76,22 +76,25 @@ const SubjectTeachers = () => {
         } catch (err) {
             setLoading(false)
         }
-      }
+    }
     const bookOneLesson = (item) => {
-        const iap_activation = item?.iap_activation;
-        if(!iap_activation) {
+        const iap_activation = item?.iap_activation
+        if (!iap_activation) {
             subscribeExternal(item)
-        }else {
+        } else {
             const subscriptionInfo = {
                 billNumber: 'ios_bill',
                 paymentFor: 'OneLesson',
                 lessonId: '1258',
                 subjectId: subject_id,
                 price: 200,
-              };
-              deviceStorage
-                .saveDataToDevice({ key: 'subscriptionInfo', value: subscriptionInfo })
-                .then(() => requestPurchase({ sku:  item?.lesson_iap_id}));
+            }
+            deviceStorage
+                .saveDataToDevice({
+                    key: 'subscriptionInfo',
+                    value: subscriptionInfo,
+                })
+                .then(() => requestPurchase({ sku: item?.lesson_iap_id }))
         }
     }
     const navigateTeachersProfile = useCallback(
@@ -113,7 +116,7 @@ const SubjectTeachers = () => {
                 subject_id,
                 teacher_id: item?.teacher_id,
                 iap_id: item?.iap_id,
-                iap_activation: item?.iap_activation
+                iap_activation: item?.iap_activation,
             })
         },
         [navigation, subject_id]
@@ -141,7 +144,16 @@ const SubjectTeachers = () => {
                 <FlatList
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => <Text text={I18n.t('UnavailableTeacher')} />}
+                    ListEmptyComponent={() => (
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text text={I18n.t('UnavailableTeacher')} />
+                        </View>
+                    )}
                     data={searchFilteredData}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
@@ -153,7 +165,9 @@ const SubjectTeachers = () => {
                                 viewProfile={() =>
                                     navigateTeachersProfile(item)
                                 }
-                                bookCourse={() => navigateFullSubscription(item)}
+                                bookCourse={() =>
+                                    navigateFullSubscription(item)
+                                }
                                 bookPrivateLesson={() =>
                                     navigatePivateLesson(item)
                                 }
