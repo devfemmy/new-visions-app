@@ -20,6 +20,7 @@ import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
 import HomePageService from '../../services/userServices'
+import colors from '../../helpers/colors'
 
 const Teachers = () => {
     const dispatch = useAppDispatch()
@@ -29,7 +30,11 @@ const Teachers = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [page, setPage] = useState(0)
     const [dataForTeachers, setDataForTeachers] = useState([])
-    console.log('quiz data', dataForTeachers.length)
+    const [
+        onEndReachedCalledDuringMomentum,
+        setOnEndReachedCalledDuringMomentum,
+    ] = useState(false)
+    // console.log('quiz data', dataForTeachers.length)
     // const { level } = route.params;
     // const data = useAppSelector((state)=> console.log(state, 'hello'));
     // const {
@@ -162,7 +167,14 @@ const Teachers = () => {
                     marginBottom: heightp(60),
                 }}
             >
-                <View style={styles.footer}>
+                {isLoading ? (
+                    <ActivityIndicator
+                        color={colors.primary}
+                        size="small"
+                        style={{ marginLeft: 8 }}
+                    />
+                ) : null}
+                {/* <View style={styles.footer}>
                     <Pressable
                         activeOpacity={0.9}
                         onPress={() => {
@@ -175,16 +187,28 @@ const Teachers = () => {
                         </RNText>
                         {isLoading ? (
                             <ActivityIndicator
-                                color="white"
+                                color={colors.primary}
                                 size="small"
                                 style={{ marginLeft: 8 }}
                             />
                         ) : null}
                     </Pressable>
-                </View>
+                </View> */}
             </View>
         )
     }
+
+    const onEndReached = useCallback(
+        (distanceFromEnd) => {
+            if (!onEndReachedCalledDuringMomentum) {
+                // setTimeout(() => {
+                fetchTeachers()
+                // }, 3000)
+                setOnEndReachedCalledDuringMomentum(true)
+            }
+        },
+        [onEndReachedCalledDuringMomentum]
+    )
 
     return (
         <Container>
@@ -216,7 +240,7 @@ const Teachers = () => {
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => (
                         <>
-                            {/* <>{console.log(item)}</> */}
+                            <>{console.log('"yuuuuuuuuuu', item)}</>
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>
@@ -232,6 +256,13 @@ const Teachers = () => {
                             />
                         </>
                     )}
+                    initialNumToRender={10}
+                    maxToRenderPerBatch={10}
+                    windowSize={20}
+                    onEndReached={onEndReached}
+                    onMomentumScrollBegin={() => {
+                        setOnEndReachedCalledDuringMomentum(false)
+                    }}
                 />
             </View>
         </Container>
