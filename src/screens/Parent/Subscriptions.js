@@ -56,13 +56,13 @@ export default function Subscriptions({ route }) {
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)
-                        alert(response.data.message)
+                        // alert(response.data.message)
                     }
                 }
             })
             .catch((error) => {
                 showLoadingSpinner(false)
-                alert(error)
+                // alert(error)
             })
     }
 

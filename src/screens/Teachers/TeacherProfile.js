@@ -37,7 +37,6 @@ const TeacherProfile = () => {
     const [VideoUrl, setVideoUrl] = useState('')
     const [vidId, setVideoId] = useState('')
     const [rateArray, setRateArray] = useState('')
-    console.log('setVideo teachersData', item)
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -182,8 +181,7 @@ const TeacherProfile = () => {
                                     },
                                 ]}
                                 text={
-                                    teachersData?.bio &&
-                                    `${I18n.t('Bio')}: ${teachersData?.bio}`
+                                    teachersData?.bio && ` ${teachersData?.bio}`
                                 }
                             />
                         </View>
@@ -208,31 +206,38 @@ const TeacherProfile = () => {
                             )}
                             data={courses}
                             showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             onEndReachedThreshold={0.5}
                             renderItem={({ item, index }) => {
                                 return (
-                                    <TeachersCourseCard
-                                        pressed={() => {
-                                            // navigateSubjectsDetails(item)
-                                        }}
-                                        students={
-                                            item?.subject?.number_of_students
-                                        }
-                                        duration={
-                                            item?.subject?.number_of_hours
-                                        }
-                                        uri={`${IMAGEURL}/${item?.subject?.image}`}
-                                        contents={item?.subject?.title}
-                                        key={index}
-                                        onPressSubscribeTeachers={() => {
-                                            subscribeToLessons(
-                                                item?.subject?.id
-                                            )
-                                        }}
-                                        onPressSubscribePrivateTeachers={() => {
-                                            navigatePivateLesson(item)
-                                        }}
-                                    />
+                                    <>
+                                        {item?.subject && (
+                                            <TeachersCourseCard
+                                                pressed={() => {
+                                                    // navigateSubjectsDetails(item)
+                                                }}
+                                                students={
+                                                    item?.subject
+                                                        ?.number_of_students
+                                                }
+                                                duration={
+                                                    item?.subject
+                                                        ?.number_of_hours
+                                                }
+                                                uri={`${IMAGEURL}/${item?.subject?.image}`}
+                                                contents={item?.subject?.title}
+                                                key={index}
+                                                onPressSubscribeTeachers={() => {
+                                                    subscribeToLessons(
+                                                        item?.subject?.id
+                                                    )
+                                                }}
+                                                onPressSubscribePrivateTeachers={() => {
+                                                    navigatePivateLesson(item)
+                                                }}
+                                            />
+                                        )}
+                                    </>
                                 )
                             }}
                         />

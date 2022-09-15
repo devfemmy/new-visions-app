@@ -15,7 +15,7 @@ import {
 import SearchBar from 'react-native-platform-searchbar'
 import I18n from 'i18n-js'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import axios from 'axios';
+import axios from 'axios'
 import { Container, Text } from '../../components/common'
 import TeachersDetailCard from '../../components/TeachersDetail'
 import { getTeachers } from '../../redux/action'
@@ -28,7 +28,7 @@ import colors from '../../helpers/colors'
 import { AppContext } from '../../context/AppState'
 import Global from '../../../Global'
 
-const ResponseCache = {};
+const ResponseCache = {}
 const Teachers = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
@@ -36,7 +36,7 @@ const Teachers = () => {
     const route = useRoute()
     const [isLoading, setIsLoading] = useState(false)
     // const [page, setPage] = useState(0)
-    const {lang, onLogOut} = useContext(AppContext);
+    const { lang, onLogOut } = useContext(AppContext)
     const [dataForTeachers, setDataForTeachers] = useState([])
 
     // New use state
@@ -111,7 +111,6 @@ const Teachers = () => {
         // const res = dispatch(getTeachers())
         // console.log('res', res)
         // setDataForTeachers(...teachersData, teachersData)
-
         // getTeachers(page)
     }, [dispatch])
 
@@ -198,97 +197,117 @@ const Teachers = () => {
     
         let keys = Object.keys(ResponseCache);
         keys = keys.filter((k) => {
-          const jsonKey = JSON.parse(k);
-          if (jsonKey.search === SerachValue) return true;
-    
-          return false;
-        });
-    
-        keys = keys.map((key) => JSON.parse(key).page);
-    
-        if (keys.length !== 0) page = Math.max(...keys) + 1;
-    
+            const jsonKey = JSON.parse(k)
+            if (jsonKey.search === SerachValue) return true
+
+            return false
+        })
+
+        keys = keys.map((key) => JSON.parse(key).page)
+
+        if (keys.length !== 0) page = Math.max(...keys) + 1
+
         axios
-          .post(
-            `https://www.newvisions.sa/api/getTeachers?page=${page}`, // URL
-            {
-              search: SerachValue,
-            }, // data
-            {
-              // config
-              headers: {
-                'Content-Type': 'application/json',
-                'Acess-Control-Allow-Origin': '*',
-                Authorization: `Bearer ${Global.AuthenticationToken}`,
-                Accept: 'application/json',
-              },
-            }
-          )
-          .then((response) => {
-            if (response.data.code === 403) {
-              Global.AuthenticationToken = '';
-              Global.UserName = '';
-              Global.UserType = '';
-              Global.UserGender = '';
-              LoggedIn = false;
-              alert('This Account is Logged in from another Device.');
-              onLogOut()
-              return;
-            }
-    
-            ResponseCache[JSON.stringify({ page, search: SerachValue })] = response.data.data.data;
-    
-            console.log(`saved to cache :${JSON.stringify({ page, search: SerachValue })}`);
-          })
-          .catch((error) => {});
-      };
-      useEffect(() => {
+            .post(
+                `https://www.newvisions.sa/api/getTeachers?page=${page}`, // URL
+                {
+                    search: SerachValue,
+                }, // data
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.data.code === 403) {
+                    Global.AuthenticationToken = ''
+                    Global.UserName = ''
+                    Global.UserType = ''
+                    Global.UserGender = ''
+                    LoggedIn = false
+                    alert('This Account is Logged in from another Device.')
+                    onLogOut()
+                    return
+                }
+
+                ResponseCache[JSON.stringify({ page, search: SerachValue })] =
+                    response.data.data.data
+
+                console.log(
+                    `saved to cache :${JSON.stringify({
+                        page,
+                        search: SerachValue,
+                    })}`
+                )
+            })
+            .catch((error) => {})
+    }
+    useEffect(() => {
         if (Page <= 1) {
-          setPagePrev(0);
+            setPagePrev(0)
         } else {
-          setPagePrev(1);
+            setPagePrev(1)
         }
         if (Page == LoadedPage && SerachValue == CurrentSerachValue) {
-          return;
+            return
         }
-        if (ResponseCache.hasOwnProperty(JSON.stringify({ page: Page, search: SerachValue }))) {
-          setLoadedPage(Page);
-          SetresponseValue(ResponseCache[JSON.stringify({ page: Page, search: SerachValue })]);
-          setCurrentSerachValue(SerachValue);
-    
-          console.log(`loaded From Cache :${JSON.stringify({ page: Page, search: SerachValue })}`);
-          GetExtraCache();
-          return;
+        if (
+            ResponseCache.hasOwnProperty(
+                JSON.stringify({ page: Page, search: SerachValue })
+            )
+        ) {
+            setLoadedPage(Page)
+            SetresponseValue(
+                ResponseCache[
+                    JSON.stringify({ page: Page, search: SerachValue })
+                ]
+            )
+            setCurrentSerachValue(SerachValue)
+
+            console.log(
+                `loaded From Cache :${JSON.stringify({
+                    page: Page,
+                    search: SerachValue,
+                })}`
+            )
+            GetExtraCache()
+            return
         }
         axios
-          .post(
-            `https://www.newvisions.sa/api/getTeachers?page=${Page}`, // URL
-            {
-              search: SerachValue,
-            }, // data
-            {
-              // config
-              headers: {
-                'Content-Type': 'application/json',
-                'Acess-Control-Allow-Origin': '*',
-                Authorization: `Bearer ${Global.AuthenticationToken}`,
-                Accept: 'application/json',
-              },
-            }
-          )
-          .then((response) => {
-            setLoadedPage(Page);
-            setCurrentSerachValue(SerachValue);
-            SetresponseValue(response.data?.data?.data || []);
-            ResponseCache[JSON.stringify({ page: Page, search: SerachValue })] =
-              response.data?.data?.data || [];
-            setMaxPages(Math.ceil(response.data.data.total / 10));
-            GetExtraCache();
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      });
+            .post(
+                `https://www.newvisions.sa/api/getTeachers?page=${Page}`, // URL
+                {
+                    search: SerachValue,
+                }, // data
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                    },
+                }
+            )
+            .then((response) => {
+                setLoadedPage(Page)
+                setCurrentSerachValue(SerachValue)
+                SetresponseValue(response.data?.data?.data || [])
+                ResponseCache[
+                    JSON.stringify({ page: Page, search: SerachValue })
+                ] = response.data?.data?.data || []
+                setMaxPages(Math.ceil(response.data.data.total / 10))
+                GetExtraCache()
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    })
 
     const renderFooter = () => {
         return (
@@ -341,18 +360,23 @@ const Teachers = () => {
     )
 
     return (
-        <Container>
-        <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
-            <View style={{ marginBottom: 15 }}>
-                <SearchBar
-                    placeholder={I18n.t('SearchTeachers')}
-                    value={searchText}
-                    onChangeText={(text) => setSearchText(text)}
-                    style={styles.searchBar}
-                />
-            </View>
-            <View style={styles.containerFlex}>
+        // <View
+        //     style={{
+        //         // paddingHorizontal: heightp(10),
+        //     }}
+        // >
+        <View style={styles.containerFlex}>
+            <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
+                <View style={{ marginBottom: 15 }}>
+                    <SearchBar
+                        placeholder={I18n.t('SearchTeachers')}
+                        value={searchText}
+                        onChangeText={(text) => setSearchText(text)}
+                        style={styles.searchBar}
+                    />
+                </View>
                 <FlatList
+                    nestedScrollEnabled={true}
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
                     ListEmptyComponent={() => (
@@ -395,54 +419,67 @@ const Teachers = () => {
                         setOnEndReachedCalledDuringMomentum(false)
                     }}
                 />
-            </View>
+            </ScrollView>
             <View
-          style={{
-            flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            marginVertical: 2,
-          }}
-        >
-          <TouchableOpacity
-            disabled={!PagePrev}
-            onPress={() => {
-              GetTeachersPrev();
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: PagePrev ? colors.primary : 'grey',
-                borderRadius: 5,
-                paddingHorizontal: 40,
-                paddingVertical: 8,
-              }}
+                style={{
+                    flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    marginVertical: 10,
+                    // marginBottom: heightp(10),
+                }}
             >
-              <Text text={I18n.t('Previous')} style={{ color: 'white' }} />
-            </View>
-          </TouchableOpacity>
-          <Text text={` ${I18n.t('Page')} ${Page}`} style={{ color: 'black' }} />
+                <TouchableOpacity
+                    disabled={!PagePrev}
+                    onPress={() => {
+                        GetTeachersPrev()
+                    }}
+                >
+                    <View
+                        style={{
+                            backgroundColor: PagePrev ? colors.primary : 'grey',
+                            borderRadius: 5,
+                            paddingHorizontal: 40,
+                            paddingVertical: 8,
+                        }}
+                    >
+                        <Text
+                            text={I18n.t('Previous')}
+                            style={{ color: 'white' }}
+                        />
+                    </View>
+                </TouchableOpacity>
+                <Text
+                    text={` ${I18n.t('Page')} ${Page}`}
+                    style={{ color: 'black' }}
+                />
 
-          <TouchableOpacity
-            disabled={Page === MaxPages}
-            onPress={() => {
-              GetTeachersNext();
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: MaxPages === Page ? 'rgb(59,63,73)' : 'yellowgreen',
-                borderRadius: 5,
-                paddingHorizontal: 40,
-                paddingVertical: 8,
-              }}
-            >
-              <Text text={I18n.t('Next')} style={{ color: 'white' }} />
+                <TouchableOpacity
+                    disabled={Page === MaxPages}
+                    onPress={() => {
+                        GetTeachersNext()
+                    }}
+                >
+                    <View
+                        style={{
+                            backgroundColor:
+                                MaxPages === Page
+                                    ? 'rgb(59,63,73)'
+                                    : 'yellowgreen',
+                            borderRadius: 5,
+                            paddingHorizontal: 40,
+                            paddingVertical: 8,
+                        }}
+                    >
+                        <Text
+                            text={I18n.t('Next')}
+                            style={{ color: 'white' }}
+                        />
+                    </View>
+                </TouchableOpacity>
             </View>
-          </TouchableOpacity>
         </View>
-        </ScrollView>
-        </Container>
+        // </View>
     )
 }
 const styles = StyleSheet.create({
@@ -450,7 +487,9 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     containerFlex: {
-        marginBottom: heightp(20),
+        // marginBottom: heightp(20),
+        flex: 1,
+        paddingHorizontal: heightp(10),
     },
     footer: {
         // paddingVertical: heightp(10),
