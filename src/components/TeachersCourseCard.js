@@ -38,7 +38,9 @@ const TeachersCourseCard = ({
             minHeight: heightp(135),
         },
         textAlign: {
-            // textAlign: 'left',
+            textAlign: 'left',
+            width: '50%',
+            fontSize: heightp(12),
         },
         //
         loginBtn: {
