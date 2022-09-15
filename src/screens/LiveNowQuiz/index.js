@@ -225,6 +225,7 @@ const LiveNowQuiz = () => {
                                 size={16}
                                 imageSize={17}
                                 defaultRating={2}
+                                isDisabled
                                 reviews={
                                     [
                                         // 'Terrible',
