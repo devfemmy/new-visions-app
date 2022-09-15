@@ -34,8 +34,8 @@ const TeachersCourseCard = ({
             backgroundColor: 'rgba(249, 249, 249, 1)',
             marginVertical: heightp(7.5),
             marginHorizontal: heightp(7.5),
-            width: WINDOW_WIDTH * 0.88,
-            height: heightp(130)
+            width: WINDOW_WIDTH * 0.9,
+            minHeight: heightp(135),
         },
         textAlign: {
             textAlign: 'left',

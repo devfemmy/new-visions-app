@@ -1,6 +1,12 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import {
     FlatList,
     StyleSheet,
@@ -47,6 +53,7 @@ const Teachers = () => {
     const [SerachValue, setSerachValue] = useState('')
     const [CurrentSerachValue, setCurrentSerachValue] = useState('')
     const [LoadedPage, setLoadedPage] = useState(-1)
+    const scrollRef = useRef()
     const [responseValue, SetresponseValue] = useState([])
     const [
         onEndReachedCalledDuringMomentum,
@@ -176,10 +183,18 @@ const Teachers = () => {
     )
 
     const GetTeachersNext = () => {
+        scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+        })
         if (LoadedPage === Page) setPage(Page + 1)
     }
 
     const GetTeachersPrev = () => {
+        scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+        })
         if (LoadedPage === Page) setPage(Page - 1)
     }
 
@@ -357,7 +372,7 @@ const Teachers = () => {
         //     }}
         // >
         <View style={styles.containerFlex}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
                 <View style={{ marginBottom: 15 }}>
                     <SearchBar
                         placeholder={I18n.t('SearchTeachers')}
