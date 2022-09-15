@@ -61,7 +61,7 @@ const Arabic = {
     Science: 'علوم',
     Chemistry: 'كيمياء',
     Join: 'انضم',
-    Teachers: 'المعلمون',
+    Teachers: 'المعلمين',
     Notification: 'اللإشعارات',
 
     //Subjects
@@ -277,6 +277,8 @@ const Arabic = {
     Error407Display:
         'تم الموافقة من قبل المعلم على طلبك للاشتراك بالمنهج الخاص يرجى اتمام عملية الدفع',
     SendRequest: 'ارسل الطلب',
+    SubscribeToOneLesson: 'حجز درس واحد',
+    SubscribeToFullSubject: 'حجز منهج كامل',
 }
 
 export default Arabic

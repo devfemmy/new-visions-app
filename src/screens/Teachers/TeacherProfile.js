@@ -1,7 +1,13 @@
 /* eslint-disable react/no-children-prop */
 import { useRoute, useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { StyleSheet, View, Text as RNText, ScrollView } from 'react-native'
+import {
+    StyleSheet,
+    View,
+    Text as RNText,
+    ScrollView,
+    FlatList,
+} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Rating, AirbnbRating } from 'react-native-ratings'
@@ -182,25 +188,54 @@ const TeacherProfile = () => {
                         </View>
                     </View>
                 </View>
-                {courses.length > 0 &&
-                    courses.map((course, index) => (
-                        <TeachersCourseCard
-                            pressed={() => {
-                                // navigateSubjectsDetails(item)
-                            }}
-                            students={course?.subject?.number_of_students}
-                            duration={course?.subject?.number_of_hours}
-                            uri={`${IMAGEURL}/${course?.subject?.image}`}
-                            contents={course?.subject?.title}
-                            key={index}
-                            onPressSubscribeTeachers={() => {
-                                subscribeToLessons(course?.subject?.id)
-                            }}
-                            onPressSubscribePrivateTeachers={() => {
-                                navigatePivateLesson(course)
+                {courses.length > 0 && (
+                    <View style={styles.containerFlex}>
+                        <FlatList
+                            horizontal
+                            keyboardShouldPersistTaps="handled"
+                            contentContainerStyle={styles.flatlistContent}
+                            ListEmptyComponent={() => (
+                                <View
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Text text={I18n.t('NoData')} />
+                                </View>
+                            )}
+                            data={courses}
+                            showsVerticalScrollIndicator={false}
+                            onEndReachedThreshold={0.5}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    <TeachersCourseCard
+                                        pressed={() => {
+                                            // navigateSubjectsDetails(item)
+                                        }}
+                                        students={
+                                            item?.subject?.number_of_students
+                                        }
+                                        duration={
+                                            item?.subject?.number_of_hours
+                                        }
+                                        uri={`${IMAGEURL}/${item?.subject?.image}`}
+                                        contents={item?.subject?.title}
+                                        key={index}
+                                        onPressSubscribeTeachers={() => {
+                                            subscribeToLessons(
+                                                item?.subject?.id
+                                            )
+                                        }}
+                                        onPressSubscribePrivateTeachers={() => {
+                                            navigatePivateLesson(item)
+                                        }}
+                                    />
+                                )
                             }}
                         />
-                    ))}
+                    </View>
+                )}
                 {rateArray.length > 0 && (
                     <View
                         style={[
@@ -486,6 +521,12 @@ const styles = StyleSheet.create({
         paddingTop: heightp(10),
         paddingBottom: heightp(20),
         textAlign: 'left',
+    },
+    flatlistContent: {
+        flexGrow: 1,
+    },
+    containerFlex: {
+        marginBottom: heightp(20),
     },
 })
 

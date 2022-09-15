@@ -24,6 +24,11 @@ const FullLessonSubscription = () => {
     const [loading, setLoading] = useState(false)
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
+    const items = [
+        { id: 1, name: I18n.t('MorningSession') },
+        { id: 2, name: I18n.t('EveningSession') },
+        { id: 3, name: I18n.t('SpecialDate') },
+    ]
     const { subject_id, iap_id, iap_activation } = route.params
     const { subjectGroupData } = useAppSelector(
         (state) => state.subjectGroupPage
@@ -32,7 +37,9 @@ const FullLessonSubscription = () => {
     useEffect(() => {
         const payload = {
             subject_id,
+            type: items[0].id === 1 ? 1 : items[0].id === 2 ? 2 : '',
         }
+        console.log('xxxxxxxxxxxxxxxxxxx hello, na here i dey', payload)
         dispatch(getSubjectGroups(payload))
     }, [dispatch, subject_id])
     const [disabledProp, setDisabledProps] = useState(false)
@@ -120,7 +127,10 @@ const FullLessonSubscription = () => {
                             label={I18n.t('SelectGroup')}
                         >
                             <View>
-                                <SelectGroup subject_id={subject_id} />
+                                <SelectGroup
+                                    subject_id={subject_id}
+                                    items={items}
+                                />
                             </View>
                         </ProgressStep>
                         <ProgressStep

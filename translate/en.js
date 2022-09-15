@@ -268,6 +268,8 @@ const English = {
     Error407Display:
         'Your request to subscribe for private subject has been approved by the teacher. Please complete the payment process',
     SendRequest: 'Send request',
+    SubscribeToOneLesson: 'Subscribe to one lesson',
+    SubscribeToFullSubject: 'Subscribe to full subject',
 }
 
 export default English

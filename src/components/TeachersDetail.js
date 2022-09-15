@@ -32,7 +32,6 @@ const TeachersDetailCard = ({
     pressed,
     subjectDetails,
 }) => {
-    console.log('ratings', ratings)
     const styles = StyleSheet.create({
         container: {
             minHeight: heightp(100),
@@ -225,31 +224,33 @@ const TeachersDetailCard = ({
                                         </View>
                                     }
                                 />
-                                {ratings && (
-                                    <IconText
-                                        text={ratings}
-                                        children={
-                                            <View
-                                                style={globalStyles.rowBetween}
-                                            >
-                                                <Ionicons
-                                                    name="ribbon-outline"
-                                                    size={20}
-                                                    color={colors.black}
-                                                />
-                                                <View
-                                                    style={{
-                                                        height: heightp(20),
-                                                        backgroundColor:
-                                                            'rgba(67, 72, 84, 1)',
-                                                        width: 1,
-                                                        marginHorizontal: 6,
-                                                    }}
-                                                />
-                                            </View>
+                                {/* {ratings && (
+                                    <AirbnbRating
+                                        size={12}
+                                        imageSize={12}
+                                        defaultRating={ratings}
+                                        reviews={
+                                            [
+                                                // 'Terrible',
+                                                // 'Bad',
+                                                // 'Okay',
+                                                // 'Swift & quick pickup',
+                                                // 'Excellent',
+                                            ]
                                         }
+                                        reviewSize={10}
+                                        type="star"
+                                        ratingColor="#3498db"
+                                        ratingContainerStyle={{
+                                            flexDirection: 'row',
+                                            backgroundColor: 'inherit',
+                                            // height: '40%',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            paddingRight: heightp(12),
+                                        }}
                                     />
-                                )}
+                                )} */}
                             </View>
                         )}
                         {subjectDetails ? (
@@ -281,6 +282,51 @@ const TeachersDetailCard = ({
                             </View>
                         ) : (
                             <View style={globalStyles.rowBetween}>
+                                {ratings && (
+                                    <View style={globalStyles.rowBetween}>
+                                        <Ionicons
+                                            name="ribbon-outline"
+                                            size={20}
+                                            color={colors.black}
+                                        />
+                                        <View
+                                            style={{
+                                                height: heightp(20),
+                                                backgroundColor:
+                                                    'rgba(67, 72, 84, 1)',
+                                                width: 1,
+                                                marginLeft: 6,
+                                            }}
+                                        />
+                                        <AirbnbRating
+                                            size={11}
+                                            defaultRating={ratings}
+                                            reviews={
+                                                [
+                                                    // 'Terrible',
+                                                    // 'Bad',
+                                                    // 'Okay',
+                                                    // 'Swift & quick pickup',
+                                                    // 'Excellent',
+                                                ]
+                                            }
+                                            reviewSize={10}
+                                            type="star"
+                                            ratingColor="#3498db"
+                                            style={{
+                                                paddingHorizontal: 30,
+                                            }}
+                                            ratingContainerStyle={{
+                                                flexDirection: 'row',
+                                                backgroundColor: 'inherit',
+                                                alignItems: 'center',
+                                                justifyContent: 'flex-start',
+                                                // paddingRight: heightp(-40),
+                                                // backgroundColor: '#f0f',
+                                            }}
+                                        />
+                                    </View>
+                                )}
                                 <IconText
                                     text={city && city}
                                     children={
