@@ -403,7 +403,7 @@ const Teachers = () => {
           >
             <View
               style={{
-                backgroundColor: PagePrev ? 'yellowgreen' : 'rgb(59,63,73)',
+                backgroundColor: PagePrev ? colors.primary : 'grey',
                 borderRadius: 5,
                 paddingHorizontal: 40,
                 paddingVertical: 8,
