@@ -286,6 +286,8 @@ const TeacherProfile = () => {
                                     size={16}
                                     imageSize={17}
                                     defaultRating={teachersData?.rate}
+                                    // count={teachersData?.rate}
+                                    isDisabled
                                     reviews={
                                         [
                                             // 'Terrible',
@@ -433,6 +435,7 @@ const TeacherProfile = () => {
                                         size={12}
                                         imageSize={10}
                                         defaultRating={rate?.rate}
+                                        isDisabled
                                         reviews={
                                             [
                                                 // 'Terrible',

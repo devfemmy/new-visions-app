@@ -44,6 +44,7 @@ const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
                 size={12}
                 imageSize={10}
                 defaultRating={ratings ? ratings : 0}
+                isDisabled
                 reviews={
                     [
                         // 'Terrible',

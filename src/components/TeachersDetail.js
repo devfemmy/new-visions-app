@@ -229,6 +229,7 @@ const TeachersDetailCard = ({
                                         size={12}
                                         imageSize={12}
                                         defaultRating={ratings}
+                                        isDisabled
                                         reviews={
                                             [
                                                 // 'Terrible',
@@ -301,6 +302,7 @@ const TeachersDetailCard = ({
                                         <AirbnbRating
                                             size={11}
                                             defaultRating={ratings}
+                                            isDisabled
                                             reviews={
                                                 [
                                                     // 'Terrible',
