@@ -34,11 +34,11 @@ const TeachersCourseCard = ({
             backgroundColor: 'rgba(249, 249, 249, 1)',
             marginVertical: heightp(7.5),
             marginHorizontal: heightp(7.5),
-            width: WINDOW_WIDTH * 0.9,
+            width: WINDOW_WIDTH * 0.7,
             minHeight: heightp(135),
         },
         textAlign: {
-            textAlign: 'left',
+            // textAlign: 'left',
         },
         //
         loginBtn: {
@@ -53,7 +53,7 @@ const TeachersCourseCard = ({
             borderRadius: 40,
             backgroundColor: colors.primary,
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: 10,
         },
@@ -89,7 +89,7 @@ const TeachersCourseCard = ({
                 <View>
                     <FastImage
                         style={{
-                            width: heightp(70),
+                            width: heightp(100),
                             height: heightp(70),
                             borderRadius: 10,
                         }}
@@ -102,64 +102,55 @@ const TeachersCourseCard = ({
                 </View>
                 <View
                     style={{
-                        width: '75%',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
                     }}
                 >
                     <View
                         style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
+                            width: '48%',
                         }}
                     >
-                        <View
-                            style={{
-                                width: '48%',
-                            }}
-                        >
-                            <IconText
-                                calender
-                                text={
-                                    duration && `${duration} ${I18n.t('Hours')}`
-                                }
-                                children={
-                                    <Ionicons
-                                        name="ios-layers"
-                                        size={20}
-                                        color={colors.black}
-                                    />
-                                }
-                            />
-                            <Text style={styles.textAlign} text={contents} />
-                        </View>
-                        <View
-                            style={{
-                                width: '48%',
-                            }}
-                        >
-                            <IconText
-                                calender
-                                text={
-                                    duration && `${duration} ${I18n.t('Hours')}`
-                                }
-                                children={<TimeIcon width={20} height={20} />}
-                            />
-                            <IconText
-                                calender
-                                text={
-                                    students &&
-                                    `${students} ${I18n.t('Students')}`
-                                }
-                                children={
-                                    <Ionicons
-                                        name="ios-people"
-                                        size={20}
-                                        color={colors.primary}
-                                    />
-                                }
-                            />
-                        </View>
+                        <IconText
+                            calender
+                            text={duration && `${duration} ${I18n.t('Hours')}`}
+                            children={<TimeIcon width={20} height={20} />}
+                        />
+                        <IconText
+                            calender
+                            text={
+                                students && `${students} ${I18n.t('Students')}`
+                            }
+                            children={
+                                <Ionicons
+                                    name="ios-people"
+                                    size={20}
+                                    color={colors.primary}
+                                />
+                            }
+                        />
                     </View>
                 </View>
+            </View>
+            <View
+                style={{
+                    paddingVertical: heightp(10),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <IconText
+                    calender
+                    text={duration && `${duration} ${I18n.t('Hours')}`}
+                    children={
+                        <Ionicons
+                            name="ios-layers"
+                            size={20}
+                            color={colors.black}
+                        />
+                    }
+                />
+                <Text style={styles.textAlign} text={contents} />
             </View>
             <View
                 style={{
@@ -175,11 +166,11 @@ const TeachersCourseCard = ({
                     }}
                 >
                     <View style={styles.loginBtnView}>
-                        <View />
+                        {/* <View /> */}
                         <RNText style={styles.loginText}>
                             {I18n.t('SubscribeToOneLesson')}
                         </RNText>
-                        <View style={styles.arrowCont}>
+                        {/* <View style={styles.arrowCont}>
                             <MaterialIcons
                                 name={
                                     lang === 'ar'
@@ -189,7 +180,7 @@ const TeachersCourseCard = ({
                                 size={14}
                                 color={colors.white}
                             />
-                        </View>
+                        </View> */}
                     </View>
                 </Pressable>
                 <Pressable
@@ -200,11 +191,11 @@ const TeachersCourseCard = ({
                     }}
                 >
                     <View style={styles.loginBtnView}>
-                        <View />
+                        {/* <View /> */}
                         <RNText style={styles.loginText}>
                             {I18n.t('SubscribeToFullSubject')}
                         </RNText>
-                        <View style={styles.arrowCont}>
+                        {/* <View style={styles.arrowCont}>
                             <MaterialIcons
                                 name={
                                     lang === 'ar'
@@ -214,7 +205,7 @@ const TeachersCourseCard = ({
                                 size={16}
                                 color={colors.white}
                             />
-                        </View>
+                        </View> */}
                     </View>
                 </Pressable>
             </View>
