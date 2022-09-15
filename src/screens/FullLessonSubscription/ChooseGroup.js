@@ -41,17 +41,7 @@ const ChooseGroup = (subjectGroupData) => {
                             newPress={() => {}}
                             stage={item}
                             groupNumber={
-                                item &&
-                                // item?.days.length > 0 &&
-                                // item?.days.map((day, index) => {
-                                //     return (
-                                //         <Text
-                                //             style={styles.textColor}
-                                //             text={returnDay(day?.day_id)}
-                                //         />
-                                //     )
-                                // })
-                                `${I18n.t('GroupNumber')} ${index + 1}`
+                                item && `${I18n.t('GroupNumber')} ${index + 1}`
                             }
                             activeLevel={activeLevel}
                             setActiveLevel={setActiveLevel}
