@@ -1,6 +1,12 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import {
     FlatList,
     StyleSheet,
