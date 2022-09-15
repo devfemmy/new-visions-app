@@ -270,6 +270,7 @@ const English = {
     SendRequest: 'Send request',
     SubscribeToOneLesson: 'Subscribe to one lesson',
     SubscribeToFullSubject: 'Subscribe to full subject',
+    NoAvailableDates: 'No available dates',
 }
 
 export default English

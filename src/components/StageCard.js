@@ -12,6 +12,7 @@ import { heightp, widthp } from '../utils/responsiveDesign'
 import { Text } from './common'
 
 const StageCard = ({
+    days,
     text,
     dark,
     stage,
@@ -29,7 +30,8 @@ const StageCard = ({
     eduPress,
     navigateSubjects,
     subject_id,
-    text2
+    text2,
+    newPress,
 }) => {
     let isActive
     if (group) {
@@ -107,7 +109,26 @@ const StageCard = ({
             flexDirection: 'row',
         },
     })
-    console.log(stage?.name, 'Hello');
+    const returnDay = (day, start) => {
+        if (day === 1) {
+            return `${I18n.t('Saturday')} ${start}`
+        } else if (day === 2) {
+            return `${I18n.t('Sunday')} ${start}`
+        } else if (day === 3) {
+            return `${I18n.t('Monday')} ${start}`
+        } else if (day === 4) {
+            return `${I18n.t('Tuesday')} ${start}`
+        } else if (day === 5) {
+            return `${I18n.t('Wednesday')} ${start}`
+        } else if (day === 6) {
+            return `${I18n.t('Thursday')} ${start}`
+        } else if (day === 7) {
+            return `${I18n.t('Friday')} ${start}`
+        } else {
+            return ''
+        }
+    }
+    // console.log(stage?.name, 'Hello')
     return (
         <View>
             {!dark ? (
@@ -132,9 +153,9 @@ const StageCard = ({
             ) : (
                 <Pressable
                     onPress={() => {
+                        newPress()
                         setActiveStage(stage)
                         if (stage.name === I18n.t('SpecialDate')) {
-
                             navigation.navigate('PrivateSubjectSubscribe', {
                                 subject_id: subject_id,
                             })
@@ -171,11 +192,40 @@ const StageCard = ({
                                 text={text}
                             />
                         </View>
-                    ) : ( <View>
-                        {text2 && <Text style={styles.text2} text={text2} />}
-                         <Text style={styles.textColor} text={text} />
-                    </View>
-                    
+                    ) : (
+                        <View>
+                            {text2 && (
+                                <Text style={styles.text2} text={text2} />
+                            )}
+                            <Text style={styles.textColor} text={text} />
+                            {days && (
+                                <View
+                                    style={{
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    {days?.map((day, index) => {
+                                        return (
+                                            <Text
+                                                style={[
+                                                    styles.textColor,
+                                                    {
+                                                        paddingVertical:
+                                                            heightp(4),
+                                                    },
+                                                ]}
+                                                text={returnDay(
+                                                    day?.day_id,
+                                                    day?.start
+                                                )}
+                                            />
+                                        )
+                                    })}
+                                </View>
+                            )}
+                        </View>
                     )}
                 </Pressable>
             )}
@@ -189,8 +239,13 @@ const StageCard = ({
                                     key={level.id}
                                     activeOpacity={0.7}
                                     onPress={() => {
-                                        setActiveLevel(level)
                                         navigateSubjects()
+                                    }}
+                                    onPressIn={() => {
+                                        setActiveLevel(level)
+                                    }}
+                                    onPressOut={() => {
+                                        setActiveLevel(level)
                                     }}
                                     style={[
                                         styles.levelBox,

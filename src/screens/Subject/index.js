@@ -71,6 +71,7 @@ const Subject = () => {
                                 setActiveStage={setActiveStage}
                                 dark
                                 text={item.name}
+                                newPress={() => {}}
                             />
                         )
                     }}

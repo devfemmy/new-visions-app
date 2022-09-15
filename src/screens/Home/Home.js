@@ -31,7 +31,7 @@ const Home = () => {
     const stagesArray = data?.homeData?.stages
     const teachersArray = data?.homeData?.teachers
 
-    console.log('packages on home page', data)
+    // console.log('packages on home page', data)
 
     const [packages, setPackages] = useState([])
     function getPackages(params) {
@@ -46,7 +46,7 @@ const Home = () => {
                 ) {
                     if (response?.data?.code == 200) {
                         const data = response?.data?.data?.data
-                        console.log('multi Packages: ' + data)
+                        // console.log('multi Packages: ' + data)
                         setPackages(data)
                         showLoadingSpinner(false)
                         console.log(packages)
@@ -250,6 +250,7 @@ const Home = () => {
                                                     { stage_id: item?.id }
                                                 )
                                             }
+                                            newPress={() => {}}
                                             uri={uri}
                                             text={item.name}
                                         />
@@ -284,7 +285,7 @@ const Home = () => {
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => {
                             const uri = `${IMAGEURL}/${item.image}`
-                            console.log('Loading teacgerrrrrrrrrr', item)
+                            // console.log('Loading teacgerrrrrrrrrr', item)
                             return (
                                 <TeachersCard
                                     pressed={() => navigateTeacherProfile(item)}

@@ -78,6 +78,10 @@ const LessonCard = ({
                     console.log('here ooo 1st')
                     setActiveStage(stage)
                 }}
+                onPressOut={() => {
+                    console.log('here ooo 1st')
+                    setActiveStage(stage)
+                }}
                 style={!dark ? styles.darkContainer : styles.container}
             >
                 {group && !reducedHeight ? (

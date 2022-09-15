@@ -327,7 +327,7 @@ const TeachersDetailCard = ({
                                         />
                                     </View>
                                 )}
-                                <IconText
+                                {/* <IconText
                                     text={city && city}
                                     children={
                                         city && (
@@ -357,7 +357,7 @@ const TeachersDetailCard = ({
                                             </View>
                                         )
                                     }
-                                />
+                                /> */}
                             </View>
                         )}
                     </View>

@@ -5,10 +5,13 @@ import I18n from 'i18n-js'
 import { StyleSheet, View } from 'react-native'
 import { SubContext } from '.'
 import StageCard from '../../components/StageCard'
+import { useAppDispatch } from '../../redux/hooks'
+import { getSubjectGroups } from '../../redux/action'
 
 const SelectGroup = ({ subject_id, items }) => {
     console.log(subject_id, 'hello')
     const { setDisabledProps } = useContext(SubContext)
+    const dispatch = useAppDispatch()
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
 
@@ -19,6 +22,7 @@ const SelectGroup = ({ subject_id, items }) => {
             setDisabledProps(true)
         }
     }, [activeStage, setDisabledProps])
+
     const styles = StyleSheet.create({
         container: {},
     })
@@ -28,7 +32,19 @@ const SelectGroup = ({ subject_id, items }) => {
                 <StageCard
                     show
                     navigateSubjects={() => {
+                        console.log('pressed')
+                    }}
+                    newPress={() => {
                         console.log('pressing what here', item)
+                        const payload = {
+                            subject_id,
+                            type: item.id === 1 ? 1 : item.id === 2 ? 2 : '',
+                        }
+                        console.log(
+                            'xxxxxxxxxxxxxxxxxxx hello, na here i dey',
+                            payload
+                        )
+                        dispatch(getSubjectGroups(payload))
                     }}
                     stage={item}
                     subject_id={subject_id}

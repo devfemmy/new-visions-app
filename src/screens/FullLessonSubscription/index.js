@@ -33,15 +33,16 @@ const FullLessonSubscription = () => {
     const { subjectGroupData } = useAppSelector(
         (state) => state.subjectGroupPage
     )
+    console.log('subjectGroupData', subjectGroupData[0]?.days)
     const { getGroupDaysData } = useAppSelector((state) => state.groupDaysPage)
-    useEffect(() => {
-        const payload = {
-            subject_id,
-            type: items[0].id === 1 ? 1 : items[0].id === 2 ? 2 : '',
-        }
-        console.log('xxxxxxxxxxxxxxxxxxx hello, na here i dey', payload)
-        dispatch(getSubjectGroups(payload))
-    }, [dispatch, subject_id])
+    // useEffect(() => {
+    //     const payload = {
+    //         subject_id,
+    //         type: items[0].id === 1 ? 1 : items[0].id === 2 ? 2 : '',
+    //     }
+    //     console.log('xxxxxxxxxxxxxxxxxxx hello, na here i dey', payload)
+    //     dispatch(getSubjectGroups(payload))
+    // }, [dispatch, subject_id])
     const [disabledProp, setDisabledProps] = useState(false)
     const [groupId, setGroupId] = useState(null)
     useEffect(() => {

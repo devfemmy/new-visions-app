@@ -27,7 +27,7 @@ const TeachersCourseCard = ({
 }) => {
     const styles = StyleSheet.create({
         container: {
-            minHeight: heightp(100),
+            // minHeight: heightp(100),
             paddingHorizontal: heightp(10),
             paddingVertical: heightp(7.5),
             borderRadius: 10,
@@ -35,6 +35,7 @@ const TeachersCourseCard = ({
             marginVertical: heightp(7.5),
             marginHorizontal: heightp(7.5),
             width: WINDOW_WIDTH * 0.88,
+            height: heightp(130)
         },
         textAlign: {
             textAlign: 'left',
@@ -169,31 +170,6 @@ const TeachersCourseCard = ({
                 <Pressable
                     style={styles.loginBtn}
                     onPress={() => {
-                        console.log('pressed onPressSubscribePrivateTeachers')
-                        onPressSubscribePrivateTeachers()
-                    }}
-                >
-                    <View style={styles.loginBtnView}>
-                        <View />
-                        <RNText style={styles.loginText}>
-                            {I18n.t('SubscribeToFullSubject')}
-                        </RNText>
-                        <View style={styles.arrowCont}>
-                            <MaterialIcons
-                                name={
-                                    lang === 'ar'
-                                        ? 'arrow-back'
-                                        : 'arrow-forward'
-                                }
-                                size={16}
-                                color={colors.white}
-                            />
-                        </View>
-                    </View>
-                </Pressable>
-                <Pressable
-                    style={styles.loginBtn}
-                    onPress={() => {
                         console.log('pressed onPressSubscribeTeachers')
                         onPressSubscribeTeachers()
                     }}
@@ -211,6 +187,31 @@ const TeachersCourseCard = ({
                                         : 'arrow-forward'
                                 }
                                 size={14}
+                                color={colors.white}
+                            />
+                        </View>
+                    </View>
+                </Pressable>
+                <Pressable
+                    style={styles.loginBtn}
+                    onPress={() => {
+                        console.log('pressed onPressSubscribePrivateTeachers')
+                        onPressSubscribePrivateTeachers()
+                    }}
+                >
+                    <View style={styles.loginBtnView}>
+                        <View />
+                        <RNText style={styles.loginText}>
+                            {I18n.t('SubscribeToFullSubject')}
+                        </RNText>
+                        <View style={styles.arrowCont}>
+                            <MaterialIcons
+                                name={
+                                    lang === 'ar'
+                                        ? 'arrow-back'
+                                        : 'arrow-forward'
+                                }
+                                size={16}
                                 color={colors.white}
                             />
                         </View>

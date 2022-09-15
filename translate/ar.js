@@ -279,6 +279,7 @@ const Arabic = {
     SendRequest: 'ارسل الطلب',
     SubscribeToOneLesson: 'حجز درس واحد',
     SubscribeToFullSubject: 'حجز منهج كامل',
+    NoAvailableDates: 'لا توجد مواعيد متاحة',
 }
 
 export default Arabic

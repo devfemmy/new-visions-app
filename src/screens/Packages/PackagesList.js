@@ -36,7 +36,7 @@ export default function PackagesList({ route, navigation }) {
                 ) {
                     if (response.data.code == 200) {
                         const data = response.data.data.data
-                        console.log('multi Packages: ' + data)
+                        // console.log('multi Packages: ' + data)
                         setMultiPackages(data)
                         showLoadingSpinner(false)
                     } else if (response.data.code == 403) {

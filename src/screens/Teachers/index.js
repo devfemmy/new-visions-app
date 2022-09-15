@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
     FlatList,
     StyleSheet,
@@ -17,24 +17,24 @@ import { getTeachers } from '../../redux/action'
 import { getSubject } from '../../redux/action/subjectPageAction'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp, widthp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
 import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
 
 const Teachers = () => {
+    const flatListRef = useRef()
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
     const [searchText, setSearchText] = useState()
     const route = useRoute()
     const [isLoading, setIsLoading] = useState(false)
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(1)
     const [dataForTeachers, setDataForTeachers] = useState([])
     const [
         onEndReachedCalledDuringMomentum,
         setOnEndReachedCalledDuringMomentum,
     ] = useState(false)
-    // console.log('quiz data', dataForTeachers.length)
     // const { level } = route.params;
     // const data = useAppSelector((state)=> console.log(state, 'hello'));
     // const {
@@ -69,7 +69,7 @@ const Teachers = () => {
                 )
             } else {
                 const data = res?.data?.data
-                console.log('getTeachers res', data)
+                // console.log('getTeachers res', data)
                 setIsLoading(false)
                 setDataForTeachers(data)
                 // const filledArray = Array.from(
@@ -112,6 +112,8 @@ const Teachers = () => {
           )
         : dataForTeachers
 
+    console.log('quiz data', searchFilteredData.length)
+
     const fetchTeachers = async () => {
         console.log('here to fetch')
         setIsLoading(true)
@@ -121,7 +123,7 @@ const Teachers = () => {
             const res = await HomePageService.getTeachers(payload)
             if (res.code === -2) {
                 setIsLoading(false)
-                console.log('false data', res)
+                // console.log('false data', res)
                 Alert.alert(
                     `${I18n.t('Teachers')}`,
                     res?.message,
@@ -142,7 +144,7 @@ const Teachers = () => {
                 const data = res?.data?.data
                 setIsLoading(false)
                 setDataForTeachers([...dataForTeachers, ...data])
-                console.log('getTeachers res for fetch', data)
+                // console.log('getTeachers res for fetch', data)
                 return data
             }
         } catch (err) {
@@ -165,6 +167,8 @@ const Teachers = () => {
             <View
                 style={{
                     marginBottom: heightp(60),
+                    height: heightp(50),
+                    // backgroundColor: '#f0f'
                 }}
             >
                 {isLoading ? (
@@ -201,9 +205,7 @@ const Teachers = () => {
     const onEndReached = useCallback(
         (distanceFromEnd) => {
             if (!onEndReachedCalledDuringMomentum) {
-                // setTimeout(() => {
                 fetchTeachers()
-                // }, 3000)
                 setOnEndReachedCalledDuringMomentum(true)
             }
         },
@@ -211,7 +213,7 @@ const Teachers = () => {
     )
 
     return (
-        <Container>
+        <View style={styles.container}>
             <View style={{ marginBottom: 15 }}>
                 <SearchBar
                     placeholder={I18n.t('SearchTeachers')}
@@ -222,7 +224,8 @@ const Teachers = () => {
             </View>
             <View style={styles.containerFlex}>
                 <FlatList
-                    keyboardShouldPersistTaps="handled"
+                    ref={flatListRef}
+                    keyboardShouldPersistTaps="always"
                     contentContainerStyle={styles.flatlistContent}
                     ListEmptyComponent={() => (
                         <View
@@ -237,10 +240,9 @@ const Teachers = () => {
                     ListFooterComponent={renderFooter}
                     data={searchFilteredData}
                     showsVerticalScrollIndicator={false}
-                    onEndReachedThreshold={0.5}
+                    onEndReachedThreshold={0.15}
                     renderItem={({ item }) => (
                         <>
-                            <>{console.log('"yuuuuuuuuuu', item)}</>
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>
@@ -257,15 +259,17 @@ const Teachers = () => {
                         </>
                     )}
                     initialNumToRender={10}
-                    maxToRenderPerBatch={10}
-                    windowSize={20}
+                    maxToRenderPerBatch={5}
+                    updateCellsBatchingPeriod={100}
+                    // windowSize={20}
                     onEndReached={onEndReached}
                     onMomentumScrollBegin={() => {
                         setOnEndReachedCalledDuringMomentum(false)
                     }}
+                    keyExtractor={(item, index) => String(index)}
                 />
             </View>
-        </Container>
+        </View>
     )
 }
 const styles = StyleSheet.create({
@@ -293,6 +297,10 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 12,
         textAlign: 'center',
+    },
+    container: {
+        paddingHorizontal: widthp(15),
+        flexGrow: 1,
     },
 })
 

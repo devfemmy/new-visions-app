@@ -27,6 +27,7 @@ import TeachersCourseCard from '../../components/TeachersCourseCard'
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
 const TeacherProfile = () => {
+    const flatListRef = useRef()
     const route = useRoute()
     const navigation = useNavigation()
     const playerRef = useRef()
@@ -191,6 +192,7 @@ const TeacherProfile = () => {
                 {courses.length > 0 && (
                     <View style={styles.containerFlex}>
                         <FlatList
+                            ref={flatListRef}
                             horizontal
                             keyboardShouldPersistTaps="handled"
                             contentContainerStyle={styles.flatlistContent}
