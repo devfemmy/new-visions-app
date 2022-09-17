@@ -16,6 +16,7 @@ import { TouchableWithoutFeedback } from 'react-native'
 import SonAttendanceItem from './SonAttendanceItem'
 import { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { heightp } from '../../utils/responsiveDesign'
 
 export default function Attendance({ route }) {
     const navigation = useNavigation();
@@ -189,9 +190,10 @@ export default function Attendance({ route }) {
                 alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginVertical: heightp(50)
             }}
         >
-            <Text style={styles.subItemText}>{I18n.t('noSubField')}Hello</Text>
+            <Text style={styles.subItemText}>{I18n.t('noSubField')}</Text>
         </View>
     )
 
