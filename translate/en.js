@@ -271,6 +271,7 @@ const English = {
     SubscribeToOneLesson: 'Term booking',
     SubscribeToFullSubject: 'One lesson',
     NoAvailableDates: 'No available dates',
+    EnterAccountInfo: 'Enter your Account Information'  
 }
 
 export default English

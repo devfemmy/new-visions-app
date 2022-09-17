@@ -118,13 +118,16 @@ export default function Parents({navigation}) {
       });
     }
 
-    const renderItem = ({item})=>(
+    const renderItem = ({item})=> {
+      console.log('item', item)
+      return (
         <ParentListItem name={item.name}
         status={item.status} 
         approveClick={() =>{ApproveParent(item)}}
         disapproveClick={() =>{disApproveParent(item)}}
         />
     );
+    }
   return (
     <View style={{backgroundColor:colors.white,  flex:.4}}>
 

@@ -7,17 +7,20 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
+  TextInput,
   Alert,
 } from 'react-native';
 
-import { TextInput, Caption } from 'react-native-paper';
+import { Caption } from 'react-native-paper';
 import { CheckBox } from 'react-native-elements';
 import * as yup from 'yup';
 import I18n from 'i18n-js';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
 import Global from '../../../Global';
 // import { EditProfileSchema } from '../../constants/schema';
 import { Loader } from '../../components/Loader';
@@ -27,10 +30,13 @@ import { AppContext } from '../../context/AppState';
 import { SafeAreaView } from '../../components/common';
 import HomePageService from '../../services/userServices';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { globalStyles } from '../../helpers/globalStyles';
+import { heightp } from '../../utils/responsiveDesign';
 
 export function CompleteProfile() {
   const { t } = useTranslation();
   const { lang, onLogin, showLoadingSpinner } = useContext(AppContext);
+  const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(false);
   const [gender, setGender] = useState(0);
   const route = useRoute();
@@ -57,6 +63,7 @@ export function CompleteProfile() {
         const res = await HomePageService.upDateUserProfile(payload)
         if (res.code === 200) {
             setIsLoading(false)
+            navigation.navigate('Login')
             setUserInfo();
 
         } else {
@@ -66,6 +73,7 @@ export function CompleteProfile() {
         }
         return res
     } catch (err) {
+      console.log(err, 'err')
       setIsLoading(false)
     }
   }
@@ -74,6 +82,7 @@ export function CompleteProfile() {
     showLoadingSpinner(false)
     Global.AuthenticationToken = userData.remember_token
     AsyncStorage.setItem('token', Global?.AuthenticationToken)
+
     Global.Image = userData?.image
     Global.UserName = userData?.first_name + userData?.last_name
     Global.phone = userData?.phone
@@ -125,58 +134,89 @@ export function CompleteProfile() {
             paddingVertical: layout.pixelSizeVertical(15),
             fontSize: 20,
             color: 'black',
-            textAlign,
+            textAlign: 'center',
           }}
         >
           {' '}
-          {I18n.t('PleaseAnswerAll')}
+          {I18n.t('EnterAccountInfo')}
         </Text>
-        <View style={[styles.inputBox]}>
-          <TextInput
-            style={{ textAlign }}
-            placeholder={I18n.t('FirstName')}
-            fontSize={15}
-            editable={false}
-            value={values.firstName}
-            onChangeText={handleChange('firstName')}
-            onBlur={handleBlur('firstName')}
-            error={!!(touched.firstName && errors?.firstName)}
-          />
-          {errors.firstName ? (
+        <View style={styles.formContainer}>
+            <View style={globalStyles.rowBetween}>
+                <Text style={styles.inputTitle}>
+                    {I18n.t('FirstName')}
+                </Text>
+                <Ionicons
+                    name="create-outline"
+                    size={20}
+                    color={'rgba(70, 79, 84, 1)'}
+                />
+            </View>
+            <TextInput
+                style={styles.input}
+                autoCapitalize="none"
+                // defaultValue={firstname}
+                placeholderTextColor="#000000"
+                editable={false}
+                value={values.firstName}
+                onChangeText={handleChange('firstName')}
+                onBlur={handleBlur('firstName')}
+            />
+            {errors.firstName ? (
             <Caption style={{ color: 'red', paddingTop: layout.pixelSizeVertical(5), textAlign }}>
               {errors.firstName}
             </Caption>
           ) : null}
         </View>
-
-        <View style={styles.inputBox}>
-          <TextInput
-            style={{ textAlign }}
-            placeholder={I18n.t('LastName')}
-            fontSize={15}
-            value={values.lastName}
-            editable={false}
-            onChangeText={handleChange('lastName')}
-            onBlur={handleBlur('lastName')}
-            error={!!(touched.lastName && errors?.lastName)}
-          />
-          {errors.lastName ? (
+        <View style={styles.formContainer}>
+            <View style={globalStyles.rowBetween}>
+                <Text style={styles.inputTitle}>
+                  {I18n.t('LastName')}
+                </Text>
+                <Ionicons
+                    name="create-outline"
+                    size={20}
+                    color={'rgba(70, 79, 84, 1)'}
+                />
+            </View>
+            <TextInput
+                style={styles.input}
+                autoCapitalize="none"
+                // defaultValue={firstname}
+                placeholderTextColor="#000000"
+                editable={false}
+                value={values.lastName}
+                onChangeText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
+                error={!!(touched.lastName && errors?.lastName)}
+            />
+            {errors.lastName ? (
             <Caption style={{ color: 'red', paddingTop: layout.pixelSizeVertical(5), textAlign }}>
               {errors.lastName}
             </Caption>
           ) : null}
         </View>
-        <View style={styles.inputBox}>
-          <TextInput
-            style={{ textAlign }}
-            placeholder={I18n.t('PhoneNumber')}
-            fontSize={15}
-            value={values.phone}
-            onChangeText={handleChange('phone')}
-            onBlur={handleBlur('phone')}
-            error={!!(touched.phone && errors?.phone)}
-          />
-          {errors.phone ? (
+        <View style={styles.formContainer}>
+            <View style={globalStyles.rowBetween}>
+                <Text style={styles.inputTitle}>
+                  {I18n.t('PhoneNumber')}
+                </Text>
+                <Ionicons
+                    name="create-outline"
+                    size={20}
+                    color={'rgba(70, 79, 84, 1)'}
+                />
+            </View>
+            <TextInput
+                style={styles.input}
+                autoCapitalize="none"
+                // defaultValue={firstname}
+                placeholderTextColor="#000000"
+                value={values.phone}
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                error={!!(touched.phone && errors?.phone)}
+            />
+            {errors.phone ? (
             <Caption style={{ color: 'red', paddingTop: layout.pixelSizeVertical(5), textAlign }}>
               {errors.phone}
             </Caption>
@@ -246,26 +286,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  margin: {
-    flex: 1,
-    marginHorizontal: 10,
-    marginVertical: 5,
-  },
-  text: {
-    fontSize: 17,
-    color: 'white',
-  },
-  divider: {
+  inputTitle: {
+    fontSize: heightp(13),
+    fontWeight: '700',
+    color: 'rgba(70, 79, 84, 1)',
+    fontFamily: 'Cairo-Regular',
+},
+input: {
+    width: '100%',
+    fontSize: heightp(14),
+    height: 35,
+    fontFamily: 'Cairo-Regular',
+    color: 'rgba(70, 79, 84, 1)',
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    borderWidth: 0,
+},
+
+formContainer: {
     borderWidth: 1,
-    borderColor: 'gray',
-    marginVertical: 5,
-    marginHorizontal: 20,
-  },
-  label: {
-    flexDirection: 'row',
+    borderColor: 'rgba(70, 79, 84, 0.091)',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 2,
+    marginBottom: 15,
+    height: 65,
+    backgroundColor: 'rgba(70, 79, 84, 0.091)',
+},
+
+icon: {
+    position: 'absolute',
+    right: 153,
+    bottom: 3,
+    paddingHorizontal: 7.5,
+    paddingVertical: 7.5,
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputBox: {
-    marginBottom: layout.pixelSizeVertical(20),
-  },
+    backgroundColor: 'rgba(70, 79, 84, 1)',
+    borderRadius: 20,
+},
 });

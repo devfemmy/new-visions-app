@@ -280,6 +280,7 @@ const Arabic = {
     SubscribeToOneLesson: 'حجز ترم',
     SubscribeToFullSubject: 'حجز حصة',
     NoAvailableDates: 'لا توجد مواعيد متاحة',
+    EnterAccountInfo: 'قم بتكلمة بيانات حسابك '   
 }
 
 export default Arabic

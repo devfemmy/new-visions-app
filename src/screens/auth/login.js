@@ -69,6 +69,8 @@ function Login() {
                       Global.LoggedIn = true;                            
                       if (response.data.data.phone === '123456' || response.data.data.phone === 123456) {
                         const responseData = response?.data?.data;
+                        Global.AuthenticationToken = responseData?.remember_token
+                        AsyncStorage.setItem('token', Global.AuthenticationToken)
                         navigation.navigate('CompleteProfile', {userData: responseData })
                       } else {
                         // replace('Main');
