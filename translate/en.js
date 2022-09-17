@@ -22,6 +22,7 @@ const English = {
     SendVerificationCode: 'Send Verification Code',
 
     UserName: 'User Name',
+    Name: 'Name',
 
     // Registreation
     FirstName: 'First Name',
@@ -271,6 +272,7 @@ const English = {
     SubscribeToOneLesson: 'Term booking',
     SubscribeToFullSubject: 'One lesson',
     NoAvailableDates: 'No available dates',
+    QuizzesResults: 'Quizzes Results',
 }
 
 export default English

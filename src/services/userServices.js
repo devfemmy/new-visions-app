@@ -139,4 +139,14 @@ export default class HomePageService {
         const res = await baseAxios.get('about_us', data)
         return res?.data || res
     }
+
+    static async getFinishedMeasurementQuizzes(data) {
+        const res = await baseAxios.post('/getFinishedMeasurementQuizzes', data)
+        return res?.data || res
+    }
+
+    static async getMeasurementQuizResult(data) {
+        const res = await baseAxios.post('/getMeasurementQuizResult', data)
+        return res?.data || res
+    }
 }

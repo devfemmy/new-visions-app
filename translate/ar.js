@@ -26,6 +26,7 @@ const Arabic = {
     SendVerificationCode: 'أرسل رمز التحقق',
 
     UserName: 'اسم المستخدم',
+    Name: 'اسم',
 
     //Registreation
     FirstName: 'الاسم الاول',
@@ -280,6 +281,7 @@ const Arabic = {
     SubscribeToOneLesson: 'حجز ترم',
     SubscribeToFullSubject: 'حجز حصة',
     NoAvailableDates: 'لا توجد مواعيد متاحة',
+    QuizzesResults: 'نتائج الاختبار',
 }
 
 export default Arabic
