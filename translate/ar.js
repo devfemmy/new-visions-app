@@ -282,6 +282,7 @@ const Arabic = {
     SubscribeToFullSubject: 'حجز حصة',
     NoAvailableDates: 'لا توجد مواعيد متاحة',
     QuizzesResults: 'نتائج الاختبار',
+    QuizResults: 'نتائج الأختبار',
 }
 
 export default Arabic

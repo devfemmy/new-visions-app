@@ -52,6 +52,7 @@ import { Loader } from '../components/Loader'
 import { useAppSelector } from '../redux/hooks'
 import { CompleteProfile } from '../screens/auth/CompleteProfile'
 import LiveNowQuizResult from '../screens/LiveNowQuizResult'
+import AttendanceResult from '../screens/AttendanceResult'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -354,6 +355,15 @@ export const PostLoginNavigator = () => {
                     }}
                     name={'Attendance'}
                     component={Attendance}
+                />
+                <MainStack.Screen
+                    options={{
+                        title: I18n.t('QuizResults'),
+                        headerShown: true,
+                        headerLeft: backRight,
+                    }}
+                    name={'AttendanceResult'}
+                    component={AttendanceResult}
                 />
                 <MainStack.Screen
                     name={'LiveNowQuiz'}

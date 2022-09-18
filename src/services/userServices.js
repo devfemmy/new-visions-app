@@ -149,4 +149,9 @@ export default class HomePageService {
         const res = await baseAxios.post('/getMeasurementQuizResult', data)
         return res?.data || res
     }
+    
+    static async getAttendanceQuizResults(data) {
+        const res = await baseAxios.post('/getAttendanceQuizResults', data)
+        return res?.data || res
+    }
 }

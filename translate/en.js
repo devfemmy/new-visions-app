@@ -273,6 +273,7 @@ const English = {
     SubscribeToFullSubject: 'One lesson',
     NoAvailableDates: 'No available dates',
     QuizzesResults: 'Quizzes Results',
+    QuizResults: 'Quiz Results',
 }
 
 export default English

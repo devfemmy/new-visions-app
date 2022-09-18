@@ -15,7 +15,7 @@ function LoadingScreen() {
                 JSON.parse(results[0][1]) !== null
                     ? JSON.parse(results[0][1])
                     : null
-            const lang = results[1][1] !== null ? results[1][1] : 'ar'
+            const lang = results[1][1] !== null ? results[1][1] : 'en'
             console.log('user ==>', user)
             console.log('lang ==>', lang)
             Global.UserType = user?.type
