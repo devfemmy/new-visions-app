@@ -1,5 +1,7 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import React from 'react'
+/* eslint-disable camelcase */
+/* eslint-disable arrow-body-style */
+import { View, Text, StyleSheet, FlatList, Alert } from 'react-native'
+import React, { useCallback } from 'react'
 import SonListItem from './SonListItem'
 import Screen from '../../components/Screen'
 import colors from '../../helpers/colors'
@@ -13,8 +15,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { TouchableWithoutFeedback } from 'react-native'
 import SonAttendanceItem from './SonAttendanceItem'
 import { useLayoutEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { heightp } from '../../utils/responsiveDesign'
 
 export default function Attendance({ route }) {
+    const navigation = useNavigation()
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
 
@@ -52,9 +57,10 @@ export default function Attendance({ route }) {
     const [attendance, setAttendance] = useState([])
 
     function getAttendance(id, month) {
+        console.log('params', route.params.id)
         axios
-            .post('https://newvisions.sa/api/getChildAttendance', {
-                child_id: route.params.id,
+            .post('https://newvisions.sa/api/getAttendance', {
+                // child_id: route.params.id,
                 month: monthNo,
                 year: yearNo,
             })
@@ -85,23 +91,71 @@ export default function Attendance({ route }) {
             })
     }
 
-    function attendanceVideoClicked(id) {
-        console.log('Clicked')
+    function attendanceVideoClicked(id, type) {
+        showLoadingSpinner(true)
+        axios
+            .post('https://newvisions.sa/api/getRecords', {
+                // child_id: route.params.id,
+                attendance_id: id.toString(),
+                type: type.toString(),
+            })
+            .then((response) => {
+                showLoadingSpinner(false)
+                console.log(response.data)
+                if (
+                    response != undefined &&
+                    response.data != undefined &&
+                    response.data.code != undefined
+                ) {
+                    if (response.data.code === 200) {
+                        const live_url = response.data.data
+                        navigation.navigate('WebView', { live_url })
+                        showLoadingSpinner(false)
+                    } else if (response.data.code === -2) {
+                        Alert.alert(response.data.message)
+                    } else if (response.data.code === 403) {
+                        onLogout()
+                        showLoadingSpinner(false)
+                    } else {
+                        showLoadingSpinner(false)
+                        // alert(response.data.message)
+                    }
+                }
+            })
+            .catch((error) => {
+                showLoadingSpinner(false)
+                // alert(error)
+            })
     }
 
-    const renderItem = ({ item, index }) => (
-        <SonAttendanceItem
-            title={item.title}
-            index={index}
-            description={item.description}
-            id={item.id}
-            date={item.date}
-            time={item.time}
-            videoClick={() => {
-                attendanceVideoClicked(item.id)
-            }}
-        />
+    const navigateQuizResult = useCallback(
+        (id) => {
+            navigation.navigate('AttendanceResult', {
+                attendance_id: id.toString(),
+            })
+        },
+        [navigation]
     )
+
+    const renderItem = ({ item, index }) => {
+        // console.log(item, 'video clicked')
+        return (
+            <SonAttendanceItem
+                title={item.title}
+                index={index}
+                description={item.description}
+                id={item.id}
+                date={item.date}
+                time={item.time}
+                videoClick={() => {
+                    attendanceVideoClicked(item.id, item.type)
+                }}
+                quizClick={() => {
+                    navigateQuizResult(item.id)
+                }}
+            />
+        )
+    }
 
     function prevMonth() {
         //alert(yearNo + " - " + monthNo);
@@ -147,6 +201,7 @@ export default function Attendance({ route }) {
                 alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginVertical: heightp(50),
             }}
         >
             <Text style={styles.subItemText}>{I18n.t('noSubField')}</Text>

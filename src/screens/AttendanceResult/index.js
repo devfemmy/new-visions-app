@@ -33,7 +33,7 @@ import { AppContext } from '../../context/AppState'
 
 const AttendanceResult = () => {
     const route = useRoute()
-    const { item, lesson_id } = route.params
+    const { attendance_id } = route.params
     const { user } = useContext(AppContext)
     const navigation = useNavigation()
     const [quizData, setQuizData] = useState([])
@@ -47,9 +47,9 @@ const AttendanceResult = () => {
         async function getAttendanceQuizResults() {
             setLoading(true)
             const payload = {
-                attendance_id: item?.id,
+                attendance_id,
             }
-            console.log(payload)
+            console.log(payload, 'payload')
             try {
                 const res = await HomePageService.getAttendanceQuizResults(
                     payload
@@ -133,7 +133,8 @@ const AttendanceResult = () => {
             if (Number(useIndex) === Number(item?.correct_answer)) {
                 return (
                     <IconText
-                        style={[styles.title]}
+                        style={styles.title}
+                        calender
                         textColor={colors.white}
                         text={answer}
                         children={
@@ -153,7 +154,8 @@ const AttendanceResult = () => {
             ) {
                 return (
                     <IconText
-                        style={[styles.title]}
+                        style={styles.title}
+                        calender
                         textColor={colors.white}
                         text={answer}
                         children={
@@ -173,7 +175,8 @@ const AttendanceResult = () => {
             ) {
                 return (
                     <IconText
-                        style={[styles.title]}
+                        style={styles.title}
+                        calender
                         textColor={colors.white}
                         text={answer}
                         children={
@@ -214,7 +217,7 @@ const AttendanceResult = () => {
                             },
                         ]}
                     >
-                        {I18n.t('QuestionNumber')} {item?.id}
+                        {I18n.t('QuestionNumber')} {index + 1}
                     </Text>
                     <Text style={[styles.inputTitle]}>{item?.title}</Text>
 
@@ -445,33 +448,6 @@ const AttendanceResult = () => {
                     ListEmptyComponent={() => (
                         <View style={styles.container}>
                             <CustomText text={I18n.t('NoData')} />
-                            <Pressable
-                                onPress={() => {
-                                    navigation.goBack()
-                                    console.log('pressed')
-                                }}
-                            >
-                                <View
-                                    style={[
-                                        styles.btnContainer,
-                                        {
-                                            backgroundColor: colors.primary,
-                                            marginTop: 20,
-                                        },
-                                    ]}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.title,
-                                            {
-                                                color: colors.white,
-                                            },
-                                        ]}
-                                    >
-                                        {I18n.t('Back')}
-                                    </Text>
-                                </View>
-                            </Pressable>
                         </View>
                     )}
                     ListFooterComponent={() => (
@@ -526,7 +502,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Cairo-Regular',
     },
     title: {
-        fontSize: heightp(15),
+        fontSize: 13,
         fontWeight: '700',
         fontFamily: 'Cairo',
     },

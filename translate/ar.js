@@ -283,6 +283,7 @@ const Arabic = {
     NoAvailableDates: 'لا توجد مواعيد متاحة',
     QuizzesResults: 'نتائج الاختبار',
     QuizResults: 'نتائج الأختبار',
+    EnterAccountInfo: 'قم بتكلمة بيانات حسابك '   
 }
 
 export default Arabic

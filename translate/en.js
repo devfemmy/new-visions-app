@@ -274,6 +274,7 @@ const English = {
     NoAvailableDates: 'No available dates',
     QuizzesResults: 'Quizzes Results',
     QuizResults: 'Quiz Results',
+    EnterAccountInfo: 'Enter your Account Information'  
 }
 
 export default English

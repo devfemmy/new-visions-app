@@ -624,6 +624,17 @@ const styles = StyleSheet.create({
         color: 'rgba(70, 79, 84, 1)',
     },
 
+    formContainer: {
+        borderWidth: 1,
+        borderColor: 'rgba(70, 79, 84, 0.091)',
+        borderRadius: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 2,
+        marginBottom: 15,
+        height: 65,
+        backgroundColor: 'rgba(70, 79, 84, 0.091)',
+    },
+
     icon: {
         position: 'absolute',
         right: 153,
@@ -693,16 +704,6 @@ const styles = StyleSheet.create({
         color: colors.gray,
         textAlign: 'center',
         marginVertical: 5,
-    },
-    formContainer: {
-        borderWidth: 1,
-        borderColor: 'rgba(70, 79, 84, 0.091)',
-        borderRadius: 10,
-        paddingHorizontal: 20,
-        paddingVertical: 2,
-        marginBottom: 15,
-        height: 65,
-        backgroundColor: 'rgba(70, 79, 84, 0.091)',
     },
     phoneContainer: {
         borderRadius: 10,

@@ -46,15 +46,15 @@ const Teachers = () => {
     const [dataForTeachers, setDataForTeachers] = useState([])
 
     // New use state
-    const insets = useSafeAreaInsets()
-    const [Page, setPage] = useState(1)
-    const [PagePrev, setPagePrev] = useState(0)
-    const [MaxPages, setMaxPages] = useState(999)
-    const [SerachValue, setSerachValue] = useState('')
-    const [CurrentSerachValue, setCurrentSerachValue] = useState('')
-    const [LoadedPage, setLoadedPage] = useState(-1)
+    const insets = useSafeAreaInsets();
+    const [Page, setPage] = useState(1);
+    const [PagePrev, setPagePrev] = useState(0);
+    const [MaxPages, setMaxPages] = useState(999);
+    const [SerachValue, setSerachValue] = useState('');
+    const [CurrentSerachValue, setCurrentSerachValue] = useState('');
+    const [LoadedPage, setLoadedPage] = useState(-1);
     const scrollRef = useRef()
-    const [responseValue, SetresponseValue] = useState([])
+    const [responseValue, SetresponseValue] = useState([]);
     const [
         onEndReachedCalledDuringMomentum,
         setOnEndReachedCalledDuringMomentum,
@@ -186,22 +186,22 @@ const Teachers = () => {
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,
-        })
-        if (LoadedPage === Page) setPage(Page + 1)
-    }
-
-    const GetTeachersPrev = () => {
+          });
+        if (LoadedPage === Page) setPage(Page + 1);
+      };
+    
+      const GetTeachersPrev = () => {
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,
-        })
-        if (LoadedPage === Page) setPage(Page - 1)
-    }
-
-    const GetExtraCache = () => {
-        let page = 0
-
-        let keys = Object.keys(ResponseCache)
+          });
+        if (LoadedPage === Page) setPage(Page - 1);
+      };
+    
+      const GetExtraCache = () => {
+        let page = 0;
+    
+        let keys = Object.keys(ResponseCache);
         keys = keys.filter((k) => {
             const jsonKey = JSON.parse(k)
             if (jsonKey.search === SerachValue) return true
