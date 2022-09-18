@@ -280,7 +280,7 @@ const TeacherProfile = () => {
                                         },
                                     ]}
                                 >
-                                    {teachersData?.rate?.toFixed(1)}
+                                    {Number(teachersData?.rate)?.toFixed(1)}
                                 </RNText>
                                 <AirbnbRating
                                     size={16}

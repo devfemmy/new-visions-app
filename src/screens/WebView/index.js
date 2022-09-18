@@ -29,8 +29,21 @@ const WebViewComponent = () => {
                 source={{ uri: live_url }}
                 mediaCapturePermissionGrantType="grantIfSameHostElsePrompt"
                 userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
+                onNavigationStateChange={(navState) => {
+                    console.log('navState changed')
+                    const { url, title } = navState
+                    console.log({ url, title })
+                    if (
+                        liveNow === 'liveNow' &&
+                        title === 'New Visions - Login' &&
+                        url === 'https://newvisions.sa/login'
+                    ) {
+                        navigateLiveNowQuiz(item)
+                        console.log('pressed')
+                    }
+                }}
             />
-            {liveNow === 'liveNow' && (
+            {/* {liveNow === 'liveNow' && (
                 <View
                     style={{
                         position: 'absolute',
@@ -42,12 +55,7 @@ const WebViewComponent = () => {
                         // backgroundColor: colors.white,
                     }}
                 >
-                    <Pressable
-                        onPress={() => {
-                            navigateLiveNowQuiz(item)
-                            console.log('pressed')
-                        }}
-                    >
+                    <Pressable onPress={() => {}}>
                         <View
                             style={[
                                 styles.btnContainer,
@@ -70,7 +78,7 @@ const WebViewComponent = () => {
                         </View>
                     </Pressable>
                 </View>
-            )}
+            )} */}
         </>
     )
 }

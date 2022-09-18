@@ -84,15 +84,34 @@ const SubjectDetails = () => {
                     data={searchFilteredData}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
-                    renderItem={({ item }) => (
-                        <SubjectCard
-                            pressed={() => navigateSubjectsDetails(item)}
-                            numberOfStudents={item?.number_of_students}
-                            duration={item?.number_of_hours}
-                            uri={`${IMAGEURL}/${item?.image}`}
-                            contents={item?.title}
-                        />
-                    )}
+                    renderItem={({ item }) => {
+                        return (
+                            <>
+                                {searchFilteredData.length > 0 ? (
+                                    <SubjectCard
+                                        pressed={() =>
+                                            navigateSubjectsDetails(item)
+                                        }
+                                        numberOfStudents={
+                                            item?.number_of_students
+                                        }
+                                        duration={item?.number_of_hours}
+                                        uri={`${IMAGEURL}/${item?.image}`}
+                                        contents={item?.title}
+                                    />
+                                ) : (
+                                    <View
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Text text={I18n.t('NoData')} />
+                                    </View>
+                                )}
+                            </>
+                        )
+                    }}
                 />
             </View>
         </Container>

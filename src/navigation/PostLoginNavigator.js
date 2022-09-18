@@ -51,6 +51,7 @@ import PrivateSubjectSubscribe from '../screens/PrivateSubjectSubscribe'
 import { Loader } from '../components/Loader'
 import { useAppSelector } from '../redux/hooks'
 import { CompleteProfile } from '../screens/auth/CompleteProfile'
+import LiveNowQuizResult from '../screens/LiveNowQuizResult'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -150,7 +151,7 @@ export const PostLoginNavigator = () => {
                     component={MeasurementTestResults}
                     options={() => ({
                         headerShown: true,
-                        title: i18n.t('MeasurementTestResults'),
+                        title: i18n.t('QuizzesResults'),
                     })}
                 />
                 <MainStack.Screen
@@ -359,6 +360,15 @@ export const PostLoginNavigator = () => {
                     component={LiveNowQuiz}
                     options={{
                         title: I18n.t('MeasurementQuiz'),
+                        headerShown: true,
+                        headerLeft: backRight,
+                    }}
+                />
+                <MainStack.Screen
+                    name={'LiveNowQuizResult'}
+                    component={LiveNowQuizResult}
+                    options={{
+                        title: I18n.t('QuizzesResults'),
                         headerShown: true,
                         headerLeft: backRight,
                     }}

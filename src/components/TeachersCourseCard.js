@@ -152,7 +152,15 @@ const TeachersCourseCard = ({
                         />
                     }
                 />
-                <Text style={styles.textAlign} text={contents} />
+                <Text
+                    style={[
+                        styles.textAlign,
+                        {
+                            fontSize: heightp(11),
+                        },
+                    ]}
+                    text={contents}
+                />
             </View>
             <View
                 style={{

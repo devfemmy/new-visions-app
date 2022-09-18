@@ -11,6 +11,7 @@ import { TouchableOpacity, View, StyleSheet, Text } from 'react-native'
 import { RootBottomTabNavigator } from './RootTabNavigator'
 import Home from '../screens/Home/Home'
 import BackIcon from '../assets/img/back.svg'
+import ForwardIcon from '../assets/img/forward.svg'
 import Calendar from '../screens/Calendar'
 import defaultStyles from '../helpers/styles'
 // import { Text } from '../components/common'
@@ -31,6 +32,7 @@ const Drawer = createDrawerNavigator()
 
 const DrawerNavigator = () => {
     const navigation = useNavigation()
+    const { lang } = useContext(AppContext)
     const backRight = () => (
         <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -38,7 +40,11 @@ const DrawerNavigator = () => {
                 marginLeft: 16,
             }}
         >
-            <BackIcon width={20} height={20} />
+            {lang === 'ar' ? (
+                <ForwardIcon width={20} height={20} />
+            ) : (
+                <BackIcon width={20} height={20} />
+            )}
         </TouchableOpacity>
     )
     const CustomDrawerContent = (props) => {
@@ -211,12 +217,12 @@ const DrawerNavigator = () => {
                     }}
                 /> */}
                 <Drawer.Screen
-                    name={I18n.t('MeasurementTestResult')}
+                    name={I18n.t('QuizzesResults')}
                     component={MeasurementTestResults}
                     options={{
-                        // headerShown: true,
-                        // headerLeft: backRight,
-                        // unmountOnBlur: true,
+                        headerShown: true,
+                        headerLeft: backRight,
+                        unmountOnBlur: true,
                         // headerTransparent: true,
                         headerTintColor: colors.black,
                         drawerIcon: () => (
