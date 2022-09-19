@@ -35,11 +35,12 @@ export default function CalendarView({ text, data }) {
             const res = await HomePageService.checkLive(payload)
             setItemDetails(item)
             console.log(res, 'first response')
-            setIsVisible(true)
             setLoading(false)
             if (res.code === -2) {
+                // setIsVisible(true)
                 setStatusInfo('stop')
             } else {
+                setIsVisible(true)
                 setStatusInfo('start')
             }
             return res
@@ -160,7 +161,10 @@ export default function CalendarView({ text, data }) {
                         renderItem={({ item }) => {
                             return (
                                 <CalendarItem
-                                    pressed={() => checkStatus(item)}
+                                    pressed={() => {
+                                        checkStatus(item)
+                                        console.log('pressed double In')
+                                    }}
                                     time={item.start}
                                     title={item.title}
                                 />

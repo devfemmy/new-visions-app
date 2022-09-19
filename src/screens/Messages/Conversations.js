@@ -52,14 +52,14 @@ const Conversation = () => {
     return (
         <Container>
             <Loader visible={loading} />
-            <SelectTab
+            {/* <SelectTab
                 eventActive={eventActive}
                 pressed={() => setEventActive(!eventActive)}
                 header1={i18n.t('People')}
                 header2={i18n.t('Group')}
-            />
+            /> */}
             <SearchBar
-                placeholder={i18n.t('SearchForMassage')}
+                placeholder={i18n.t('Search')}
                 value={searchText}
                 onChangeText={(text) => setSearchText(text)}
                 style={globalStyles.searchBar}

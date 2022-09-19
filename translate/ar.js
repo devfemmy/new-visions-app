@@ -239,6 +239,7 @@ const Arabic = {
 
     Group: 'المجموعات الدراسية',
     People: 'الاشخاص',
+    Search: 'بحث',
     SearchForMassage: 'لا توجد رسائل',
     NoData: 'لا يوجد',
     Welcome: 'مرحبا',
@@ -283,7 +284,7 @@ const Arabic = {
     NoAvailableDates: 'لا توجد مواعيد متاحة',
     QuizzesResults: 'نتائج الاختبار',
     QuizResults: 'نتائج الأختبار',
-    EnterAccountInfo: 'قم بتكلمة بيانات حسابك '   
+    EnterAccountInfo: 'قم بتكلمة بيانات حسابك ',
 }
 
 export default Arabic

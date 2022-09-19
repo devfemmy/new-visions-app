@@ -1,9 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import colors from '../../helpers/colors'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import I18n from 'i18n-js'
+import { AppContext } from '../../context/AppState'
+import { IMAGEURL } from '../../utils/functions'
+import FastImage from 'react-native-fast-image'
+import { heightp } from '../../utils/responsiveDesign'
 
 function ReturnStatus({ status }) {
     if (status == '2') {
@@ -20,14 +24,31 @@ export default function SonListItem({
     subClick,
     attendanceClick,
 }) {
+    const { user } = useContext(AppContext)
+
     console.log(status)
     return (
         <View style={styles.rowItem}>
             <View>
-                <Image
-                    source={require('../../assets/img/USRE.png')}
-                    style={styles.img}
-                />
+                {user?.image === null || user?.image === '' ? (
+                    <Image
+                        source={require('../../assets/img/default-profile-picture.jpeg')}
+                        style={styles.img}
+                    />
+                ) : (
+                    <FastImage
+                        style={{
+                            width: heightp(75),
+                            height: heightp(75),
+                            borderRadius: heightp(75),
+                        }}
+                        source={{
+                            uri: `${IMAGEURL}/${user?.image}`,
+                            priority: FastImage.priority.normal,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                )}
             </View>
             <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>

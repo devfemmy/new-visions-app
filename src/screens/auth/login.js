@@ -43,7 +43,7 @@ function Login() {
         loadingSpinner,
     } = useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
-    const navigation = useNavigation();
+    const navigation = useNavigation()
     const socialAuthApi = ({ givenName, familyName, email, id, type }) => {
         console.log('I AM HERE')
         axios
@@ -75,7 +75,7 @@ function Login() {
                       } else {
                         // replace('Main');
                         setUserInfo(response.data.data)
-                      }
+                    }
                 } else {
                     alert(JSON.stringify(response.data.message))
                 }
