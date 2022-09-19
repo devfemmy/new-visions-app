@@ -57,13 +57,13 @@ function Login() {
             .then(async (response) => {
                 if (response.data.code === 200) {
                     console.log('response hereee', response.data)
-                    if (response.data.data?.type === 2) {
+                    if (response.data.data?.type == 2) {
                         Global.UserType = 'Teacher';
                       }
-                      if (response.data.data.type === 3) {
+                      if (response.data.data.type == 3) {
                         Global.UserType = 'Student';
                       }
-                      if (response.data.data.type === 4) {
+                      if (response.data.data.type == 4) {
                         Global.UserType = 'Parent';
                       }
                       Global.LoggedIn = true;                            
