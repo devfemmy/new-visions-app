@@ -165,6 +165,11 @@ export const RootBottomTabNavigator = () => {
                 />
             )}
             <RootBottomTab.Screen
+                options={{
+                    headerShown: Global.UserType == 4,
+                    headerLeft: backRight,
+                    unmountOnBlur: true,
+                }}
                 name={Global.UserType == 3 ? I18n.t('Profile') : I18n.t('Sons')}
                 component={
                     Global.UserType == 4 ? ParentProfileNavigator : Profile

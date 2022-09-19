@@ -26,6 +26,7 @@ export default function SonListItem({
 }) {
     const { user } = useContext(AppContext)
 
+    console.log(status)
     return (
         <View style={styles.rowItem}>
             <View>
@@ -56,7 +57,7 @@ export default function SonListItem({
                     </View>
                     <View>{status && <ReturnStatus status={status} />}</View>
                 </View>
-                {status == '1' && (
+                {status == '2' && (
                     <View
                         style={{
                             flexDirection: 'row',
