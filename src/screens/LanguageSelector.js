@@ -24,7 +24,7 @@ const Selector = ({navigation}) => {
   return (
     <View style={styles.wrapper}>
       <ImageBackground
-        source={require('../../assets/BG.png')}
+        source={require('../assets/img/BG-Dark.png')}
         style={styles.backgroundImage}>
         <View style={styles.container}>
           <View style={styles.row}>

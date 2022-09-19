@@ -41,21 +41,28 @@ export class AppState extends React.Component {
         }
     }
 
-    changeLang = (lang) => {
-        this.setState({ loadingSpinner: true })
+     changeLang = async (lang) => {
+        // this.setState({ loadingSpinner: true })
         i18n.locale = lang
+        this.setState({lang})
         if (lang !== 'ar') {
-            I18nManager.forceRTL(false)
-            this.setState({ lang, rtl: false }, () =>
+            if (I18nManager.isRTL) {
+                await I18nManager.forceRTL(false)
+                this.setState({ lang, rtl: false }, () =>
                 AsyncStorage.setItem('lang', lang)
             )
+            }
         } else {
-            I18nManager.forceRTL(true)
-            this.setState({ lang, rtl: true }, () =>
-                AsyncStorage.setItem('lang', lang)
-            )
+            if (!I18nManager.isRTL) {
+                await I18nManager.forceRTL(true)
+                console.log(I18nManager.isRTL, 'what is rtl 222')
+                this.setState({ lang, rtl: true }, () =>
+                    AsyncStorage.setItem('lang', lang)
+                )
+            }
         }
-        RNRestart.Restart()
+        RNRestart.Restart();
+        // RNRestart.Restart()
         //Updates.reloadAsync();
     }
 

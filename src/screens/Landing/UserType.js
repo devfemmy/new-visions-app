@@ -24,7 +24,6 @@ import Toast from 'react-native-toast-message'
 export default function UserType({ navigation }) {
     const { changeLang, lang, showLoadingSpinner } =
         useContext(AppContext)
-    console.log(`UserType`, lang)
     const langTo = lang === 'ar' ? 'en' : 'ar'
     const [focusSt, setFocusSt] = useState(false)
     const [focusPar, setFocusPar] = useState(false)
@@ -53,10 +52,6 @@ export default function UserType({ navigation }) {
                             style={styles.touchLang}
                             onPress={() => {
                                 changeLang(langTo)
-                                console.log(
-                                    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx langTo xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                    langTo
-                                )
                             }}
                         >
                             <View style={styles.lang}>
@@ -253,11 +248,12 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderWidth: 1,
         borderColor: colors.white,
-        width: 60,
-        height: 30,
+        width: 70,
+        height: 40,
         alignSelf: 'flex-end',
         justifyContent: 'center',
         alignItems: 'center',
+        // paddingVertical: heightp(20)
     },
     langText: {
         color: colors.white,
