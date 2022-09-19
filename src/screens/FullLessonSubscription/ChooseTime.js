@@ -36,21 +36,23 @@ const ChooseTime = ({ getGroupDaysData }) => {
                 const specialIndex = `${item?.day_id - 1}`
                 const dayOfWeek = daysOfWeek[specialIndex]
                 return (
-                    <StageCard
-                        show
-                        navigateSubjects={() => {}}
-                        newPress={() => {}}
-                        stage={item}
-                        group
-                        reducedHeight
-                        activeLevel={activeLevel}
-                        setActiveLevel={setActiveLevel}
-                        // activeStage={activeStage}
-                        setActiveStage={setActiveStage}
-                        text2={dayOfWeek}
-                        dark
-                        text={item.start && `${item.start} - ${item.end}`}
-                    />
+                    <>
+                        <StageCard
+                            show
+                            navigateSubjects={() => {}}
+                            newPress={() => {}}
+                            stage={item}
+                            group
+                            reducedHeight
+                            activeLevel={activeLevel}
+                            setActiveLevel={setActiveLevel}
+                            // activeStage={activeStage} moment(item.time).format('LT')
+                            setActiveStage={setActiveStage}
+                            text2={dayOfWeek}
+                            dark
+                            text={item.start && `${item.start} - ${item.end}`}
+                        />
+                    </>
                 )
             })}
         </View>

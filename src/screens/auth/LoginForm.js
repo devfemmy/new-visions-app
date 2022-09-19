@@ -60,7 +60,7 @@ function LoginForm({ submitLogin, onAppleButtonPress, signInGoogle }) {
                             },
                         ]}
                     >
-                        {`${i18n.t('ForgotPassword')}?`}
+                        {`${i18n.t('ForgotPassword')}`}
                     </OtherText>
                 </TouchableOpacity>
 

@@ -230,6 +230,7 @@ const English = {
 
     Group: 'Group',
     People: 'People',
+    Search: 'Search',
     SearchForMassage: 'Search For Message',
     NoData: 'No Data',
     Welcome: 'Welcome',

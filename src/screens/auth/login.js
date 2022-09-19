@@ -43,7 +43,7 @@ function Login() {
         loadingSpinner,
     } = useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
-    const navigation = useNavigation();
+    const navigation = useNavigation()
     const socialAuthApi = ({ givenName, familyName, email, id, type }) => {
         console.log('I AM HERE')
         axios
@@ -58,24 +58,33 @@ function Login() {
                 if (response.data.code === 200) {
                     console.log('response hereee', response.data)
                     if (response.data.data?.type === 2) {
-                        Global.UserType = 'Teacher';
-                      }
-                      if (response.data.data.type === 3) {
-                        Global.UserType = 'Student';
-                      }
-                      if (response.data.data.type === 4) {
-                        Global.UserType = 'Parent';
-                      }
-                      Global.LoggedIn = true;                            
-                      if (response.data.data.phone === '123456' || response.data.data.phone === 123456) {
-                        const responseData = response?.data?.data;
-                        Global.AuthenticationToken = responseData?.remember_token
-                        AsyncStorage.setItem('token', Global.AuthenticationToken)
-                        navigation.navigate('CompleteProfile', {userData: responseData })
-                      } else {
+                        Global.UserType = 'Teacher'
+                    }
+                    if (response.data.data.type === 3) {
+                        Global.UserType = 'Student'
+                    }
+                    if (response.data.data.type === 4) {
+                        Global.UserType = 'Parent'
+                    }
+                    Global.LoggedIn = true
+                    if (
+                        response.data.data.phone === '123456' ||
+                        response.data.data.phone === 123456
+                    ) {
+                        const responseData = response?.data?.data
+                        Global.AuthenticationToken =
+                            responseData?.remember_token
+                        AsyncStorage.setItem(
+                            'token',
+                            Global.AuthenticationToken
+                        )
+                        navigation.navigate('CompleteProfile', {
+                            userData: responseData,
+                        })
+                    } else {
                         // replace('Main');
                         setUserInfo(response.data.data)
-                      }
+                    }
                 } else {
                     alert(JSON.stringify(response.data.message))
                 }

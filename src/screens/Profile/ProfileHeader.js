@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import colors from '../../helpers/colors'
 import Global from '../../../Global'
@@ -8,9 +8,13 @@ import { globalStyles } from '../../helpers/globalStyles'
 import I18n from 'i18n-js'
 import { heightp } from '../../utils/responsiveDesign'
 import { useNavigation } from '@react-navigation/native'
+import { AppContext } from '../../context/AppState'
+import FastImage from 'react-native-fast-image'
+import { IMAGEURL } from '../../utils/functions'
 
 export default function ProfileHeader() {
     const navigation = useNavigation()
+    const { user } = useContext(AppContext)
     return (
         <View style={styles.outContainer}>
             <View style={styles.container}>
@@ -47,7 +51,24 @@ export default function ProfileHeader() {
                 ></Image>
             </View>
             <View style={styles.avatar}>
-                <Image source={require('../../assets/img/avatar.png')}></Image>
+                {user?.image === null || user?.image === '' ? (
+                    <Image
+                        source={require('../../assets/img/default-profile-picture.jpeg')}
+                    ></Image>
+                ) : (
+                    <FastImage
+                        style={{
+                            width: heightp(150),
+                            height: heightp(150),
+                            borderRadius: heightp(150),
+                        }}
+                        source={{
+                            uri: `${IMAGEURL}/${user?.image}`,
+                            priority: FastImage.priority.normal,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                )}
             </View>
             <Text style={styles.MainText}>{Global.UserName}</Text>
             <Text style={styles.subText}>{Global.email}</Text>
