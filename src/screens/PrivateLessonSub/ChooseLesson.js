@@ -8,6 +8,7 @@ import { Text } from '../../components/common'
 import LessonCard from '../../components/LessonCard'
 
 const ChooseLesson = ({ lessons }) => {
+    console.log('choosing', lessons.length)
     const { setDisabledProps } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
@@ -24,7 +25,7 @@ const ChooseLesson = ({ lessons }) => {
     })
     return (
         <View style={styles.container}>
-            {lessons.length > 0 ? (
+            {lessons ? (
                 lessons?.map((item, index) => (
                     <LessonCard
                         key={item?.id}
