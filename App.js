@@ -20,7 +20,9 @@ import { deviceStorage } from './src/services/deviceStorage'
 import { iapSkus } from './src/services/iap'
 import { googleSignInInit } from './src/services/googleSignInInit'
 import axios from 'axios'
-import errorHandler from './src/components/Errorhandler'
+import errorHandler from './src/components/Errorhandler';
+import { GlobalStateProvider } from './src/context/GlobalStateProvider'
+
 
 initTranslate()
 setInterceptors(axios)
@@ -112,9 +114,11 @@ function App() {
     }, [isIOS])
     return (
         <Provider store={store}>
-            <AppState>
-                <AppNavigator />
-            </AppState>
+            <GlobalStateProvider>
+                <AppState>
+                    <AppNavigator />
+                </AppState>
+            </GlobalStateProvider>
         </Provider>
     )
 }
