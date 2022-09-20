@@ -65,7 +65,7 @@ export default function UserType({ navigation }) {
                             <Image
                                 style={styles.logo}
                                 source={require('../../assets/img/logo-light.png')}
-                            ></Image>
+                             />
                             <Text style={styles.textLbl}>
                                 {I18n.t('RegisterAs')}
                             </Text>

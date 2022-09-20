@@ -126,11 +126,12 @@ export default function Sons({ navigation }) {
     }, [])
 
     function SubscriptionsClicked(item) {
-        navigation.navigate('Subscriptions', item)
+        navigation.navigate('Subscriptions', {id: item})
     }
 
+
     function AttendanceClicked(item) {
-        navigation.navigate('Attendance', item)
+        navigation.navigate('Attendance', {id: item, userStatus: 'Parent'})
     }
 
     const renderItem = ({ item }) => (
@@ -138,11 +139,11 @@ export default function Sons({ navigation }) {
             name={item.name}
             status={item.status}
             subClick={() => {
-                SubscriptionsClicked(item)
+                SubscriptionsClicked(item.user_id)
                 console.log('Subscriptions', item)
             }}
             attendanceClick={() => {
-                AttendanceClicked(item)
+                AttendanceClicked(item.user_id)
             }}
         />
     )

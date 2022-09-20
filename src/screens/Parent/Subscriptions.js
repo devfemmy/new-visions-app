@@ -22,8 +22,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
 import IconText from '../../components/IconText'
 import { Text as CustomText } from '../../components/common'
+import { useRoute } from '@react-navigation/native'
 
-export default function Subscriptions({ route }) {
+export default function Subscriptions({  }) {
+    const route = useRoute()
     const [subscriptions, setSubscriptions] = useState([])
     const [toggle1, setToggle1] = useState(false)
     const [toggle2, setToggle2] = useState(false)
@@ -32,9 +34,11 @@ export default function Subscriptions({ route }) {
     const [toggle5, setToggle5] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [isVisibleItem, setIsVisibleItem] = useState({})
-
+    const {id} = route.params;
+    console.log('params', id)
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
+
     function getSonSubscriptions() {
         axios
             .post('https://newvisions.sa/api/getChildPayments', {
