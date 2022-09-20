@@ -179,6 +179,7 @@ function Login() {
         Global.phone = userData.phone
         Global.email = userData.email
         Global.UserId = userData.id
+        Global.UserType = String(userData.type)
         onLogin(userData, true)
     }
 
