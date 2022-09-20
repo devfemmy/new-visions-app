@@ -45,8 +45,9 @@ export default function UserType({ navigation }) {
         <>
             <View style={styles.container}>
                 <ImageBackground
-                    source={require('../../assets/img/BG-Dark.png')}
+                    source={require('../../assets/img/BG1.png')}
                     style={styles.backgroundImage}
+                    // imageStyle={{ tintColor: 'rgba(255, 255, 255, 1)' }}
                 >
                     <View style={styles.screen}>
                         <TouchableOpacity
@@ -69,7 +70,7 @@ export default function UserType({ navigation }) {
                         <View style={styles.content}>
                             <Image
                                 style={styles.logo}
-                                source={require('../../assets/img/logo-white.png')}
+                                source={require('../../assets/img/logo-light.png')}
                             ></Image>
                             <Text style={styles.textLbl}>
                                 {I18n.t('RegisterAs')}
@@ -182,7 +183,7 @@ export default function UserType({ navigation }) {
                                                 : 'arrow-back-ios'
                                         }
                                         size={20}
-                                        color={colors.white}
+                                        color={colors.dark}
                                     />
                                 </View>
                                 <Text style={styles.loginText}>
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
     loginBtnView: {
         flex: 1,
         borderRadius: 40,
-        backgroundColor: colors.white,
+        backgroundColor: colors.primary,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 15,
         justifyContent: 'center',
-        backgroundColor: colors.dark,
+        backgroundColor: colors.white,
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: 'bold',
         marginRight: '35%',
-        color: colors.black,
+        color: colors.white,
     },
     backgroundImage: {
         flex: 1,
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
         margin: 20,
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: colors.white,
+        borderColor: colors.dark,
         width: 60,
         height: 30,
         alignSelf: 'flex-end',
@@ -260,14 +261,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     langText: {
-        color: colors.white,
+        color: colors.dark,
         fontSize: 20,
         fontFamily: 'Cairo-Regular',
         alignSelf: 'center',
     },
     logo: {
-        height: 55,
-        width: '40%',
+        height: 75,
+        width: '55%',
         resizeMode: 'stretch',
     },
     content: {
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textLbl: {
-        color: colors.white,
+        color: colors.dark,
         fontFamily: 'Cairo-Bold',
         fontSize: 24,
         paddingTop: 10,
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
         width: 130,
         height: 180,
         borderWidth: 2,
-        borderColor: colors.white,
+        borderColor: colors.dark,
         borderRadius: 30,
 
         justifyContent: 'center',

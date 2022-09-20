@@ -220,12 +220,12 @@ export default function Attendance({ route }) {
     return (
         <Screen>
             <View style={{ backgroundColor: colors.white, flex: 1 }}>
-                <SonListItem name={route.params.name} />
+                {/* <SonListItem name={route.params.name} /> */}
 
                 <View
                     style={{
-                        borderBottomColor: 'black',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
+                        // borderBottomColor: 'black',
+                        // borderBottomWidth: StyleSheet.hairlineWidth,
                         width: '90%',
                         alignSelf: 'center',
                         marginBottom: 20,
