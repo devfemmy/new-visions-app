@@ -39,6 +39,7 @@ export default function MultiPackagesList({ route, navigation }) {
                         showLoadingSpinner(false)
                         console.log(multiPackages)
                     } else if (response.data.code == 403) {
+                        alert('This Account is Logged in from another Device.')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {
@@ -62,7 +63,10 @@ export default function MultiPackagesList({ route, navigation }) {
     }, [])
 
     function openDetails(item) {
-        navigation.navigate('MultiPackageDetails', {item, packageType: 'multi'})
+        navigation.navigate('MultiPackageDetails', {
+            item,
+            packageType: 'multi',
+        })
     }
 
     const shareDetails = async (item) => {

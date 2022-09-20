@@ -46,15 +46,15 @@ const Teachers = () => {
     const [dataForTeachers, setDataForTeachers] = useState([])
 
     // New use state
-    const insets = useSafeAreaInsets();
-    const [Page, setPage] = useState(1);
-    const [PagePrev, setPagePrev] = useState(0);
-    const [MaxPages, setMaxPages] = useState(999);
-    const [SerachValue, setSerachValue] = useState('');
-    const [CurrentSerachValue, setCurrentSerachValue] = useState('');
-    const [LoadedPage, setLoadedPage] = useState(-1);
+    const insets = useSafeAreaInsets()
+    const [Page, setPage] = useState(1)
+    const [PagePrev, setPagePrev] = useState(0)
+    const [MaxPages, setMaxPages] = useState(999)
+    const [SerachValue, setSerachValue] = useState('')
+    const [CurrentSerachValue, setCurrentSerachValue] = useState('')
+    const [LoadedPage, setLoadedPage] = useState(-1)
     const scrollRef = useRef()
-    const [responseValue, SetresponseValue] = useState([]);
+    const [responseValue, SetresponseValue] = useState([])
     const [
         onEndReachedCalledDuringMomentum,
         setOnEndReachedCalledDuringMomentum,
@@ -186,22 +186,22 @@ const Teachers = () => {
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,
-          });
-        if (LoadedPage === Page) setPage(Page + 1);
-      };
-    
-      const GetTeachersPrev = () => {
+        })
+        if (LoadedPage === Page) setPage(Page + 1)
+    }
+
+    const GetTeachersPrev = () => {
         scrollRef.current?.scrollTo({
             y: 0,
             animated: true,
-          });
-        if (LoadedPage === Page) setPage(Page - 1);
-      };
-    
-      const GetExtraCache = () => {
-        let page = 0;
-    
-        let keys = Object.keys(ResponseCache);
+        })
+        if (LoadedPage === Page) setPage(Page - 1)
+    }
+
+    const GetExtraCache = () => {
+        let page = 0
+
+        let keys = Object.keys(ResponseCache)
         keys = keys.filter((k) => {
             const jsonKey = JSON.parse(k)
             if (jsonKey.search === SerachValue) return true
@@ -238,18 +238,19 @@ const Teachers = () => {
                     LoggedIn = false
                     alert('This Account is Logged in from another Device.')
                     onLogOut()
-                    return
+                    // return
+                } else {
+                    ResponseCache[
+                        JSON.stringify({ page, search: SerachValue })
+                    ] = response.data.data.data
+
+                    console.log(
+                        `saved to cache :${JSON.stringify({
+                            page,
+                            search: SerachValue,
+                        })}`
+                    )
                 }
-
-                ResponseCache[JSON.stringify({ page, search: SerachValue })] =
-                    response.data.data.data
-
-                console.log(
-                    `saved to cache :${JSON.stringify({
-                        page,
-                        search: SerachValue,
-                    })}`
-                )
             })
             .catch((error) => {})
     }
@@ -301,6 +302,16 @@ const Teachers = () => {
                 }
             )
             .then((response) => {
+                // if (response.data.code === 403) {
+                //     Global.AuthenticationToken = ''
+                //     Global.UserName = ''
+                //     Global.UserType = ''
+                //     Global.UserGender = ''
+                //     LoggedIn = false
+                //     alert('This Account is Logged in from another Device.')
+                //     onLogOut()
+                //     // return
+                // } else {
                 setLoadedPage(Page)
                 setCurrentSerachValue(SerachValue)
                 SetresponseValue(response.data?.data?.data || [])
@@ -309,6 +320,7 @@ const Teachers = () => {
                 ] = response.data?.data?.data || []
                 setMaxPages(Math.ceil(response.data.data.total / 10))
                 GetExtraCache()
+                // }
             })
             .catch((error) => {
                 alert(error)

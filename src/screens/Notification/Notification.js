@@ -23,6 +23,7 @@ const Notification = () => {
                 const res = await HomePageService.getNotificationData()
                 if (res.code === 403) {
                     setLoading(false)
+                    alert('This Account is Logged in from another Device.')
                     onLogout()
                 } else if (res.code === 407) {
                     setLoading(false)

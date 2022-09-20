@@ -109,7 +109,7 @@ const English = {
     PackagesSubscriptions: 'Package Subscription',
     PrivateLessonsSubscriptions: 'Private Course Subscription',
     Student: 'Student',
-    Sons: 'Childrens',
+    Sons: 'Children',
     Subscriptions: 'Subscriptions',
     Attendace: 'Attendance',
     Attendance: 'Attendance',

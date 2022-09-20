@@ -52,6 +52,7 @@ export default function Subscriptions({ route }) {
                         showLoadingSpinner(false)
                         console.log(subscriptions)
                     } else if (response.data.code == 403) {
+                        alert('This Account is Logged in from another Device.')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {
