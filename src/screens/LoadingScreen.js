@@ -22,7 +22,7 @@ function LoadingScreen() {
             Global.UserName = user?.first_name + ' ' + user?.last_name
             Global.email = user?.email
             Global.phone = user?.phone
-            initState(user, 'ar')
+            initState(user, lang)
         })
     }
     useEffect(() => {
