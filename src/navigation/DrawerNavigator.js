@@ -216,7 +216,8 @@ const DrawerNavigator = () => {
                         ),
                     }}
                 /> */}
-                <Drawer.Screen
+                {/* to be addedlater */}
+                {/* <Drawer.Screen
                     name={I18n.t('QuizzesResults')}
                     component={MeasurementTestResults}
                     options={{
@@ -233,7 +234,8 @@ const DrawerNavigator = () => {
                             />
                         ),
                     }}
-                />
+                /> */}
+
                 <Drawer.Screen
                     name={I18n.t('JointCourses')}
                     component={JointCourses}

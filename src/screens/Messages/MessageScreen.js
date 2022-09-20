@@ -85,6 +85,7 @@ const MessageScreen = () => {
         try {
             const res = await HomePageService.sendMessage(payload)
             if (res.code === 403) {
+                alert('This Account is Logged in from another Device.')
                 onLogout()
             } else {
                 const data = res
@@ -104,6 +105,7 @@ const MessageScreen = () => {
         try {
             const res = await HomePageService.getMessageById(payload)
             if (res.code === 403) {
+                alert('This Account is Logged in from another Device.')
                 onLogout()
             } else {
                 const data = res?.data[0]

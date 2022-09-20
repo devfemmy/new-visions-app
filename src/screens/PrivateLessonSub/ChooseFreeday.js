@@ -24,7 +24,7 @@ const ChooseFreeDay = ({ freeDays }) => {
     })
     return (
         <View style={styles.container}>
-            {freeDays.length > 0 ? (
+            {freeDays ? (
                 freeDays?.map((item, index) => (
                     <LessonCard
                         key={item?.id}

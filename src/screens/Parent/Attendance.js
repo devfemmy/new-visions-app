@@ -15,13 +15,15 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { TouchableWithoutFeedback } from 'react-native'
 import SonAttendanceItem from './SonAttendanceItem'
 import { useLayoutEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { heightp } from '../../utils/responsiveDesign'
 
-export default function Attendance({ route }) {
+export default function Attendance({ }) {
     const navigation = useNavigation()
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
+    const route = useRoute();
+    const {userStatus} = route.params;
 
     const months = [
         'January',
@@ -72,11 +74,47 @@ export default function Attendance({ route }) {
                 ) {
                     if (response.data.code == 200) {
                         const data = response.data.data
+                        console.log('attendance child: ' + data)
+                        setAttendance(data)
+                        showLoadingSpinner(false)
+                        console.log(attendance)
+                    } else if (response.data.code == 403) {
+                        alert('This Account is Logged in from another Device.')
+                        onLogout()
+                        showLoadingSpinner(false)
+                    } else {
+                        showLoadingSpinner(false)
+                        // alert(response.data.message)
+                    }
+                }
+            })
+            .catch((error) => {
+                showLoadingSpinner(false)
+                // alert(error)
+            })
+    }
+    function getChildAttendance(id, month) {
+        console.log('getting child attendance', route.params.id)
+        axios
+            .post('https://newvisions.sa/api/getChildAttendance', {
+                child_id: route.params.id,
+                month: monthNo,
+                year: yearNo,
+            })
+            .then((response) => {
+                if (
+                    response != undefined &&
+                    response.data != undefined &&
+                    response.data.code != undefined
+                ) {
+                    if (response.data.code == 200) {
+                        const data = response.data.data
                         console.log('attendance: ' + data)
                         setAttendance(data)
                         showLoadingSpinner(false)
                         console.log(attendance)
                     } else if (response.data.code == 403) {
+                        alert('This Account is Logged in from another Device.')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {
@@ -114,6 +152,7 @@ export default function Attendance({ route }) {
                     } else if (response.data.code === -2) {
                         Alert.alert(response.data.message)
                     } else if (response.data.code === 403) {
+                        alert('This Account is Logged in from another Device.')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {
@@ -211,7 +250,12 @@ export default function Attendance({ route }) {
     useEffect(() => {
         setMonthNameFun(monthNo)
         //setMonthNo(monthNo);
+        if (userStatus === 'Parent') {
+            getChildAttendance()
+        }else {
         getAttendance(route.params.id, monthNo)
+        }
+       
     }, [monthNo])
 
     useLayoutEffect(() => {

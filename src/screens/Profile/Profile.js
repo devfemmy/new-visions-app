@@ -11,12 +11,14 @@ import Global from '../../../Global'
 
 export default function Profile({ navigation }) {
     function SubscriptionsClicked(item) {
-        navigation.navigate('Subscriptions', item)
+        // console.log('child', item.id)
+        navigation.navigate('Subscriptions', {id: item?.id})
     }
 
     function AttendanceClicked(item) {
-        navigation.navigate('Attendance', item)
+        navigation.navigate('Attendance', {id: item?.id, userStatus: 'Sons'})
     }
+
 
     return (
         <Screen>

@@ -6,14 +6,12 @@ import ProfileHeader from './ProfileHeader'
 import colors from '../../helpers/colors'
 import Sons from './Sons'
 
-export default function Profile({navigation}) {
-  return (
-    <Screen>
-        <ProfileHeader />
-      <Sons navigation={navigation} />
-    </Screen>
-  )
+export default function Profile({ navigation }) {
+    return (
+        <Screen>
+            <ProfileHeader />
+            <Sons navigation={navigation} />
+        </Screen>
+    )
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({})

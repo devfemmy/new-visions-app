@@ -51,6 +51,7 @@ const Home = () => {
                         showLoadingSpinner(false)
                         console.log(packages)
                     } else if (response?.data?.code == 403) {
+                        alert('This Account is Logged in from another Device.')
                         onLogout()
                         showLoadingSpinner(false)
                     } else if (response?.data?.code == 407) {

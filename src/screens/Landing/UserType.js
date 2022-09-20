@@ -22,8 +22,7 @@ import { heightp } from '../../utils/responsiveDesign'
 import Toast from 'react-native-toast-message'
 
 export default function UserType({ navigation }) {
-    const { changeLang, lang, showLoadingSpinner } =
-        useContext(AppContext)
+    const { changeLang, lang, showLoadingSpinner } = useContext(AppContext)
     const langTo = lang === 'ar' ? 'en' : 'ar'
     const [focusSt, setFocusSt] = useState(false)
     const [focusPar, setFocusPar] = useState(false)
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
         margin: 20,
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: colors.white,
+        borderColor: colors.dark,
         width: 70,
         height: 40,
         alignSelf: 'flex-end',

@@ -1,6 +1,12 @@
 /* eslint-disable react/no-children-prop */
 import { useRoute, useNavigation } from '@react-navigation/native'
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React, {
+    useEffect,
+    useState,
+    useRef,
+    useCallback,
+    useContext,
+} from 'react'
 import {
     StyleSheet,
     View,
@@ -24,12 +30,14 @@ import { Vimeo } from 'react-native-vimeo-iframe'
 import I18n from 'i18n-js'
 import * as Progress from 'react-native-progress'
 import TeachersCourseCard from '../../components/TeachersCourseCard'
+import { AppContext } from '../../context/AppState'
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
 const TeacherProfile = () => {
     const flatListRef = useRef()
     const route = useRoute()
     const navigation = useNavigation()
+    const { onLogOut } = useContext(AppContext)
     const playerRef = useRef()
     const { item } = route.params
     const [teachersData, setTeachersData] = useState({})
@@ -47,22 +55,37 @@ const TeacherProfile = () => {
             try {
                 const res = await HomePageService.getTeacherProfile(payload)
                 const data = res?.data
-                // setLoading(false)
-                setTeachersData(data)
-                const arrayResult = Object.keys(data?.rate_numbers).map(
-                    (room) => {
-                        return { id: room, val: data?.rate_numbers[room] }
-                    }
-                )
-                setRateArray(arrayResult)
-                setCourses(data?.courses)
-                console.log('wwwwwwwwww data zooooooooooooooom', data?.courses)
-                console.log('wwwwwwwwww data', arrayResult)
+                console.log('teacher ressssssssss', res)
+                if (res.code === 403) {
+                    // Global.AuthenticationToken = ''
+                    // Global.UserName = ''
+                    // Global.UserType = ''
+                    // Global.UserGender = ''
+                    // LoggedIn = false
+                    alert('This Account is Logged in from another Device.')
+                    onLogOut()
+                    // return
+                } else {
+                    // setLoading(false)
+                    setTeachersData(data)
+                    const arrayResult = Object.keys(data?.rate_numbers).map(
+                        (room) => {
+                            return { id: room, val: data?.rate_numbers[room] }
+                        }
+                    )
+                    setRateArray(arrayResult)
+                    setCourses(data?.courses)
+                    console.log(
+                        'wwwwwwwwww data zooooooooooooooom',
+                        data?.courses
+                    )
+                    console.log('wwwwwwwwww data', arrayResult)
 
-                const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
-                // fetchVideoLink(id)
-                setVideoId(id)
-                return res
+                    const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
+                    // fetchVideoLink(id)
+                    setVideoId(id)
+                    return res
+                }
             } catch (err) {
                 // setLoading(false)
             }
