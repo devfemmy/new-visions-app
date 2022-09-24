@@ -30,6 +30,7 @@ import { requestPurchase } from '../../services/iap'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import { useNavigation } from '@react-navigation/native'
+import Global from '../../../Global'
 
 export default function MultiPackageDetails({ route }) {
     const navigation = useNavigation()
@@ -292,49 +293,58 @@ export default function MultiPackageDetails({ route }) {
                 </View>
                 {description && <DetailsTeachers data={description.content} />}
 
-                <View
-                    style={{
-                        backgroundColor: colors.primary,
-                        width: '90%',
-                        height: 45,
-                        alignSelf: 'center',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: 20,
-                        borderRadius: 20,
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={
-                            packageType === 'multi'
-                                ? subscribeMultiPackage
-                                : subscribeSinglePackage
-                        }
+                {Global.UserType == 4 ? (
+                    <View
+                        style={{
+                            marginVertical: heightp(10),
+                        }}
+                    />
+                ) : (
+                    <View
+                        style={{
+                            backgroundColor: colors.primary,
+                            width: '90%',
+                            height: 45,
+                            alignSelf: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginTop: 20,
+                            borderRadius: 20,
+                        }}
                     >
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text
-                                style={[
-                                    styles.subItemText,
-                                    {
-                                        marginHorizontal: 20,
-                                        color: colors.white,
-                                    },
-                                ]}
-                            >
-                                {I18n.t('SubscripePackage')}
-                            </Text>
-                            <FontAwesome
-                                name={
-                                    I18n.locale == 'ar'
-                                        ? 'arrow-circle-left'
-                                        : 'arrow-circle-right'
-                                }
-                                size={30}
-                                color={colors.white}
-                            />
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity
+                            onPress={
+                                packageType === 'multi'
+                                    ? subscribeMultiPackage
+                                    : subscribeSinglePackage
+                            }
+                        >
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text
+                                    style={[
+                                        styles.subItemText,
+                                        {
+                                            marginHorizontal: 20,
+                                            color: colors.white,
+                                        },
+                                    ]}
+                                >
+                                    {I18n.t('SubscripePackage')} (
+                                    {description.price} {I18n.t('SAR')})
+                                </Text>
+                                <FontAwesome
+                                    name={
+                                        I18n.locale == 'ar'
+                                            ? 'arrow-circle-left'
+                                            : 'arrow-circle-right'
+                                    }
+                                    size={30}
+                                    color={colors.white}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </ScrollView>
         </Screen>
     )

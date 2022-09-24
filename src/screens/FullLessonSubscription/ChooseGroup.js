@@ -9,6 +9,7 @@ import { Text } from '../../components/common'
 
 const ChooseGroup = (subjectGroupData) => {
     const items = subjectGroupData?.subjectGroupData
+    console.log("subjectGroupData", subjectGroupData)
     const { setGroupId, setDisabledProps } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
@@ -49,7 +50,7 @@ const ChooseGroup = (subjectGroupData) => {
                             setActiveStage={setActiveStage}
                             dark
                             text={item.start && `${item.start} - ${item.end}`}
-                            days={item?.days && item?.days}
+                            // days={item?.days && item?.days}
                         />
                     </>
                 ))

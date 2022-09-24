@@ -255,32 +255,54 @@ const TeachersDetailCard = ({
                             </View>
                         )}
                         {subjectDetails ? (
-                            <View style={globalStyles.rowBetween}>
-                                <IconText
-                                    text={
-                                        lessonPrice &&
-                                        `${lessonPrice} ${I18n.t('SAR')}`
-                                    }
-                                    children={
-                                        <View style={globalStyles.rowBetween}>
-                                            <Ionicons
-                                                name="ios-pricetag"
-                                                size={20}
-                                                color={'rgba(67, 72, 84, 1)'}
-                                            />
-                                            <View
-                                                style={{
-                                                    height: heightp(20),
-                                                    backgroundColor:
-                                                        'rgba(67, 72, 84, 1)',
-                                                    width: 1,
-                                                    marginHorizontal: 6,
-                                                }}
-                                            />
-                                        </View>
-                                    }
-                                />
-                            </View>
+                            <>
+                                {ratings && (
+                                    <View style={globalStyles.rowBetween}>
+                                        <Ionicons
+                                            name="ribbon-outline"
+                                            size={20}
+                                            color={colors.black}
+                                        />
+                                        <View
+                                            style={{
+                                                height: heightp(20),
+                                                backgroundColor:
+                                                    'rgba(67, 72, 84, 1)',
+                                                width: 1,
+                                                marginLeft: 6,
+                                            }}
+                                        />
+                                        <AirbnbRating
+                                            size={11}
+                                            defaultRating={ratings}
+                                            isDisabled
+                                            reviews={
+                                                [
+                                                    // 'Terrible',
+                                                    // 'Bad',
+                                                    // 'Okay',
+                                                    // 'Swift & quick pickup',
+                                                    // 'Excellent',
+                                                ]
+                                            }
+                                            reviewSize={10}
+                                            type="star"
+                                            ratingColor="#3498db"
+                                            style={{
+                                                paddingHorizontal: 30,
+                                            }}
+                                            ratingContainerStyle={{
+                                                flexDirection: 'row',
+                                                backgroundColor: 'inherit',
+                                                alignItems: 'center',
+                                                justifyContent: 'flex-start',
+                                                // paddingRight: heightp(-40),
+                                                // backgroundColor: '#f0f',
+                                            }}
+                                        />
+                                    </View>
+                                )}
+                            </>
                         ) : (
                             <View style={globalStyles.rowBetween}>
                                 {ratings && (

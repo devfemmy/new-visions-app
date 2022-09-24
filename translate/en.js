@@ -103,11 +103,11 @@ const English = {
     Profile: 'Profile',
     Parents: 'Parents',
     Parent: 'Parent',
-    FullLessonSubscription: 'Full Lessons Subscription',
+    FullLessonSubscription: 'Lessons Subscription',
     OneLessonSubscription: 'One Lesson Subscription',
     JointCoursesSubscriptions: 'Joint Courses Subscription',
     PackagesSubscriptions: 'Package Subscription',
-    PrivateLessonsSubscriptions: 'Private Course Subscription',
+    PrivateLessonsSubscriptions: 'One Lesson Subscription',
     Student: 'Student',
     Sons: 'Children',
     Subscriptions: 'Subscriptions',
@@ -275,7 +275,7 @@ const English = {
     NoAvailableDates: 'No available dates',
     QuizzesResults: 'Quizzes Results',
     QuizResults: 'Quiz Results',
-    EnterAccountInfo: 'Enter your Account Information'  
+    EnterAccountInfo: 'Enter your Account Information',
 }
 
 export default English

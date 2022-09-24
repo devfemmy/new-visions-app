@@ -33,15 +33,17 @@ const SubjectTeachers = () => {
             subject_id,
             teacher_id: teacher_id ? teacher_id : '',
         }
+        console.log('payload', payload)
         dispatch(getSubjectTeachers(payload))
     }, [dispatch, subject_id])
 
     const navigateFullSubscription = useCallback(
         (item) => {
             navigation.navigate('FullLesson', {
-                subject_id,
+                subject_id: item?.id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
+                lesson_price: item?.lesson_price,
             })
         },
         [navigation, subject_id]
@@ -113,7 +115,7 @@ const SubjectTeachers = () => {
             // const uri = `${IMAGEURL}/${image}`
             // if (id)
             navigation.navigate('PrivateLesson', {
-                subject_id,
+                subject_id: item?.id,
                 teacher_id: item?.teacher_id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
@@ -159,26 +161,33 @@ const SubjectTeachers = () => {
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => {
                         return (
-                            <TeachersDetailCard
-                                bookOneLesson={() => bookOneLesson(item)}
-                                subjectDetails
-                                viewProfile={() =>
-                                    navigateTeachersProfile(item)
-                                }
-                                bookCourse={() =>
-                                    navigateFullSubscription(item)
-                                }
-                                bookPrivateLesson={() =>
-                                    navigatePivateLesson(item)
-                                }
-                                title={item?.subject?.title}
-                                lessonPrice={item?.lesson_price}
-                                numberOfStudents={
-                                    item?.subject?.number_of_students
-                                }
-                                uri={`${IMAGEURL}/${item?.user?.image}`}
-                                contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
-                            />
+                            <>
+                                <TeachersDetailCard
+                                    bookOneLesson={() => bookOneLesson(item)}
+                                    subjectDetails
+                                    viewProfile={() =>
+                                        navigateTeachersProfile(item)
+                                    }
+                                    bookCourse={() => {
+                                        navigateFullSubscription(item)
+                                        console.log(
+                                            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx iap_activation iap_activation iap_activation',
+                                            item?.id
+                                        )
+                                    }}
+                                    bookPrivateLesson={() =>
+                                        navigatePivateLesson(item)
+                                    }
+                                    title={item?.subject?.title}
+                                    lessonPrice={item?.lesson_price}
+                                    ratings={item?.user?.rating}
+                                    numberOfStudents={
+                                        item?.subject?.number_of_students
+                                    }
+                                    uri={`${IMAGEURL}/${item?.user?.image}`}
+                                    contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
+                                />
+                            </>
                         )
                     }}
                 />

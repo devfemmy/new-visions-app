@@ -17,6 +17,7 @@ import ChooseTime from './ChooseTime'
 import SelectGroup from './SelectGroup'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
+import Global from '../../../Global'
 
 export const SubContext = createContext(null)
 const FullLessonSubscription = () => {
@@ -29,10 +30,11 @@ const FullLessonSubscription = () => {
         { id: 2, name: I18n.t('EveningSession') },
         { id: 3, name: I18n.t('SpecialDate') },
     ]
-    const { subject_id, iap_id, iap_activation } = route.params
+    const { subject_id, iap_id, iap_activation, lesson_price } = route.params
     const { subjectGroupData } = useAppSelector(
         (state) => state.subjectGroupPage
     )
+    console.log('iap_activation full lesson', lesson_price)
     const { getGroupDaysData } = useAppSelector((state) => state.groupDaysPage)
     // useEffect(() => {
     //     const payload = {
@@ -44,6 +46,7 @@ const FullLessonSubscription = () => {
     // }, [dispatch, subject_id])
     const [disabledProp, setDisabledProps] = useState(false)
     const [groupId, setGroupId] = useState(null)
+    console.log('groupId', groupId)
     useEffect(() => {
         const payload = {
             group_id: groupId,
@@ -147,12 +150,19 @@ const FullLessonSubscription = () => {
                         </ProgressStep>
                         <ProgressStep
                             previousBtnText={I18n.t('Previous')}
-                            finishBtnText={I18n.t('Subscribe')}
-                            onSubmit={subscribeToFullLesson}
+                            finishBtnText={
+                                Global.UserType == 4 ? '' : I18n.t('Subscribe')
+                            }
+                            onSubmit={
+                                Global.UserType == 4
+                                    ? null
+                                    : subscribeToFullLesson
+                            }
                             label={I18n.t('GroupDays')}
                         >
                             <View>
                                 <ChooseTime
+                                    lesson_price={lesson_price}
                                     getGroupDaysData={getGroupDaysData}
                                 />
                             </View>

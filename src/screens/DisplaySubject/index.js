@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
+import Global from '../../../Global'
 
 const DisplaySubject = () => {
     const dispatch = useAppDispatch()
@@ -145,12 +146,18 @@ const DisplaySubject = () => {
                             }
                         />
                         <Pressable
-                            onPress={subscribeToLessons}
+                            onPress={
+                                Global.UserType == 4 ? null : subscribeToLessons
+                            }
                             style={globalStyles.subBtn}
                         >
                             <Text
                                 style={globalStyles.btnColor}
-                                text={I18n.t('Subscribe')}
+                                text={
+                                    Global.UserType == 4
+                                        ? ''
+                                        : I18n.t('Subscribe')
+                                }
                             />
                         </Pressable>
                     </View>

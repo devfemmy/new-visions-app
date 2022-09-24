@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { createContext, useEffect, useState } from 'react'
-import { Platform, View } from 'react-native'
+import { Alert, Platform, View } from 'react-native'
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps'
 import { Container } from '../../components/common'
 import colors from '../../helpers/colors'
@@ -19,6 +19,9 @@ import ChooseGroup from '../FullLessonSubscription/ChooseGroup'
 import SelectGroup from '../FullLessonSubscription/SelectGroup'
 import ChooseFreeDay from './ChooseFreeday'
 import ChooseLesson from './ChooseLesson'
+import HomePageService from '../../services/userServices'
+import { Loader } from '../../components/Loader'
+import Global from '../../../Global'
 // import ChooseGroup from './ChooseGroup';
 // import ChooseTime from './ChooseTime';
 // import SelectGroup from './SelectGroup';
@@ -28,7 +31,9 @@ const PrivateLessonSubscription = () => {
     const route = useRoute()
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
-    const { subject_id, teacher_id } = route.params
+    const [loading, setLoading] = useState(false)
+    const { subject_id, teacher_id, iap_activation, iap_id } = route.params
+    console.log('iap_activation one lesson', iap_activation, iap_id)
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
     )
@@ -54,28 +59,66 @@ const PrivateLessonSubscription = () => {
             getInAppPurchaseProducts()
         }
     }, [])
+    const subscribeExternal = async () => {
+        setLoading(true)
+        const payload = {
+            id: subject_id.toString(),
+            type: 1,
+            lesson_id: '',
+            day_id: '',
+        }
+        try {
+            const res = await HomePageService.subscribeExternal(payload)
+            if (res.code === 200) {
+                setLoading(false)
+                Alert.alert('Alert', res?.message, [
+                    {
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.navigate('HomePage'),
+                    },
+                ])
+            } else {
+                setLoading(false)
+            }
+            return res
+        } catch (err) {
+            setLoading(false)
+        }
+    }
     const subscribeToLesson = () => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        const subscriptionInfo = {
-            billNumber: 'ios_bill',
-            paymentFor: 'OneLesson',
-            lessonId: '1258',
-            subjectId: subject_id,
-            price: 200,
+        if (!iap_activation) {
+            subscribeExternal()
+        } else {
+            const subscriptionInfo = {
+                billNumber: 'ios_bill',
+                paymentFor: 'OneLesson',
+                lessonId: '1258',
+                subjectId: subject_id,
+                price: 200,
+            }
+            deviceStorage
+                .saveDataToDevice({
+                    key: 'subscriptionInfo',
+                    value: subscriptionInfo,
+                })
+                .then(() =>
+                    requestPurchase({
+                        sku: 'com.newtouch.newvisions_one_lesson',
+                    })
+                )
         }
-        deviceStorage
-            .saveDataToDevice({
-                key: 'subscriptionInfo',
-                value: subscriptionInfo,
-            })
-            .then(() =>
-                requestPurchase({ sku: 'com.newtouch.newvisions_one_lesson' })
-            )
     }
     return (
         <SubContext.Provider
             value={{ disabledProp, setDisabledProps, setGroupId }}
         >
+            <Loader visible={loading} />
             <Container>
                 <View style={{ flex: 1 }}>
                     <ProgressSteps
@@ -99,8 +142,12 @@ const PrivateLessonSubscription = () => {
                         </ProgressStep>
                         <ProgressStep
                             previousBtnText={I18n.t('Previous')}
-                            finishBtnText={I18n.t('Subscribe')}
-                            onSubmit={subscribeToLesson}
+                            finishBtnText={
+                                Global.UserType == 4 ? '' : I18n.t('Subscribe')
+                            }
+                            onSubmit={
+                                Global.UserType == 4 ? null : subscribeToLesson
+                            }
                             label={I18n.t('ChooseDay')}
                             nextBtnDisabled={!disabledProp}
                         >

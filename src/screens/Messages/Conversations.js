@@ -43,8 +43,11 @@ const Conversation = () => {
                 setLoading(false)
             }
         }
-        getConversations()
-    }, [])
+        const unsubscribe = navigation.addListener('focus', () => {
+            getConversations()
+        })
+        return unsubscribe
+    }, [navigation, searchText])
     const searchFilteredData = searchText
         ? messages?.filter((x) =>
               x?.name.toLowerCase().includes(searchText.toLowerCase())
@@ -83,7 +86,6 @@ const Conversation = () => {
                         </View>
                     )}
                     renderItem={({ item }) => {
-                        const uri = `${IMAGEURL}/1640081198.webP`
                         return (
                             <View>
                                 {item?.name === '' ? null : (
@@ -119,7 +121,7 @@ const Conversation = () => {
                                                         borderRadius: 25,
                                                     }}
                                                     source={{
-                                                        uri,
+                                                        uri: item?.image,
                                                         priority:
                                                             FastImage.priority
                                                                 .normal,

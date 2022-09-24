@@ -11,7 +11,7 @@ export const handleError = (err, dispatch) => {
       // remove error
     }
   
-    console.log('Done.')
+    // console.log('Done.')
   }
   if (err.code === 403) {
     // AsyncStorage.removeItem('token')
