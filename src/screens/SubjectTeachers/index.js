@@ -15,12 +15,15 @@ import { deviceStorage } from '../../services/deviceStorage'
 import { requestPurchase } from '../../services/iap'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
+import SubscriptionModal from '../../components/SubscriptionModal'
 
 const SubjectTeachers = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
     const [searchText, setSearchText] = useState()
     const [loader, setLoading] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
     const route = useRoute()
     const { subject_id, teacher_id } = route.params
     const {
@@ -33,19 +36,25 @@ const SubjectTeachers = () => {
             subject_id,
             teacher_id: teacher_id ? teacher_id : '',
         }
+        console.log('payload', payload)
         dispatch(getSubjectTeachers(payload))
     }, [dispatch, subject_id])
 
     const navigateFullSubscription = useCallback(
         (item) => {
             navigation.navigate('FullLesson', {
-                subject_id,
+                subject_id: item?.id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
+                lesson_price: item?.lesson_price,
             })
         },
         [navigation, subject_id]
     )
+    const openModal = (message) => {
+        setIsVisible(!isVisible)
+        setModalMessage(message)
+    }
     const subscribeExternal = async (item) => {
         setLoading(true)
         const payload = {
@@ -58,17 +67,18 @@ const SubjectTeachers = () => {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
-                Alert.alert('Alert', res?.message, [
-                    {
-                        text: 'Cancel',
-                        onPress: () => navigation.popToTop(),
-                        style: 'cancel',
-                    },
-                    {
-                        text: 'OK',
-                        onPress: () => navigation.navigate('HomePage'),
-                    },
-                ])
+                openModal(res?.message)
+                // Alert.alert('Alert', res?.message, [
+                //     {
+                //         text: 'Cancel',
+                //         onPress: () => navigation.popToTop(),
+                //         style: 'cancel',
+                //     },
+                //     {
+                //         text: 'OK',
+                //         onPress: () => navigation.navigate('HomePage'),
+                //     },
+                // ])
             } else {
                 setLoading(false)
             }
@@ -113,7 +123,7 @@ const SubjectTeachers = () => {
             // const uri = `${IMAGEURL}/${image}`
             // if (id)
             navigation.navigate('PrivateLesson', {
-                subject_id,
+                subject_id: item?.id,
                 teacher_id: item?.teacher_id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
@@ -132,6 +142,15 @@ const SubjectTeachers = () => {
     return (
         <Container>
             <Loader visible={loader} />
+            <SubscriptionModal
+                onPress={openModal}
+                isVisible={isVisible}
+                text={modalMessage}
+                navigation={() => {
+                    setIsVisible(!isVisible)
+                    navigation.popToTop()
+                }}
+            />
             <View style={{ marginBottom: 15 }}>
                 {/* <SearchBar
           placeholder="Search Subject Teachers"
@@ -159,26 +178,33 @@ const SubjectTeachers = () => {
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => {
                         return (
-                            <TeachersDetailCard
-                                bookOneLesson={() => bookOneLesson(item)}
-                                subjectDetails
-                                viewProfile={() =>
-                                    navigateTeachersProfile(item)
-                                }
-                                bookCourse={() =>
-                                    navigateFullSubscription(item)
-                                }
-                                bookPrivateLesson={() =>
-                                    navigatePivateLesson(item)
-                                }
-                                title={item?.subject?.title}
-                                lessonPrice={item?.lesson_price}
-                                numberOfStudents={
-                                    item?.subject?.number_of_students
-                                }
-                                uri={`${IMAGEURL}/${item?.user?.image}`}
-                                contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
-                            />
+                            <>
+                                <TeachersDetailCard
+                                    bookOneLesson={() => bookOneLesson(item)}
+                                    subjectDetails
+                                    viewProfile={() =>
+                                        navigateTeachersProfile(item)
+                                    }
+                                    bookCourse={() => {
+                                        navigateFullSubscription(item)
+                                        console.log(
+                                            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx iap_activation iap_activation iap_activation',
+                                            item?.id
+                                        )
+                                    }}
+                                    bookPrivateLesson={() =>
+                                        navigatePivateLesson(item)
+                                    }
+                                    title={item?.subject?.title}
+                                    lessonPrice={item?.lesson_price}
+                                    ratings={item?.user?.rating}
+                                    numberOfStudents={
+                                        item?.subject?.number_of_students
+                                    }
+                                    uri={`${IMAGEURL}/${item?.user?.image}`}
+                                    contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
+                                />
+                            </>
                         )
                     }}
                 />

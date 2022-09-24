@@ -52,6 +52,7 @@ const Arabic = {
     Subscribtions: 'الاشتراكات',
     AboutUs: 'معلومات',
     SignOut: 'خروج',
+    Done: 'فعله',
 
     //Home
     SeeAll: 'اظهار الكل',
@@ -107,11 +108,11 @@ const Arabic = {
     Profile: 'الملف الشخصي',
     Parents: 'الوالدان',
     Parent: 'ولي الأمر',
-    FullLessonSubscription: 'اشتراك الدروس كاملة',
+    FullLessonSubscription: 'حجز حصة',
     OneLessonSubscription: 'اشتراك درس واحد',
     JointCoursesSubscriptions: 'الاشتراك في الدورات المشتركة',
     PackagesSubscriptions: 'اشتراكات الباقات',
-    PrivateLessonsSubscriptions: 'اشتراكات المنهج الخاص',
+    PrivateLessonsSubscriptions: 'اشتراك حصة واحده',
     Student: 'طالب',
     Sons: 'الأبناء',
     Subscriptions: 'الاشتراكات',
@@ -285,6 +286,7 @@ const Arabic = {
     QuizzesResults: 'نتائج الاختبار',
     QuizResults: 'نتائج الأختبار',
     EnterAccountInfo: 'قم بتكلمة بيانات حسابك ',
+    RegistrationRequest: 'Registration Request',
 }
 
 export default Arabic

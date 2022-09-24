@@ -6,7 +6,8 @@ import I18n from 'i18n-js'
 import { SubContext } from '.'
 import StageCard from '../../components/StageCard'
 
-const ChooseTime = ({ getGroupDaysData }) => {
+const ChooseTime = ({ getGroupDaysData, lesson_price }) => {
+    // console.log('getGroupDays', getGroupDaysData)
     const { setDisabledProps } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
@@ -50,7 +51,12 @@ const ChooseTime = ({ getGroupDaysData }) => {
                             setActiveStage={setActiveStage}
                             text2={dayOfWeek}
                             dark
-                            text={item.start && `${item.start} - ${item.end}`}
+                            text={
+                                item.start &&
+                                `${item.start} - ${
+                                    item.end
+                                } - ${lesson_price} ${I18n.t('SAR')}`
+                            }
                         />
                     </>
                 )

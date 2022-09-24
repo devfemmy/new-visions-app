@@ -30,6 +30,8 @@ import { requestPurchase } from '../../services/iap'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import { useNavigation } from '@react-navigation/native'
+import Global from '../../../Global'
+import SubscriptionModal from '../../components/SubscriptionModal'
 
 export default function MultiPackageDetails({ route }) {
     const navigation = useNavigation()
@@ -38,6 +40,8 @@ export default function MultiPackageDetails({ route }) {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
 
+    const [isVisible, setIsVisible] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
     const [iapId, setIapId] = useState('')
     const [iap_activation, setIapActivation] = useState(false)
     const { packageType, item } = route.params
@@ -92,7 +96,12 @@ export default function MultiPackageDetails({ route }) {
             getInAppPurchaseProducts()
         }
     }, [])
+    const openModal = (message) => {
+        setIsVisible(!isVisible)
+        setModalMessage(message)
+    }
     const subscribeExternal = async () => {
+        console.log('i don dey here oo')
         setLoading(true)
         const payload = {
             id: uniqueId.toString(),
@@ -104,14 +113,15 @@ export default function MultiPackageDetails({ route }) {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
-                Alert.alert('Alert', res?.message, [
-                    {
-                        text: 'Cancel',
-                        onPress: () => navigation.popToTop(),
-                        style: 'cancel',
-                    },
-                    { text: 'OK', onPress: () => navigation.popToTop() },
-                ])
+                openModal(res?.message)
+                // Alert.alert('Alert', res?.message, [
+                //     {
+                //         text: 'Cancel',
+                //         onPress: () => navigation.popToTop(),
+                //         style: 'cancel',
+                //     },
+                //     { text: 'OK', onPress: () => navigation.popToTop() },
+                // ])
             } else {
                 console.log('failed', res)
                 setLoading(false)
@@ -166,177 +176,205 @@ export default function MultiPackageDetails({ route }) {
         showLoadingSpinner(true)
     }, [])
     return (
-        <Screen style={{ marginBottom: 20, paddingHorizontal: 20 }}>
-            <Loader visible={loading} />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <FastImage
-                    style={{
-                        width: '95%',
-                        height: 200,
-                        borderRadius: 10,
-                        alignSelf: 'center',
-                        marginTop: 10,
-                    }}
-                    source={{
-                        uri,
-                        priority: FastImage.priority.normal,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                />
-                <Text style={[styles.subItemText, { alignSelf: 'center' }]}>
-                    {description.title}
-                </Text>
-                <View style={styles.countContainer}>
-                    <View style={styles.countHalfContainer}>
-                        <IonIcons
-                            name="people-circle"
-                            color={colors.primary}
-                            size={48}
-                        />
-                        <View>
-                            <Text style={styles.subItemText2}>
-                                {I18n.t('Students')}
-                            </Text>
-                            <Text style={styles.subItemText2}>
-                                {description.number_of_students}
-                            </Text>
+        <>
+            <Screen style={{ marginBottom: 20, paddingHorizontal: 20 }}>
+                <Loader visible={loading} />
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <FastImage
+                        style={{
+                            width: '95%',
+                            height: 200,
+                            borderRadius: 10,
+                            alignSelf: 'center',
+                            marginTop: 10,
+                        }}
+                        source={{
+                            uri,
+                            priority: FastImage.priority.normal,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <Text style={[styles.subItemText, { alignSelf: 'center' }]}>
+                        {description.title}
+                    </Text>
+                    <View style={styles.countContainer}>
+                        <View style={styles.countHalfContainer}>
+                            <IonIcons
+                                name="people-circle"
+                                color={colors.primary}
+                                size={48}
+                            />
+                            <View>
+                                <Text style={styles.subItemText2}>
+                                    {I18n.t('Students')}
+                                </Text>
+                                <Text style={styles.subItemText2}>
+                                    {description.number_of_students}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={styles.countHalfContainer}>
+                            <View
+                                style={{
+                                    width: 45,
+                                    height: 40,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: colors.primary,
+                                    borderRadius: 25,
+                                }}
+                            >
+                                <MaterialIcons
+                                    name="local-offer"
+                                    color={colors.white}
+                                    size={30}
+                                />
+                            </View>
+                            <View>
+                                <Text style={styles.subItemText2}>
+                                    {I18n.t('SAR')}
+                                </Text>
+                                <Text style={styles.subItemText2}>
+                                    {description.price}
+                                </Text>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.countHalfContainer}>
+
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            margin: 10,
+                            alignItems: 'center',
+                        }}
+                    >
+                        <AntDesign
+                            name="infocirlce"
+                            color={colors.primary}
+                            size={16}
+                        />
+                        <Text
+                            style={[
+                                styles.subItemText,
+                                { color: colors.primary, marginHorizontal: 10 },
+                            ]}
+                        >
+                            {I18n.t('MultiPackageBrief')}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                            height: 150,
+                            borderRadius: 10,
+                            width: '95%',
+                            alignSelf: 'center',
+                            paddingHorizontal: heightp(10),
+                        }}
+                    >
+                        <ScrollView nestedScrollEnabled={true}>
+                            {description && (
+                                <HTML
+                                    tagsStyles={{
+                                        div: { textAlign: 'left' },
+                                    }}
+                                    source={{ html: description.description }}
+                                    imagesMaxWidth={
+                                        Dimensions.get('window').width
+                                    }
+                                />
+                            )}
+                        </ScrollView>
+                    </View>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            margin: 10,
+                            alignItems: 'center',
+                        }}
+                    >
+                        <IonIcons
+                            name="people"
+                            color={colors.primary}
+                            size={20}
+                        />
+                        <Text
+                            style={[
+                                styles.subItemText,
+                                { color: colors.primary, marginHorizontal: 10 },
+                            ]}
+                        >
+                            {I18n.t('Teachers')}
+                        </Text>
+                    </View>
+                    {description && (
+                        <DetailsTeachers data={description.content} />
+                    )}
+
+                    {Global.UserType == 4 ? (
                         <View
                             style={{
-                                width: 45,
-                                height: 40,
-                                alignItems: 'center',
-                                justifyContent: 'center',
+                                marginVertical: heightp(10),
+                            }}
+                        />
+                    ) : (
+                        <View
+                            style={{
                                 backgroundColor: colors.primary,
-                                borderRadius: 25,
+                                width: '90%',
+                                height: 45,
+                                alignSelf: 'center',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: 20,
+                                borderRadius: 20,
                             }}
                         >
-                            <MaterialIcons
-                                name="local-offer"
-                                color={colors.white}
-                                size={30}
-                            />
-                        </View>
-                        <View>
-                            <Text style={styles.subItemText2}>
-                                {I18n.t('SAR')}
-                            </Text>
-                            <Text style={styles.subItemText2}>
-                                {description.price}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        margin: 10,
-                        alignItems: 'center',
-                    }}
-                >
-                    <AntDesign
-                        name="infocirlce"
-                        color={colors.primary}
-                        size={16}
-                    />
-                    <Text
-                        style={[
-                            styles.subItemText,
-                            { color: colors.primary, marginHorizontal: 10 },
-                        ]}
-                    >
-                        {I18n.t('MultiPackageBrief')}
-                    </Text>
-                </View>
-                <View
-                    style={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
-                        height: 150,
-                        borderRadius: 10,
-                        width: '95%',
-                        alignSelf: 'center',
-                        paddingHorizontal: heightp(10),
-                    }}
-                >
-                    <ScrollView nestedScrollEnabled={true}>
-                        {description && (
-                            <HTML
-                                tagsStyles={{
-                                    div: { textAlign: 'left' },
-                                }}
-                                source={{ html: description.description }}
-                                imagesMaxWidth={Dimensions.get('window').width}
-                            />
-                        )}
-                    </ScrollView>
-                </View>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        margin: 10,
-                        alignItems: 'center',
-                    }}
-                >
-                    <IonIcons name="people" color={colors.primary} size={20} />
-                    <Text
-                        style={[
-                            styles.subItemText,
-                            { color: colors.primary, marginHorizontal: 10 },
-                        ]}
-                    >
-                        {I18n.t('Teachers')}
-                    </Text>
-                </View>
-                {description && <DetailsTeachers data={description.content} />}
-
-                <View
-                    style={{
-                        backgroundColor: colors.primary,
-                        width: '90%',
-                        height: 45,
-                        alignSelf: 'center',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: 20,
-                        borderRadius: 20,
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={
-                            packageType === 'multi'
-                                ? subscribeMultiPackage
-                                : subscribeSinglePackage
-                        }
-                    >
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text
-                                style={[
-                                    styles.subItemText,
-                                    {
-                                        marginHorizontal: 20,
-                                        color: colors.white,
-                                    },
-                                ]}
-                            >
-                                {I18n.t('SubscripePackage')}
-                            </Text>
-                            <FontAwesome
-                                name={
-                                    I18n.locale == 'ar'
-                                        ? 'arrow-circle-left'
-                                        : 'arrow-circle-right'
+                            <TouchableOpacity
+                                onPress={
+                                    packageType === 'multi'
+                                        ? subscribeMultiPackage
+                                        : subscribeSinglePackage
                                 }
-                                size={30}
-                                color={colors.white}
-                            />
+                            >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text
+                                        style={[
+                                            styles.subItemText,
+                                            {
+                                                marginHorizontal: 20,
+                                                color: colors.white,
+                                            },
+                                        ]}
+                                    >
+                                        {I18n.t('SubscripePackage')} (
+                                        {description.price} {I18n.t('SAR')})
+                                    </Text>
+                                    <FontAwesome
+                                        name={
+                                            I18n.locale == 'ar'
+                                                ? 'arrow-circle-left'
+                                                : 'arrow-circle-right'
+                                        }
+                                        size={30}
+                                        color={colors.white}
+                                    />
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-        </Screen>
+                    )}
+                </ScrollView>
+            </Screen>
+            <SubscriptionModal
+                onPress={openModal}
+                isVisible={isVisible}
+                text={modalMessage}
+                navigation={() => {
+                    setIsVisible(!isVisible)
+                    navigation.popToTop()
+                }}
+            />
+        </>
     )
 }
 
