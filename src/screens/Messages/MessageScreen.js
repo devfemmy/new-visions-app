@@ -166,6 +166,7 @@ class MessageScreen extends Component {
             <View
                 style={{
                     flex: 1,
+                    backgroundColor: "#FFFFFF"
                 }}
             >
                 <KeyboardAvoidingView

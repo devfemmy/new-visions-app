@@ -86,6 +86,8 @@ const Conversation = () => {
                         </View>
                     )}
                     renderItem={({ item }) => {
+                        console.log('renderItem', item)
+                        const uri = `${IMAGEURL}/${item?.image}`
                         return (
                             <View>
                                 {item?.name === '' ? null : (
@@ -161,6 +163,7 @@ const Conversation = () => {
                                                         fontSize: heightp(14),
                                                         opacity: 0.5,
                                                     }}
+                                                    numberOfLines={1}
                                                 />
                                             </View>
                                             <View

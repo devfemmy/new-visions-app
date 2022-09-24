@@ -52,6 +52,7 @@ const Arabic = {
     Subscribtions: 'الاشتراكات',
     AboutUs: 'معلومات',
     SignOut: 'خروج',
+    Done: 'فعله',
 
     //Home
     SeeAll: 'اظهار الكل',
@@ -285,6 +286,7 @@ const Arabic = {
     QuizzesResults: 'نتائج الاختبار',
     QuizResults: 'نتائج الأختبار',
     EnterAccountInfo: 'قم بتكلمة بيانات حسابك ',
+    RegistrationRequest: 'Registration Request',
 }
 
 export default Arabic

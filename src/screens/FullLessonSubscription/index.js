@@ -18,11 +18,14 @@ import SelectGroup from './SelectGroup'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import Global from '../../../Global'
+import SubscriptionModal from '../../components/SubscriptionModal'
 
 export const SubContext = createContext(null)
 const FullLessonSubscription = () => {
     const route = useRoute()
     const [loading, setLoading] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const items = [
@@ -59,6 +62,11 @@ const FullLessonSubscription = () => {
             getInAppPurchaseProducts()
         }
     }, [])
+
+    const openModal = (message) => {
+        setIsVisible(!isVisible)
+        setModalMessage(message)
+    }
     const subscribeExternal = async () => {
         setLoading(true)
         const payload = {
@@ -71,17 +79,18 @@ const FullLessonSubscription = () => {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
-                Alert.alert('Alert', res?.message, [
-                    {
-                        text: 'Cancel',
-                        onPress: () => navigation.popToTop(),
-                        style: 'cancel',
-                    },
-                    {
-                        text: 'OK',
-                        onPress: () => navigation.navigate('HomePage'),
-                    },
-                ])
+                openModal(res?.message)
+                // Alert.alert('Alert', res?.message, [
+                //     {
+                //         text: 'Cancel',
+                //         onPress: () => navigation.popToTop(),
+                //         style: 'cancel',
+                //     },
+                //     {
+                //         text: 'OK',
+                //         onPress: () => navigation.navigate('HomePage'),
+                //     },
+                // ])
             } else {
                 setLoading(false)
             }
@@ -114,6 +123,15 @@ const FullLessonSubscription = () => {
         <SubContext.Provider
             value={{ disabledProp, setDisabledProps, setGroupId }}
         >
+            <SubscriptionModal
+                onPress={openModal}
+                isVisible={isVisible}
+                text={modalMessage}
+                navigation={() => {
+                    setIsVisible(!isVisible)
+                    navigation.popToTop()
+                }}
+            />
             <Loader visible={loading} />
             <Container>
                 <View style={{ flex: 1 }}>

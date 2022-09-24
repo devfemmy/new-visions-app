@@ -15,12 +15,15 @@ import { deviceStorage } from '../../services/deviceStorage'
 import { requestPurchase } from '../../services/iap'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
+import SubscriptionModal from '../../components/SubscriptionModal'
 
 const SubjectTeachers = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
     const [searchText, setSearchText] = useState()
     const [loader, setLoading] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
     const route = useRoute()
     const { subject_id, teacher_id } = route.params
     const {
@@ -48,6 +51,10 @@ const SubjectTeachers = () => {
         },
         [navigation, subject_id]
     )
+    const openModal = (message) => {
+        setIsVisible(!isVisible)
+        setModalMessage(message)
+    }
     const subscribeExternal = async (item) => {
         setLoading(true)
         const payload = {
@@ -60,17 +67,18 @@ const SubjectTeachers = () => {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
-                Alert.alert('Alert', res?.message, [
-                    {
-                        text: 'Cancel',
-                        onPress: () => navigation.popToTop(),
-                        style: 'cancel',
-                    },
-                    {
-                        text: 'OK',
-                        onPress: () => navigation.navigate('HomePage'),
-                    },
-                ])
+                openModal(res?.message)
+                // Alert.alert('Alert', res?.message, [
+                //     {
+                //         text: 'Cancel',
+                //         onPress: () => navigation.popToTop(),
+                //         style: 'cancel',
+                //     },
+                //     {
+                //         text: 'OK',
+                //         onPress: () => navigation.navigate('HomePage'),
+                //     },
+                // ])
             } else {
                 setLoading(false)
             }
@@ -134,6 +142,15 @@ const SubjectTeachers = () => {
     return (
         <Container>
             <Loader visible={loader} />
+            <SubscriptionModal
+                onPress={openModal}
+                isVisible={isVisible}
+                text={modalMessage}
+                navigation={() => {
+                    setIsVisible(!isVisible)
+                    navigation.popToTop()
+                }}
+            />
             <View style={{ marginBottom: 15 }}>
                 {/* <SearchBar
           placeholder="Search Subject Teachers"

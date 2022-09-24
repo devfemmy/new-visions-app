@@ -22,6 +22,7 @@ import ChooseLesson from './ChooseLesson'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import Global from '../../../Global'
+import SubscriptionModal from '../../components/SubscriptionModal'
 // import ChooseGroup from './ChooseGroup';
 // import ChooseTime from './ChooseTime';
 // import SelectGroup from './SelectGroup';
@@ -32,6 +33,8 @@ const PrivateLessonSubscription = () => {
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const [loading, setLoading] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
     const { subject_id, teacher_id, iap_activation, iap_id } = route.params
     console.log('iap_activation one lesson', iap_activation, iap_id)
     const { getSubjectChaptersAndLessonData } = useAppSelector(
@@ -59,6 +62,10 @@ const PrivateLessonSubscription = () => {
             getInAppPurchaseProducts()
         }
     }, [])
+    const openModal = (message) => {
+        setIsVisible(!isVisible)
+        setModalMessage(message)
+    }
     const subscribeExternal = async () => {
         setLoading(true)
         const payload = {
@@ -71,17 +78,18 @@ const PrivateLessonSubscription = () => {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
-                Alert.alert('Alert', res?.message, [
-                    {
-                        text: 'Cancel',
-                        onPress: () => navigation.popToTop(),
-                        style: 'cancel',
-                    },
-                    {
-                        text: 'OK',
-                        onPress: () => navigation.navigate('HomePage'),
-                    },
-                ])
+                openModal(res?.message)
+                // Alert.alert('Alert', res?.message, [
+                //     {
+                //         text: 'Cancel',
+                //         onPress: () => navigation.popToTop(),
+                //         style: 'cancel',
+                //     },
+                //     {
+                //         text: 'OK',
+                //         onPress: () => navigation.navigate('HomePage'),
+                //     },
+                // ])
             } else {
                 setLoading(false)
             }
@@ -118,6 +126,15 @@ const PrivateLessonSubscription = () => {
         <SubContext.Provider
             value={{ disabledProp, setDisabledProps, setGroupId }}
         >
+            <SubscriptionModal
+                onPress={openModal}
+                isVisible={isVisible}
+                text={modalMessage}
+                navigation={() => {
+                    setIsVisible(!isVisible)
+                    navigation.popToTop()
+                }}
+            />
             <Loader visible={loading} />
             <Container>
                 <View style={{ flex: 1 }}>

@@ -115,6 +115,7 @@ const English = {
     Attendance: 'Attendance',
     Add: 'Add',
     Play: 'Play',
+    Done: 'Done',
 
     PreviewBill: 'Preview Bill',
     // Live Brodcast Times
@@ -276,6 +277,7 @@ const English = {
     QuizzesResults: 'Quizzes Results',
     QuizResults: 'Quiz Results',
     EnterAccountInfo: 'Enter your Account Information',
+    RegistrationRequest: 'Registration Request',
 }
 
 export default English
