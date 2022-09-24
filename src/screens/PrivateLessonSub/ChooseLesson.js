@@ -8,7 +8,6 @@ import { Text } from '../../components/common'
 import LessonCard from '../../components/LessonCard'
 
 const ChooseLesson = ({ lessons }) => {
-    console.log('choosing', lessons.length)
     const { setDisabledProps } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
