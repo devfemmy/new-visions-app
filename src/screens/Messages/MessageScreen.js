@@ -169,10 +169,14 @@ class MessageScreen extends Component {
         this.setState({
             isLoading: true,
         })
+        const payload = {
+            conversation_id: this.props.route.params.items?.conversation_id,
+        }
         try {
             axios
                 .post(
                     this.state.next_page_url, // URL
+                    payload,
                     {
                         // config
                         headers: {
@@ -196,11 +200,19 @@ class MessageScreen extends Component {
                         this.setState({
                             isLoading: true,
                         })
-                        console.log(`saved to cache,`, response?.data)
+                        console.log(
+                            `saved to cache,`,
+                            response?.data?.data[0]?.messages
+                        )
                         const chats = this.state.chats.slice()
-                        // this.setState({
-                        //     chats: [...response?.data, ...chats],
-                        // })
+                        this.setState({
+                            chats: [
+                                ...chats,
+                                ...response?.data?.data[0]?.messages,
+                            ],
+                            next_page_url:
+                                response?.data?.data[0]?.next_page_url,
+                        })
                     }
                 })
                 .catch((error) => {
@@ -256,6 +268,7 @@ class MessageScreen extends Component {
                 }}
             >
                 <KeyboardAwareScrollView
+                    enableOnAndroid
                     extraHeight={100}
                     keyboardDismissMode="on-drag"
                     contentContainerStyle={{
