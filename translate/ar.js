@@ -301,6 +301,7 @@ const Arabic = {
     SR: 'ريال',
     Subscribefor: 'اشترك',
     Rscourse: 'ريال / للمنهج.',
+    SARlesson: 'ريال / للحصة.',
     Reservationofthesyllabus: 'حجز متابعة منهج',
 }
 

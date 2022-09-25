@@ -127,6 +127,7 @@ const SubjectTeachers = () => {
                 teacher_id: item?.teacher_id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
+                lesson_price: item?.lesson_price,
             })
         },
         [navigation, subject_id]

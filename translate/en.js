@@ -291,6 +291,7 @@ const English = {
     SR: 'sr.',
     Subscribefor: 'Subscribe for',
     Rscourse: 'Rs / course',
+    SARlesson: 'SAR / lesson',
     Reservationofthesyllabus: 'Reservation of the syllabus',
 }
 
