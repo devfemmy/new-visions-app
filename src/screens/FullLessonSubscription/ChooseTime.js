@@ -55,7 +55,7 @@ const ChooseTime = ({ getGroupDaysData, lesson_price }) => {
                                 item.start &&
                                 `${item.start} - ${
                                     item.end
-                                } - ${lesson_price} ${I18n.t('SAR')}`
+                                }`
                             }
                         />
                     </>

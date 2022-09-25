@@ -347,8 +347,9 @@ export default function MultiPackageDetails({ route }) {
                                             },
                                         ]}
                                     >
-                                        {I18n.t('SubscripePackage')} (
-                                        {description.price} {I18n.t('SAR')})
+                                        {I18n.t('SubscripePackage')}
+                                        {description.price} {I18n.t('SAR')}
+
                                     </Text>
                                     <FontAwesome
                                         name={

@@ -169,7 +169,8 @@ const FullLessonSubscription = () => {
                         <ProgressStep
                             previousBtnText={I18n.t('Previous')}
                             finishBtnText={
-                                Global.UserType == 4 ? '' : I18n.t('Subscribe')
+                                Global.UserType == 4 ? '' : `${I18n.t('Subscribe')}
+                                    ${lesson_price} ${I18n.t('SAR')}`
                             }
                             onSubmit={
                                 Global.UserType == 4
