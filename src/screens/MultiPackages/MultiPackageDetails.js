@@ -347,7 +347,7 @@ export default function MultiPackageDetails({ route }) {
                                             },
                                         ]}
                                     >
-                                        {I18n.t('Subscripe')}
+                                        {I18n.t('Subscripe')}{' '}
                                         {description.price}
                                     </Text>
                                     <FontAwesome

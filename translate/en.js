@@ -279,6 +279,19 @@ const English = {
     QuizResults: 'Quiz Results',
     EnterAccountInfo: 'Enter your Account Information',
     RegistrationRequest: 'Registration Request',
+    RegistrationRequestBody:
+        'Dear Student, Thank you for your interest in joining our unique group, you will receive a text message with more information.',
+    //
+    Fullsubjectsubscribes: 'Full subject subscribes',
+    Onelessonsubscribes: 'One lesson subscribes ',
+    Multipackagesubscribes: 'Multi package subscribes',
+    Packagesubscribes: 'Package subscribes',
+    Privatesubjectsubscribes: 'Private subject subscribes',
+    Writeyourmessage: 'Write your message',
+    SR: 'sr.',
+    Subscribefor: 'Subscribe for',
+    Rscourse: 'Rs / course',
+    Reservationofthesyllabus: 'Reservation of the syllabus',
 }
 
 export default English

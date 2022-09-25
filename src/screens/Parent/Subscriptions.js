@@ -24,7 +24,7 @@ import IconText from '../../components/IconText'
 import { Text as CustomText } from '../../components/common'
 import { useRoute } from '@react-navigation/native'
 
-export default function Subscriptions({  }) {
+export default function Subscriptions({}) {
     const route = useRoute()
     const [subscriptions, setSubscriptions] = useState([])
     const [toggle1, setToggle1] = useState(false)
@@ -34,7 +34,7 @@ export default function Subscriptions({  }) {
     const [toggle5, setToggle5] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [isVisibleItem, setIsVisibleItem] = useState({})
-    const {id} = route.params;
+    const { id } = route.params
     console.log('params', id)
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
@@ -135,7 +135,7 @@ export default function Subscriptions({  }) {
                         >
                             <View style={styles.subItem}>
                                 <Text style={styles.subItemText}>
-                                    {I18n.t('FullLessonSubscription')}
+                                    {I18n.t('Fullsubjectsubscribes')}
                                 </Text>
                                 <FontAwesome
                                     name={
@@ -166,7 +166,7 @@ export default function Subscriptions({  }) {
                         >
                             <View style={styles.subItem}>
                                 <Text style={styles.subItemText}>
-                                    {I18n.t('OneLessonSubscription')}
+                                    {I18n.t('Onelessonsubscribes')}
                                 </Text>
                                 <FontAwesome
                                     name={
@@ -197,7 +197,7 @@ export default function Subscriptions({  }) {
                         >
                             <View style={styles.subItem}>
                                 <Text style={styles.subItemText}>
-                                    {I18n.t('JointCoursesSubscriptions')}
+                                    {I18n.t('Multipackagesubscribes')}
                                 </Text>
                                 <FontAwesome
                                     name={
@@ -230,7 +230,7 @@ export default function Subscriptions({  }) {
                         >
                             <View style={styles.subItem}>
                                 <Text style={styles.subItemText}>
-                                    {I18n.t('PackagesSubscriptions')}
+                                    {I18n.t('Packagesubscribes')}
                                 </Text>
                                 <FontAwesome
                                     name={
@@ -261,7 +261,7 @@ export default function Subscriptions({  }) {
                         >
                             <View style={styles.subItem}>
                                 <Text style={styles.subItemText}>
-                                    {I18n.t('PrivateLessonsSubscriptions')}
+                                    {I18n.t('Privatesubjectsubscribes')}
                                 </Text>
                                 <FontAwesome
                                     name={

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/no-cycle */
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { Alert, Platform, View } from 'react-native'
 import I18n from 'i18n-js'
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps'
@@ -19,10 +19,13 @@ import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import Global from '../../../Global'
 import SubscriptionModal from '../../components/SubscriptionModal'
+import { heightp } from '../../utils/responsiveDesign'
+import { AppContext } from '../../context/AppState'
 
 export const SubContext = createContext(null)
 const FullLessonSubscription = () => {
     const route = useRoute()
+    const { lang } = useContext(AppContext)
     const [loading, setLoading] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [modalMessage, setModalMessage] = useState('')
@@ -169,7 +172,11 @@ const FullLessonSubscription = () => {
                         <ProgressStep
                             previousBtnText={I18n.t('Previous')}
                             finishBtnText={
-                                Global.UserType == 4 ? '' : I18n.t('Subscribe')
+                                Global.UserType == 4
+                                    ? ''
+                                    : `${I18n.t(
+                                          'Subscribefor'
+                                      )} ${lesson_price} ${I18n.t('Rscourse')}`
                             }
                             onSubmit={
                                 Global.UserType == 4
@@ -177,6 +184,22 @@ const FullLessonSubscription = () => {
                                     : subscribeToFullLesson
                             }
                             label={I18n.t('GroupDays')}
+                            nextBtnStyle={{
+                                backgroundColor: colors.primary,
+                                // width: '100%',
+                                paddingHorizontal:
+                                    lang === 'ar' ? heightp(20) : heightp(10),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginRight: lang === 'ar' ? -40 : -50,
+                                // marginLeft: lang === 'ar' ? 0 : 40,
+                            }}
+                            nextBtnTextStyle={{
+                                color: colors.white,
+                                fontSize: lang === 'ar' ? 14 : 13,
+                            }}
                         >
                             <View>
                                 <ChooseTime

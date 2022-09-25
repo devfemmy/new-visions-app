@@ -51,12 +51,7 @@ const ChooseTime = ({ getGroupDaysData, lesson_price }) => {
                             setActiveStage={setActiveStage}
                             text2={dayOfWeek}
                             dark
-                            text={
-                                item.start &&
-                                `${item.start} - ${
-                                    item.end
-                                } - ${lesson_price} ${I18n.t('SAR')}`
-                            }
+                            text={item.start && `${item.start} - ${item.end} `}
                         />
                     </>
                 )

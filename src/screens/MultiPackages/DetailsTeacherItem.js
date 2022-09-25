@@ -7,7 +7,7 @@ import {
     StyleSheet,
     Pressable,
 } from 'react-native'
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import I18n from 'i18n-js'
@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native'
 import colors from '../../helpers/colors'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
+import { AppContext } from '../../context/AppState'
 
 export default function DetailsTeacherItem({
     image,
@@ -25,6 +26,7 @@ export default function DetailsTeacherItem({
     itemData,
 }) {
     const navigation = useNavigation()
+    const { lang } = useContext(AppContext)
 
     const dateArr = [
         'السبت',
@@ -44,27 +46,34 @@ export default function DetailsTeacherItem({
         'Thursday',
         'Friday',
     ]
-    const renderItem = ({ item }) => (
-        <View
-            style={{
-                backgroundColor: colors.darkGray,
-                flexDirection: 'row',
-                width: 100,
-                height: 30,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 5,
-                marginHorizontal: 5,
-            }}
-        >
-            <FontAwesome5 name="calendar-day" size={20} color={colors.dark} />
-            <Text style={[styles.subItemText, { fontWeight: '100' }]}>
-                {I18n.locale == 'ar'
-                    ? dateArr[item.day_id - 1]
-                    : dateArrEn[item.day_id - 1]}
-            </Text>
-        </View>
-    )
+    const renderItem = ({ item }) => {
+        const { lang } = useContext(AppContext)
+        return (
+            <View
+                style={{
+                    backgroundColor: colors.darkGray,
+                    flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                    width: 100,
+                    height: 30,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 5,
+                    marginHorizontal: 5,
+                }}
+            >
+                <FontAwesome5
+                    name="calendar-day"
+                    size={20}
+                    color={colors.dark}
+                />
+                <Text style={[styles.subItemText, { fontWeight: '100' }]}>
+                    {I18n.locale == 'ar'
+                        ? dateArr[item.day_id - 1]
+                        : dateArrEn[item.day_id - 1]}
+                </Text>
+            </View>
+        )
+    }
     const navigateTeacherProfile = useCallback(
         (item) => {
             navigation.navigate('TeacherProfile', {
@@ -80,14 +89,20 @@ export default function DetailsTeacherItem({
     return (
         <Pressable
             onPress={() => navigateTeacherProfile(itemData)}
-            style={styles.container}
+            style={[
+                styles.container,
+                {
+                    flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                },
+            ]}
         >
             <FastImage
                 style={{
                     width: heightp(100),
                     height: heightp(100),
                     borderRadius: 10,
-                    marginRight: heightp(20),
+                    marginRight: lang === 'ar' ? heightp(0) : heightp(20),
+                    marginLeft: lang === 'ar' ? heightp(20) : heightp(0),
                 }}
                 source={{
                     uri,
@@ -96,15 +111,32 @@ export default function DetailsTeacherItem({
                 resizeMode={FastImage.resizeMode.cover}
             />
             <View style={{ justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row' }}>
+                <View
+                    style={{
+                        flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                    }}
+                >
                     <FontAwesome5
                         name="chalkboard-teacher"
                         size={20}
                         color={colors.black}
                     />
-                    <Text style={styles.subItemText}>{teacherName}</Text>
+                    <Text
+                        style={[
+                            styles.subItemText,
+                            {
+                                textAlign: lang === 'ar' ? 'left' : 'right',
+                            },
+                        ]}
+                    >
+                        {teacherName}
+                    </Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View
+                    style={{
+                        flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                    }}
+                >
                     <MaterialIcons
                         name="subject"
                         size={20}
@@ -112,14 +144,19 @@ export default function DetailsTeacherItem({
                     />
                     <Text
                         // numberOfLines={1}
-                        style={styles.subItemText}
+                        style={[
+                            styles.subItemText,
+                            {
+                                textAlign: lang === 'ar' ? 'left' : 'right',
+                            },
+                        ]}
                     >
                         {subjectName}
                     </Text>
                 </View>
                 <View
                     style={{
-                        flexDirection: 'row',
+                        flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
@@ -148,11 +185,13 @@ const styles = StyleSheet.create({
         width: '52.5%',
     },
     container: {
+        // width: '100%',
         flexDirection: 'row',
+        justifyContent: 'space-between',
         height: 120,
         paddingVertical: 15,
         borderBottomWidth: 1,
         borderBottomColor: colors.darkGray,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
     },
 })

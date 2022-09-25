@@ -31,6 +31,7 @@ import { AppContext } from '../../context/AppState'
 import Global from '../../../Global'
 import axios from 'axios'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import I18n from 'i18n-js'
 
 class MessageScreen extends Component {
     static contextType = AppContext
@@ -454,7 +455,8 @@ class MessageScreen extends Component {
                             style={{
                                 height: 50,
                                 width: '100%',
-                                flexDirection: 'row',
+                                flexDirection:
+                                    lang === 'ar' ? 'row-reverse' : 'row',
                                 justifyContent: 'center',
                                 paddingHorizontal: heightp(10),
                                 backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -478,12 +480,13 @@ class MessageScreen extends Component {
                                             messages: text,
                                         })
                                     }}
-                                    placeholder="Write your message here"
+                                    placeholder={I18n.t('Writeyourmessage')}
                                     blurOnSubmit={false}
                                     keyboardType="default"
                                     returnKeyType="done"
                                     enablesReturnKeyAutomatically
                                     placeholderTextColor={colors.solidGray}
+                                    textAlign={lang === 'ar' ? 'right' : 'left'}
                                     style={{
                                         height: 40,
                                         borderRadius: 20,
@@ -517,7 +520,7 @@ class MessageScreen extends Component {
                                     style={{
                                         transform:
                                             lang === 'ar'
-                                                ? [{ rotate: '180deg' }]
+                                                ? [{ rotate: '0deg' }]
                                                 : [{ rotate: '0deg' }],
                                     }}
                                 />

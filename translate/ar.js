@@ -287,7 +287,21 @@ const Arabic = {
     QuizzesResults: 'نتائج الاختبار',
     QuizResults: 'نتائج الأختبار',
     EnterAccountInfo: 'قم بتكلمة بيانات حسابك ',
-    RegistrationRequest: 'Registration Request',
+    RegistrationRequest: 'طلب التسجيل',
+    RegistrationRequestBody:
+        'عزيزي الطالب شكرا لاهتمامك للانضمام في مجموعتنا الفريدة ، سوف تصلك رسالة نصية بمزيد من المعلومات. ',
+    //
+    Fullsubjectsubscribes: 'اشتراكات المنهج الكامل',
+    Onelessonsubscribes: 'اشتراكات الحصة الواحدة',
+    Multipackagesubscribes: 'اشتراكات الدورات المشتركة',
+    Packagesubscribes: 'اشتراكات الباقات',
+    Privatesubjectsubscribes: 'اشتراكات المنهج الخاص',
+    //
+    Writeyourmessage: 'اكتب رسالتك',
+    SR: 'ريال',
+    Subscribefor: 'اشترك',
+    Rscourse: 'ريال / للمنهج.',
+    Reservationofthesyllabus: 'حجز متابعة منهج',
 }
 
 export default Arabic
