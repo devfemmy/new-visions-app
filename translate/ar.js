@@ -99,6 +99,7 @@ const Arabic = {
     Courses: 'الدورات',
     Students: 'طالب',
     Stars: 'النجوم',
+    Subscripe: 'اشترك',
 
     //Messages
     Contacts: 'جهات الاتصال',
@@ -108,7 +109,7 @@ const Arabic = {
     Profile: 'الملف الشخصي',
     Parents: 'الوالدان',
     Parent: 'ولي الأمر',
-    FullLessonSubscription: 'حجز حصة',
+    FullLessonSubscription: 'حجز ترم كامل',
     OneLessonSubscription: 'اشتراك درس واحد',
     JointCoursesSubscriptions: 'الاشتراك في الدورات المشتركة',
     PackagesSubscriptions: 'اشتراكات الباقات',

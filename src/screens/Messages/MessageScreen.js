@@ -259,7 +259,7 @@ class MessageScreen extends Component {
 
     render() {
         const { messages, chats, msg, fullName } = this.state
-        const { onLogout, user } = this.context
+        const { onLogout, user, lang } = this.context
         return (
             <View
                 style={{
@@ -514,6 +514,12 @@ class MessageScreen extends Component {
                                     name="send"
                                     size={30}
                                     color={colors.primary}
+                                    style={{
+                                        transform:
+                                            lang === 'ar'
+                                                ? [{ rotate: '180deg' }]
+                                                : [{ rotate: '0deg' }],
+                                    }}
                                 />
                             </TouchableOpacity>
                         </View>

@@ -103,7 +103,7 @@ const English = {
     Profile: 'Profile',
     Parents: 'Parents',
     Parent: 'Parent',
-    FullLessonSubscription: 'Lessons Subscription',
+    FullLessonSubscription: 'Booking Full Subject',
     OneLessonSubscription: 'One Lesson Subscription',
     JointCoursesSubscriptions: 'Joint Courses Subscription',
     PackagesSubscriptions: 'Package Subscription',
@@ -160,6 +160,7 @@ const English = {
     MultiPackageBrief: 'Brief about the course',
     SubscripePackage: 'Subscribe Now',
     PackageDetails: 'Package Details',
+    Subscripe: 'Subscribe',
 
     Packages: 'Packages',
     Share: 'Share',
