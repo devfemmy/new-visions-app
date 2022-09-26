@@ -31,11 +31,14 @@ import I18n from 'i18n-js'
 import * as Progress from 'react-native-progress'
 import TeachersCourseCard from '../../components/TeachersCourseCard'
 import { AppContext } from '../../context/AppState'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { getSubjectTeachers } from '../../redux/action'
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
 const TeacherProfile = () => {
     const flatListRef = useRef()
     const route = useRoute()
+    const dispatch = useAppDispatch()
     const navigation = useNavigation()
     const { onLogOut } = useContext(AppContext)
     const playerRef = useRef()
@@ -45,6 +48,8 @@ const TeacherProfile = () => {
     const [VideoUrl, setVideoUrl] = useState('')
     const [vidId, setVideoId] = useState('')
     const [rateArray, setRateArray] = useState('')
+    const { subjectTeachersPage } = useAppSelector((state) => state)
+    const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -143,14 +148,21 @@ const TeacherProfile = () => {
 
     const navigatePivateLesson = useCallback(
         (course) => {
+            // const payload = {
+            //     subject_id,
+            //     teacher_id: teacher_id ? teacher_id : '',
+            // }
+            console.log('payload', item, course)
+            // dispatch(getSubjectTeachers(payload))
             // const {id, title, image} = item;
             // const uri = `${IMAGEURL}/${image}`
-            // if (id)
+            // // if (id)
             navigation.navigate('PrivateLesson', {
                 subject_id: course?.subject?.id,
                 teacher_id: item?.id,
-                iap_id: item?.iap_id,
-                iap_activation: item?.iap_activation,
+                iap_id: course?.iap_id,
+                iap_activation: course?.iap_activation,
+                lesson_price: course?.lesson_price,
             })
         },
         [navigation, item]
