@@ -172,6 +172,7 @@ const Arabic = {
     Packages: 'الباقات',
     MultiPackageBrief: 'نبذة تعريفية عن محور الدورة',
 
+    SubscribeNow: 'اشتراك',
     SubscripePackage: 'اشترك بالدورة الاّن',
     Share: 'مشاركة',
     Details: 'التفاصيل',

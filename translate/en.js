@@ -159,6 +159,7 @@ const English = {
     MultiPackages: 'MultiPackages',
     MultiPackageBrief: 'Brief about the course',
     SubscripePackage: 'Subscribe Now',
+    SubscribeNow: 'Subscribe Now',
     PackageDetails: 'Package Details',
     Subscripe: 'Subscribe',
 

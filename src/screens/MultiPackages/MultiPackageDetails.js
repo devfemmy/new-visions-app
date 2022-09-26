@@ -337,6 +337,7 @@ export default function MultiPackageDetails({ route }) {
                                         : subscribeSinglePackage
                                 }
                             >
+                                
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text
                                         style={[
@@ -347,8 +348,8 @@ export default function MultiPackageDetails({ route }) {
                                             },
                                         ]}
                                     >
-                                        {I18n.t('Subscripe')}{' '}
-                                        {description.price}
+                                        {I18n.t('SubscribeNow')}{' '}
+                                        {description.price}{' '}{I18n.t('SAR')}
                                     </Text>
                                     <FontAwesome
                                         name={
