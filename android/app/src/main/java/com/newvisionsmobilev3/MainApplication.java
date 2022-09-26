@@ -3,7 +3,6 @@ package com.newvisionsmobilev3;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
-import org.devio.rn.splashscreen.SplashScreen;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -56,7 +55,7 @@ public class MainApplication extends Application implements ReactApplication {
     // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
-     SplashScreen.show(this); 
+    //  SplashScreen.show(this); 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
