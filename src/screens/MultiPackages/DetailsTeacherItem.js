@@ -17,6 +17,7 @@ import colors from '../../helpers/colors'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import { AppContext } from '../../context/AppState'
+import { WINDOW_WIDTH } from '../../helpers/common'
 
 export default function DetailsTeacherItem({
     image,
@@ -47,12 +48,11 @@ export default function DetailsTeacherItem({
         'Friday',
     ]
     const renderItem = ({ item }) => {
-        const { lang } = useContext(AppContext)
         return (
             <View
                 style={{
                     backgroundColor: colors.darkGray,
-                    flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                    flexDirection: I18n.locale !== 'ar' ? 'row-reverse' : 'row',
                     width: 100,
                     height: 30,
                     alignItems: 'center',
@@ -84,36 +84,46 @@ export default function DetailsTeacherItem({
         [navigation]
     )
     const uri = image
-        ? `${IMAGEURL}/${image}`
-        : '../../assets/img/teacherDefaultpng.png'
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx', uri, lang)
+
     return (
         <Pressable
             onPress={() => navigateTeacherProfile(itemData)}
             style={[
                 styles.container,
                 {
-                    flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                    flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
+                    // backgroundColor: '#f0f',
                 },
             ]}
         >
             <FastImage
                 style={{
-                    width: heightp(100),
-                    height: heightp(100),
+                    width: uri ? heightp(100) : heightp(75),
+                    height: uri ? heightp(100) : heightp(75),
                     borderRadius: 10,
-                    marginRight: lang === 'ar' ? heightp(0) : heightp(20),
-                    marginLeft: lang === 'ar' ? heightp(20) : heightp(0),
+                    // marginRight: lang === 'ar' ? heightp(0) : heightp(20),
+                    // marginLeft: lang === 'ar' ? heightp(20) : heightp(0),
                 }}
-                source={{
-                    uri,
-                    priority: FastImage.priority.normal,
-                }}
+                source={
+                    uri
+                        ? {
+                              uri: `${IMAGEURL}/${image}`,
+                              priority: FastImage.priority.normal,
+                          }
+                        : require('../../assets/img/default-profile-picture.jpeg')
+                }
                 resizeMode={FastImage.resizeMode.cover}
             />
-            <View style={{ justifyContent: 'space-between' }}>
+            <View
+                style={{
+                    justifyContent: 'space-between',
+                    marginHorizontal: 10,
+                }}
+            >
                 <View
                     style={{
-                        flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                        flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
                     }}
                 >
                     <FontAwesome5
@@ -125,7 +135,7 @@ export default function DetailsTeacherItem({
                         style={[
                             styles.subItemText,
                             {
-                                textAlign: lang === 'ar' ? 'left' : 'right',
+                                textAlign: lang !== 'ar' ? 'left' : 'right',
                             },
                         ]}
                     >
@@ -134,7 +144,7 @@ export default function DetailsTeacherItem({
                 </View>
                 <View
                     style={{
-                        flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                        flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
                     }}
                 >
                     <MaterialIcons
@@ -147,7 +157,7 @@ export default function DetailsTeacherItem({
                         style={[
                             styles.subItemText,
                             {
-                                textAlign: lang === 'ar' ? 'left' : 'right',
+                                textAlign: lang !== 'ar' ? 'left' : 'right',
                             },
                         ]}
                     >
@@ -156,7 +166,7 @@ export default function DetailsTeacherItem({
                 </View>
                 <View
                     style={{
-                        flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                        flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
@@ -188,7 +198,7 @@ const styles = StyleSheet.create({
         // width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        height: 120,
+        minHeight: 120,
         paddingVertical: 15,
         borderBottomWidth: 1,
         borderBottomColor: colors.darkGray,
