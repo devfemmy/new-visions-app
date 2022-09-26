@@ -99,6 +99,7 @@ const Arabic = {
     Courses: 'الدورات',
     Students: 'طالب',
     Stars: 'النجوم',
+    Subscripe: 'اشترك',
 
     //Messages
     Contacts: 'جهات الاتصال',
@@ -108,7 +109,7 @@ const Arabic = {
     Profile: 'الملف الشخصي',
     Parents: 'الوالدان',
     Parent: 'ولي الأمر',
-    FullLessonSubscription: 'حجز حصة',
+    FullLessonSubscription: 'حجز ترم كامل',
     OneLessonSubscription: 'اشتراك درس واحد',
     JointCoursesSubscriptions: 'الاشتراك في الدورات المشتركة',
     PackagesSubscriptions: 'اشتراكات الباقات',
@@ -286,7 +287,22 @@ const Arabic = {
     QuizzesResults: 'نتائج الاختبار',
     QuizResults: 'نتائج الأختبار',
     EnterAccountInfo: 'قم بتكلمة بيانات حسابك ',
-    RegistrationRequest: 'Registration Request',
+    RegistrationRequest: 'طلب التسجيل',
+    RegistrationRequestBody:
+        'عزيزي الطالب شكرا لاهتمامك للانضمام في مجموعتنا الفريدة ، سوف تصلك رسالة نصية بمزيد من المعلومات. ',
+    //
+    Fullsubjectsubscribes: 'اشتراكات المنهج الكامل',
+    Onelessonsubscribes: 'اشتراكات الحصة الواحدة',
+    Multipackagesubscribes: 'اشتراكات الدورات المشتركة',
+    Packagesubscribes: 'اشتراكات الباقات',
+    Privatesubjectsubscribes: 'اشتراكات المنهج الخاص',
+    //
+    Writeyourmessage: 'اكتب رسالتك',
+    SR: 'ريال',
+    Subscribefor: 'اشترك',
+    Rscourse: 'ريال / للمنهج.',
+    SARlesson: 'ريال / للحصة.',
+    Reservationofthesyllabus: 'حجز متابعة منهج',
 }
 
 export default Arabic

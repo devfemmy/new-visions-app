@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/no-cycle */
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { Alert, Platform, View } from 'react-native'
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps'
 import { Container } from '../../components/common'
@@ -23,6 +23,8 @@ import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import Global from '../../../Global'
 import SubscriptionModal from '../../components/SubscriptionModal'
+import { AppContext } from '../../context/AppState'
+import { heightp } from '../../utils/responsiveDesign'
 // import ChooseGroup from './ChooseGroup';
 // import ChooseTime from './ChooseTime';
 // import SelectGroup from './SelectGroup';
@@ -30,12 +32,14 @@ import SubscriptionModal from '../../components/SubscriptionModal'
 export const SubContext = createContext(null)
 const PrivateLessonSubscription = () => {
     const route = useRoute()
+    const { lang } = useContext(AppContext)
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const [loading, setLoading] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [modalMessage, setModalMessage] = useState('')
-    const { subject_id, teacher_id, iap_activation, iap_id } = route.params
+    const { subject_id, teacher_id, iap_activation, iap_id, lesson_price } =
+        route.params
     console.log('iap_activation one lesson', iap_activation, iap_id)
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
@@ -160,13 +164,33 @@ const PrivateLessonSubscription = () => {
                         <ProgressStep
                             previousBtnText={I18n.t('Previous')}
                             finishBtnText={
-                                Global.UserType == 4 ? '' : I18n.t('Subscribe')
+                                Global.UserType == 4
+                                    ? ''
+                                    : `${I18n.t(
+                                          'Subscribefor'
+                                      )} ${lesson_price} ${I18n.t('SARlesson')}`
                             }
                             onSubmit={
                                 Global.UserType == 4 ? null : subscribeToLesson
                             }
                             label={I18n.t('ChooseDay')}
-                            nextBtnDisabled={!disabledProp}
+                            // nextBtnDisabled={!disabledProp}
+                            nextBtnStyle={{
+                                backgroundColor: colors.primary,
+                                // width: '100%',
+                                paddingHorizontal:
+                                    lang === 'ar' ? heightp(20) : heightp(10),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginRight: lang === 'ar' ? -50 : -50,
+                                // marginLeft: lang === 'ar' ? 0 : 40,
+                            }}
+                            nextBtnTextStyle={{
+                                color: colors.white,
+                                fontSize: lang === 'ar' ? 14 : 13,
+                            }}
                         >
                             <View>
                                 {/* <ChooseGroup subjectGroupData={subjectGroupData} /> */}

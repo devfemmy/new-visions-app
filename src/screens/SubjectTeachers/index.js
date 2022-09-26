@@ -46,7 +46,7 @@ const SubjectTeachers = () => {
                 subject_id: item?.id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
-                lesson_price: item?.lesson_price,
+                lesson_price: item?.price,
             })
         },
         [navigation, subject_id]
@@ -127,6 +127,7 @@ const SubjectTeachers = () => {
                 teacher_id: item?.teacher_id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
+                lesson_price: item?.lesson_price,
             })
         },
         [navigation, subject_id]
@@ -189,7 +190,7 @@ const SubjectTeachers = () => {
                                         navigateFullSubscription(item)
                                         console.log(
                                             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx iap_activation iap_activation iap_activation',
-                                            item?.id
+                                            item
                                         )
                                     }}
                                     bookPrivateLesson={() =>
