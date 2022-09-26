@@ -282,7 +282,7 @@ const Arabic = {
     Error407Display:
         'تم الموافقة من قبل المعلم على طلبك للاشتراك بالمنهج الخاص يرجى اتمام عملية الدفع',
     SendRequest: 'ارسل الطلب',
-    SubscribeToOneLesson: 'حجز ترم',
+    SubscribeToOneLesson: 'حجز منهج',
     SubscribeToFullSubject: 'حجز حصة',
     NoAvailableDates: 'لا توجد مواعيد متاحة',
     QuizzesResults: 'نتائج الاختبار',
