@@ -54,7 +54,7 @@ export default function Subscriptions({}) {
                         const data = response.data.data
                         setSubscriptions(data)
                         showLoadingSpinner(false)
-                        console.log(subscriptions)
+                        console.log('typeof', typeof data)
                     } else if (response.data.code == 403) {
                         alert('This Account is Logged in from another Device.')
                         onLogout()
@@ -63,6 +63,8 @@ export default function Subscriptions({}) {
                         showLoadingSpinner(false)
                         // alert(response.data.message)
                     }
+                } else {
+                    setSubscriptions([])
                 }
             })
             .catch((error) => {
@@ -148,11 +150,11 @@ export default function Subscriptions({}) {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        {subscriptions.payments && toggle1 && (
+                        {subscriptions?.payments && toggle1 && (
                             <View>
                                 <FlatList
-                                    data={subscriptions.payments}
-                                    extraData={subscriptions.payments}
+                                    data={subscriptions?.payments}
+                                    extraData={subscriptions?.payments}
                                     renderItem={renderItem}
                                     ListEmptyComponent={EmptyItem}
                                     keyExtractor={(item) => item.id}
@@ -179,11 +181,11 @@ export default function Subscriptions({}) {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        {subscriptions.lessonsPayments && toggle2 && (
+                        {subscriptions?.lessonsPayments && toggle2 && (
                             <View>
                                 <FlatList
-                                    data={subscriptions.lessonsPayments}
-                                    extraData={subscriptions.lessonsPayments}
+                                    data={subscriptions?.lessonsPayments}
+                                    extraData={subscriptions?.lessonsPayments}
                                     renderItem={renderItem}
                                     ListEmptyComponent={EmptyItem}
                                     keyExtractor={(item) => item.id}
@@ -210,12 +212,12 @@ export default function Subscriptions({}) {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        {subscriptions.multiPackagePayments && toggle3 && (
+                        {subscriptions?.multiPackagePayments && toggle3 && (
                             <View>
                                 <FlatList
-                                    data={subscriptions.multiPackagePayments}
+                                    data={subscriptions?.multiPackagePayments}
                                     extraData={
-                                        subscriptions.multiPackagePayments
+                                        subscriptions?.multiPackagePayments
                                     }
                                     renderItem={renderItem}
                                     ListEmptyComponent={EmptyItem}
@@ -243,11 +245,11 @@ export default function Subscriptions({}) {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        {subscriptions.packagesPayments && toggle4 && (
+                        {subscriptions?.packagesPayments && toggle4 && (
                             <View>
                                 <FlatList
-                                    data={subscriptions.packagesPayments}
-                                    extraData={subscriptions.packagesPayments}
+                                    data={subscriptions?.packagesPayments}
+                                    extraData={subscriptions?.packagesPayments}
                                     renderItem={renderItem}
                                     ListEmptyComponent={EmptyItem}
                                     keyExtractor={(item) => item.id}
@@ -274,12 +276,12 @@ export default function Subscriptions({}) {
                                 />
                             </View>
                         </TouchableWithoutFeedback>
-                        {subscriptions.PrivateSubjectPayments && toggle5 && (
+                        {subscriptions?.PrivateSubjectPayments && toggle5 && (
                             <View>
                                 <FlatList
-                                    data={subscriptions.PrivateSubjectPayments}
+                                    data={subscriptions?.PrivateSubjectPayments}
                                     extraData={
-                                        subscriptions.PrivateSubjectPayments
+                                        subscriptions?.PrivateSubjectPayments
                                     }
                                     renderItem={renderItem}
                                     keyExtractor={(item) => item.id}
@@ -292,7 +294,7 @@ export default function Subscriptions({}) {
             </Screen>
             <Modal
                 onBackdropPress={() => {
-                    previewBill()
+                    setIsVisible(!isVisible)
                 }}
                 isVisible={isVisible}
             >

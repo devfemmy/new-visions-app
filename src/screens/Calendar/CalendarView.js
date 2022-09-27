@@ -37,7 +37,7 @@ export default function CalendarView({ text, data }) {
             console.log(res, 'first response')
             setLoading(false)
             if (res.code === -2) {
-                // setIsVisible(true)
+                setIsVisible(true)
                 setStatusInfo('stop')
             } else {
                 setIsVisible(true)
@@ -78,6 +78,10 @@ export default function CalendarView({ text, data }) {
         } catch (err) {
             setLoading(false)
         }
+    }
+
+    const closeModal = () => {
+        setIsVisible(!isVisible)
     }
 
     const styles = StyleSheet.create({
@@ -163,6 +167,7 @@ export default function CalendarView({ text, data }) {
                                 <CalendarItem
                                     pressed={() => {
                                         checkStatus(item)
+                                        // setItemDetails(item)
                                         console.log('pressed double In')
                                     }}
                                     time={item.start}
@@ -203,7 +208,7 @@ export default function CalendarView({ text, data }) {
                         />
                     </View>
                     <Pressable
-                        onPress={statusInfo === 'start' ? joinLive : null}
+                        onPress={statusInfo === 'start' ? joinLive : closeModal}
                         style={styles.btn}
                     >
                         <Text

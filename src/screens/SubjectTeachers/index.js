@@ -144,7 +144,9 @@ const SubjectTeachers = () => {
         <Container>
             <Loader visible={loader} />
             <SubscriptionModal
-                onPress={openModal}
+                onPress={() => {
+                    setIsVisible(!isVisible)
+                }}
                 isVisible={isVisible}
                 text={modalMessage}
                 navigation={() => {
