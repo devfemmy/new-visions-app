@@ -337,7 +337,6 @@ export default function MultiPackageDetails({ route }) {
                                         : subscribeSinglePackage
                                 }
                             >
-                                
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text
                                         style={[
@@ -349,7 +348,7 @@ export default function MultiPackageDetails({ route }) {
                                         ]}
                                     >
                                         {I18n.t('SubscribeNow')}{' '}
-                                        {description.price}{' '}{I18n.t('SAR')}
+                                        {description.price} {I18n.t('SAR')}
                                     </Text>
                                     <FontAwesome
                                         name={
@@ -367,7 +366,9 @@ export default function MultiPackageDetails({ route }) {
                 </ScrollView>
             </Screen>
             <SubscriptionModal
-                onPress={openModal}
+                onPress={() => {
+                    setIsVisible(!isVisible)
+                }}
                 isVisible={isVisible}
                 text={modalMessage}
                 navigation={() => {

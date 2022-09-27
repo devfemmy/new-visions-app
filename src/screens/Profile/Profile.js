@@ -8,17 +8,25 @@ import { TouchableWithoutFeedback } from 'react-native'
 import I18n from 'i18n-js'
 import colors from '../../helpers/colors'
 import Global from '../../../Global'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Profile({ navigation }) {
-    function SubscriptionsClicked(item) {
-        // console.log('child', item.id)
-        navigation.navigate('Subscriptions', {id: item?.id})
+    async function SubscriptionsClicked(item) {
+        const dataFromAsync = await AsyncStorage.getItem('user')
+        const session = JSON.parse(dataFromAsync)
+        navigation.navigate('Subscriptions', {
+            id: item?.id ? item.id : session?.id,
+        })
     }
 
-    function AttendanceClicked(item) {
-        navigation.navigate('Attendance', {id: item?.id, userStatus: 'Sons'})
+    async function AttendanceClicked(item) {
+        const dataFromAsync = await AsyncStorage.getItem('user')
+        const session = JSON.parse(dataFromAsync)
+        navigation.navigate('Attendance', {
+            id: item?.id ? item.id : session?.id,
+            userStatus: 'Sons',
+        })
     }
-
 
     return (
         <Screen>

@@ -127,7 +127,9 @@ const FullLessonSubscription = () => {
             value={{ disabledProp, setDisabledProps, setGroupId }}
         >
             <SubscriptionModal
-                onPress={openModal}
+                onPress={() => {
+                    setIsVisible(!isVisible)
+                }}
                 isVisible={isVisible}
                 text={modalMessage}
                 navigation={() => {
