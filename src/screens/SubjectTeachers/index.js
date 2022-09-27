@@ -36,17 +36,17 @@ const SubjectTeachers = () => {
             subject_id,
             teacher_id: teacher_id ? teacher_id : '',
         }
-        console.log('payload', payload)
         dispatch(getSubjectTeachers(payload))
     }, [dispatch, subject_id])
 
     const navigateFullSubscription = useCallback(
         (item) => {
             navigation.navigate('FullLesson', {
-                subject_id: item?.id,
+                subject_id: item?.subject_id,
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
                 lesson_price: item?.price,
+                subscribe_id: item?.id
             })
         },
         [navigation, subject_id]
@@ -123,11 +123,13 @@ const SubjectTeachers = () => {
             // const uri = `${IMAGEURL}/${image}`
             // if (id)
             navigation.navigate('PrivateLesson', {
-                subject_id: item?.id,
+                subject_id: item?.subject_id,
                 teacher_id: item?.teacher_id,
-                iap_id: item?.iap_id,
+                iap_id: item?.lesson_iap_id,
                 iap_activation: item?.iap_activation,
                 lesson_price: item?.lesson_price,
+                subscribe_id: item?.id
+
             })
         },
         [navigation, subject_id]
@@ -139,7 +141,6 @@ const SubjectTeachers = () => {
                   .includes(searchText.toLowerCase())
           )
         : subjectTeachersData
-
     return (
         <Container>
             <Loader visible={loader} />

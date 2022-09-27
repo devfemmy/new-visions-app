@@ -17,6 +17,7 @@ const ChooseLesson = ({ lessons }) => {
             setDisabledProps(false)
         } else {
             setDisabledProps(true)
+            setLessonIdGetten(activeStage?.id)
         }
     }, [activeStage, setDisabledProps])
 
