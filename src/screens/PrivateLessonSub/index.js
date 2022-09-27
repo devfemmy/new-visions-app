@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/no-cycle */
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Alert, Platform, View } from 'react-native'
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps'
 import { Container } from '../../components/common'
@@ -38,9 +38,10 @@ const PrivateLessonSubscription = () => {
     const [loading, setLoading] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [modalMessage, setModalMessage] = useState('')
+    const [allLessons, setAllLessons] = useState([])
     const { subject_id, teacher_id, iap_activation, iap_id, lesson_price } =
         route.params
-    console.log('iap_activation one lesson', iap_activation, iap_id)
+    console.log('iap_activation one lesson', iap_activation, iap_id, subject_id)
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
     )
@@ -53,7 +54,8 @@ const PrivateLessonSubscription = () => {
         }
         dispatch(getSubjectChaptersAndLessons(payload))
     }, [dispatch, subject_id])
-    const [disabledProp, setDisabledProps] = useState(false)
+    const [disabledProp, setDisabledProps] = useState(false);
+    const [lessonIdGotten, setLessonIdGetten] = useState(0)
     const [groupId, setGroupId] = useState(null)
     useEffect(() => {
         const payload = {
@@ -70,11 +72,26 @@ const PrivateLessonSubscription = () => {
         setIsVisible(!isVisible)
         setModalMessage(message)
     }
+    const recipientGetSubjectChaptersAndLessonData = useMemo(
+        () =>
+            getSubjectChaptersAndLessonData?.map((a) => {
+                return setAllLessons((allLessons) => [
+                    ...allLessons,
+                    allLessons,
+                ])
+            }),
+        [getSubjectChaptersAndLessonData]
+    )
+    console.log(
+        'recipientGetSubjectChaptersAndLessonData',
+        recipientGetSubjectChaptersAndLessonData,
+        allLessons
+    )
     const subscribeExternal = async () => {
         setLoading(true)
         const payload = {
             id: subject_id.toString(),
-            type: 1,
+            type: 3,
             lesson_id: '',
             day_id: '',
         }
@@ -128,7 +145,7 @@ const PrivateLessonSubscription = () => {
     }
     return (
         <SubContext.Provider
-            value={{ disabledProp, setDisabledProps, setGroupId }}
+            value={{ disabledProp, setDisabledProps, setGroupId, setLessonIdGetten, lessonIdGotten }}
         >
             <SubscriptionModal
                 onPress={openModal}

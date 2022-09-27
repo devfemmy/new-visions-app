@@ -73,7 +73,7 @@ const FullLessonSubscription = () => {
     const subscribeExternal = async () => {
         setLoading(true)
         const payload = {
-            id: subject_id.toString(),
+            id: groupId.toString(),
             type: 1,
             lesson_id: '',
             day_id: '',
