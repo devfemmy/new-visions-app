@@ -48,6 +48,7 @@ const PrivateLessonSubscription = () => {
     const { subject_id, teacher_id, iap_activation, iap_id, lesson_price, subscribe_id } =
         route.params
     console.log('iap_activation one lesson', subject_id,)
+    console.log('groupsss', getSubjectChaptersAndLessonData)
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
     )
@@ -75,6 +76,7 @@ const PrivateLessonSubscription = () => {
         }
         dispatch(getSubjectChaptersAndLessons(payload))
     }, [dispatch, subject_id])
+    console.log('groupsss', getSubjectChaptersAndLessonData)
     const [disabledProp, setDisabledProps] = useState(false);
     const [lessonIdGotten, setLessonIdGetten] = useState(0);
     const [dayIdData, setDayIdData] = useState(0);
