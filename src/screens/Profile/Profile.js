@@ -57,7 +57,9 @@ export default function Profile({ navigation }) {
                     }}
                 >
                     <View style={styles.btnContainer}>
-                        <Text style={styles.title}>{I18n.t('Attendance')}</Text>
+                        <Text style={styles.title}>
+                            {I18n.t('PreviousClasses')}
+                        </Text>
                     </View>
                 </TouchableWithoutFeedback>
             </View>

@@ -296,6 +296,9 @@ const English = {
     SARlesson: 'SAR / lesson',
     Reservationofthesyllabus: 'Reservation of the syllabus',
     CurriculumReservation: 'Curriculum Reservation',
+    NoDataPresentatthemoment: 'No Data Present at the moment',
+    NoRatingsPresentatthemoment: 'No Ratings Present at the moment',
+    PreviousClasses: 'Previous Classes',
 }
 
 export default English

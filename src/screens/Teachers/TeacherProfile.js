@@ -404,7 +404,7 @@ const TeacherProfile = () => {
                     ) : (
                         <Text
                             style={styles.text}
-                            text="No Data Present at the moment"
+                            text={I18n.t('NoDataPresentatthemoment')}
                         />
                     )}
                 </View>
@@ -502,7 +502,7 @@ const TeacherProfile = () => {
                     ) : (
                         <Text
                             style={styles.text}
-                            text="No Ratings Present at the moment"
+                            text={I18n.t('NoRatingsPresentatthemoment')}
                         />
                     )}
                 </View>

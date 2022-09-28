@@ -52,7 +52,7 @@ const Arabic = {
     Subscribtions: 'الاشتراكات',
     AboutUs: 'معلومات',
     SignOut: 'خروج',
-    Done: 'فعله',
+    Done: 'استمرار',
 
     //Home
     SeeAll: 'اظهار الكل',
@@ -109,7 +109,7 @@ const Arabic = {
     Profile: 'الملف الشخصي',
     Parents: 'الوالدان',
     Parent: 'ولي الأمر',
-    FullLessonSubscription: 'حجز ترم كامل',
+    FullLessonSubscription: 'حجز منهج',
     OneLessonSubscription: 'اشتراك درس واحد',
     JointCoursesSubscriptions: 'الاشتراك في الدورات المشتركة',
     PackagesSubscriptions: 'اشتراكات الباقات',
@@ -306,6 +306,9 @@ const Arabic = {
     SARlesson: 'ريال / للحصة.',
     Reservationofthesyllabus: 'حجز متابعة منهج',
     CurriculumReservation: 'حجز منهج',
+    NoDataPresentatthemoment: 'لا يوجد فيديو',
+    NoRatingsPresentatthemoment: 'لا يوجد تقيم',
+    PreviousClasses: 'الحصص السابقة',
 }
 
 export default Arabic

@@ -45,9 +45,15 @@ const PrivateLessonSubscription = () => {
     const [isVisible, setIsVisible] = useState(false)
     const [modalMessage, setModalMessage] = useState('')
     const [allLessons, setAllLessons] = useState([])
-    const { subject_id, teacher_id, iap_activation, iap_id, lesson_price, subscribe_id } =
-        route.params
-    console.log('iap_activation one lesson', subject_id,)
+    const {
+        subject_id,
+        teacher_id,
+        iap_activation,
+        iap_id,
+        lesson_price,
+        subscribe_id,
+    } = route.params
+    console.log('iap_activation one lesson', subject_id)
     console.log('groupsss', getSubjectChaptersAndLessonData)
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
@@ -69,17 +75,17 @@ const PrivateLessonSubscription = () => {
         getSubjectChaptersAndLessonData?.map((a) => {
             setAllLessons((allLessons) => [...allLessons, ...a?.lessons])
         })
-    }, [])
+    }, [subject_id, getSubjectChaptersAndLessonData])
     useEffect(() => {
         const payload = {
-            subject_id : subject_id,
+            subject_id: subject_id,
         }
         dispatch(getSubjectChaptersAndLessons(payload))
     }, [dispatch, subject_id])
     console.log('groupsss', getSubjectChaptersAndLessonData)
-    const [disabledProp, setDisabledProps] = useState(false);
-    const [lessonIdGotten, setLessonIdGetten] = useState(0);
-    const [dayIdData, setDayIdData] = useState(0);
+    const [disabledProp, setDisabledProps] = useState(false)
+    const [lessonIdGotten, setLessonIdGetten] = useState(0)
+    const [dayIdData, setDayIdData] = useState(0)
     const [groupId, setGroupId] = useState(null)
     useEffect(() => {
         const payload = {
@@ -154,7 +160,14 @@ const PrivateLessonSubscription = () => {
     }
     return (
         <SubContext.Provider
-            value={{ disabledProp, setDisabledProps, setGroupId, setLessonIdGetten, lessonIdGotten, setDayIdData }}
+            value={{
+                disabledProp,
+                setDisabledProps,
+                setGroupId,
+                setLessonIdGetten,
+                lessonIdGotten,
+                setDayIdData,
+            }}
         >
             <SubscriptionModal
                 onPress={() => {
