@@ -25,7 +25,7 @@ const errorHandler = (WrappedComponent, axios) => {
                     }
                     debugger
                     config.baseURL = API_URL_Prod
-                    config.headers.version = '2'
+                    config.headers.version = '3'
                     config.headers.platform =
                         Platform.OS === 'ios' ? 'IOS' : 'Android'
                     config.headers['content-type'] = 'application/json'

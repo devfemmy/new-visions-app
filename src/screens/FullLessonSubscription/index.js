@@ -37,7 +37,7 @@ const FullLessonSubscription = () => {
         { id: 2, name: I18n.t('ViewGroupDates') },
         { id: 3, name: I18n.t('SpecialDate') },
     ]
-    const { subject_id, iap_id, iap_activation, lesson_price } = route.params
+    const { subject_id, iap_id, iap_activation, lesson_price, subscribe_id } = route.params
     const { subjectGroupData } = useAppSelector(
         (state) => state.subjectGroupPage
     )
@@ -155,6 +155,7 @@ const FullLessonSubscription = () => {
                         >
                             <View>
                                 <SelectGroup
+                                    subscribe_id={subscribe_id}
                                     subject_id={subject_id}
                                     items={items}
                                 />
