@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
     View,
     StyleSheet,
@@ -26,10 +26,11 @@ import { heightp } from '../../utils/responsiveDesign'
 import AppForm from '../../components/forms/Form'
 import AppFormField from '../../components/forms/FormField'
 import SubmitButton from '../../components/forms/SubmitButton'
+import { AppContext } from '../../context/AppState'
 
 function Registration({ navigation }) {
-    const lang = i18n.language
     const [loading, setLoading] = useState(false)
+    const { lang } = useContext(AppContext)
 
     const validateLoginForm = Yup.object().shape({
         email: Yup.string().email().required('البريد الالكتروني الزامي'),
@@ -168,7 +169,13 @@ function Registration({ navigation }) {
                                 <MaterialIcons
                                     name="arrow-back-ios"
                                     size={20}
-                                    style={{ paddingRight: 5 }}
+                                    style={{
+                                        paddingRight: 5,
+                                        transform:
+                                            lang === 'ar'
+                                                ? [{ rotate: '180deg' }]
+                                                : [{ rotate: '0deg' }],
+                                    }}
                                 />
                             </TouchableOpacity>
                             <Text

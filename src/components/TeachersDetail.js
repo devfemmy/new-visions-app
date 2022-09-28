@@ -434,7 +434,7 @@ const TeachersDetailCard = ({
                     <Pressable onPress={bookCourse} style={styles.bookBtn2}>
                         <Text
                             style={styles.textWhite}
-                            text={I18n.t('Reservationofthesyllabus')}
+                            text={I18n.t('CurriculumReservation')}
                         />
                     </Pressable>
                 </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
     View,
     StyleSheet,
@@ -13,9 +13,12 @@ import { TextInput } from 'react-native-paper'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { StackActions } from '@react-navigation/native'
+import { AppContext } from '../../context/AppState'
 
 export default function VerifyEnterEmail({ navigation }) {
     const { t, i18n } = useTranslation()
+    const { lang } = useContext(AppContext)
     const [loading, setLoading] = useState(false)
     const [InputValue, onChangeInput] = useState('')
     const ForgetPasswordAPI = () => {
@@ -65,7 +68,16 @@ export default function VerifyEnterEmail({ navigation }) {
                             navigation.dispatch(StackActions.pop(1))
                         }}
                     >
-                        <MaterialIcons name="arrow-back-ios" size={20} />
+                        <MaterialIcons
+                            name="arrow-back-ios"
+                            size={20}
+                            style={{
+                                transform:
+                                    lang === 'ar'
+                                        ? [{ rotate: '180deg' }]
+                                        : [{ rotate: '0deg' }],
+                            }}
+                        />
                     </TouchableOpacity>
                     <Text
                         style={{

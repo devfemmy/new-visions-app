@@ -94,6 +94,12 @@ export default function ResetPassword({ route, navigation }) {
                             name="arrow-back-ios"
                             size={20}
                             color={colors.white}
+                            style={{
+                                transform:
+                                    lang === 'ar'
+                                        ? [{ rotate: '180deg' }]
+                                        : [{ rotate: '0deg' }],
+                            }}
                         />
                     </TouchableOpacity>
                     {/* <Text

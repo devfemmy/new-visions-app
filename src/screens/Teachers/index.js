@@ -213,12 +213,86 @@ const Teachers = () => {
 
         if (keys.length !== 0) page = Math.max(...keys) + 1
 
+        const payload = {
+            search: SerachValue,
+        }
+
         axios
             .post(
                 `https://www.newvisions.sa/api/getTeachers?page=${page}`, // URL
+                payload, // data
                 {
-                    search: SerachValue,
-                }, // data
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.data.code === 403) {
+                    Global.AuthenticationToken = ''
+                    Global.UserName = ''
+                    Global.UserType = ''
+                    Global.UserGender = ''
+                    LoggedIn = false
+                    alert('This Account is Logged in from another Device.')
+                    onLogOut()
+                    // return
+                } else {
+                    ResponseCache[
+                        JSON.stringify({ page, search: SerachValue })
+                    ] = response.data.data.data
+                    // console.log(
+                    //     `saved to cache :${JSON.stringify({
+                    //         page,
+                    //         search: SerachValue,
+                    //     })}`
+                    // )
+
+                    console.log(
+                        'aaaaaaaaaaaa page number',
+                        Page,
+                        'aaaaaaaaaaaa payload',
+                        payload
+                    )
+
+                    console.log(
+                        'xxxxxxxxxxxxxxxxxxxx responseValue',
+                        response.data.data.data
+                    )
+                }
+            })
+            .catch((error) => {})
+    }
+    const SearchExtraCache = (text) => {
+        setPage(1)
+        let page = 0
+
+        let keys = Object.keys(ResponseCache)
+        keys = keys.filter((k) => {
+            const jsonKey = JSON.parse(k)
+            if (jsonKey.search === SerachValue) return true
+
+            return false
+        })
+
+        keys = keys.map((key) => JSON.parse(key).page)
+
+        if (keys.length !== 0) page = Math.max(...keys) + 1
+
+        const payload = {
+            search: text,
+        }
+
+        console.log(`https://www.newvisions.sa/api/getTeachers?page=${1}`)
+
+        axios
+            .post(
+                `https://www.newvisions.sa/api/getTeachers?page=${1}`, // URL
+                payload, // data
                 {
                     // config
                     headers: {
@@ -244,11 +318,24 @@ const Teachers = () => {
                         JSON.stringify({ page, search: SerachValue })
                     ] = response.data.data.data
 
+                    SetresponseValue(response.data?.data?.data)
+                    // console.log(
+                    //     `saved to cache :${JSON.stringify({
+                    //         page,
+                    //         search: SerachValue,
+                    //     })}`
+                    // )
+
                     console.log(
-                        `saved to cache :${JSON.stringify({
-                            page,
-                            search: SerachValue,
-                        })}`
+                        'aaaaaaaaaaaa page number',
+                        1,
+                        'aaaaaaaaaaaa payload',
+                        payload
+                    )
+
+                    console.log(
+                        'xxxxxxxxxxxxxxxxxxxx responseValue',
+                        response.data.data.data
                     )
                 }
             })
@@ -285,12 +372,14 @@ const Teachers = () => {
             GetExtraCache()
             return
         }
+
+        const payload = {
+            search: SerachValue,
+        }
         axios
             .post(
                 `https://www.newvisions.sa/api/getTeachers?page=${Page}`, // URL
-                {
-                    search: SerachValue,
-                }, // data
+                payload, // data
                 {
                     // config
                     headers: {
@@ -389,7 +478,11 @@ const Teachers = () => {
                     <SearchBar
                         placeholder={I18n.t('SearchTeachers')}
                         value={searchText}
-                        onChangeText={(text) => setSearchText(text)}
+                        onChangeText={(text) => {
+                            setSearchText(text)
+                            setSerachValue(text)
+                            SearchExtraCache(text)
+                        }}
                         style={styles.searchBar}
                     />
                 </View>
@@ -408,12 +501,11 @@ const Teachers = () => {
                         </View>
                     )}
                     // ListFooterComponent={renderFooter}
-                    data={searchFilteredData}
+                    data={responseValue}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => (
                         <>
-                            <>{console.log('"yuuuuuuuuuu', item)}</>
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>

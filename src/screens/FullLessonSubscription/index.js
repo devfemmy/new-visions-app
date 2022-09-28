@@ -32,8 +32,9 @@ const FullLessonSubscription = () => {
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const items = [
-        { id: 1, name: I18n.t('MorningSession') },
-        { id: 2, name: I18n.t('EveningSession') },
+        // { id: 1, name: I18n.t('MorningSession') },
+        // { id: 2, name: I18n.t('EveningSession') },
+        { id: 2, name: I18n.t('ViewGroupDates') },
         { id: 3, name: I18n.t('SpecialDate') },
     ]
     const { subject_id, iap_id, iap_activation, lesson_price } = route.params

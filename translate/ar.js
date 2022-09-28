@@ -260,6 +260,7 @@ const Arabic = {
     Edit: 'تعديل',
     EditProfile: 'تعديل الملف الشخصي',
     Save: 'يحفظ',
+    ViewGroupDates: 'عرض مواعيد المجموعات',
     MorningSession: 'الفترة الصباحية',
     EveningSession: 'الفتره المسائية',
     SpecialDate: 'موعد خاص',
@@ -304,6 +305,7 @@ const Arabic = {
     Rscourse: 'ريال / للمنهج.',
     SARlesson: 'ريال / للحصة.',
     Reservationofthesyllabus: 'حجز متابعة منهج',
+    CurriculumReservation: 'حجز منهج',
 }
 
 export default Arabic

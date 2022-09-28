@@ -261,6 +261,7 @@ const English = {
     Wednesday: 'Wednesday',
     Thursday: 'Thursday',
     Friday: 'Friday',
+    ViewGroupDates: 'View group dates',
     MorningSession: 'Morning Session',
     EveningSession: 'Evening Session',
     SpecialDate: 'Special Date',
@@ -294,6 +295,7 @@ const English = {
     Rscourse: 'Rs / course',
     SARlesson: 'SAR / lesson',
     Reservationofthesyllabus: 'Reservation of the syllabus',
+    CurriculumReservation: 'Curriculum Reservation',
 }
 
 export default English

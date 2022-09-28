@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
     View,
     ImageBackground,
@@ -16,11 +16,13 @@ import { heightp } from '../../utils/responsiveDesign'
 import colors from '../../helpers/colors'
 import defaultStyles from '../../helpers/styles'
 import { StackActions } from '@react-navigation/native'
+import { AppContext } from '../../context/AppState'
 
 export default function VerifyConfirmPassword({ route, navigation }) {
     // const {t, i18n} = useTranslation();
     const [loading, setLoading] = useState(false)
     const [CodeInput, onChangeCode] = useState('')
+    const { lang } = useContext(AppContext)
     const VerifyAPI = () => {
         setLoading(true)
         axios
@@ -86,6 +88,12 @@ export default function VerifyConfirmPassword({ route, navigation }) {
                             name="arrow-back-ios"
                             size={20}
                             color={colors.white}
+                            style={{
+                                transform:
+                                    lang === 'ar'
+                                        ? [{ rotate: '180deg' }]
+                                        : [{ rotate: '0deg' }],
+                            }}
                         />
                     </TouchableOpacity>
                     <View

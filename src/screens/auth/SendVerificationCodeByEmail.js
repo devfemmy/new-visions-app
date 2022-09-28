@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
     View,
     StyleSheet,
@@ -18,11 +18,13 @@ import { heightp } from '../../utils/responsiveDesign'
 import defaultStyles from '../../helpers/styles'
 import colors from '../../helpers/colors'
 import { StackActions } from '@react-navigation/native'
+import { AppContext } from '../../context/AppState'
 
 export default function VerifyEnterEmail({ navigation }) {
     // const {t, i18n} = useTranslation();
     const [loading, setLoading] = useState(false)
     const [InputValue, onChangeInput] = useState('')
+    const { lang } = useContext(AppContext)
     const ForgetPasswordAPI = () => {
         setLoading(true)
         axios
@@ -82,6 +84,12 @@ export default function VerifyEnterEmail({ navigation }) {
                             name="arrow-back-ios"
                             size={20}
                             color={colors.white}
+                            style={{
+                                transform:
+                                    lang === 'ar'
+                                        ? [{ rotate: '180deg' }]
+                                        : [{ rotate: '0deg' }],
+                            }}
                         />
                     </TouchableOpacity>
                     <View
@@ -197,9 +205,7 @@ export default function VerifyEnterEmail({ navigation }) {
                                     ForgetPasswordAPI()
                                 }}
                             >
-                                <Text
-                                    style={styles.buttontext}
-                                >{`${i18n.t(
+                                <Text style={styles.buttontext}>{`${i18n.t(
                                     'SendVerificationCode'
                                 )}`}</Text>
                             </TouchableOpacity>
