@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
         color: colors.primary,
         marginVertical: 3.5,
         paddingVertical: 7,
-        paddingLeft: 10,
+        paddingHorizontal: 10,
         // backgroundColor: '#000'
     },
     textStyle2: {

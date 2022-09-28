@@ -28,12 +28,12 @@ const dayOptions = [
     { value: '7', label: 'Friday' },
 ]
 const dayArrOptions = [
-    { value: '1', label: 'سبت ' },
+    { value: '1', label: 'سبت' },
     { value: '2', label: 'الاحد' },
     { value: '3', label: 'الاثنين' },
     { value: '4', label: 'الثلاثاء' },
     { value: '5', label: 'الاربع' },
-    { value: '6', label: 'الخميس ' },
+    { value: '6', label: 'الخميس' },
     { value: '7', label: 'الجمعة' },
 ]
 
@@ -90,19 +90,19 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
         inputArray?.map((item) => {
             const res = {
                 day_id:
-                    item.day_id === 'Saturday'
+                    item.day_id === 'Saturday' || 'سبت'
                         ? '1'
-                        : item.day_id === 'Sunday'
+                        : item.day_id === 'Sunday' || 'الاحد'
                         ? '2'
-                        : item.day_id === 'Monday'
+                        : item.day_id === 'Monday' || 'الاثنين'
                         ? '3'
-                        : item.day_id === 'Tuesday'
+                        : item.day_id === 'Tuesday' || 'الثلاثاء'
                         ? '4'
-                        : item.day_id === 'Wednesday'
+                        : item.day_id === 'Wednesday' || 'الاربع'
                         ? '5'
-                        : item.day_id === 'Thursday'
+                        : item.day_id === 'Thursday' || 'الخميس'
                         ? '6'
-                        : item.day_id === 'Friday'
+                        : item.day_id === 'Friday' || 'الجمعة'
                         ? '7'
                         : item?.day_id,
                 time: moment(item.time).format('LT'),
