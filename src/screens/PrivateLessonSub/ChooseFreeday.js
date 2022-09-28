@@ -8,15 +8,15 @@ import { Text } from '../../components/common'
 import LessonCard from '../../components/LessonCard'
 
 const ChooseFreeDay = ({ freeDays }) => {
-    const { setDisabledProps } = useContext(SubContext)
+    const { setDisabledProps, setDayIdData } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
     useEffect(() => {
-        console.log('active stage', activeStage)
         if (activeStage == null) {
             setDisabledProps(false)
         } else {
             setDisabledProps(true)
+            setDayIdData(activeStage?.day_id)
         }
     }, [activeStage, setDisabledProps])
     const styles = StyleSheet.create({
