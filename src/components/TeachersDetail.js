@@ -423,7 +423,7 @@ const TeachersDetailCard = ({
       </Pressable>
                     </View> */}
                     <Pressable
-                        onPress={bookPrivateLesson}
+                        onPressIn={bookPrivateLesson}
                         style={styles.bookBtn}
                     >
                         <Text
