@@ -1,6 +1,6 @@
 import React from "react";
-import LottieView from "lottie-react-native";
-import { StyleSheet, View, Platform } from "react-native";
+// import LottieView from "lottie-react-native";
+import { StyleSheet, View, Platform, ActivityIndicator } from "react-native";
 import colors from "../helpers/colors";
 import { WINDOW_HEIGHT } from "../helpers/common";
 
@@ -10,7 +10,10 @@ function Lottie({ fileSource }) {
   return (
     <View style={styles.container}>
       <View style={styles.innerContent}>
-        <LottieView source={fileSource} autoPlay loop />
+        <ActivityIndicator size="large" 
+        animating
+        color={colors.primary} />
+        {/* <LottieView source={fileSource} autoPlay loop /> */}
       </View>
     </View>
   );
@@ -34,6 +37,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: 500,
     height: 500,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

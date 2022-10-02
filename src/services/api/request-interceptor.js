@@ -8,7 +8,7 @@ export const reqInterceptor = async (req) => {
   if (token) {
     console.log('token', token)
     req.headers.Authorization = `Bearer ${token}`;
-    req.headers.version = '2';
+    req.headers.version = '3';
     req.headers.lang = I18n.locale;
 
   }

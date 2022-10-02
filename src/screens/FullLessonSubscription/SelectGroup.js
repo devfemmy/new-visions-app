@@ -8,7 +8,7 @@ import StageCard from '../../components/StageCard'
 import { useAppDispatch } from '../../redux/hooks'
 import { getSubjectGroups } from '../../redux/action'
 
-const SelectGroup = ({ subject_id, items }) => {
+const SelectGroup = ({ subject_id, items, subscribe_id }) => {
     console.log(subject_id, 'hello')
     const { setDisabledProps } = useContext(SubContext)
     const dispatch = useAppDispatch()
@@ -37,7 +37,7 @@ const SelectGroup = ({ subject_id, items }) => {
                     newPress={() => {
                         console.log('pressing what here', item)
                         const payload = {
-                            subject_id,
+                            subject_id: subscribe_id,
                             type: item.id === 1 ? 1 : item.id === 2 ? 2 : '',
                         }
                         console.log(
