@@ -56,7 +56,6 @@ const PrivateLessonSubscription = () => {
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
     )
-    console.log('iap_activation one lesson', subject_id)
     const { teachersFreeDaysData } = useAppSelector(
         (state) => state.teacherFreeDaysPage
     )

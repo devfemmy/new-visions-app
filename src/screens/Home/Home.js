@@ -18,7 +18,8 @@ import Global from '../../../Global'
 import { AppContext } from '../../context/AppState'
 import axios from 'axios'
 import colors from '../../helpers/colors'
-const defaultUri = require('../../assets/img/HOME_BG_NEW.jpg')
+const defaultUri =
+    'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/HOME_BG_NEW.jpg?alt=media&token=0c48db74-5d80-4fb3-a43b-fea209a57225'
 
 const Home = () => {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
@@ -155,7 +156,10 @@ const Home = () => {
                                 height: heightp(180),
                                 borderRadius: 10,
                             }}
-                            source={defaultUri}
+                            source={{
+                                uri: defaultUri,
+                                priority: FastImage.priority.normal,
+                            }}
                             resizeMode={FastImage.resizeMode.cover}
                         />
                     </Pressable>

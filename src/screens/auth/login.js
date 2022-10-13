@@ -58,21 +58,30 @@ function Login() {
                 if (response.data.code === 200) {
                     console.log('response hereee', response.data)
                     if (response.data.data?.type == 2) {
-                        Global.UserType = 'Teacher';
-                      }
-                      if (response.data.data.type == 3) {
-                        Global.UserType = 'Student';
-                      }
-                      if (response.data.data.type == 4) {
-                        Global.UserType = 'Parent';
-                      }
-                      Global.LoggedIn = true;                            
-                      if (response.data.data.phone === '123456' || response.data.data.phone === 123456) {
-                        const responseData = response?.data?.data;
-                        Global.AuthenticationToken = responseData?.remember_token
-                        AsyncStorage.setItem('token', Global.AuthenticationToken)
-                        navigation.navigate('CompleteProfile', {userData: responseData })
-                      } else {
+                        Global.UserType = 'Teacher'
+                    }
+                    if (response.data.data.type == 3) {
+                        Global.UserType = 'Student'
+                    }
+                    if (response.data.data.type == 4) {
+                        Global.UserType = 'Parent'
+                    }
+                    Global.LoggedIn = true
+                    if (
+                        response.data.data.phone === '123456' ||
+                        response.data.data.phone === 123456
+                    ) {
+                        const responseData = response?.data?.data
+                        Global.AuthenticationToken =
+                            responseData?.remember_token
+                        AsyncStorage.setItem(
+                            'token',
+                            Global.AuthenticationToken
+                        )
+                        navigation.navigate('CompleteProfile', {
+                            userData: responseData,
+                        })
+                    } else {
                         // replace('Main');
                         setUserInfo(response.data.data)
                     }
@@ -199,7 +208,9 @@ function Login() {
                             <View style={styles.center}>
                                 <Image
                                     style={styles.logo}
-                                    source={require('../../assets/img/logo-light.png')}
+                                    source={{
+                                        uri: 'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=f2a1976b-f286-4cc1-bfab-fe0e33c4146c',
+                                    }}
                                 ></Image>
                                 <AppleButton />
                                 <LoginForm
