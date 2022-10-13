@@ -46,7 +46,7 @@ const SubjectTeachers = () => {
                 iap_id: item?.iap_id,
                 iap_activation: item?.iap_activation,
                 lesson_price: item?.price,
-                subscribe_id: item?.id
+                subscribe_id: item?.id,
             })
         },
         [navigation, subject_id]
@@ -129,9 +129,7 @@ const SubjectTeachers = () => {
                 iap_id: item?.lesson_iap_id,
                 iap_activation: item?.iap_activation,
                 lesson_price: item?.lesson_price,
-                subscribe_id: item?.id
-                
-
+                subscribe_id: item?.id,
             })
         },
         [navigation, subject_id]

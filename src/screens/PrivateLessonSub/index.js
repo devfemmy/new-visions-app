@@ -13,7 +13,7 @@ import { ProgressSteps, ProgressStep } from 'react-native-progress-steps'
 import { Container } from '../../components/common'
 import colors from '../../helpers/colors'
 import {
-    getSubjectChaptersAndLessons,
+    // getSubjectChaptersAndLessons,
     getTeacherFreeDays,
 } from '../../redux/action'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
@@ -38,7 +38,7 @@ import { heightp } from '../../utils/responsiveDesign'
 export const SubContext = createContext(null)
 const PrivateLessonSubscription = () => {
     const route = useRoute()
-    const { lang } = useContext(AppContext)
+    const { lang, onLogout } = useContext(AppContext)
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const [loading, setLoading] = useState(false)
@@ -53,37 +53,49 @@ const PrivateLessonSubscription = () => {
         lesson_price,
         subscribe_id,
     } = route.params
-    console.log('iap_activation one lesson', subject_id)
-    console.log('groupsss', getSubjectChaptersAndLessonData)
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
     )
-    // const recipientGetSubjectChaptersAndLessonData = useMemo(
-    //     () =>
-    //         getSubjectChaptersAndLessonData?.map((a) => {
-    //             return setAllLessons((allLessons) => [
-    //                 ...allLessons,
-    //                 a?.lessons[0],
-    //             ])
-    //         }),
-    //     [getSubjectChaptersAndLessonData]
-    // )
+    console.log('iap_activation one lesson', subject_id)
     const { teachersFreeDaysData } = useAppSelector(
         (state) => state.teacherFreeDaysPage
     )
     console.log('groupsss teachersFreeDaysData', teachersFreeDaysData)
     useEffect(() => {
-        getSubjectChaptersAndLessonData?.map((a) => {
-            setAllLessons((allLessons) => [...allLessons, ...a?.lessons])
-        })
-    }, [subject_id, getSubjectChaptersAndLessonData])
-    useEffect(() => {
         const payload = {
             subject_id: subject_id,
         }
-        dispatch(getSubjectChaptersAndLessons(payload))
-    }, [dispatch, subject_id])
-    console.log('groupsss', getSubjectChaptersAndLessonData)
+        async function getSubjectChaptersAndLessons() {
+            setLoading(true)
+            try {
+                const res = await HomePageService.getSubjectChaptersAndLessons(
+                    payload
+                )
+                if (res.code === 403) {
+                    setLoading(false)
+                    alert('This Account is Logged in from another Device.')
+                    onLogout()
+                } else {
+                    const data = res?.data
+                    data?.map((a) => {
+                        setAllLessons((allLessons) => [
+                            ...allLessons,
+                            ...a?.lessons,
+                        ])
+                    })
+                    setLoading(false)
+                    return data
+                }
+            } catch (err) {
+                console.log(err, 'error')
+                setLoading(false)
+            }
+        }
+        const unsubscribe = navigation.addListener('focus', () => {
+            getSubjectChaptersAndLessons()
+        })
+        return unsubscribe
+    }, [dispatch, subject_id, navigation])
     const [disabledProp, setDisabledProps] = useState(false)
     const [lessonIdGotten, setLessonIdGetten] = useState(0)
     const [dayIdData, setDayIdData] = useState(0)
@@ -199,7 +211,10 @@ const PrivateLessonSubscription = () => {
                         >
                             <View>
                                 {/* <SelectGroup /> */}
-                                <ChooseLesson lessons={allLessons} />
+                                <ChooseLesson
+                                    lessons={allLessons}
+                                    subject_id={subject_id}
+                                />
                             </View>
                         </ProgressStep>
                         <ProgressStep
