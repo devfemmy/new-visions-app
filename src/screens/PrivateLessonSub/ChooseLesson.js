@@ -28,7 +28,6 @@ const ChooseLesson = ({ lessons }) => {
         <View style={styles.container}>
             {lessons ? (
                 lessons?.map((item, index) => {
-                    console.log('items')
                     return (
                         <LessonCard
                             key={item?.id}

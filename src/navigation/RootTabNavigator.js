@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -23,9 +23,10 @@ import { AppContext, AppState } from '../context/AppState'
 import Global from '../../Global'
 import Conversation from '../screens/Messages/Conversations'
 import HomeNavigation from './HomeNavigation'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const RootBottomTab = createBottomTabNavigator()
-
+let session: ''
 export const RootBottomTabNavigator = () => {
     const { lang } = useContext(AppContext)
     const navigation = useNavigation()
@@ -64,6 +65,18 @@ export const RootBottomTabNavigator = () => {
             )}
         </TouchableOpacity>
     )
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            console.log('<<<<<tabs Refreshed>>>>>>')
+            getData()
+        })
+        return unsubscribe
+    }, [navigation])
+    const getData = async () => {
+        const dataFromAsync = await AsyncStorage.getItem('user')
+        session = JSON.parse(dataFromAsync)
+        console.log('data in the async storage', session)
+    }
     return (
         <RootBottomTab.Navigator
             screenOptions={({ route }) => ({
@@ -117,7 +130,7 @@ export const RootBottomTabNavigator = () => {
                 }}
             />
 
-            {Global.UserType == 3 && (
+            {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{
                         headerShown: true,
@@ -128,7 +141,7 @@ export const RootBottomTabNavigator = () => {
                     component={Subject}
                 />
             )}
-            {Global.UserType == 3 && (
+            {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{
                         headerShown: true,
@@ -139,7 +152,7 @@ export const RootBottomTabNavigator = () => {
                     component={Teachers}
                 />
             )}
-            {Global.UserType == 3 && (
+            {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{
                         headerShown: true,
@@ -153,7 +166,7 @@ export const RootBottomTabNavigator = () => {
             {/* {Global.UserType == 3 &&
         <RootBottomTab.Screen name={I18n.t("Subscriptions")} component={HomeNavigation} />
       } */}
-            {Global.UserType == 3 && (
+            {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{
                         headerShown: true,
@@ -166,13 +179,13 @@ export const RootBottomTabNavigator = () => {
             )}
             <RootBottomTab.Screen
                 options={{
-                    headerShown: Global.UserType == 4,
+                    headerShown: session?.type == 4,
                     headerLeft: backRight,
                     unmountOnBlur: true,
                 }}
-                name={Global.UserType == 3 ? I18n.t('Profile') : I18n.t('Sons')}
+                name={session?.type == 3 ? I18n.t('Profile') : I18n.t('Sons')}
                 component={
-                    Global.UserType == 4 ? ParentProfileNavigator : Profile
+                    session?.type == 4 ? ParentProfileNavigator : Profile
                 }
             />
         </RootBottomTab.Navigator>
