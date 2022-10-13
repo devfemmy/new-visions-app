@@ -108,44 +108,6 @@ const Home = () => {
                     text={i18n.t('Packages')}
                 />
                 <View style={styles.containerFlex}>
-                    {/* <FlatList
-                        horizontal
-                        keyboardShouldPersistTaps="handled"
-                        contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => (
-                            <Text text={i18n.t('NoData')} />
-                        )}
-                        data={packages}
-                        showsVerticalScrollIndicator={false}
-                        onEndReachedThreshold={0.5}
-                        renderItem={({ item }) => {
-                            const uri = `${IMAGEURL}/${item.image}`
-                            return (
-                                <Pressable
-                                    onPress={() =>
-                                        navigation.navigate(
-                                            'MultiPackageDetails',
-                                            item
-                                        )
-                                    }
-                                >
-                                    <FastImage
-                                        style={{
-                                            width: heightp(210),
-                                            height: heightp(130),
-                                            borderRadius: 10,
-                                            marginRight: heightp(20),
-                                        }}
-                                        source={{
-                                            uri,
-                                            priority: FastImage.priority.normal,
-                                        }}
-                                        resizeMode={FastImage.resizeMode.cover}
-                                    />
-                                </Pressable>
-                            )
-                        }}
-                    /> */}
                     <Pressable
                         onPress={() => navigation.navigate('PackagesStage')}
                     >
@@ -216,7 +178,7 @@ const Home = () => {
                 </View>
                 <View style={globalStyles.horizontal} />
 
-                {Global.UserType == 3 && (
+                {Global.UserType === 3 && (
                     <>
                         <HeaderTitle
                             deleteIcon
@@ -286,7 +248,6 @@ const Home = () => {
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => {
                             const uri = `${IMAGEURL}/${item.image}`
-                            // console.log('Loading teacgerrrrrrrrrr', item)
                             return (
                                 <TeachersCard
                                     pressed={() => navigateTeacherProfile(item)}
@@ -303,12 +264,12 @@ const Home = () => {
                     />
                 </View>
             </ScrollView>
-        </Container>
+         </Container>
     )
 }
 const styles = StyleSheet.create({
     flatlistContent: {
-        flexGrow: 1,
+        // flexGrow: 1,
     },
     containerFlex: {
         marginBottom: heightp(20),

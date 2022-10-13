@@ -12,13 +12,12 @@ const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
         <View
             style={[
                 styles.container,
-                { height: image === null && heightp(90) },
             ]}
         >
             <FastImage
                 style={{
-                    width: image === null ? heightp(80) : heightp(121),
-                    height: image === null ? heightp(80) : heightp(100),
+                    width: image === null ? heightp(80) : heightp(80),
+                    height: image === null ? heightp(80) : heightp(80),
                     borderRadius: 10,
                 }}
                 source={
