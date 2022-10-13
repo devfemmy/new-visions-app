@@ -20,6 +20,7 @@ function AppFormField({ name, width, ...otherProps }) {
                     height: '100%',
                     paddingHorizontal: heightp(20),
                     fontSize: heightp(20),
+                    color: '#000',
                 }}
                 {...otherProps}
             />
