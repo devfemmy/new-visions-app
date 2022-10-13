@@ -16,7 +16,7 @@ const ChooseFreeDay = ({ freeDays }) => {
             setDisabledProps(false)
         } else {
             setDisabledProps(true)
-            setDayIdData(activeStage?.day_id)
+            setDayIdData(activeStage?.id)
         }
     }, [activeStage, setDisabledProps])
     const styles = StyleSheet.create({

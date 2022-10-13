@@ -71,6 +71,7 @@ const PrivateLessonSubscription = () => {
     const { teachersFreeDaysData } = useAppSelector(
         (state) => state.teacherFreeDaysPage
     )
+    console.log('groupsss teachersFreeDaysData', teachersFreeDaysData)
     useEffect(() => {
         getSubjectChaptersAndLessonData?.map((a) => {
             setAllLessons((allLessons) => [...allLessons, ...a?.lessons])
@@ -110,24 +111,25 @@ const PrivateLessonSubscription = () => {
             lesson_id: lessonIdGotten,
             day_id: dayIdData,
         }
+        console.log('the payload dey here oooo', payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
                 openModal(res?.message)
-                // Alert.alert('Alert', res?.message, [
-                //     {
-                //         text: 'Cancel',
-                //         onPress: () => navigation.popToTop(),
-                //         style: 'cancel',
-                //     },
-                //     {
-                //         text: 'OK',
-                //         onPress: () => navigation.navigate('HomePage'),
-                //     },
-                // ])
             } else {
                 setLoading(false)
+                Alert.alert(I18n.t('Subscribe'), res?.message, [
+                    {
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.navigate('HomePage'),
+                    },
+                ])
             }
             return res
         } catch (err) {

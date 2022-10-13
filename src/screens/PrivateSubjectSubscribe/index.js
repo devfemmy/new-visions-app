@@ -17,6 +17,7 @@ import CustomDateTimePicker from '../../components/DateTimePicker'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import { AppContext } from '../../context/AppState'
+import SubscriptionModal from '../../components/SubscriptionModal'
 
 const dayOptions = [
     { value: '1', label: 'Saturday' },
@@ -51,6 +52,8 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
     const [timeTogglePicker, setTimeTogglePicker] = useState(false)
     const [openDateTogglePickerByInd, setOpenDateTogglePickerByInd] =
         useState('')
+    const [isVisible, setIsVisible] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
     const [loading, setLoading] = useState(false)
     console.log('inputArray', subject_id, inputArray)
     const addInput = () => {
@@ -83,6 +86,10 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
             return item // else return unmodified item not particularly needed to run this function
         })
         setInputArray(updatedList)
+    }
+    const openModal = (message) => {
+        setIsVisible(!isVisible)
+        setModalMessage(message)
     }
     async function subscribeToPrivateCourse() {
         setLoading(true)
@@ -119,7 +126,8 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
             if (res.code === 200) {
                 console.log('subscribeToPrivateCourse res', res)
                 setLoading(false)
-                navigation.goBack()
+                openModal(res?.message)
+                // navigation.goBack()
             } else {
                 setLoading(false)
                 console.log('false data', res)
@@ -147,6 +155,17 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
     }
     return (
         <>
+            <SubscriptionModal
+                onPress={() => {
+                    setIsVisible(!isVisible)
+                }}
+                isVisible={isVisible}
+                text={modalMessage}
+                navigation={() => {
+                    setIsVisible(!isVisible)
+                    navigation.goBack()
+                }}
+            />
             <Container>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.containerFlex}>

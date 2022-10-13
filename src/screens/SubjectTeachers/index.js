@@ -63,6 +63,7 @@ const SubjectTeachers = () => {
             lesson_id: '',
             day_id: '',
         }
+        console.log("the payload dey here oooo", payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
