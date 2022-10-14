@@ -616,7 +616,7 @@
 				CODE_SIGN_ENTITLEMENTS = newVisionsMobileV3/newVisionsMobileV3.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 139;
+				CURRENT_PROJECT_VERSION = 141;
 				DEVELOPMENT_TEAM = JBR8MHLCSP;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = newVisionsMobileV3/Info.plist;
@@ -648,7 +648,7 @@
 				CODE_SIGN_ENTITLEMENTS = newVisionsMobileV3/newVisionsMobileV3.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 139;
+				CURRENT_PROJECT_VERSION = 141;
 				DEVELOPMENT_TEAM = JBR8MHLCSP;
 				INFOPLIST_FILE = newVisionsMobileV3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
