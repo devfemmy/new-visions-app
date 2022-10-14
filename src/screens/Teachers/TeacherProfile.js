@@ -152,12 +152,13 @@ const TeacherProfile = () => {
             //     subject_id,
             //     teacher_id: teacher_id ? teacher_id : '',
             // }
-            console.log('payload', item, course)
+            console.log('payload', item, 'ccccccccccccccccccccccccc', course)
             // dispatch(getSubjectTeachers(payload))
             // const {id, title, image} = item;
             // const uri = `${IMAGEURL}/${image}`
             // // if (id)
             navigation.navigate('PrivateLesson', {
+                subscribe_id: course?.id,
                 subject_id: course?.subject?.id,
                 teacher_id: item?.id,
                 iap_id: course?.iap_id,

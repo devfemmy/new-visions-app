@@ -31,6 +31,7 @@ const SubjectTeachers = () => {
         app: { loading },
     } = useAppSelector((state) => state)
     const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
+    console.log('subjectTeachersData', subject_id, subjectTeachersData)
     useEffect(() => {
         const payload = {
             subject_id,
@@ -41,6 +42,7 @@ const SubjectTeachers = () => {
 
     const navigateFullSubscription = useCallback(
         (item) => {
+            console.log('wwwwwwwwww TeacherProfile wwwwwwwwwwwwwwwwwwwww id', item?.id)
             navigation.navigate('FullLesson', {
                 subject_id: item?.subject_id,
                 iap_id: item?.iap_id,
@@ -123,6 +125,7 @@ const SubjectTeachers = () => {
             // const {id, title, image} = item;
             // const uri = `${IMAGEURL}/${image}`
             // if (id)
+            console.log('wwwwwwwwww TeacherProfile wwwwwwwwwwwwwwwwwwwww id', item?.id)
             navigation.navigate('PrivateLesson', {
                 subject_id: item?.subject?.id,
                 teacher_id: item?.teacher_id,
