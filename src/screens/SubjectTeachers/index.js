@@ -63,24 +63,25 @@ const SubjectTeachers = () => {
             lesson_id: '',
             day_id: '',
         }
+        console.log('the payload dey here oooo', payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
                 openModal(res?.message)
-                // Alert.alert('Alert', res?.message, [
-                //     {
-                //         text: 'Cancel',
-                //         onPress: () => navigation.popToTop(),
-                //         style: 'cancel',
-                //     },
-                //     {
-                //         text: 'OK',
-                //         onPress: () => navigation.navigate('HomePage'),
-                //     },
-                // ])
             } else {
                 setLoading(false)
+                Alert.alert(I18n.t('Subscribe'), res?.message, [
+                    {
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.popToTop(),
+                    },
+                ])
             }
             return res
         } catch (err) {
@@ -123,7 +124,7 @@ const SubjectTeachers = () => {
             // const uri = `${IMAGEURL}/${image}`
             // if (id)
             navigation.navigate('PrivateLesson', {
-                subject_id: item?.subject_id,
+                subject_id: item?.subject?.id,
                 teacher_id: item?.teacher_id,
                 iap_id: item?.lesson_iap_id,
                 iap_activation: item?.iap_activation,
@@ -180,6 +181,13 @@ const SubjectTeachers = () => {
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => {
+                        console.log(
+                            searchFilteredData.length,
+                            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                            item.subject?.id,
+                            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                            item
+                        )
                         return (
                             <>
                                 <TeachersDetailCard
@@ -195,9 +203,9 @@ const SubjectTeachers = () => {
                                             item
                                         )
                                     }}
-                                    bookPrivateLesson={() =>
+                                    bookPrivateLesson={() => {
                                         navigatePivateLesson(item)
-                                    }
+                                    }}
                                     title={item?.subject?.title}
                                     lessonPrice={item?.lesson_price}
                                     ratings={item?.user?.rating}

@@ -37,7 +37,8 @@ const FullLessonSubscription = () => {
         { id: 2, name: I18n.t('ViewGroupDates') },
         { id: 3, name: I18n.t('SpecialDate') },
     ]
-    const { subject_id, iap_id, iap_activation, lesson_price, subscribe_id } = route.params
+    const { subject_id, iap_id, iap_activation, lesson_price, subscribe_id } =
+        route.params
     const { subjectGroupData } = useAppSelector(
         (state) => state.subjectGroupPage
     )
@@ -79,24 +80,25 @@ const FullLessonSubscription = () => {
             lesson_id: '',
             day_id: '',
         }
+        console.log('the payload dey here oooo', payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
                 openModal(res?.message)
-                // Alert.alert('Alert', res?.message, [
-                //     {
-                //         text: 'Cancel',
-                //         onPress: () => navigation.popToTop(),
-                //         style: 'cancel',
-                //     },
-                //     {
-                //         text: 'OK',
-                //         onPress: () => navigation.navigate('HomePage'),
-                //     },
-                // ])
             } else {
                 setLoading(false)
+                Alert.alert(I18n.t('Subscribe'), res?.message, [
+                    {
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.popToTop(),
+                    },
+                ])
             }
             return res
         } catch (err) {

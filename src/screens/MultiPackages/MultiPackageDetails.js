@@ -109,22 +109,26 @@ export default function MultiPackageDetails({ route }) {
             lesson_id: '',
             day_id: '',
         }
+        console.log('the payload dey here oooo', payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
                 setLoading(false)
                 openModal(res?.message)
-                // Alert.alert('Alert', res?.message, [
-                //     {
-                //         text: 'Cancel',
-                //         onPress: () => navigation.popToTop(),
-                //         style: 'cancel',
-                //     },
-                //     { text: 'OK', onPress: () => navigation.popToTop() },
-                // ])
             } else {
                 console.log('failed', res)
                 setLoading(false)
+                Alert.alert(I18n.t('Subscribe'), res?.message, [
+                    {
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.popToTop(),
+                    },
+                ])
             }
             return res
         } catch (err) {

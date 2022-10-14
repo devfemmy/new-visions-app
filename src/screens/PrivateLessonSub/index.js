@@ -56,10 +56,10 @@ const PrivateLessonSubscription = () => {
     const { getSubjectChaptersAndLessonData } = useAppSelector(
         (state) => state.getSubjectChaptersAndLessonsPage
     )
-    console.log('iap_activation one lesson', subject_id)
     const { teachersFreeDaysData } = useAppSelector(
         (state) => state.teacherFreeDaysPage
     )
+    console.log('groupsss teachersFreeDaysData', teachersFreeDaysData)
     useEffect(() => {
         const payload = {
             subject_id: subject_id,
@@ -122,6 +122,7 @@ const PrivateLessonSubscription = () => {
             lesson_id: lessonIdGotten,
             day_id: dayIdData,
         }
+        console.log('the payload dey here oooo', payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
@@ -129,6 +130,17 @@ const PrivateLessonSubscription = () => {
                 openModal(res?.message)
             } else {
                 setLoading(false)
+                Alert.alert(I18n.t('Subscribe'), res?.message, [
+                    {
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.popToTop(),
+                    },
+                ])
             }
             return res
         } catch (err) {

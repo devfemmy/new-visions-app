@@ -64,8 +64,10 @@ export default function UserType({ navigation }) {
                         <View style={styles.content}>
                             <Image
                                 style={styles.logo}
-                                source={require('../../assets/img/logo-light.png')}
-                             />
+                                source={{
+                                    uri: 'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=f2a1976b-f286-4cc1-bfab-fe0e33c4146c',
+                                }}
+                            />
                             <Text style={styles.textLbl}>
                                 {I18n.t('RegisterAs')}
                             </Text>
@@ -265,6 +267,7 @@ const styles = StyleSheet.create({
         height: 75,
         width: '55%',
         resizeMode: 'stretch',
+        // tintColor: 'transparent',
     },
     content: {
         alignItems: 'center',
