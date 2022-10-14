@@ -138,7 +138,7 @@ const PrivateLessonSubscription = () => {
                     },
                     {
                         text: 'OK',
-                        onPress: () => navigation.navigate('HomePage'),
+                        onPress: () => navigation.popToTop(),
                     },
                 ])
             }
