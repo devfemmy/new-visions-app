@@ -269,6 +269,9 @@ const English = {
     Previous: 'Previous',
     NextNew: 'Next',
     SelectGroup: 'Select Group',
+    SelectDate: 'Please select the date',
+    PrivateSubjectSubscription: 'Private subject subscription',
+    NoAvailableLessons: 'No available lessons',
     ChooseGroup: 'Choose the Group',
     GroupDays: 'Group Days',
     Error407Display:

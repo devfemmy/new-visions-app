@@ -271,8 +271,30 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
                 <Pressable
                     style={styles.loginBtn}
                     onPress={() => {
-                        subscribeToPrivateCourse()
-                        console.log('pressed')
+                        const doEmptyAction = inputArray.every(
+                            (obj) => obj.day_id !== ''
+                        )
+                        if (doEmptyAction === true) {
+                            subscribeToPrivateCourse()
+                        } else {
+                            Alert.alert(
+                                `${I18n.t('PrivateSubjectSubscription')}`,
+                                `${I18n.t('SelectDate')}`,
+                                [
+                                    {
+                                        text: 'Ok',
+                                        onPress: () => {
+                                            // navigation.navigate('Home')
+                                        },
+                                        style: 'cancel',
+                                    },
+                                ],
+                                {
+                                    cancelable: false,
+                                }
+                            )
+                        }
+                        console.log('pressed', doEmptyAction)
                     }}
                 >
                     <View style={styles.loginBtnView}>

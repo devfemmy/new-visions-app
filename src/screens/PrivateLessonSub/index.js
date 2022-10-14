@@ -10,7 +10,7 @@ import React, {
 } from 'react'
 import { Alert, Platform, View } from 'react-native'
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps'
-import { Container } from '../../components/common'
+import { Container, Text } from '../../components/common'
 import colors from '../../helpers/colors'
 import {
     // getSubjectChaptersAndLessons,
@@ -59,7 +59,7 @@ const PrivateLessonSubscription = () => {
     const { teachersFreeDaysData } = useAppSelector(
         (state) => state.teacherFreeDaysPage
     )
-    console.log('groupsss teachersFreeDaysData', teachersFreeDaysData)
+    // console.log('groupsss teachersFreeDaysData', subject_id, allLessons)
     useEffect(() => {
         const payload = {
             subject_id: subject_id,
@@ -115,6 +115,7 @@ const PrivateLessonSubscription = () => {
         setModalMessage(message)
     }
     const subscribeExternal = async () => {
+        console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the payload dey here oooo', subscribe_id)
         setLoading(true)
         const payload = {
             id: subscribe_id.toString(),
@@ -122,7 +123,6 @@ const PrivateLessonSubscription = () => {
             lesson_id: lessonIdGotten,
             day_id: dayIdData,
         }
-        console.log('the payload dey here oooo', payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
@@ -210,10 +210,23 @@ const PrivateLessonSubscription = () => {
                         >
                             <View>
                                 {/* <SelectGroup /> */}
-                                <ChooseLesson
-                                    lessons={allLessons}
-                                    subject_id={subject_id}
-                                />
+                                {allLessons.length > 0 ? (
+                                    <ChooseLesson
+                                        lessons={allLessons}
+                                        subject_id={subject_id}
+                                    />
+                                ) : (
+                                    <View
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Text
+                                            text={I18n.t('NoAvailableLessons')}
+                                        />
+                                    </View>
+                                )}
                             </View>
                         </ProgressStep>
                         <ProgressStep
