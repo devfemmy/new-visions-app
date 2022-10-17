@@ -83,6 +83,7 @@ const Home = () => {
             const payload = {
                 token: fcmtoken,
             }
+            console.log('e plemnty ooooo', payload)
             try {
                 const res = await HomePageService.postNotificationData(payload)
                 return res
@@ -268,7 +269,7 @@ const Home = () => {
                     />
                 </View>
             </ScrollView>
-         </Container>
+        </Container>
     )
 }
 const styles = StyleSheet.create({

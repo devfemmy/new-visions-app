@@ -252,17 +252,17 @@ const Teachers = () => {
                     //     })}`
                     // )
 
-                    console.log(
-                        'aaaaaaaaaaaa page number',
-                        Page,
-                        'aaaaaaaaaaaa payload',
-                        payload
-                    )
+                    // console.log(
+                    //     'aaaaaaaaaaaa page number',
+                    //     Page,
+                    //     'aaaaaaaaaaaa payload',
+                    //     payload
+                    // )
 
-                    console.log(
-                        'xxxxxxxxxxxxxxxxxxxx responseValue',
-                        response.data.data.data
-                    )
+                    // console.log(
+                    //     'xxxxxxxxxxxxxxxxxxxx responseValue',
+                    //     response.data.data.data
+                    // )
                 }
             })
             .catch((error) => {})
@@ -287,7 +287,7 @@ const Teachers = () => {
             search: text,
         }
 
-        console.log(`https://www.newvisions.sa/api/getTeachers?page=${1}`)
+        // console.log(`https://www.newvisions.sa/api/getTeachers?page=${1}`)
 
         axios
             .post(
@@ -326,17 +326,17 @@ const Teachers = () => {
                     //     })}`
                     // )
 
-                    console.log(
-                        'aaaaaaaaaaaa page number',
-                        1,
-                        'aaaaaaaaaaaa payload',
-                        payload
-                    )
+                    // console.log(
+                    //     'aaaaaaaaaaaa page number',
+                    //     1,
+                    //     'aaaaaaaaaaaa payload',
+                    //     payload
+                    // )
 
-                    console.log(
-                        'xxxxxxxxxxxxxxxxxxxx responseValue',
-                        response.data.data.data
-                    )
+                    // console.log(
+                    //     'xxxxxxxxxxxxxxxxxxxx responseValue',
+                    //     response.data.data.data
+                    // )
                 }
             })
             .catch((error) => {})
@@ -363,12 +363,12 @@ const Teachers = () => {
             )
             setCurrentSerachValue(SerachValue)
 
-            console.log(
-                `loaded From Cache :${JSON.stringify({
-                    page: Page,
-                    search: SerachValue,
-                })}`
-            )
+            // console.log(
+            //     `loaded From Cache :${JSON.stringify({
+            //         page: Page,
+            //         search: SerachValue,
+            //     })}`
+            // )
             GetExtraCache()
             return
         }
@@ -412,9 +412,10 @@ const Teachers = () => {
                 // }
             })
             .catch((error) => {
+                console.log('errrrrrorrrrr wey dey here', error)
                 alert(error)
             })
-    })
+    }, [])
 
     const renderFooter = () => {
         return (
