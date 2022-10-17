@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { Provider } from 'react-redux'
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import * as RNIap from 'react-native-iap'
 import SplashScreen from 'react-native-splash-screen'
 import messaging from '@react-native-firebase/messaging'
@@ -20,9 +20,10 @@ import { deviceStorage } from './src/services/deviceStorage'
 import { iapSkus } from './src/services/iap'
 import { googleSignInInit } from './src/services/googleSignInInit'
 import axios from 'axios'
-import errorHandler from './src/components/Errorhandler';
+import errorHandler from './src/components/Errorhandler'
 import { GlobalStateProvider } from './src/context/GlobalStateProvider'
-
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
+import PushNotification from 'react-native-push-notification'
 
 initTranslate()
 setInterceptors(axios)
@@ -38,9 +39,30 @@ function App() {
         NotificationListener()
         const unsubscribe = messaging().onMessage(async (remoteMessage) => {
             Alert.alert(
-                'A new FCM message arrived!',
-                JSON.stringify(remoteMessage)
+                JSON.stringify(remoteMessage?.notification?.title),
+                JSON.stringify(remoteMessage?.notification?.body)
             )
+            console.log('handle in foreground', remoteMessage)
+            const { notification, messageId } = remoteMessage
+
+            if (Platform.OS == 'ios') {
+                PushNotificationIOS.addNotificationRequest({
+                    id: messageId,
+                    body: notification?.body,
+                    title: notification?.title,
+                    sound: 'default',
+                })
+            } else {
+                PushNotification.localNotification({
+                    channelId: 'your-channel-id',
+                    id: messageId,
+                    body: notification?.body,
+                    title: notification?.title,
+                    soundName: 'default',
+                    vibrate: true,
+                    playSound: true,
+                })
+            }
         })
 
         return unsubscribe
