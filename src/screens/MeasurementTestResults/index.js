@@ -119,6 +119,8 @@ const MeasurementTestResults = () => {
                         value={searchText}
                         onChangeText={(text) => setSearchText(text)}
                         style={styles.searchBar}
+                        inputStyle={{ color: colors.dark }}
+                        iconColor={colors.dark}
                     />
                 </View>
                 <FlatList

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react'
-import { Pressable, StyleSheet, View, Text as RNText } from 'react-native'
+import { Pressable, StyleSheet, View, Text as RNText, Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -35,7 +35,7 @@ const TeachersCourseCard = ({
             marginVertical: heightp(7.5),
             marginHorizontal: heightp(7.5),
             width: WINDOW_WIDTH * 0.7,
-            minHeight: heightp(135),
+            minHeight: Platform.OS === 'android' ? heightp(135) : heightp(135),
         },
         textAlign: {
             textAlign: 'left',

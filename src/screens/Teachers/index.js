@@ -484,7 +484,9 @@ const Teachers = () => {
                             setSerachValue(text)
                             SearchExtraCache(text)
                         }}
-                        style={styles.searchBar}
+                        style={[styles.searchBar, { color: colors.dark }]}
+                        inputStyle={{ color: colors.dark }}
+                        iconColor={colors.dark}
                     />
                 </View>
                 <FlatList

@@ -41,7 +41,7 @@ const TeacherProfile = () => {
     const route = useRoute()
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
-    const { onLogOut } = useContext(AppContext)
+    const { lang, onLogOut } = useContext(AppContext)
     const playerRef = useRef()
     const { item } = route.params
     const [teachersData, setTeachersData] = useState({})
@@ -61,7 +61,6 @@ const TeacherProfile = () => {
             try {
                 const res = await HomePageService.getTeacherProfile(payload)
                 const data = res?.data
-                console.log('teacher ressssssssss', res)
                 if (res.code === 403) {
                     // Global.AuthenticationToken = ''
                     // Global.UserName = ''
@@ -81,11 +80,11 @@ const TeacherProfile = () => {
                     )
                     setRateArray(arrayResult)
                     setCourses(data?.courses)
-                    console.log(
-                        'wwwwwwwwww data zooooooooooooooom',
-                        data?.courses
-                    )
-                    console.log('wwwwwwwwww data', arrayResult)
+                    // console.log(
+                    //     'wwwwwwwwww data zooooooooooooooom',
+                    //     data?.courses
+                    // )
+                    // console.log('wwwwwwwwww data', arrayResult)
 
                     const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                     // fetchVideoLink(id)
@@ -106,12 +105,12 @@ const TeacherProfile = () => {
                 })
                     .then((res) => res.json())
                     .then((res) => {
-                        console.log(
-                            'ressssssssss',
-                            res.request.files.hls.cdns[
-                                res.request.files.hls.default_cdn
-                            ].url
-                        )
+                        // console.log(
+                        //     'ressssssssss',
+                        //     res.request.files.hls.cdns[
+                        //         res.request.files.hls.default_cdn
+                        //     ].url
+                        // )
                         setVideoUrl(
                             res.request.files.hls.cdns[
                                 res.request.files.hls.default_cdn
@@ -153,7 +152,7 @@ const TeacherProfile = () => {
             //     subject_id,
             //     teacher_id: teacher_id ? teacher_id : '',
             // }
-            console.log('payload', item, 'ccccccccccccccccccccccccc', course)
+            // console.log('payload', item, 'ccccccccccccccccccccccccc', course)
             // dispatch(getSubjectTeachers(payload))
             // const {id, title, image} = item;
             // const uri = `${IMAGEURL}/${image}`
@@ -169,6 +168,10 @@ const TeacherProfile = () => {
         },
         [navigation, item]
     )
+
+    const platLang = () => {
+        return Platform.OS === 'android' && lang === 'ar'
+    }
 
     return (
         <Container
@@ -226,6 +229,12 @@ const TeacherProfile = () => {
                 </View>
                 {courses.length > 0 && (
                     <View style={styles.containerFlex}>
+                        <>
+                            {console.log(
+                                'Course oooooooooooooooo',
+                                courses.length
+                            )}
+                        </>
                         <FlatList
                             ref={flatListRef}
                             horizontal
@@ -241,21 +250,27 @@ const TeacherProfile = () => {
                                     <Text text={I18n.t('NoData')} />
                                 </View>
                             )}
-                            data={
-                                Platform.OS === 'android'
-                                    ? courses.reverse()
-                                    : courses
-                            }
+                            // ListFooterComponent={() => (
+                            //     <View
+                            //         style={{
+                            //             backgroundColor: '#00f',
+                            //             width: heightp(135),
+                            //             // height: WINDOW_WIDTH * 0.7,
+                            //         }}
+                            //     />
+                            // )}
+                            data={courses}
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
-                            // onEndReachedThreshold={0.5}
-                            maxToRenderPerBatch={20}
-                            initialNumToRender={10}
-                            windowSize={10}
-                            removeClippedSubviews={true}
-                            pagingEnabled
-                            snapToEnd
-                            inverted={true}
+                            // maxToRenderPerBatch={10}
+                            // initialNumToRender={10}
+                            // initialScrollIndex={1}
+                            // windowSize={10}
+                            // removeClippedSubviews={true}
+                            // pagingEnabled
+                            // snapToEnd
+                            inverted={platLang() && true}
+                            nestedScrollEnabled={platLang() && true}
                             renderItem={({ item, index }) => {
                                 return (
                                     <>
@@ -584,6 +599,7 @@ const styles = StyleSheet.create({
     },
     flatlistContent: {
         flexGrow: 1,
+        // backgroundColor: '#f0f',
     },
     containerFlex: {
         marginBottom: heightp(20),
