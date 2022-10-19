@@ -13,6 +13,7 @@ import {
     Text as RNText,
     ScrollView,
     FlatList,
+    Platform,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -240,10 +241,21 @@ const TeacherProfile = () => {
                                     <Text text={I18n.t('NoData')} />
                                 </View>
                             )}
-                            data={courses}
+                            data={
+                                Platform.OS === 'android'
+                                    ? courses.reverse()
+                                    : courses
+                            }
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
-                            onEndReachedThreshold={0.5}
+                            // onEndReachedThreshold={0.5}
+                            maxToRenderPerBatch={20}
+                            initialNumToRender={10}
+                            windowSize={10}
+                            removeClippedSubviews={true}
+                            pagingEnabled
+                            snapToEnd
+                            inverted={true}
                             renderItem={({ item, index }) => {
                                 return (
                                     <>
@@ -276,6 +288,7 @@ const TeacherProfile = () => {
                                     </>
                                 )
                             }}
+                            keyExtractor={(_, index) => index.toString()}
                         />
                     </View>
                 )}
@@ -532,6 +545,7 @@ const styles = StyleSheet.create({
     header: {
         fontWeight: 'bold',
         fontSize: heightp(18),
+        color: colors.dark,
     },
     borderContainer: {
         borderBottomColor: 'rgba(0, 0, 0, 0.5)',

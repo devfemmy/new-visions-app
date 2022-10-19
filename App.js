@@ -33,6 +33,13 @@ function App() {
     const purchaseUpdateSubscription = useRef(null)
     const purchaseErrorSubscription = useRef(null)
     useEffect(() => {
+        const createChannels = () => {
+            PushNotification.createChannel({
+                channelId: 'new-visions',
+                channelName: 'New Visions',
+            })
+        }
+        createChannels()
         SplashScreen.hide()
         googleSignInInit()
         requestUserPermission()
@@ -54,7 +61,7 @@ function App() {
                 })
             } else {
                 PushNotification.localNotification({
-                    channelId: 'your-channel-id',
+                    channelId: 'new-visions',
                     id: messageId,
                     body: notification?.body,
                     title: notification?.title,
