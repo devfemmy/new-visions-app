@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react'
 import { StyleSheet, View } from 'react-native'
+import colors from '../helpers/colors'
 import { heightp } from '../utils/responsiveDesign'
 import { Text } from './common'
 
@@ -8,7 +9,7 @@ const IconText = ({ text, children, textColor, calender, modal }) => {
     const styles = StyleSheet.create({
         text: {
             marginLeft: heightp(5),
-            color: textColor,
+            color: textColor ? textColor : colors.dark,
             fontSize: calender ? 13 : heightp(16),
             fontWeight: calender ? '600' : 'bold',
         },

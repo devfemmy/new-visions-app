@@ -13,6 +13,8 @@ import {
     Text as RNText,
     ScrollView,
     FlatList,
+    Platform,
+    Dimensions,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -33,14 +35,25 @@ import TeachersCourseCard from '../../components/TeachersCourseCard'
 import { AppContext } from '../../context/AppState'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getSubjectTeachers } from '../../redux/action'
+import {
+    DataProvider,
+    RecyclerListView,
+    LayoutProvider,
+} from 'recyclerlistview'
+
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
+const dimensionsForScreen = Dimensions.get('screen')
+const createNewDataProvider = () => {
+    return new DataProvider((r1, r2) => r1 !== r2)
+}
+import { I18nManager } from 'react-native'
 
 const TeacherProfile = () => {
     const flatListRef = useRef()
     const route = useRoute()
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
-    const { onLogOut } = useContext(AppContext)
+    const { lang, onLogOut } = useContext(AppContext)
     const playerRef = useRef()
     const { item } = route.params
     const [teachersData, setTeachersData] = useState({})
@@ -48,8 +61,26 @@ const TeacherProfile = () => {
     const [VideoUrl, setVideoUrl] = useState('')
     const [vidId, setVideoId] = useState('')
     const [rateArray, setRateArray] = useState('')
+    //
+    const [dataProvider, setDataProvider] = useState(null)
+    //
     const { subjectTeachersPage } = useAppSelector((state) => state)
     const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
+    //
+    useEffect(() => {
+        console.log('SubjectTeachers RTL ooooooo', I18nManager.isRTL)
+        if (courses !== undefined) {
+            try {
+                I18nManager.allowRTL(false)
+                I18nManager.forceRTL(false)
+                I18nManager.swapLeftAndRightInRTL(false)
+            } catch (error) {
+                console.error(error)
+            }
+            setDataProvider(createNewDataProvider().cloneWithRows(courses))
+        }
+    }, [courses])
+    //
     useEffect(() => {
         // get Notification
         async function getTeacherProfile() {
@@ -60,7 +91,6 @@ const TeacherProfile = () => {
             try {
                 const res = await HomePageService.getTeacherProfile(payload)
                 const data = res?.data
-                console.log('teacher ressssssssss', res)
                 if (res.code === 403) {
                     // Global.AuthenticationToken = ''
                     // Global.UserName = ''
@@ -80,11 +110,11 @@ const TeacherProfile = () => {
                     )
                     setRateArray(arrayResult)
                     setCourses(data?.courses)
-                    console.log(
-                        'wwwwwwwwww data zooooooooooooooom',
-                        data?.courses
-                    )
-                    console.log('wwwwwwwwww data', arrayResult)
+                    // console.log(
+                    //     'wwwwwwwwww data zooooooooooooooom',
+                    //     data?.courses
+                    // )
+                    // console.log('wwwwwwwwww data', arrayResult)
 
                     const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                     // fetchVideoLink(id)
@@ -105,12 +135,12 @@ const TeacherProfile = () => {
                 })
                     .then((res) => res.json())
                     .then((res) => {
-                        console.log(
-                            'ressssssssss',
-                            res.request.files.hls.cdns[
-                                res.request.files.hls.default_cdn
-                            ].url
-                        )
+                        // console.log(
+                        //     'ressssssssss',
+                        //     res.request.files.hls.cdns[
+                        //         res.request.files.hls.default_cdn
+                        //     ].url
+                        // )
                         setVideoUrl(
                             res.request.files.hls.cdns[
                                 res.request.files.hls.default_cdn
@@ -152,7 +182,7 @@ const TeacherProfile = () => {
             //     subject_id,
             //     teacher_id: teacher_id ? teacher_id : '',
             // }
-            console.log('payload', item, 'ccccccccccccccccccccccccc', course)
+            // console.log('payload', item, 'ccccccccccccccccccccccccc', course)
             // dispatch(getSubjectTeachers(payload))
             // const {id, title, image} = item;
             // const uri = `${IMAGEURL}/${image}`
@@ -167,6 +197,49 @@ const TeacherProfile = () => {
             })
         },
         [navigation, item]
+    )
+
+    const platLang = () => {
+        return Platform.OS === 'android' && lang === 'ar'
+    }
+
+    const renderTeachersCourseCard = (type, item, index) => {
+        // console.log('adey inside item of RecyclerListView', type, item, index)
+        return (
+            <>
+                {item?.subject && (
+                    <TeachersCourseCard
+                        pressed={() => {
+                            // navigateSubjectsDetails(item)
+                        }}
+                        students={item?.subject?.number_of_students}
+                        duration={item?.subject?.number_of_hours}
+                        uri={`${IMAGEURL}/${item?.subject?.image}`}
+                        contents={item?.subject?.title}
+                        key={index.toString()}
+                        onPressSubscribeTeachers={() => {
+                            subscribeToLessons(item?.subject?.id)
+                        }}
+                        onPressSubscribePrivateTeachers={() => {
+                            navigatePivateLesson(item)
+                        }}
+                    />
+                )}
+            </>
+        )
+    }
+
+    const _layoutProvider = new LayoutProvider(
+        () => {
+            return 0
+        },
+        (type, dim) => {
+            dim.width =
+                Platform.OS === 'android'
+                    ? dimensionsForScreen.width / 1
+                    : dimensionsForScreen.width / 1.2
+            dim.height = dimensionsForScreen.width / 1
+        }
     )
 
     return (
@@ -225,11 +298,50 @@ const TeacherProfile = () => {
                 </View>
                 {courses.length > 0 && (
                     <View style={styles.containerFlex}>
+                        <>
+                            {console.log(
+                                'Course oooooooooooooooo',
+                                courses.length
+                            )}
+                        </>
+                        {/* <View
+                            style={{
+                                width: dimensionsForScreen.width,
+                                height: heightp(195),
+                                backgroundColor: '#00f',
+                            }}
+                        >
+                            <RecyclerListView
+                                ref={flatListRef}
+                                isHorizontal
+                                layoutProvider={_layoutProvider}
+                                dataProvider={dataProvider}
+                                rowRenderer={(type, item, index) =>
+                                    renderTeachersCourseCard(type, item, index)
+                                }
+                                // snapToAlignment={'start'}
+                                disableIntervalMomentum={true}
+                                showsVerticalScrollIndicator={false}
+                                forceNonDeterministicRendering
+                                showsHorizontalScrollIndicator={false}
+                                canChangeSize
+                                maxToRenderPerBatch={100}
+                            />
+                        </View> */}
                         <FlatList
                             ref={flatListRef}
                             horizontal
                             keyboardShouldPersistTaps="handled"
-                            contentContainerStyle={styles.flatlistContent}
+                            contentContainerStyle={[
+                                styles.flatlistContent,
+                                // {
+                                //     flexDirection: platLang()
+                                //         ? 'row-reverse'
+                                //         : 'row',
+                                //     backgroundColor: 'rgba(67, 72, 84, 0.1)',
+                                //     borderRadius: 10,
+                                // },
+                            ]}
                             ListEmptyComponent={() => (
                                 <View
                                     style={{
@@ -240,10 +352,27 @@ const TeacherProfile = () => {
                                     <Text text={I18n.t('NoData')} />
                                 </View>
                             )}
+                            // ListFooterComponent={() => (
+                            //     <View
+                            //         style={{
+                            //             backgroundColor: '#00f',
+                            //             width: heightp(135),
+                            //             // height: WINDOW_WIDTH * 0.7,
+                            //         }}
+                            //     />
+                            // )}
                             data={courses}
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
-                            onEndReachedThreshold={0.5}
+                            // maxToRenderPerBatch={10}
+                            initialNumToRender={10}
+                            initialScrollIndex={1}
+                            // windowSize={10}
+                            // removeClippedSubviews={true}
+                            // pagingEnabled
+                            // snapToEnd
+                            // inverted={platLang() && true}
+                            // nestedScrollEnabled={platLang() && true}
                             renderItem={({ item, index }) => {
                                 return (
                                     <>
@@ -276,6 +405,12 @@ const TeacherProfile = () => {
                                     </>
                                 )
                             }}
+                            getItemLayout={(data, index) => ({
+                                length: heightp(135),
+                                offset: heightp(135) * index,
+                                index,
+                            })}
+                            keyExtractor={(_, index) => index.toString()}
                         />
                     </View>
                 )}
@@ -532,6 +667,7 @@ const styles = StyleSheet.create({
     header: {
         fontWeight: 'bold',
         fontSize: heightp(18),
+        color: colors.dark,
     },
     borderContainer: {
         borderBottomColor: 'rgba(0, 0, 0, 0.5)',
@@ -570,6 +706,7 @@ const styles = StyleSheet.create({
     },
     flatlistContent: {
         flexGrow: 1,
+        // backgroundColor: '#f0f',
     },
     containerFlex: {
         marginBottom: heightp(20),

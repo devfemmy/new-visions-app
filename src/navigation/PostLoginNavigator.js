@@ -105,6 +105,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('Notification'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -113,6 +114,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('Profile'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -121,6 +123,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('Subjects'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -129,6 +132,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('Teachers'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -137,6 +141,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('Calendar'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -145,6 +150,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('MeasurementQuiz'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -153,6 +159,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('QuizzesResults'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -161,6 +168,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('EducationalLevel'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -169,6 +177,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('Settings'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -177,6 +186,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('WhoWeAre'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -185,6 +195,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('WhoWeAre'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -193,6 +204,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('WhoWeAre'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -201,6 +213,7 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('EducationalLevel'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -209,6 +222,7 @@ export const PostLoginNavigator = () => {
                     options={({ route }) => ({
                         headerShown: true,
                         title: route.params.title,
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -217,6 +231,7 @@ export const PostLoginNavigator = () => {
                     options={({ route }) => ({
                         headerShown: true,
                         title: route.params.title,
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -234,6 +249,7 @@ export const PostLoginNavigator = () => {
                     options={({ route }) => ({
                         headerShown: true,
                         title: i18n.t('SubjectTeachers'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -242,6 +258,7 @@ export const PostLoginNavigator = () => {
                     options={({ route }) => ({
                         headerShown: true,
                         title: i18n.t('FullLessonSubscription'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -259,6 +276,7 @@ export const PostLoginNavigator = () => {
                     options={({ route }) => ({
                         headerShown: true,
                         title: i18n.t('PrivateLessonsSubscriptions'),
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -270,6 +288,7 @@ export const PostLoginNavigator = () => {
                         headerStyle: {
                             backgroundColor: colors.primary,
                         },
+                        headerLeft: backRight,
                     })}
                 />
                 <MainStack.Screen
@@ -294,6 +313,7 @@ export const PostLoginNavigator = () => {
                     options={{
                         title: I18n.t('EditProfile'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                 />
 
@@ -303,6 +323,7 @@ export const PostLoginNavigator = () => {
                     options={{
                         title: I18n.t('Packages'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                 />
                 <MainStack.Screen
@@ -311,6 +332,7 @@ export const PostLoginNavigator = () => {
                     options={{
                         title: I18n.t('EducationalLevel'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                 />
 
@@ -320,6 +342,7 @@ export const PostLoginNavigator = () => {
                     options={{
                         title: I18n.t('MultiPackages'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                 />
 
@@ -329,6 +352,7 @@ export const PostLoginNavigator = () => {
                     options={{
                         title: I18n.t('EducationalLevel'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                 />
 
@@ -338,12 +362,14 @@ export const PostLoginNavigator = () => {
                     options={{
                         title: I18n.t('Details'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                 />
                 <MainStack.Screen
                     options={{
                         title: I18n.t('Subscriptions'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                     name={'Subscriptions'}
                     component={Subscriptions}
@@ -352,6 +378,7 @@ export const PostLoginNavigator = () => {
                     options={{
                         title: I18n.t('Attendance'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
                     }}
                     name={'Attendance'}
                     component={Attendance}

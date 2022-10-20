@@ -269,7 +269,7 @@ class MessageScreen extends Component {
                 }}
             >
                 <KeyboardAwareScrollView
-                    enableOnAndroid
+                    // enableOnAndroid
                     extraHeight={100}
                     keyboardDismissMode="on-drag"
                     contentContainerStyle={{
@@ -460,7 +460,10 @@ class MessageScreen extends Component {
                                 justifyContent: 'center',
                                 paddingHorizontal: heightp(10),
                                 backgroundColor: 'rgba(255, 255, 255, 1)',
-                                marginBottom: heightp(50),
+                                marginBottom:
+                                    Platform.OS === 'android'
+                                        ? heightp(15)
+                                        : heightp(50),
                                 marginTop: heightp(5),
                             }}
                         >

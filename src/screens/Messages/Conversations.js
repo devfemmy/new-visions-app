@@ -8,6 +8,7 @@ import { Container, Text } from '../../components/common'
 import { Loader } from '../../components/Loader'
 import SelectTab from '../../components/SelectTab'
 import { AppContext } from '../../context/AppState'
+import colors from '../../helpers/colors'
 import { globalStyles } from '../../helpers/globalStyles'
 import HomePageService from '../../services/userServices'
 import { IMAGEURL } from '../../utils/functions'
@@ -67,6 +68,8 @@ const Conversation = () => {
                 value={searchText}
                 onChangeText={(text) => setSearchText(text)}
                 style={globalStyles.searchBar}
+                inputStyle={{ color: colors.dark }}
+                iconColor={colors.dark}
             />
             <View>
                 <FlatList

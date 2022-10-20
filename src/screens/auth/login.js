@@ -5,6 +5,7 @@ import {
     ScrollView,
     ImageBackground,
     Image,
+    Platform,
 } from 'react-native'
 import {
     GoogleSignin,
@@ -212,7 +213,7 @@ function Login() {
                                         uri: 'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=f2a1976b-f286-4cc1-bfab-fe0e33c4146c',
                                     }}
                                 ></Image>
-                                <AppleButton />
+                                {Platform.OS === 'ios' && <AppleButton />}
                                 <LoginForm
                                     submitLogin={submitLogin}
                                     signInGoogle={signInGoogle}

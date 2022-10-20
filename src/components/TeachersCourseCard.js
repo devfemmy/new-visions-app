@@ -1,7 +1,13 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react'
-import { Pressable, StyleSheet, View, Text as RNText } from 'react-native'
+import {
+    Pressable,
+    StyleSheet,
+    View,
+    Text as RNText,
+    Platform,
+} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -33,9 +39,13 @@ const TeachersCourseCard = ({
             borderRadius: 10,
             backgroundColor: 'rgba(249, 249, 249, 1)',
             marginVertical: heightp(7.5),
-            marginHorizontal: heightp(7.5),
-            width: WINDOW_WIDTH * 0.7,
-            minHeight: heightp(135),
+            marginHorizontal:
+                Platform.OS === 'android' ? heightp(7.5) : heightp(7.5),
+            width:
+                Platform.OS === 'android'
+                    ? WINDOW_WIDTH * 0.65
+                    : WINDOW_WIDTH * 0.75,
+            height: heightp(175),
         },
         textAlign: {
             textAlign: 'left',
@@ -136,7 +146,7 @@ const TeachersCourseCard = ({
             </View>
             <View
                 style={{
-                    paddingVertical: heightp(10),
+                    paddingVertical: heightp(5),
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                 }}

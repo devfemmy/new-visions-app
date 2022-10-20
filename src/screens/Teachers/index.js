@@ -415,7 +415,7 @@ const Teachers = () => {
                 console.log('errrrrrorrrrr wey dey here', error)
                 alert(error)
             })
-    }, [])
+    }, [Page, LoadedPage])
 
     const renderFooter = () => {
         return (
@@ -468,11 +468,6 @@ const Teachers = () => {
     )
 
     return (
-        // <View
-        //     style={{
-        //         // paddingHorizontal: heightp(10),
-        //     }}
-        // >
         <View style={styles.containerFlex}>
             <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
                 <View style={{ marginBottom: 15 }}>
@@ -484,7 +479,9 @@ const Teachers = () => {
                             setSerachValue(text)
                             SearchExtraCache(text)
                         }}
-                        style={styles.searchBar}
+                        style={[styles.searchBar, { color: colors.dark }]}
+                        inputStyle={{ color: colors.dark }}
+                        iconColor={colors.dark}
                     />
                 </View>
                 <FlatList
@@ -590,7 +587,6 @@ const Teachers = () => {
                 </TouchableOpacity>
             </View>
         </View>
-        // </View>
     )
 }
 const styles = StyleSheet.create({

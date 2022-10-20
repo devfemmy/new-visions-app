@@ -389,7 +389,9 @@ const TeachersDetailCard = ({
                 <Pressable style={styles.loginBtn} onPress={viewProfile}>
                     <View style={styles.loginBtnView}>
                         <View />
-                        <RNText style={styles.loginText}>
+                        <RNText
+                            style={[styles.loginText, { color: colors.dark }]}
+                        >
                             {I18n.t('ViewProfile')}
                         </RNText>
                         <View style={styles.arrowCont}>
