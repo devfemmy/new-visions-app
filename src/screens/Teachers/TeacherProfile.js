@@ -303,6 +303,11 @@ const TeacherProfile = () => {
                                     </>
                                 )
                             }}
+                            getItemLayout={(data, index) => ({
+                                length: heightp(135),
+                                offset: heightp(135) * index,
+                                index,
+                            })}
                             keyExtractor={(_, index) => index.toString()}
                         />
                     </View>
