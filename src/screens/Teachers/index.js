@@ -415,7 +415,7 @@ const Teachers = () => {
                 console.log('errrrrrorrrrr wey dey here', error)
                 alert(error)
             })
-    }, [])
+    }, [Page, LoadedPage])
 
     const renderFooter = () => {
         return (
