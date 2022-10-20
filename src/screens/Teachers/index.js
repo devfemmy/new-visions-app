@@ -468,11 +468,6 @@ const Teachers = () => {
     )
 
     return (
-        // <View
-        //     style={{
-        //         // paddingHorizontal: heightp(10),
-        //     }}
-        // >
         <View style={styles.containerFlex}>
             <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
                 <View style={{ marginBottom: 15 }}>
@@ -592,7 +587,6 @@ const Teachers = () => {
                 </TouchableOpacity>
             </View>
         </View>
-        // </View>
     )
 }
 const styles = StyleSheet.create({
