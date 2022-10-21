@@ -240,7 +240,7 @@ export function CompleteProfile() {
                 setGender(!gender);
               }}
             />
-            <Text>{I18n.t('Male')}</Text>
+            <Text style={{color: 'black'}}>{I18n.t('Male')}</Text>
           </View>
 
           <View
@@ -256,7 +256,7 @@ export function CompleteProfile() {
                 setGender(!gender);
               }}
             />
-            <Text>{I18n.t('Female')}</Text>
+            <Text style={{color: 'black'}}>{I18n.t('Female')}</Text>
           </View>
         </View>
       </ScrollView>
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
 input: {
     width: '100%',
     fontSize: heightp(14),
-    height: 35,
+    minHeight: 35,
     fontFamily: 'Cairo-Regular',
     color: 'rgba(70, 79, 84, 1)',
     backgroundColor: 'transparent',

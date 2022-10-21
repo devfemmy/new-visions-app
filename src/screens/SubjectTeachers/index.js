@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, FlatList, StyleSheet, View } from 'react-native'
+import { Alert, FlatList, Platform, StyleSheet, View } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
 import TeachersDetailCard from '../../components/TeachersDetail'
@@ -92,7 +92,7 @@ const SubjectTeachers = () => {
     }
     const bookOneLesson = (item) => {
         const iap_activation = item?.iap_activation
-        if (!iap_activation) {
+        if (!iap_activation || Platform.OS === 'android') {
             subscribeExternal(item)
         } else {
             const subscriptionInfo = {

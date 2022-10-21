@@ -14,7 +14,6 @@ import {
     ScrollView,
     FlatList,
     Platform,
-    Dimensions,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -52,9 +51,6 @@ const TeacherProfile = () => {
     const [VideoUrl, setVideoUrl] = useState('')
     const [vidId, setVideoId] = useState('')
     const [rateArray, setRateArray] = useState('')
-    //
-    const [dataProvider, setDataProvider] = useState(null)
-    //
     const { subjectTeachersPage } = useAppSelector((state) => state)
     const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
     //
@@ -223,7 +219,7 @@ const TeacherProfile = () => {
                             ref={flatListRef}
                             horizontal
                             keyboardShouldPersistTaps="handled"
-                            contentContainerStyle={[styles.flatlistContent]}
+                            contentContainerStyle={styles.flatlistContent}
                             ListEmptyComponent={() => (
                                 <View
                                     style={{
@@ -273,11 +269,6 @@ const TeacherProfile = () => {
                                     </>
                                 )
                             }}
-                            getItemLayout={(data, index) => ({
-                                length: heightp(135),
-                                offset: heightp(135) * index,
-                                index,
-                            })}
                             keyExtractor={(_, index) => index.toString()}
                         />
                     </View>

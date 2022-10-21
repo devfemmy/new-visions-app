@@ -149,7 +149,7 @@ const PrivateLessonSubscription = () => {
     }
     const subscribeToLesson = () => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        if (!iap_activation) {
+        if (!iap_activation || Platform.OS === 'android') {
             subscribeExternal()
         } else {
             const subscriptionInfo = {
