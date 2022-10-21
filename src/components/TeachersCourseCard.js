@@ -30,6 +30,7 @@ const TeachersCourseCard = ({
     onPressSubscribeTeachers,
     onPressSubscribePrivateTeachers,
     key,
+    fromAllCourse,
 }) => {
     const styles = StyleSheet.create({
         container: {
@@ -39,13 +40,12 @@ const TeachersCourseCard = ({
             borderRadius: 10,
             backgroundColor: 'rgba(249, 249, 249, 1)',
             marginVertical: heightp(7.5),
-            marginHorizontal:
-                Platform.OS === 'android' ? heightp(7.5) : heightp(7.5),
+            marginHorizontal: heightp(7.5),
             width:
                 Platform.OS === 'android'
                     ? WINDOW_WIDTH * 0.65
                     : WINDOW_WIDTH * 0.75,
-            height: heightp(175),
+            minHeight: heightp(135),
         },
         textAlign: {
             textAlign: 'left',
@@ -94,6 +94,10 @@ const TeachersCourseCard = ({
                 {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
+                    width:
+                        fromAllCourse === true
+                            ? WINDOW_WIDTH * 0.9
+                            : WINDOW_WIDTH * 0.75,
                 },
             ]}
         >

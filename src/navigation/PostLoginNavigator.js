@@ -53,6 +53,7 @@ import { useAppSelector } from '../redux/hooks'
 import { CompleteProfile } from '../screens/auth/CompleteProfile'
 import LiveNowQuizResult from '../screens/LiveNowQuizResult'
 import AttendanceResult from '../screens/AttendanceResult'
+import TeacherCourse from '../screens/Teachers/TeacherCourse'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -62,7 +63,7 @@ export const PostLoginNavigator = () => {
         <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={{
-                marginLeft: 16,
+                marginHorizontal: 16,
             }}
         >
             {lang === 'ar' ? (
@@ -222,6 +223,15 @@ export const PostLoginNavigator = () => {
                     options={({ route }) => ({
                         headerShown: true,
                         title: route.params.title,
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="TeacherCourse"
+                    component={TeacherCourse}
+                    options={({ route }) => ({
+                        headerShown: true,
+                        title: i18n.t('TeacherCourse'),
                         headerLeft: backRight,
                     })}
                 />

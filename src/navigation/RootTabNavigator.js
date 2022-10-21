@@ -34,7 +34,7 @@ export const RootBottomTabNavigator = () => {
         <TouchableOpacity
             onPress={() => navigation.openDrawer()}
             style={{
-                marginLeft: 16,
+                marginHorizontal: 16,
             }}
         >
             <MenuIcon width={20} height={20} />
@@ -45,7 +45,7 @@ export const RootBottomTabNavigator = () => {
         <TouchableOpacity
             onPress={() => navigation.navigate('Notification')}
             style={{
-                marginRight: 16,
+                marginHorizontal: 16,
             }}
         >
             <NotificationIcon width={20} height={20} />
@@ -55,7 +55,7 @@ export const RootBottomTabNavigator = () => {
         <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={{
-                marginLeft: 16,
+                marginHorizontal: 16,
             }}
         >
             {lang === 'ar' ? (

@@ -312,6 +312,7 @@ const Arabic = {
     NoDataPresentatthemoment: 'لا يوجد فيديو',
     NoRatingsPresentatthemoment: 'لا يوجد تقيم',
     PreviousClasses: 'الحصص السابقة',
+    TeacherCourse: 'الدورات',
 }
 
 export default Arabic

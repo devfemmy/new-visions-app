@@ -302,6 +302,7 @@ const English = {
     NoDataPresentatthemoment: 'No Data Present at the moment',
     NoRatingsPresentatthemoment: 'No Ratings Present at the moment',
     PreviousClasses: 'Previous Classes',
+    TeacherCourse: 'Courses',
 }
 
 export default English

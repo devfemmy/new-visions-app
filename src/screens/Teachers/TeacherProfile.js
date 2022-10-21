@@ -35,18 +35,9 @@ import TeachersCourseCard from '../../components/TeachersCourseCard'
 import { AppContext } from '../../context/AppState'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getSubjectTeachers } from '../../redux/action'
-import {
-    DataProvider,
-    RecyclerListView,
-    LayoutProvider,
-} from 'recyclerlistview'
+import HeaderTitle from '../../components/common/HeaderTitle'
 
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
-const dimensionsForScreen = Dimensions.get('screen')
-const createNewDataProvider = () => {
-    return new DataProvider((r1, r2) => r1 !== r2)
-}
-import { I18nManager } from 'react-native'
 
 const TeacherProfile = () => {
     const flatListRef = useRef()
@@ -66,20 +57,6 @@ const TeacherProfile = () => {
     //
     const { subjectTeachersPage } = useAppSelector((state) => state)
     const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
-    //
-    useEffect(() => {
-        console.log('SubjectTeachers RTL ooooooo', I18nManager.isRTL)
-        if (courses !== undefined) {
-            try {
-                I18nManager.allowRTL(false)
-                I18nManager.forceRTL(false)
-                I18nManager.swapLeftAndRightInRTL(false)
-            } catch (error) {
-                console.error(error)
-            }
-            setDataProvider(createNewDataProvider().cloneWithRows(courses))
-        }
-    }, [courses])
     //
     useEffect(() => {
         // get Notification
@@ -117,37 +94,9 @@ const TeacherProfile = () => {
                     // console.log('wwwwwwwwww data', arrayResult)
 
                     const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
-                    // fetchVideoLink(id)
                     setVideoId(id)
                     return res
                 }
-            } catch (err) {
-                // setLoading(false)
-            }
-        }
-        async function fetchVideoLink(id) {
-            try {
-                fetch(`https://player.vimeo.com/video/${id}/config`, {
-                    headers: {
-                        'content-type': 'application/json',
-                        accept: 'application/json',
-                    },
-                })
-                    .then((res) => res.json())
-                    .then((res) => {
-                        // console.log(
-                        //     'ressssssssss',
-                        //     res.request.files.hls.cdns[
-                        //         res.request.files.hls.default_cdn
-                        //     ].url
-                        // )
-                        setVideoUrl(
-                            res.request.files.hls.cdns[
-                                res.request.files.hls.default_cdn
-                            ].url
-                        )
-                    })
-                // return res
             } catch (err) {
                 // setLoading(false)
             }
@@ -202,45 +151,6 @@ const TeacherProfile = () => {
     const platLang = () => {
         return Platform.OS === 'android' && lang === 'ar'
     }
-
-    const renderTeachersCourseCard = (type, item, index) => {
-        // console.log('adey inside item of RecyclerListView', type, item, index)
-        return (
-            <>
-                {item?.subject && (
-                    <TeachersCourseCard
-                        pressed={() => {
-                            // navigateSubjectsDetails(item)
-                        }}
-                        students={item?.subject?.number_of_students}
-                        duration={item?.subject?.number_of_hours}
-                        uri={`${IMAGEURL}/${item?.subject?.image}`}
-                        contents={item?.subject?.title}
-                        key={index.toString()}
-                        onPressSubscribeTeachers={() => {
-                            subscribeToLessons(item?.subject?.id)
-                        }}
-                        onPressSubscribePrivateTeachers={() => {
-                            navigatePivateLesson(item)
-                        }}
-                    />
-                )}
-            </>
-        )
-    }
-
-    const _layoutProvider = new LayoutProvider(
-        () => {
-            return 0
-        },
-        (type, dim) => {
-            dim.width =
-                Platform.OS === 'android'
-                    ? dimensionsForScreen.width / 1
-                    : dimensionsForScreen.width / 1.2
-            dim.height = dimensionsForScreen.width / 1
-        }
-    )
 
     return (
         <Container
@@ -299,49 +209,21 @@ const TeacherProfile = () => {
                 {courses.length > 0 && (
                     <View style={styles.containerFlex}>
                         <>
-                            {console.log(
-                                'Course oooooooooooooooo',
-                                courses.length
-                            )}
-                        </>
-                        {/* <View
-                            style={{
-                                width: dimensionsForScreen.width,
-                                height: heightp(195),
-                                backgroundColor: '#00f',
-                            }}
-                        >
-                            <RecyclerListView
-                                ref={flatListRef}
-                                isHorizontal
-                                layoutProvider={_layoutProvider}
-                                dataProvider={dataProvider}
-                                rowRenderer={(type, item, index) =>
-                                    renderTeachersCourseCard(type, item, index)
+                            <HeaderTitle
+                                pressed={() =>
+                                    navigation.navigate('TeacherCourse', {
+                                        courses: courses,
+                                        item: item,
+                                    })
                                 }
-                                // snapToAlignment={'start'}
-                                disableIntervalMomentum={true}
-                                showsVerticalScrollIndicator={false}
-                                forceNonDeterministicRendering
-                                showsHorizontalScrollIndicator={false}
-                                canChangeSize
-                                maxToRenderPerBatch={100}
+                                text={I18n.t('TeacherCourse')}
                             />
-                        </View> */}
+                        </>
                         <FlatList
                             ref={flatListRef}
                             horizontal
                             keyboardShouldPersistTaps="handled"
-                            contentContainerStyle={[
-                                styles.flatlistContent,
-                                // {
-                                //     flexDirection: platLang()
-                                //         ? 'row-reverse'
-                                //         : 'row',
-                                //     backgroundColor: 'rgba(67, 72, 84, 0.1)',
-                                //     borderRadius: 10,
-                                // },
-                            ]}
+                            contentContainerStyle={[styles.flatlistContent]}
                             ListEmptyComponent={() => (
                                 <View
                                     style={{
@@ -352,27 +234,12 @@ const TeacherProfile = () => {
                                     <Text text={I18n.t('NoData')} />
                                 </View>
                             )}
-                            // ListFooterComponent={() => (
-                            //     <View
-                            //         style={{
-                            //             backgroundColor: '#00f',
-                            //             width: heightp(135),
-                            //             // height: WINDOW_WIDTH * 0.7,
-                            //         }}
-                            //     />
-                            // )}
-                            data={courses}
+                            data={courses?.slice(0, 3)}
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
                             // maxToRenderPerBatch={10}
                             initialNumToRender={10}
                             initialScrollIndex={1}
-                            // windowSize={10}
-                            // removeClippedSubviews={true}
-                            // pagingEnabled
-                            // snapToEnd
-                            // inverted={platLang() && true}
-                            // nestedScrollEnabled={platLang() && true}
                             renderItem={({ item, index }) => {
                                 return (
                                     <>
@@ -400,6 +267,7 @@ const TeacherProfile = () => {
                                                 onPressSubscribePrivateTeachers={() => {
                                                     navigatePivateLesson(item)
                                                 }}
+                                                fromAllCourse={false}
                                             />
                                         )}
                                     </>
