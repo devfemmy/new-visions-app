@@ -22,7 +22,6 @@ import AppButton from '../../components/Button'
 import I18n from 'i18n-js'
 import { heightp } from '../../utils/responsiveDesign'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-// import { updateProfile } from '../../api/updateProfile'
 import FastImage from 'react-native-fast-image'
 import { IMAGEURL } from '../../utils/functions'
 import Global from '../../../Global'
@@ -156,7 +155,7 @@ class EditProfile extends Component {
                         Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 2,
+                        version: 3,
                     },
                 }
             )
@@ -188,8 +187,10 @@ class EditProfile extends Component {
                     }
                     // console.log(BroadcastData);
                 } else if (response.data.code === -2) {
+                    this.setState({ loading: false })
                     alert(response.data.message)
                     console.log(
+                        response.data,
                         '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
                         response.data.message
                     )
@@ -227,7 +228,7 @@ class EditProfile extends Component {
                         Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 2,
+                        version: 3,
                     },
                 }
             )
@@ -243,6 +244,7 @@ class EditProfile extends Component {
                     }
                     // console.log(BroadcastData);
                 } else if (response.data.code === -2) {
+                    this.setState({ loading: false })
                     console.log(
                         '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
                         response.data.message
@@ -283,14 +285,13 @@ class EditProfile extends Component {
 
             console.log('<<<PHOTO>>>', photo)
             const data = new FormData()
-            data.append('image', photo ? photo : avatarUrl)
             data.append('first_name', firstname)
             data.append('last_name', lastname)
             data.append('phone', phone)
+            data.append('image', photo ? photo : '')
             data.append('gender', user?.gender)
-            const res = this.updateProfile({ data, lang, onLogin })
 
-            console.log('res', res)
+            this.updateProfile({ data, lang, onLogin })
         } catch (error) {
             console.log('error', error)
         }
