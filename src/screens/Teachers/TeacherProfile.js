@@ -233,9 +233,6 @@ const TeacherProfile = () => {
                             data={courses?.slice(0, 3)}
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
-                            // maxToRenderPerBatch={10}
-                            initialNumToRender={10}
-                            initialScrollIndex={1}
                             renderItem={({ item, index }) => {
                                 return (
                                     <>
