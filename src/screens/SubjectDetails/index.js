@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
+import colors from '../../helpers/colors'
 
 LogBox.ignoreAllLogs()
 const SubjectDetails = () => {
