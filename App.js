@@ -23,7 +23,7 @@ import axios from 'axios'
 import errorHandler from './src/components/Errorhandler'
 import { GlobalStateProvider } from './src/context/GlobalStateProvider'
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
-import PushNotification from 'react-native-push-notification'
+import PushNotification, { Importance } from 'react-native-push-notification'
 
 initTranslate()
 setInterceptors(axios)
@@ -39,7 +39,10 @@ function App() {
                 channelName: 'New Visions',
                 playSound: true,
                 soundName: 'default',
+                importance: Importance.HIGH,
                 vibrate: true,
+                allowWhileIdle: true,
+                isCritical: true,
             })
         }
         createChannels()
@@ -63,6 +66,8 @@ function App() {
                     sound: 'default',
                     playSound: true,
                     vibrate: true,
+                    isCritical: true,
+                    allowWhileIdle: true,
                     vibration: 300,
                 })
             } else {
