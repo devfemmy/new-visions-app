@@ -37,6 +37,9 @@ function App() {
             PushNotification.createChannel({
                 channelId: 'new-visions',
                 channelName: 'New Visions',
+                playSound: true,
+                soundName: 'default',
+                vibrate: true,
             })
         }
         createChannels()
@@ -58,6 +61,9 @@ function App() {
                     body: notification?.body,
                     title: notification?.title,
                     sound: 'default',
+                    playSound: true,
+                    vibrate: true,
+                    vibration: 300,
                 })
             } else {
                 PushNotification.localNotification({
