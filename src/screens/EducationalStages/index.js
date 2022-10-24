@@ -5,6 +5,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container, Text } from '../../components/common'
 import LessonCard from '../../components/LessonCard'
+import { Loader } from '../../components/Loader'
 import StageCard from '../../components/StageCard'
 import { AppContext } from '../../context/AppState'
 import colors from '../../helpers/colors'
@@ -15,7 +16,7 @@ import { heightp } from '../../utils/responsiveDesign'
 
 const EducationalStage = () => {
     const route = useRoute()
-    const { lang } = useContext(AppContext)
+    const { lang, loadingSpinner, showLoadingSpinner } = useContext(AppContext)
     // const { setDisabledProps } = useContext(SubContext);
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
@@ -45,6 +46,7 @@ const EducationalStage = () => {
     }, [activeStage, navigation])
     return (
         <Container>
+            {/* <Loader visible={loading} /> */}
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Text
                     style={styles.textStyle}
