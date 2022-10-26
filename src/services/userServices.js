@@ -96,6 +96,7 @@ export default class HomePageService {
         const res = await baseAxios.post('/subscribeExternal', data)
         return res?.data || res
     }
+    
 
     static async startLessonQuiz(data) {
         const res = await baseAxios.post('/startLessonQuiz', data)
@@ -111,6 +112,12 @@ export default class HomePageService {
         const res = await baseAxios.post('/getMessages', data)
         return res?.data || res
     }
+
+    static async getUserChildren(data) {
+        const res = await baseAxios.post('/getUserChildren', data)
+        return res?.data || res
+    }
+
 
     static async sendMessage(data) {
         const res = await baseAxios.post('/sendMessage', data)

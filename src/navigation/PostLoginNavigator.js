@@ -54,6 +54,7 @@ import { CompleteProfile } from '../screens/auth/CompleteProfile'
 import LiveNowQuizResult from '../screens/LiveNowQuizResult'
 import AttendanceResult from '../screens/AttendanceResult'
 import TeacherCourse from '../screens/Teachers/TeacherCourse'
+import ParentSubscription from '../screens/ParentSubscription'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -371,6 +372,15 @@ export const PostLoginNavigator = () => {
                     component={MultiPackageDetails}
                     options={{
                         title: I18n.t('Details'),
+                        headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
+                    }}
+                />
+                <MainStack.Screen
+                    name="ParentSub"
+                    component={ParentSubscription}
+                    options={{
+                        title: I18n.t('Subscribefor'),
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
                         headerLeft: backRight,
                     }}

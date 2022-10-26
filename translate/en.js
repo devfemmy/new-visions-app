@@ -247,6 +247,7 @@ const English = {
     UnavailableTeacher: 'No Teacher Available',
     ChooseDay: 'Choose the lesson',
     ChooseClass: 'Choose the class',
+    ChooseChild: 'Choose the child you want to subscribe to',
     ViewProfile: 'View profile',
     Edit: 'Edit',
     EditProfile: 'Edit Profile',

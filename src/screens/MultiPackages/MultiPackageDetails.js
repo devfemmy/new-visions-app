@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import { View, Text, ImageBackground, Platform, Alert } from 'react-native'
@@ -135,8 +136,13 @@ export default function MultiPackageDetails({ route }) {
             setLoading(false)
         }
     }
-    const subscribeMultiPackage = () => {
+    const subscribeMultiPackage = (value) => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
+        if (value === 'parent') {
+            console.log('her')
+            navigation.navigate('ParentSub', {uniqueId, type: 2})
+        }else {
+            console.log('student')
         if (!iap_activation || Platform.OS === 'android') {
             subscribeExternal()
         } else {
@@ -154,24 +160,31 @@ export default function MultiPackageDetails({ route }) {
                 })
                 .then(() => requestPurchase({ sku: iapId }))
         }
+        }
     }
-    const subscribeSinglePackage = () => {
-        if (!iap_activation || Platform.OS === 'android') {
-            subscribeExternal()
-        } else {
-            const subscriptionInfo = {
-                billNumber: 'ios_bill',
-                paymentFor: 'Singlepackage',
-                lessonId: '1258',
-                subjectId: 12345,
-                price: 200,
+    const subscribeSinglePackage = (value) => {
+        if (value === 'parent') {
+            navigation.navigate('ParentSub', {uniqueId, type: 2})
+
+        }else {
+            console.log('student')
+            if (!iap_activation || Platform.OS === 'android') {
+                subscribeExternal()
+            } else {
+                const subscriptionInfo = {
+                    billNumber: 'ios_bill',
+                    paymentFor: 'Singlepackage',
+                    lessonId: '1258',
+                    subjectId: 12345,
+                    price: 200,
+                }
+                deviceStorage
+                    .saveDataToDevice({
+                        key: 'subscriptionInfo',
+                        value: subscriptionInfo,
+                    })
+                    .then(() => requestPurchase({ sku: iapId }))
             }
-            deviceStorage
-                .saveDataToDevice({
-                    key: 'subscriptionInfo',
-                    value: subscriptionInfo,
-                })
-                .then(() => requestPurchase({ sku: iapId }))
         }
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
     }
@@ -314,13 +327,57 @@ export default function MultiPackageDetails({ route }) {
                     {description && (
                         <DetailsTeachers data={description.content} />
                     )}
-
+    
                     {Global.UserType == 4 ? (
-                        <View
+                        <View>
+                            {!iap_activation ? <View /> : 
+                            
+                            <View
                             style={{
-                                marginVertical: heightp(10),
+                                backgroundColor: colors.primary,
+                                width: '90%',
+                                height: 45,
+                                alignSelf: 'center',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: 20,
+                                borderRadius: 20,
                             }}
-                        />
+                        >
+                            <TouchableOpacity
+                                onPress={
+                                    packageType === 'multi'
+                                        ?() => subscribeMultiPackage('parent')
+                                        : () => subscribeSinglePackage('parent')
+                                }
+                            >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text
+                                        style={[
+                                            styles.subItemText,
+                                            {
+                                                marginHorizontal: 20,
+                                                color: colors.white,
+                                            },
+                                        ]}
+                                    >
+                                        {I18n.t('SubscribeNow')}{' '}
+                                        {description.price} {I18n.t('SAR')}
+                                    </Text>
+                                    <FontAwesome
+                                        name={
+                                            I18n.locale == 'ar'
+                                                ? 'arrow-circle-left'
+                                                : 'arrow-circle-right'
+                                        }
+                                        size={30}
+                                        color={colors.white}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        </View>       
+                            }
+                        </View>
                     ) : (
                         <View
                             style={{
@@ -337,8 +394,8 @@ export default function MultiPackageDetails({ route }) {
                             <TouchableOpacity
                                 onPress={
                                     packageType === 'multi'
-                                        ? subscribeMultiPackage
-                                        : subscribeSinglePackage
+                                        ? () => subscribeMultiPackage('student')
+                                        : () => subscribeSinglePackage('student')
                                 }
                             >
                                 <View style={{ flexDirection: 'row' }}>
