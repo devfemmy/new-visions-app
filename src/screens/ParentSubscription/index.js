@@ -15,7 +15,7 @@ import SubscriptionModal from '../../components/SubscriptionModal'
 const ParentSubscription = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const {uniqueId, type} = route.params;
+  const {uniqueId, type, lesson_id, day_id} = route.params;
   const [childrenData, setChildrenData] = useState([])
   const [loading, setLoading] = useState(false)
   const { onLogout } = useContext(AppContext)
@@ -57,8 +57,8 @@ const subscribeExternal = async (child_id) => {
   const payload = {
       id: uniqueId.toString(),
       type,
-      lesson_id: '',
-      day_id: '',
+      lesson_id,
+      day_id,
       child_id,
   }
   try {

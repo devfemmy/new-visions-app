@@ -54,7 +54,6 @@ const FullLessonSubscription = () => {
     // }, [dispatch, subject_id])
     const [disabledProp, setDisabledProps] = useState(false)
     const [groupId, setGroupId] = useState(null)
-    console.log('groupId', groupId)
     useEffect(() => {
         const payload = {
             group_id: groupId,
@@ -80,7 +79,6 @@ const FullLessonSubscription = () => {
             lesson_id: '',
             day_id: '',
         }
-        console.log('the payload dey here oooo', payload)
         try {
             const res = await HomePageService.subscribeExternal(payload)
             if (res.code === 200) {
@@ -107,22 +105,29 @@ const FullLessonSubscription = () => {
     }
     const subscribeToFullLesson = () => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        if (!iap_activation || Platform.OS === 'android') {
-            subscribeExternal()
-        } else {
-            const subscriptionInfo = {
-                billNumber: 'ios_bill',
-                paymentFor: 'FullLesson',
-                lessonId: '1258',
-                subjectId: subject_id,
-                price: 200,
+        if (Global.UserType == 4 && !iap_activation) {
+            navigation.navigate('ParentSub', {uniqueId: groupId.toString(), type: 1, lesson_id: '',day_id: ''})
+        }else if (Global.UserType == 3) {
+            console.log('hello');
+            if (!iap_activation || Platform.OS === 'android') {
+                subscribeExternal()
+            } else {
+                const subscriptionInfo = {
+                    billNumber: 'ios_bill',
+                    paymentFor: 'FullLesson',
+                    lessonId: '1258',
+                    subjectId: subject_id,
+                    price: 200,
+                }
+                deviceStorage
+                    .saveDataToDevice({
+                        key: 'subscriptionInfo',
+                        value: subscriptionInfo,
+                    })
+                    .then(() => requestPurchase({ sku: iap_id }))
             }
-            deviceStorage
-                .saveDataToDevice({
-                    key: 'subscriptionInfo',
-                    value: subscriptionInfo,
-                })
-                .then(() => requestPurchase({ sku: iap_id }))
+        } else {
+            return
         }
     }
     return (
@@ -179,14 +184,16 @@ const FullLessonSubscription = () => {
                             previousBtnText={I18n.t('Previous')}
                             finishBtnText={
                                 Global.UserType == 4
-                                    ? ''
+                                    ?  `${I18n.t(
+                                        'Subscribefor'
+                                    )} ${lesson_price} ${I18n.t('Rscourse')}`
                                     : `${I18n.t(
                                           'Subscribefor'
                                       )} ${lesson_price} ${I18n.t('Rscourse')}`
                             }
                             onSubmit={
                                 Global.UserType == 4
-                                    ? null
+                                    ? subscribeToFullLesson
                                     : subscribeToFullLesson
                             }
                             label={I18n.t('GroupDays')}

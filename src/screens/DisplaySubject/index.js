@@ -43,10 +43,11 @@ const DisplaySubject = () => {
         dispatch(getSubjectDetails(payload))
     }, [dispatch, subjectId])
 
-    const subscribeToLessons = useCallback(() => {
+    const subscribeToLessons = useCallback((tag) => {
         if (subjectId)
             navigation.navigate('SubjectTeachers', {
                 subject_id: subjectId,
+                tag,
             })
     }, [navigation, subjectId])
 
@@ -147,7 +148,7 @@ const DisplaySubject = () => {
                         />
                         <Pressable
                             onPress={
-                                Global.UserType == 4 ? null : subscribeToLessons
+                                Global.UserType == 4 ? () => subscribeToLessons('parent') : () =>  subscribeToLessons('student')
                             }
                             style={globalStyles.subBtn}
                         >
@@ -155,7 +156,7 @@ const DisplaySubject = () => {
                                 style={globalStyles.btnColor}
                                 text={
                                     Global.UserType == 4
-                                        ? ''
+                                        ? I18n.t('Subscribe')
                                         : I18n.t('Subscribe')
                                 }
                             />

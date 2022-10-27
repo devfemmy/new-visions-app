@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Text } from '../../components/common'
 import { globalStyles } from '../../helpers/globalStyles'
@@ -10,18 +10,18 @@ import { heightp } from '../../utils/responsiveDesign'
 const ChildsCard = ({name, uri, pressed}) => {
   return (
     <TouchableOpacity onPress={pressed} style={[styles.container, globalStyles.rowBetween]}>
-        <FastImage
+        <Image
       style={{
           width: heightp(100),
           height: heightp(80),
           borderRadius: 10,
           marginRight: heightp(20),
       }}
+      defaultSource={require('../../assets/img/USRE.png')}
       source={{
           uri,
-          priority: FastImage.priority.normal,
       }}
-      resizeMode={FastImage.resizeMode.cover}
+      // resizeMode={FastImage.resizeMode.cover}
   />
       <View style={{width: '75%'}}>
         <Text style={styles.headerText} text={name} />

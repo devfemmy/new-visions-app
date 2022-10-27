@@ -183,7 +183,7 @@ const Home = () => {
                 </View>
                 <View style={globalStyles.horizontal} />
 
-                {Global.UserType == 3 && (
+                {(Global.UserType == 3 || Global.UserType == 4)  && (
                     <>
                         <HeaderTitle
                             deleteIcon

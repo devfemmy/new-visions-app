@@ -140,7 +140,7 @@ export default function MultiPackageDetails({ route }) {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
         if (value === 'parent') {
             console.log('her')
-            navigation.navigate('ParentSub', {uniqueId, type: 2})
+            navigation.navigate('ParentSub', {uniqueId, type: 2, lesson_id: '',day_id: '',})
         }else {
             console.log('student')
         if (!iap_activation || Platform.OS === 'android') {
@@ -164,7 +164,7 @@ export default function MultiPackageDetails({ route }) {
     }
     const subscribeSinglePackage = (value) => {
         if (value === 'parent') {
-            navigation.navigate('ParentSub', {uniqueId, type: 2})
+            navigation.navigate('ParentSub', {uniqueId, type: 2, lesson_id: '',day_id: '',})
 
         }else {
             console.log('student')
@@ -330,7 +330,7 @@ export default function MultiPackageDetails({ route }) {
     
                     {Global.UserType == 4 ? (
                         <View>
-                            {!iap_activation ? <View /> : 
+                            {iap_activation ? <View /> : 
                             
                             <View
                             style={{

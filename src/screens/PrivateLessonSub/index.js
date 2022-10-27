@@ -149,26 +149,30 @@ const PrivateLessonSubscription = () => {
     }
     const subscribeToLesson = () => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        if (!iap_activation || Platform.OS === 'android') {
-            subscribeExternal()
-        } else {
-            const subscriptionInfo = {
-                billNumber: 'ios_bill',
-                paymentFor: 'OneLesson',
-                lessonId: '1258',
-                subjectId: subject_id,
-                price: 200,
-            }
-            deviceStorage
-                .saveDataToDevice({
-                    key: 'subscriptionInfo',
-                    value: subscriptionInfo,
-                })
-                .then(() =>
-                    requestPurchase({
-                        sku: iap_id,
+        if (Global.UserType == 4 && !iap_activation) {
+            navigation.navigate('ParentSub', {uniqueId: subscribe_id.toString(), type: 3,
+                lesson_id: lessonIdGotten,day_id: dayIdData,})
+        }else if (Global.UserType == 3) {
+            console.log('hello');
+            if (!iap_activation || Platform.OS === 'android') {
+                subscribeExternal()
+            } else {
+                const subscriptionInfo = {
+                    billNumber: 'ios_bill',
+                    paymentFor: 'FullLesson',
+                    lessonId: '1258',
+                    subjectId: subject_id,
+                    price: 200,
+                }
+                deviceStorage
+                    .saveDataToDevice({
+                        key: 'subscriptionInfo',
+                        value: subscriptionInfo,
                     })
-                )
+                    .then(() => requestPurchase({ sku: iap_id }))
+            }
+        } else {
+            return
         }
     }
     return (
@@ -233,13 +237,16 @@ const PrivateLessonSubscription = () => {
                             previousBtnText={I18n.t('Previous')}
                             finishBtnText={
                                 Global.UserType == 4
-                                    ? ''
+                                    ? `${I18n.t(
+                                        'Subscribefor'
+                                    )} ${lesson_price} ${I18n.t('SARlesson')}`
                                     : `${I18n.t(
                                           'Subscribefor'
                                       )} ${lesson_price} ${I18n.t('SARlesson')}`
                             }
+
                             onSubmit={
-                                Global.UserType == 4 ? null : subscribeToLesson
+                                Global.UserType == 4 ? subscribeToLesson : subscribeToLesson
                             }
                             label={I18n.t('ChooseDay')}
                             // nextBtnDisabled={!disabledProp}
