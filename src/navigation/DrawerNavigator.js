@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
     createDrawerNavigator,
     DrawerContentScrollView,
@@ -27,9 +27,10 @@ import DeleteMembership from '../screens/DeleteMembership'
 import Exit from '../screens/Exit'
 import { AppContext } from '../context/AppState'
 import I18n from 'i18n-js'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Drawer = createDrawerNavigator()
-
+let session: ''
 const DrawerNavigator = () => {
     const navigation = useNavigation()
     const { lang } = useContext(AppContext)
@@ -132,6 +133,18 @@ const DrawerNavigator = () => {
             </View>
         )
     }
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            console.log('<<<<<tabs Refreshed>>>>>>')
+            getData()
+        })
+        return unsubscribe
+    }, [navigation])
+    const getData = async () => {
+        const dataFromAsync = await AsyncStorage.getItem('user')
+        session = JSON.parse(dataFromAsync)
+        console.log('data in the async storage', session)
+    }
     return (
         <View
             style={{
@@ -180,24 +193,26 @@ const DrawerNavigator = () => {
                         ),
                     }}
                 />
-                <Drawer.Screen
-                    name={I18n.t('Calendar')}
-                    component={Calendar}
-                    options={{
-                        headerShown: true,
-                        headerLeft: backRight,
-                        unmountOnBlur: true,
-                        // headerTransparent: true,
-                        headerTintColor: colors.black,
-                        drawerIcon: () => (
-                            <Ionicons
-                                name={'calendar'}
-                                size={20}
-                                color={colors.primary}
-                            />
-                        ),
-                    }}
-                />
+                {session?.type == 3 && (
+                    <Drawer.Screen
+                        name={I18n.t('Calendar')}
+                        component={Calendar}
+                        options={{
+                            headerShown: true,
+                            headerLeft: backRight,
+                            unmountOnBlur: true,
+                            // headerTransparent: true,
+                            headerTintColor: colors.black,
+                            drawerIcon: () => (
+                                <Ionicons
+                                    name={'calendar'}
+                                    size={20}
+                                    color={colors.primary}
+                                />
+                            ),
+                        }}
+                    />
+                )}
                 {/* <Drawer.Screen
                     name={I18n.t('MeasurementQuiz')}
                     component={MeasurementQuiz}

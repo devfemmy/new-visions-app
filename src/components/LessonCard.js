@@ -24,7 +24,7 @@ const LessonCard = ({
     if (group) {
         isActive = activeStage?.id === stage?.id
     } else {
-        isActive = activeStage?.title === stage?.title
+        isActive = activeStage?.id === stage?.id
     }
     const daysOfWeek = [
         I18n.t('Saturday'),
@@ -72,14 +72,14 @@ const LessonCard = ({
                     console.log('here ooo')
                     navigateSubjects()
 
-                    if (stage.title !== activeStage?.title) setActiveLevel(null)
+                    if (stage.id !== activeStage?.id) setActiveLevel(null)
                 }}
                 onPressIn={() => {
-                    console.log('here ooo 1st')
+                    console.log('here ooo 1st', stage)
                     setActiveStage(stage)
                 }}
                 onPressOut={() => {
-                    console.log('here ooo 1st')
+                    console.log('here ooo 2nd', stage)
                     setActiveStage(stage)
                 }}
                 style={!dark ? styles.darkContainer : styles.container}
