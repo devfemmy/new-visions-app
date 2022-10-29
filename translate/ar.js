@@ -281,7 +281,7 @@ const Arabic = {
     Thursday: 'الخميس ',
     Friday: 'الجمعة',
     PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
-    ChooseChild: 'اختر الطفل الذي تريد الاشتراك فيه" ،',
+    ChooseChild: 'قم بإختيار احد الابناء للاشتراك',
     ChooseTheRightDate: 'اختر المواعيد المناسبك لك',
     AddAnotherDate: 'أضف تاريخًا آخر',
     Error407Display:

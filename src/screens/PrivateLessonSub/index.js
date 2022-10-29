@@ -59,7 +59,11 @@ const PrivateLessonSubscription = () => {
     const { teachersFreeDaysData } = useAppSelector(
         (state) => state.teacherFreeDaysPage
     )
-    // console.log('groupsss teachersFreeDaysData', subject_id, allLessons)
+    console.log(
+        'groupsss teachersFreeDaysData allLessons ooooooooooooooooooooo',
+        subject_id,
+        allLessons
+    )
     useEffect(() => {
         const payload = {
             subject_id: subject_id,
@@ -115,7 +119,10 @@ const PrivateLessonSubscription = () => {
         setModalMessage(message)
     }
     const subscribeExternal = async () => {
-        console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the payload dey here oooo', subscribe_id)
+        console.log(
+            'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the payload dey here oooo',
+            subscribe_id
+        )
         setLoading(true)
         const payload = {
             id: subscribe_id.toString(),
@@ -150,10 +157,14 @@ const PrivateLessonSubscription = () => {
     const subscribeToLesson = () => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
         if (Global.UserType == 4 && !iap_activation) {
-            navigation.navigate('ParentSub', {uniqueId: subscribe_id.toString(), type: 3,
-                lesson_id: lessonIdGotten,day_id: dayIdData,})
-        }else if (Global.UserType == 3) {
-            console.log('hello');
+            navigation.navigate('ParentSub', {
+                uniqueId: subscribe_id.toString(),
+                type: 3,
+                lesson_id: lessonIdGotten,
+                day_id: dayIdData,
+            })
+        } else if (Global.UserType == 3) {
+            console.log('hello')
             if (!iap_activation || Platform.OS === 'android') {
                 subscribeExternal()
             } else {
@@ -238,15 +249,16 @@ const PrivateLessonSubscription = () => {
                             finishBtnText={
                                 Global.UserType == 4
                                     ? `${I18n.t(
-                                        'Subscribefor'
-                                    )} ${lesson_price} ${I18n.t('SARlesson')}`
+                                          'Subscribefor'
+                                      )} ${lesson_price} ${I18n.t('SARlesson')}`
                                     : `${I18n.t(
                                           'Subscribefor'
                                       )} ${lesson_price} ${I18n.t('SARlesson')}`
                             }
-
                             onSubmit={
-                                Global.UserType == 4 ? subscribeToLesson : subscribeToLesson
+                                Global.UserType == 4
+                                    ? subscribeToLesson
+                                    : subscribeToLesson
                             }
                             label={I18n.t('ChooseDay')}
                             // nextBtnDisabled={!disabledProp}

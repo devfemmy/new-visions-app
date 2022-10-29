@@ -130,28 +130,26 @@ export const RootBottomTabNavigator = () => {
                 }}
             />
 
-            {session?.type == 3 && (
-                <RootBottomTab.Screen
-                    options={{
-                        headerShown: true,
-                        headerLeft: backRight,
-                        unmountOnBlur: true,
-                    }}
-                    name={I18n.t('Subjects')}
-                    component={Subject}
-                />
-            )}
-            {session?.type == 3 && (
-                <RootBottomTab.Screen
-                    options={{
-                        headerShown: true,
-                        headerLeft: backRight,
-                        unmountOnBlur: true,
-                    }}
-                    name={I18n.t('Teachers')}
-                    component={Teachers}
-                />
-            )}
+            <RootBottomTab.Screen
+                options={{
+                    headerShown: true,
+                    headerLeft: backRight,
+                    unmountOnBlur: true,
+                }}
+                name={I18n.t('Subjects')}
+                component={Subject}
+            />
+
+            <RootBottomTab.Screen
+                options={{
+                    headerShown: true,
+                    headerLeft: backRight,
+                    unmountOnBlur: true,
+                }}
+                name={I18n.t('Teachers')}
+                component={Teachers}
+            />
+
             {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{

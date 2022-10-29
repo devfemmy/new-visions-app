@@ -1,9 +1,22 @@
 import { useNavigation } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import {
+    FlatList,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    View,
+    Text as RNText,
+} from 'react-native'
 import i18n from 'i18n-js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import SearchBar from 'react-native-platform-searchbar'
+import Toast from 'react-native-toast-message'
+import ContentLoader, { Rect, Circle } from 'react-content-loader/native'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Container, Text } from '../../components/common'
 import { globalStyles } from '../../helpers/globalStyles'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
@@ -18,9 +31,11 @@ import Global from '../../../Global'
 import { AppContext } from '../../context/AppState'
 import axios from 'axios'
 import colors from '../../helpers/colors'
+import SonListItem from '../Parent/SonListItem'
 const defaultUri =
     'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/HOME_BG_NEW.jpg?alt=media&token=0c48db74-5d80-4fb3-a43b-fea209a57225'
 
+let session: ''
 const Home = () => {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
@@ -35,6 +50,11 @@ const Home = () => {
     // console.log('packages on home page', data)
 
     const [packages, setPackages] = useState([])
+    //
+    const [searchText, setSearchText] = useState('')
+    const [sons, setSons] = useState([])
+    const [loadingContent, setLoadingContent] = useState(true)
+    //
     function getPackages(params) {
         axios
             .post('https://newvisions.sa/api/getPackages', {})
@@ -93,6 +113,7 @@ const Home = () => {
         }
         postNotificationToken()
     }, [dispatch])
+
     const navigateTeacherProfile = useCallback(
         (item) => {
             navigation.navigate('TeacherProfile', {
@@ -102,6 +123,85 @@ const Home = () => {
         },
         [navigation]
     )
+
+    const getChildren = (value) => {
+        //showLoadingSpinner(true);
+        axios
+            .post('https://newvisions.sa/api/getUserChildren', {})
+            .then((response) => {
+                //alert(response.data.code);
+                if (
+                    response != undefined &&
+                    response.data != undefined &&
+                    response.data.code != undefined
+                ) {
+                    if (response.data.code == 200) {
+                        const data = response.data.data
+                        setSons(data)
+                        setLoadingContent(false)
+                        console.log(sons)
+                    } else if (response.data.code == 403) {
+                        alert('This Account is Logged in from another Device.')
+                        onLogout()
+                    } else {
+                        showLoadingSpinner(false)
+                        Toast.show({
+                            text1: response.data.message,
+                            type: 'error',
+                            style: { color: colors.dark },
+                        })
+                    }
+                }
+            })
+            .catch((error) => {
+                showLoadingSpinner(false)
+                alert(error)
+            })
+    }
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            console.log('<<<<<tabs Refreshed>>>>>>')
+            getData()
+            getChildren()
+        })
+        return unsubscribe
+    }, [navigation])
+
+    const getData = async () => {
+        const dataFromAsync = await AsyncStorage.getItem('user')
+        session = JSON.parse(dataFromAsync)
+        console.log('data in the async storage', session)
+    }
+
+    function SubscriptionsClicked(item) {
+        navigation.navigate('Subscriptions', { id: item })
+    }
+
+    function AttendanceClicked(item) {
+        navigation.navigate('Attendance', { id: item, userStatus: 'Parent' })
+    }
+
+    const renderItem = ({ item }) => (
+        <SonListItem
+            name={item.name}
+            status={item.status}
+            subClick={() => {
+                SubscriptionsClicked(item.user_id)
+                console.log('Subscriptions', item)
+            }}
+            attendanceClick={() => {
+                AttendanceClicked(item.user_id)
+            }}
+        />
+    )
+
+    const searchFilteredData = searchText
+        ? sons?.filter((x) =>
+              x?.name.toLowerCase().includes(searchText.toLowerCase())
+          )
+        : sons
+
     return (
         <Container>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -159,7 +259,10 @@ const Home = () => {
                                     onPress={() =>
                                         navigation.navigate(
                                             'MultiPackageDetails',
-                                            { item, packageType: 'multi' }
+                                            {
+                                                item,
+                                                packageType: 'multi',
+                                            }
                                         )
                                     }
                                 >
@@ -183,7 +286,7 @@ const Home = () => {
                 </View>
                 <View style={globalStyles.horizontal} />
 
-                {(Global.UserType == 3 || Global.UserType == 4)  && (
+                {(Global.UserType == 3 || Global.UserType == 4) && (
                     <>
                         <HeaderTitle
                             deleteIcon
@@ -215,7 +318,9 @@ const Home = () => {
                                             eduPress={() =>
                                                 navigation.navigate(
                                                     'EducationalStage',
-                                                    { stage_id: item?.id }
+                                                    {
+                                                        stage_id: item?.id,
+                                                    }
                                                 )
                                             }
                                             newPress={() => {}}
@@ -229,45 +334,221 @@ const Home = () => {
                         <View style={globalStyles.horizontal} />
                     </>
                 )}
-                <HeaderTitle
-                    pressed={() => navigation.navigate('Teachers')}
-                    text={i18n.t('Teachers')}
-                />
-                <View style={styles.containerFlex}>
-                    <FlatList
-                        horizontal
-                        keyboardShouldPersistTaps="handled"
-                        contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => (
-                            <View
-                                style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
+                {session?.type == 3 ? (
+                    <>
+                        <HeaderTitle
+                            pressed={() => navigation.navigate('Teachers')}
+                            text={i18n.t('Teachers')}
+                        />
+                        <View style={styles.containerFlex}>
+                            <FlatList
+                                horizontal
+                                keyboardShouldPersistTaps="handled"
+                                contentContainerStyle={styles.flatlistContent}
+                                ListEmptyComponent={() => (
+                                    <View
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Text text={i18n.t('NoData')} />
+                                    </View>
+                                )}
+                                data={teachersArray}
+                                showsVerticalScrollIndicator={false}
+                                onEndReachedThreshold={0.5}
+                                renderItem={({ item }) => {
+                                    const uri = `${IMAGEURL}/${item.image}`
+                                    return (
+                                        <TeachersCard
+                                            pressed={() =>
+                                                navigateTeacherProfile(item)
+                                            }
+                                            uri={uri}
+                                            ratings={
+                                                item?.rate === 0
+                                                    ? null
+                                                    : item?.rate
+                                            }
+                                            lastName={item.last_name}
+                                            text={item.first_name}
+                                            image={item.image}
+                                        />
+                                    )
                                 }}
-                            >
-                                <Text text={i18n.t('NoData')} />
-                            </View>
-                        )}
-                        data={teachersArray}
-                        showsVerticalScrollIndicator={false}
-                        onEndReachedThreshold={0.5}
-                        renderItem={({ item }) => {
-                            const uri = `${IMAGEURL}/${item.image}`
-                            return (
-                                <TeachersCard
-                                    pressed={() => navigateTeacherProfile(item)}
-                                    uri={uri}
-                                    ratings={
-                                        item?.rate === 0 ? null : item?.rate
-                                    }
-                                    lastName={item.last_name}
-                                    text={item.first_name}
-                                    image={item.image}
-                                />
-                            )
+                            />
+                        </View>
+                    </>
+                ) : (
+                    <>
+                        {/* <SearchBar
+                        placeholder={i18n.t('Search')}
+                        value={searchText}
+                        onChangeText={(text) => setSearchText(text)}
+                        style={[
+                            globalStyles.searchBar,
+                            {
+                                marginTop: heightp(20),
+                                marginBottom: heightp(10),
+                            },
+                        ]}
+                        inputStyle={{ color: colors.dark }}
+                        iconColor={colors.dark}
+                    /> */}
+                        {/* <TouchableWithoutFeedback
+                        onPress={() => {
+                            // setToggle1(!toggle1)
                         }}
-                    />
-                </View>
+                    >
+                        <View style={styles.subItem}>
+                            <Ionicons
+                                name="ios-albums"
+                                size={35}
+                                color={colors.white}
+                            />
+                            <RNText style={styles.subItemText}>
+                                {i18n.t('Subscriptions')}
+                            </RNText>
+                            <FontAwesome
+                                name={
+                                    lang === 'ar'
+                                        ? 'arrow-circle-left'
+                                        : 'arrow-circle-right'
+                                }
+                                color={colors.white}
+                                size={35}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            // setToggle1(!toggle1)
+                        }}
+                    >
+                        <View style={styles.subItem}>
+                            <Ionicons
+                                name="ios-grid"
+                                size={35}
+                                color={colors.white}
+                            />
+                            <RNText style={styles.subItemText}>
+                                {i18n.t('Attendance')}
+                            </RNText>
+                            <FontAwesome
+                                name={
+                                    lang === 'ar'
+                                        ? 'arrow-circle-left'
+                                        : 'arrow-circle-right'
+                                }
+                                color={colors.white}
+                                size={35}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            // setToggle1(!toggle1)
+                        }}
+                    >
+                        <View style={styles.subItem}>
+                            <Ionicons
+                                name="ribbon-outline"
+                                size={35}
+                                color={colors.white}
+                            />
+                            <RNText style={styles.subItemText}>
+                                {i18n.t('MeasurementTestResult')}
+                            </RNText>
+                            <FontAwesome
+                                name={
+                                    lang === 'ar'
+                                        ? 'arrow-circle-left'
+                                        : 'arrow-circle-right'
+                                }
+                                color={colors.white}
+                                size={35}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback> */}
+                        {loadingContent ? (
+                            <ContentLoader
+                                viewBox="0 0 380 70"
+                                backgroundColor={colors.darkGray}
+                                foregroundColor={colors.gray}
+                                height={100}
+                                speed={1}
+                            >
+                                {i18n.locale === 'ar' ? (
+                                    <>
+                                        <Rect
+                                            x="300"
+                                            y="0"
+                                            rx="4"
+                                            ry="4"
+                                            width="70"
+                                            height="70"
+                                        />
+                                        <Rect
+                                            x="80"
+                                            y="17"
+                                            rx="4"
+                                            ry="4"
+                                            width="200"
+                                            height="13"
+                                        />
+                                        <Rect
+                                            x="80"
+                                            y="40"
+                                            rx="3"
+                                            ry="3"
+                                            width="200"
+                                            height="10"
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Rect
+                                            x="0"
+                                            y="0"
+                                            rx="4"
+                                            ry="4"
+                                            width="70"
+                                            height="70"
+                                        />
+                                        <Rect
+                                            x="80"
+                                            y="17"
+                                            rx="4"
+                                            ry="4"
+                                            width="200"
+                                            height="13"
+                                        />
+                                        <Rect
+                                            x="80"
+                                            y="40"
+                                            rx="3"
+                                            ry="3"
+                                            width="150"
+                                            height="10"
+                                        />
+                                    </>
+                                )}
+                            </ContentLoader>
+                        ) : (
+                            <>
+                                {/* <View style={globalStyles.horizontalMargin} /> */}
+                                <FlatList
+                                    data={searchFilteredData}
+                                    extraData={searchFilteredData}
+                                    renderItem={renderItem}
+                                    keyExtractor={(item) => item.id}
+                                    scrollEnabled={true}
+                                />
+                            </>
+                        )}
+                    </>
+                )}
             </ScrollView>
         </Container>
     )
@@ -278,6 +559,25 @@ const styles = StyleSheet.create({
     },
     containerFlex: {
         marginBottom: heightp(20),
+    },
+    subItem: {
+        backgroundColor: colors.primary,
+        height: 90,
+        width: '100%',
+        marginTop: 15,
+        marginBottom: 5,
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: 15,
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+    },
+    subItemText: {
+        color: colors.white,
+        fontSize: 19,
+        fontWeight: '700',
+        fontFamily: 'Cairo',
     },
 })
 
