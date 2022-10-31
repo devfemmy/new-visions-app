@@ -1,18 +1,28 @@
-import React from 'react'
-import { View, TextInput, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import {
+    View,
+    TextInput,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Feather from 'react-native-vector-icons/Feather'
 
 import defaultStyles from '../helpers/styles'
 import colors from '../helpers/colors'
+import { heightp } from '../utils/responsiveDesign'
 
 function AppTextInput({
     labelName,
     icon,
     width = '100%',
     AntDesignIcon,
+    password = false,
     ...otherProps
 }) {
+    const [showValue, setShowValue] = useState(false)
     return (
         <View style={{ flex: 1, marginVertical: 10 }}>
             <View style={styles.inputLbl}>
@@ -34,13 +44,66 @@ function AppTextInput({
                 )}
                 <Text style={styles.label}>{labelName}</Text>
             </View>
-            <View style={[styles.container]}>
-                <TextInput
-                    placeholderTextColor={defaultStyles.colors.black}
-                    style={styles.text}
-                    {...otherProps}
-                />
-            </View>
+            {password ? (
+                <View
+                    style={[
+                        styles.container,
+                        {
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        },
+                    ]}
+                >
+                    <TextInput
+                        placeholderTextColor={defaultStyles.colors.black}
+                        style={[
+                            styles.text,
+                            {
+                                width: '90%',
+                                padding: 5,
+                            },
+                        ]}
+                        secureTextEntry={!showValue}
+                        {...otherProps}
+                    />
+                    <>
+                        {showValue ? (
+                            <TouchableHighlight
+                                underlayColor="transparent"
+                                onPress={() => setShowValue(!showValue)}
+                                style={{
+                                    paddingRight: heightp(15),
+                                }}
+                            >
+                                <Feather name="eye" size={16} color="#a09e9e" />
+                            </TouchableHighlight>
+                        ) : (
+                            <TouchableHighlight
+                                underlayColor="transparent"
+                                onPress={() => setShowValue(!showValue)}
+                                style={{
+                                    paddingRight: heightp(15),
+                                }}
+                            >
+                                <Feather
+                                    name="eye-off"
+                                    size={16}
+                                    color="#a09e9e"
+                                />
+                            </TouchableHighlight>
+                        )}
+                    </>
+                </View>
+            ) : (
+                <View style={[styles.container]}>
+                    <TextInput
+                        placeholderTextColor={defaultStyles.colors.black}
+                        style={styles.text}
+                        {...otherProps}
+                    />
+                </View>
+            )}
         </View>
     )
 }

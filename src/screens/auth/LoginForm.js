@@ -42,7 +42,7 @@ function LoginForm({ submitLogin, onAppleButtonPress, signInGoogle }) {
                     autoCorrect={false}
                     AntDesignIcon="lock"
                     name="password"
-                    secureTextEntry
+                    password={true}
                     labelName={i18n.t('Password')}
                 />
                 <TouchableOpacity
