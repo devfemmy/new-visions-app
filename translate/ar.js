@@ -314,6 +314,7 @@ const Arabic = {
     NoRatingsPresentatthemoment: 'لا يوجد تقيم',
     PreviousClasses: 'الحصص السابقة',
     TeacherCourse: 'المواد الدراسية',
+    Optional: 'اختياري'
 }
 
 export default Arabic
