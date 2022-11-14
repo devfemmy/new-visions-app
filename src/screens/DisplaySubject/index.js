@@ -3,7 +3,15 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, Linking, Pressable, StyleSheet, View } from 'react-native'
+import {
+    FlatList,
+    Linking,
+    Pressable,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    View,
+} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -29,30 +37,60 @@ const DisplaySubject = () => {
     const { subjectDetails } = useAppSelector(
         (state) => state.subjectDetailsPage
     )
-    console.log(subjectDetails)
     const number_of_hours = subjectDetails?.number_of_hours
     const number_of_students = subjectDetails?.number_of_students
     const level = subjectDetails?.level?.name
     const pdf_link = subjectDetails?.pdf_link
     const chaptersArray = subjectDetails?.chapters
     const lang = 'ar'
+    //
+    const [refreshing, setRefreshing] = useState(false)
+    //
     useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            const payload = {
+                subject_id: subjectId?.toString(),
+            }
+            dispatch(getSubjectDetails(payload))
+        })
+        return unsubscribe
+    }, [dispatch, subjectId])
+
+    const subscribeToLessons = useCallback(
+        (tag) => {
+            if (subjectId)
+                navigation.navigate('SubjectTeachers', {
+                    subject_id: subjectId,
+                    tag,
+                })
+        },
+        [navigation, subjectId]
+    )
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
         const payload = {
             subject_id: subjectId?.toString(),
         }
-        dispatch(getSubjectDetails(payload))
-    }, [dispatch, subjectId])
-
-    const subscribeToLessons = useCallback((tag) => {
-        if (subjectId)
-            navigation.navigate('SubjectTeachers', {
-                subject_id: subjectId,
-                tag,
-            })
-    }, [navigation, subjectId])
+        const res = await dispatch(getSubjectDetails(payload))
+        console.log('response', res?.payload)
+        if (res?.payload?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [])
 
     return (
-        <Container>
+        <ScrollView
+            contentContainerStyle={[
+                styles.container,
+                globalStyles.container,
+                globalStyles.wrapper,
+            ]}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <View style={styles.containerFlex}>
                 <View>
                     <FastImage
@@ -148,7 +186,9 @@ const DisplaySubject = () => {
                         />
                         <Pressable
                             onPress={
-                                Global.UserType == 4 ? () => subscribeToLessons('parent') : () =>  subscribeToLessons('student')
+                                Global.UserType == 4
+                                    ? () => subscribeToLessons('parent')
+                                    : () => subscribeToLessons('student')
                             }
                             style={globalStyles.subBtn}
                         >
@@ -193,10 +233,13 @@ const DisplaySubject = () => {
                 }}
                 position="right"
             />
-        </Container>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1,
+    },
     flatlistContent: {
         flexGrow: 1,
     },

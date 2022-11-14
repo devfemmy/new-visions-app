@@ -9,6 +9,7 @@ import {
     TouchableWithoutFeedback,
     View,
     Text as RNText,
+    RefreshControl,
 } from 'react-native'
 import i18n from 'i18n-js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -55,6 +56,8 @@ const Home = () => {
     const [sons, setSons] = useState([])
     const [loadingContent, setLoadingContent] = useState(true)
     //
+    const [refreshing, setRefreshing] = useState(false)
+    //
     function getPackages(params) {
         axios
             .post('https://newvisions.sa/api/getPackages', {})
@@ -93,29 +96,9 @@ const Home = () => {
             })
     }
 
-    useEffect(() => {
-        dispatch(getHomePage())
-        getPackages()
-        // Send Notification Token
-
-        async function postNotificationToken() {
-            const fcmtoken = await AsyncStorage.getItem('fcmtoken')
-            const payload = {
-                token: fcmtoken,
-            }
-            console.log('e plemnty ooooo', payload)
-            try {
-                const res = await HomePageService.postNotificationData(payload)
-                return res
-            } catch (err) {
-                console.log(err, 'error')
-            }
-        }
-        postNotificationToken()
-    }, [dispatch])
-
     const navigateTeacherProfile = useCallback(
         (item) => {
+            console.log('item wey dey here', item)
             navigation.navigate('TeacherProfile', {
                 item,
                 title: `${item?.first_name} ${item?.last_name}`,
@@ -161,12 +144,31 @@ const Home = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            console.log('<<<<<tabs Refreshed>>>>>>')
             getData()
+            dispatch(getHomePage())
+            getPackages()
+            // Send Notification Token
+
+            async function postNotificationToken() {
+                const fcmtoken = await AsyncStorage.getItem('fcmtoken')
+                const payload = {
+                    token: fcmtoken,
+                }
+                console.log('e plemnty ooooo', payload)
+                try {
+                    const res = await HomePageService.postNotificationData(
+                        payload
+                    )
+                    return res
+                } catch (err) {
+                    console.log(err, 'error')
+                }
+            }
+            postNotificationToken()
             getChildren()
         })
         return unsubscribe
-    }, [navigation])
+    }, [navigation, dispatch])
 
     const getData = async () => {
         const dataFromAsync = await AsyncStorage.getItem('user')
@@ -202,8 +204,27 @@ const Home = () => {
           )
         : sons
 
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const res = await dispatch(getHomePage())
+        console.log('response', res?.payload)
+        if (res?.payload?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [])
+
     return (
-        <Container>
+        <ScrollView
+            contentContainerStyle={[
+                styles.container,
+                globalStyles.container,
+                globalStyles.wrapper,
+            ]}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <ScrollView showsVerticalScrollIndicator={false}>
                 <HeaderTitle
                     pressed={() => navigation.navigate('PackagesStage')}
@@ -550,10 +571,13 @@ const Home = () => {
                     </>
                 )}
             </ScrollView>
-        </Container>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1,
+    },
     flatlistContent: {
         // flexGrow: 1,
     },

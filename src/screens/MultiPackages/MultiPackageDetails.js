@@ -1,8 +1,15 @@
 /* eslint-disable no-else-return */
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
-import { View, Text, ImageBackground, Platform, Alert } from 'react-native'
-import React from 'react'
+import {
+    View,
+    Text,
+    ImageBackground,
+    Platform,
+    Alert,
+    RefreshControl,
+} from 'react-native'
+import React, { useCallback } from 'react'
 import { IMAGEURL } from '../../utils/functions'
 import FastImage from 'react-native-fast-image'
 import { StyleSheet } from 'react-native'
@@ -48,11 +55,12 @@ export default function MultiPackageDetails({ route }) {
     const { packageType, item } = route.params
     const [uniqueId, setUniqueId] = useState('')
     const [loading, setLoading] = useState(false)
+    const [refreshing, setRefreshing] = useState(false)
 
     const uri = `${IMAGEURL}/${description.image}`
 
-    function getMultiPackageDetails(params) {
-        axios
+    async function getMultiPackageDetails(params) {
+        return await axios
             .post('https://newvisions.sa/api/getMultiPackageDetails', {
                 package_id: item?.id,
             })
@@ -82,6 +90,7 @@ export default function MultiPackageDetails({ route }) {
                         alert(response.data.message)
                     }
                 }
+                return response
             })
             .catch((error) => {
                 showLoadingSpinner(false)
@@ -90,8 +99,13 @@ export default function MultiPackageDetails({ route }) {
     }
 
     useEffect(() => {
-        getMultiPackageDetails()
+        const unsubscribe = navigation.addListener('focus', () => {
+            // console.log('<<<<<tabs Refreshed>>>>>>')
+            getMultiPackageDetails()
+        })
+        return unsubscribe
     }, [])
+
     useEffect(() => {
         if (Platform.OS === 'ios') {
             getInAppPurchaseProducts()
@@ -140,33 +154,42 @@ export default function MultiPackageDetails({ route }) {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
         if (value === 'parent') {
             console.log('her')
-            navigation.navigate('ParentSub', {uniqueId, type: 2, lesson_id: '',day_id: '',})
-        }else {
-            console.log('student')
-        if (!iap_activation || Platform.OS === 'android') {
-            subscribeExternal()
+            navigation.navigate('ParentSub', {
+                uniqueId,
+                type: 2,
+                lesson_id: '',
+                day_id: '',
+            })
         } else {
-            const subscriptionInfo = {
-                billNumber: 'ios_bill',
-                paymentFor: 'Multipackage',
-                lessonId: '1258',
-                subjectId: 12345,
-                price: 200,
+            console.log('student')
+            if (!iap_activation || Platform.OS === 'android') {
+                subscribeExternal()
+            } else {
+                const subscriptionInfo = {
+                    billNumber: 'ios_bill',
+                    paymentFor: 'Multipackage',
+                    lessonId: '1258',
+                    subjectId: 12345,
+                    price: 200,
+                }
+                deviceStorage
+                    .saveDataToDevice({
+                        key: 'subscriptionInfo',
+                        value: subscriptionInfo,
+                    })
+                    .then(() => requestPurchase({ sku: iapId }))
             }
-            deviceStorage
-                .saveDataToDevice({
-                    key: 'subscriptionInfo',
-                    value: subscriptionInfo,
-                })
-                .then(() => requestPurchase({ sku: iapId }))
-        }
         }
     }
     const subscribeSinglePackage = (value) => {
         if (value === 'parent') {
-            navigation.navigate('ParentSub', {uniqueId, type: 2, lesson_id: '',day_id: '',})
-
-        }else {
+            navigation.navigate('ParentSub', {
+                uniqueId,
+                type: 2,
+                lesson_id: '',
+                day_id: '',
+            })
+        } else {
             console.log('student')
             if (!iap_activation || Platform.OS === 'android') {
                 subscribeExternal()
@@ -192,11 +215,29 @@ export default function MultiPackageDetails({ route }) {
     useLayoutEffect(() => {
         showLoadingSpinner(true)
     }, [])
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const res = await getMultiPackageDetails()
+        console.log('ffffffffffffffffffffffffffffff response', res?.data)
+        if (res?.data?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [])
+
     return (
         <>
             <Screen style={{ marginBottom: 20, paddingHorizontal: 20 }}>
                 <Loader visible={loading} />
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
                     <FastImage
                         style={{
                             width: '95%',
@@ -327,56 +368,64 @@ export default function MultiPackageDetails({ route }) {
                     {description && (
                         <DetailsTeachers data={description.content} />
                     )}
-    
+
                     {Global.UserType == 4 ? (
                         <View>
-                            {iap_activation ? <View /> : 
-                            
-                            <View
-                            style={{
-                                backgroundColor: colors.primary,
-                                width: '90%',
-                                height: 45,
-                                alignSelf: 'center',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: 20,
-                                borderRadius: 20,
-                            }}
-                        >
-                            <TouchableOpacity
-                                onPress={
-                                    packageType === 'multi'
-                                        ?() => subscribeMultiPackage('parent')
-                                        : () => subscribeSinglePackage('parent')
-                                }
-                            >
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text
-                                        style={[
-                                            styles.subItemText,
-                                            {
-                                                marginHorizontal: 20,
-                                                color: colors.white,
-                                            },
-                                        ]}
-                                    >
-                                        {I18n.t('SubscribeNow')}{' '}
-                                        {description.price} {I18n.t('SAR')}
-                                    </Text>
-                                    <FontAwesome
-                                        name={
-                                            I18n.locale == 'ar'
-                                                ? 'arrow-circle-left'
-                                                : 'arrow-circle-right'
+                            {iap_activation ? (
+                                <View />
+                            ) : (
+                                <View
+                                    style={{
+                                        backgroundColor: colors.primary,
+                                        width: '90%',
+                                        height: 45,
+                                        alignSelf: 'center',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginTop: 20,
+                                        borderRadius: 20,
+                                    }}
+                                >
+                                    <TouchableOpacity
+                                        onPress={
+                                            packageType === 'multi'
+                                                ? () =>
+                                                      subscribeMultiPackage(
+                                                          'parent'
+                                                      )
+                                                : () =>
+                                                      subscribeSinglePackage(
+                                                          'parent'
+                                                      )
                                         }
-                                        size={30}
-                                        color={colors.white}
-                                    />
+                                    >
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text
+                                                style={[
+                                                    styles.subItemText,
+                                                    {
+                                                        marginHorizontal: 20,
+                                                        color: colors.white,
+                                                    },
+                                                ]}
+                                            >
+                                                {I18n.t('SubscribeNow')}{' '}
+                                                {description.price}{' '}
+                                                {I18n.t('SAR')}
+                                            </Text>
+                                            <FontAwesome
+                                                name={
+                                                    I18n.locale == 'ar'
+                                                        ? 'arrow-circle-left'
+                                                        : 'arrow-circle-right'
+                                                }
+                                                size={30}
+                                                color={colors.white}
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
-                            </TouchableOpacity>
-                        </View>       
-                            }
+                            )}
                         </View>
                     ) : (
                         <View
@@ -395,7 +444,8 @@ export default function MultiPackageDetails({ route }) {
                                 onPress={
                                     packageType === 'multi'
                                         ? () => subscribeMultiPackage('student')
-                                        : () => subscribeSinglePackage('student')
+                                        : () =>
+                                              subscribeSinglePackage('student')
                                 }
                             >
                                 <View style={{ flexDirection: 'row' }}>

@@ -2,7 +2,15 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, FlatList, Platform, StyleSheet, View } from 'react-native'
+import {
+    Alert,
+    FlatList,
+    Platform,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    View,
+} from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
 import TeachersDetailCard from '../../components/TeachersDetail'
@@ -16,6 +24,7 @@ import { requestPurchase } from '../../services/iap'
 import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import SubscriptionModal from '../../components/SubscriptionModal'
+import { globalStyles } from '../../helpers/globalStyles'
 
 const SubjectTeachers = () => {
     const dispatch = useAppDispatch()
@@ -32,17 +41,26 @@ const SubjectTeachers = () => {
     } = useAppSelector((state) => state)
     const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
     console.log('subjectTeachersData', subject_id, subjectTeachersData)
+    //
+    const [refreshing, setRefreshing] = useState(false)
+    //
     useEffect(() => {
-        const payload = {
-            subject_id,
-            teacher_id: teacher_id ? teacher_id : '',
-        }
-        dispatch(getSubjectTeachers(payload))
+        const unsubscribe = navigation.addListener('focus', () => {
+            const payload = {
+                subject_id,
+                teacher_id: teacher_id ? teacher_id : '',
+            }
+            dispatch(getSubjectTeachers(payload))
+        })
+        return unsubscribe
     }, [dispatch, subject_id])
 
     const navigateFullSubscription = useCallback(
         (item) => {
-            console.log('wwwwwwwwww TeacherProfile wwwwwwwwwwwwwwwwwwwww id', item?.id)
+            console.log(
+                'wwwwwwwwww TeacherProfile wwwwwwwwwwwwwwwwwwwww id',
+                item?.id
+            )
             navigation.navigate('FullLesson', {
                 subject_id: item?.subject_id,
                 iap_id: item?.iap_id,
@@ -125,7 +143,10 @@ const SubjectTeachers = () => {
             // const {id, title, image} = item;
             // const uri = `${IMAGEURL}/${image}`
             // if (id)
-            console.log('wwwwwwwwww TeacherProfile wwwwwwwwwwwwwwwwwwwww id', item?.id)
+            console.log(
+                'wwwwwwwwww TeacherProfile wwwwwwwwwwwwwwwwwwwww id',
+                item?.id
+            )
             navigation.navigate('PrivateLesson', {
                 subject_id: item?.subject?.id,
                 teacher_id: item?.teacher_id,
@@ -144,8 +165,32 @@ const SubjectTeachers = () => {
                   .includes(searchText.toLowerCase())
           )
         : subjectTeachersData
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const payload = {
+            subject_id,
+            teacher_id: teacher_id ? teacher_id : '',
+        }
+        const res = await dispatch(getSubjectTeachers(payload))
+        console.log('response', res?.payload)
+        if (res?.payload?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [dispatch, subject_id])
+
     return (
-        <Container>
+        <ScrollView
+            contentContainerStyle={[
+                styles.container,
+                globalStyles.container,
+                globalStyles.wrapper,
+            ]}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <Loader visible={loader} />
             <SubscriptionModal
                 onPress={() => {
@@ -223,10 +268,13 @@ const SubjectTeachers = () => {
                     }}
                 />
             </View>
-        </Container>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1,
+    },
     flatlistContent: {
         flexGrow: 1,
     },

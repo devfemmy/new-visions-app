@@ -1,5 +1,5 @@
 import { View, ImageBackground, FlatList } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { TouchableWithoutFeedback } from 'react-native'
@@ -23,8 +23,9 @@ export default function PackagesList({ route, navigation }) {
         useContext(AppContext)
 
     const [multiPackages, setMultiPackages] = useState([])
-    function getPackages(params) {
-        axios
+    const [refreshing, setRefreshing] = useState(false)
+    async function getPackages(params) {
+        return await axios
             .post('https://newvisions.sa/api/getPackages', {
                 stage_id: route.params.stage_id,
             })
@@ -39,6 +40,7 @@ export default function PackagesList({ route, navigation }) {
                         // console.log('multi Packages: ' + data)
                         setMultiPackages(data)
                         showLoadingSpinner(false)
+                        return response
                     } else if (response.data.code == 403) {
                         alert('This Account is Logged in from another Device.')
                         onLogout()
@@ -48,6 +50,7 @@ export default function PackagesList({ route, navigation }) {
                         alert(response.data.message)
                     }
                 }
+                return response
             })
             .catch((error) => {
                 showLoadingSpinner(false)
@@ -56,15 +59,22 @@ export default function PackagesList({ route, navigation }) {
     }
 
     useEffect(() => {
-        getPackages()
-    }, [])
+        const unsubscribe = navigation.addListener('focus', () => {
+            // console.log('<<<<<tabs Refreshed>>>>>>')
+            getPackages()
+        })
+        return unsubscribe
+    }, [route.params.stage_id])
 
     useLayoutEffect(() => {
         showLoadingSpinner(true)
     }, [])
 
     function openDetails(item) {
-        navigation.navigate('MultiPackageDetails', {item, packageType: 'single'})
+        navigation.navigate('MultiPackageDetails', {
+            item,
+            packageType: 'single',
+        })
     }
 
     const shareDetails = async (item) => {
@@ -110,6 +120,16 @@ export default function PackagesList({ route, navigation }) {
             }}
         />
     )
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const res = await getPackages()
+        console.log('response', res.data)
+        if (res?.data?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [])
+
     return (
         <Screen>
             {multiPackages.length > 0 ||
@@ -121,6 +141,8 @@ export default function PackagesList({ route, navigation }) {
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
                     // ListEmptyComponent={() => <Text text={I18n.t('NoData')} />}
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
                 />
             ) : (
                 <View

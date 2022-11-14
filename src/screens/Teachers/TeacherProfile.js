@@ -14,6 +14,7 @@ import {
     ScrollView,
     FlatList,
     Platform,
+    RefreshControl,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -35,6 +36,7 @@ import { AppContext } from '../../context/AppState'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getSubjectTeachers } from '../../redux/action'
 import HeaderTitle from '../../components/common/HeaderTitle'
+import { Loader } from '../../components/Loader'
 
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
@@ -54,51 +56,53 @@ const TeacherProfile = () => {
     const { subjectTeachersPage } = useAppSelector((state) => state)
     const subjectTeachersData = subjectTeachersPage?.subjectTeachersData
     //
-    useEffect(() => {
-        // get Notification
-        async function getTeacherProfile() {
-            // setLoading(true)
-            const payload = {
-                teacher_id: item?.id,
-            }
-            try {
-                const res = await HomePageService.getTeacherProfile(payload)
-                const data = res?.data
-                if (res.code === 403) {
-                    // Global.AuthenticationToken = ''
-                    // Global.UserName = ''
-                    // Global.UserType = ''
-                    // Global.UserGender = ''
-                    // LoggedIn = false
-                    alert('This Account is Logged in from another Device.')
-                    onLogOut()
-                    // return
-                } else {
-                    // setLoading(false)
-                    setTeachersData(data)
-                    const arrayResult = Object.keys(data?.rate_numbers).map(
-                        (room) => {
-                            return { id: room, val: data?.rate_numbers[room] }
-                        }
-                    )
-                    setRateArray(arrayResult)
-                    setCourses(data?.courses)
-                    // console.log(
-                    //     'wwwwwwwwww data zooooooooooooooom',
-                    //     data?.courses
-                    // )
-                    // console.log('wwwwwwwwww data', arrayResult)
-
-                    const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
-                    setVideoId(id)
-                    return res
-                }
-            } catch (err) {
-                // setLoading(false)
-            }
+    const [refreshing, setRefreshing] = useState(false)
+    const [loading, setLoading] = useState(false)
+    //
+    async function getTeacherProfile() {
+        setLoading(true)
+        const payload = {
+            teacher_id: item?.id,
         }
-        getTeacherProfile()
+        try {
+            const res = await HomePageService.getTeacherProfile(payload)
+            const data = res?.data
+            if (res.code === 403) {
+                // Global.AuthenticationToken = ''
+                // Global.UserName = ''
+                // Global.UserType = ''
+                // Global.UserGender = ''
+                // LoggedIn = false
+                alert('This Account is Logged in from another Device.')
+                onLogOut()
+                // return
+            } else {
+                setLoading(false)
+                setTeachersData(data)
+                const arrayResult = Object.keys(data?.rate_numbers).map(
+                    (room) => {
+                        return { id: room, val: data?.rate_numbers[room] }
+                    }
+                )
+                setRateArray(arrayResult)
+                setCourses(data?.courses)
+
+                const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
+                setVideoId(id)
+                return res
+            }
+        } catch (err) {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // console.log('<<<<<tabs Refreshed>>>>>>')
+            getTeacherProfile()
+        })
+        return unsubscribe
     }, [item?.id])
+
     const uri = `${IMAGEURL}/${teachersData?.image}`
 
     const videoCallbacks = {
@@ -148,17 +152,34 @@ const TeacherProfile = () => {
         return Platform.OS === 'android' && lang === 'ar'
     }
 
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const res = await getTeacherProfile()
+        console.log('res wey dey here', res)
+        if (res?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [item?.id])
+
     return (
-        <Container
-            contentContainerStyle={
-                {
-                    // flexGrow: 2,
-                    // backgroundColor: '#f0f',
-                    // paddingBottom: heightp(1000),
+        <>
+            <Loader visible={loading} />
+            <ScrollView
+                contentContainerStyle={[
+                    {
+                        flexGrow: 1,
+                    },
+                    globalStyles.container,
+                    globalStyles.wrapper,
+                ]}
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
                 }
-            }
-        >
-            <ScrollView showsVerticalScrollIndicator={false}>
+            >
                 <View style={[styles.container, globalStyles.rowBetween]}>
                     <FastImage
                         style={{
@@ -499,7 +520,7 @@ const TeacherProfile = () => {
                     )}
                 </View>
             </ScrollView>
-        </Container>
+        </>
     )
 }
 

@@ -2,7 +2,13 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
 import I18n from 'i18n-js'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from 'react-native'
 import { Container, Text } from '../../components/common'
 import LessonCard from '../../components/LessonCard'
 import { Loader } from '../../components/Loader'
@@ -12,14 +18,19 @@ import colors from '../../helpers/colors'
 import { globalStyles } from '../../helpers/globalStyles'
 import { getSubjectLevels } from '../../redux/action'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import HomePageService from '../../services/userServices'
 import { heightp } from '../../utils/responsiveDesign'
 
 const EducationalStage = () => {
     const route = useRoute()
-    const { lang, loadingSpinner, showLoadingSpinner } = useContext(AppContext)
+    const { lang, loadingSpinner, showLoadingSpinner, onLogout } =
+        useContext(AppContext)
     // const { setDisabledProps } = useContext(SubContext);
+    const [levelDatas, setLevelDatas] = useState(null)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
+    const [refreshing, setRefreshing] = useState(false)
+    const [loading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
     const { stage_id } = route.params
     const navigation = useNavigation()
@@ -30,13 +41,38 @@ const EducationalStage = () => {
     } else {
         stagesArray = ['Primary School', 'Middle School', 'Secondary School']
     }
-    useEffect(() => {
+
+    const getSubjectLevels = async () => {
+        setLoading(true)
         const payload = {
             stage_id,
         }
-        // dispatch(getSubjectStages())
-        dispatch(getSubjectLevels(payload))
+        try {
+            const res = await HomePageService.getLevels(payload)
+            const data = res?.data
+            if (res.code === 200) {
+                setLoading(false)
+                setLevelDatas(data)
+                // console.log('wwwwwwwwww data zooooooooooooooom', data)
+            } else {
+                alert('This Account is Logged in from another Device.')
+                onLogout()
+                // return
+            }
+            return res
+        } catch (err) {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // console.log('<<<<<tabs Refreshed>>>>>>')
+            getSubjectLevels()
+        })
+        return unsubscribe
     }, [stage_id, dispatch])
+
     const navigateSubjects = useCallback(() => {
         if (activeStage)
             navigation.navigate('SubjectDetails', {
@@ -44,17 +80,39 @@ const EducationalStage = () => {
                 // subject: route?.params?.SubjectValue ? route.params.SubjectValue : '',
             })
     }, [activeStage, navigation])
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const res = await getSubjectLevels()
+        console.log('response', res)
+        if (res?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [])
+
     return (
-        <Container>
-            {/* <Loader visible={loading} /> */}
-            <ScrollView showsVerticalScrollIndicator={false}>
+        <>
+            <ScrollView
+                contentContainerStyle={[
+                    styles.container,
+                    globalStyles.container,
+                    globalStyles.wrapper,
+                ]}
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 <Text
                     style={styles.textStyle}
                     text={stagesArray[stage_id - 1]}
                 />
                 <View style={globalStyles.horizontalMargin} />
                 <View>
-                    {levelData?.map((item, index) => (
+                    {levelDatas?.map((item, index) => (
                         <LessonCard
                             key={item?.id}
                             show
@@ -73,29 +131,15 @@ const EducationalStage = () => {
                         />
                     ))}
                 </View>
-                {/* {activeStage != null ? (
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        style={styles.continueBtn}
-                        onPress={navigateSubjects}
-                    >
-                        <Text
-                            text={I18n.t('Next')}
-                            style={{
-                                textAlign: 'center',
-                                fontWeight: '600',
-                                color: 'white',
-                                fontFamily: 'Cairo-Medium',
-                                fontSize: 20,
-                            }}
-                        />
-                    </TouchableOpacity>
-                ) : null} */}
             </ScrollView>
-        </Container>
+            <Loader visible={loading} />
+        </>
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1,
+    },
     textStyle: {
         fontSize: heightp(22),
         fontWeight: 'bold',

@@ -59,14 +59,7 @@ const Teachers = () => {
         onEndReachedCalledDuringMomentum,
         setOnEndReachedCalledDuringMomentum,
     ] = useState(false)
-    // console.log('quiz data', dataForTeachers.length)
-    // const { level } = route.params;
-    // const data = useAppSelector((state)=> console.log(state, 'hello'));
-    // const {
-    //     teachersPage,
-    //     app: { loading },
-    // } = useAppSelector((state) => state)
-    // const teachersData = teachersPage?.teachersData
+    // console.log('quiz data', responseValue.length, responseValue)
     async function getTeachers(page) {
         setIsLoading(true)
         const payload = { page: page }
@@ -96,15 +89,6 @@ const Teachers = () => {
                 const data = res?.data?.data
                 setIsLoading(false)
                 setDataForTeachers(data)
-                // const filledArray = Array.from(
-                //     Array(data?.questions.length),
-                //     () => {
-                //         return { answer: '', question_id: '' }
-                //     }
-                // )
-                // setAnswersInput(filledArray)
-                // setNumOfMins(data?.number_of_minutes)
-                // console.log('quiz data', data)
 
                 return data
             }
@@ -113,12 +97,6 @@ const Teachers = () => {
             console.log('err', err)
         }
     }
-    useEffect(() => {
-        // const res = dispatch(getTeachers())
-        // console.log('res', res)
-        // setDataForTeachers(...teachersData, teachersData)
-        // getTeachers(page)
-    }, [dispatch])
 
     const navigateSubjectsDetails = useCallback(
         (item) => {
@@ -228,6 +206,8 @@ const Teachers = () => {
                         'Acess-Control-Allow-Origin': '*',
                         Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
+                        lang: lang,
+                        version: 3,
                     },
                 }
             )
@@ -287,8 +267,6 @@ const Teachers = () => {
             search: text,
         }
 
-        // console.log(`https://www.newvisions.sa/api/getTeachers?page=${1}`)
-
         axios
             .post(
                 `https://www.newvisions.sa/api/getTeachers?page=${1}`, // URL
@@ -300,6 +278,8 @@ const Teachers = () => {
                         'Acess-Control-Allow-Origin': '*',
                         Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
+                        lang: lang,
+                        version: 3,
                     },
                 }
             )
@@ -319,24 +299,6 @@ const Teachers = () => {
                     ] = response.data.data.data
 
                     SetresponseValue(response.data?.data?.data)
-                    // console.log(
-                    //     `saved to cache :${JSON.stringify({
-                    //         page,
-                    //         search: SerachValue,
-                    //     })}`
-                    // )
-
-                    // console.log(
-                    //     'aaaaaaaaaaaa page number',
-                    //     1,
-                    //     'aaaaaaaaaaaa payload',
-                    //     payload
-                    // )
-
-                    // console.log(
-                    //     'xxxxxxxxxxxxxxxxxxxx responseValue',
-                    //     response.data.data.data
-                    // )
                 }
             })
             .catch((error) => {})
@@ -387,20 +349,12 @@ const Teachers = () => {
                         'Acess-Control-Allow-Origin': '*',
                         Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
+                        lang: lang,
+                        version: 3,
                     },
                 }
             )
             .then((response) => {
-                // if (response.data.code === 403) {
-                //     Global.AuthenticationToken = ''
-                //     Global.UserName = ''
-                //     Global.UserType = ''
-                //     Global.UserGender = ''
-                //     LoggedIn = false
-                //     alert('This Account is Logged in from another Device.')
-                //     onLogOut()
-                //     // return
-                // } else {
                 setLoadedPage(Page)
                 setCurrentSerachValue(SerachValue)
                 SetresponseValue(response.data?.data?.data || [])
@@ -409,63 +363,12 @@ const Teachers = () => {
                 ] = response.data?.data?.data || []
                 setMaxPages(Math.ceil(response.data.data.total / 10))
                 GetExtraCache()
-                // }
             })
             .catch((error) => {
                 console.log('errrrrrorrrrr wey dey here', error)
                 alert(error)
             })
     }, [Page, LoadedPage])
-
-    const renderFooter = () => {
-        return (
-            <View
-                style={{
-                    marginBottom: heightp(60),
-                }}
-            >
-                {isLoading ? (
-                    <ActivityIndicator
-                        color={colors.primary}
-                        size="small"
-                        style={{ marginLeft: 8 }}
-                    />
-                ) : null}
-                {/* <View style={styles.footer}>
-                    <Pressable
-                        activeOpacity={0.9}
-                        onPress={() => {
-                            fetchTeachers()
-                        }}
-                        style={styles.loadMoreBtn}
-                    >
-                        <RNText style={styles.btnText}>
-                            {isLoading ? 'Loading...' : 'Load More'}
-                        </RNText>
-                        {isLoading ? (
-                            <ActivityIndicator
-                                color={colors.primary}
-                                size="small"
-                                style={{ marginLeft: 8 }}
-                            />
-                        ) : null}
-                    </Pressable>
-                </View> */}
-            </View>
-        )
-    }
-
-    const onEndReached = useCallback(
-        (distanceFromEnd) => {
-            if (!onEndReachedCalledDuringMomentum) {
-                // setTimeout(() => {
-                fetchTeachers()
-                // }, 3000)
-                setOnEndReachedCalledDuringMomentum(true)
-            }
-        },
-        [onEndReachedCalledDuringMomentum]
-    )
 
     return (
         <View style={styles.containerFlex}>
@@ -504,6 +407,7 @@ const Teachers = () => {
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => (
                         <>
+                            <>{console.log(item.id)}</>
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>

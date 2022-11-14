@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FlatList, LogBox, StyleSheet, View } from 'react-native'
 import { Container, Text } from '../../components/common'
 import PackageStageCard from '../../components/PackageStageCard'
@@ -10,24 +10,33 @@ import {
 } from '../../redux/action/subjectPageAction'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL2 } from '../../utils/functions'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp, widthp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
+import { AppContext } from '../../context/AppState'
+import { Loader } from '../../components/Loader'
 
 LogBox.ignoreAllLogs()
 const PackagesStage = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
+    const { loadingSpinner } = useContext(AppContext)
     const { subjectData } = useAppSelector((state) => state.subjectPage)
     const { levelData } = useAppSelector((state) => state.levelPage)
     console.log('levelData', levelData)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
+    //
+    const [refreshing, setRefreshing] = useState(false)
     useEffect(() => {
-        const payload = {
-            stage_id: activeStage?.id,
-        }
-        dispatch(getSubjectStages())
-        dispatch(getSubjectLevels(payload))
+        const unsubscribe = navigation.addListener('focus', () => {
+            // console.log('<<<<<tabs Refreshed>>>>>>')
+            const payload = {
+                stage_id: activeStage?.id,
+            }
+            dispatch(getSubjectStages())
+            dispatch(getSubjectLevels(payload))
+        })
+        return unsubscribe
     }, [activeStage?.id, dispatch])
 
     const navigateSubjects = useCallback(() => {
@@ -38,8 +47,17 @@ const PackagesStage = () => {
             })
     }, [activeLevel?.id, activeStage, navigation])
 
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const res = await dispatch(getSubjectStages())
+        console.log('response', res?.payload)
+        if (res?.payload?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [])
+
     return (
-        <Container>
+        <>
             <View style={styles.containerFlex}>
                 <FlatList
                     keyboardShouldPersistTaps="handled"
@@ -76,9 +94,12 @@ const PackagesStage = () => {
                             />
                         )
                     }}
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
                 />
             </View>
-        </Container>
+            {/* <Loader visible={loadingSpinner} /> */}
+        </>
     )
 }
 
@@ -89,6 +110,8 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     containerFlex: {
+        flex: 1,
         marginBottom: heightp(20),
+        paddingHorizontal: widthp(15),
     },
 })
