@@ -10,7 +10,7 @@ import {
 } from '../../redux/action/subjectPageAction'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL2 } from '../../utils/functions'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp, widthp } from '../../utils/responsiveDesign'
 import I18n from 'i18n-js'
 
 LogBox.ignoreAllLogs()
@@ -21,6 +21,8 @@ const Subject = () => {
     const { levelData } = useAppSelector((state) => state.levelPage)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
+    //
+    const [refreshing, setRefreshing] = useState(false)
     useEffect(() => {
         const payload = {
             stage_id: activeStage?.id,
@@ -37,8 +39,17 @@ const Subject = () => {
             })
     }, [activeLevel?.id, activeStage, navigation])
 
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+        const res = await dispatch(getSubjectStages())
+        console.log('response', res?.payload)
+        if (res?.payload?.code === 200) {
+            setRefreshing(false)
+        }
+    }, [activeStage])
+
     return (
-        <Container>
+        <>
             <View style={styles.containerFlex}>
                 <FlatList
                     keyboardShouldPersistTaps="handled"
@@ -75,9 +86,11 @@ const Subject = () => {
                             />
                         )
                     }}
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
                 />
             </View>
-        </Container>
+        </>
     )
 }
 const styles = StyleSheet.create({
@@ -85,7 +98,9 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     containerFlex: {
+        flex: 1,
         marginBottom: heightp(20),
+        paddingHorizontal: widthp(15),
     },
 })
 
