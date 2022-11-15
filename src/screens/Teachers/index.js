@@ -419,6 +419,7 @@ const Teachers = () => {
                                 rates_count={item?.rates_count}
                                 ratings={item?.rate === 0 ? null : item?.rate}
                                 uri={`${IMAGEURL}/${item?.image}`}
+                                image={item?.image}
                                 contents={`${item?.first_name} ${item?.last_name}`}
                             />
                         </>
