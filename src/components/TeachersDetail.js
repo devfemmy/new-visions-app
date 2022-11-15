@@ -13,11 +13,13 @@ import colors from '../helpers/colors'
 import { AppContext } from '../context/AppState'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { AirbnbRating } from 'react-native-ratings'
+const defaultUri = require('../assets/img/default-profile-picture.jpeg')
 
 const TeachersDetailCard = ({
     contents,
     title,
     uri,
+    image,
     gender,
     rates_count,
     city,
@@ -122,14 +124,20 @@ const TeachersDetailCard = ({
                     <View>
                         <FastImage
                             style={{
-                                width: heightp(100),
-                                height: heightp(90),
+                                width:
+                                    image === null ? heightp(75) : heightp(100),
+                                height:
+                                    image === null ? heightp(75) : heightp(90),
                                 borderRadius: 10,
                             }}
-                            source={{
-                                uri,
-                                priority: FastImage.priority.normal,
-                            }}
+                            source={
+                                image === null
+                                    ? defaultUri
+                                    : {
+                                          uri,
+                                          priority: FastImage.priority.normal,
+                                      }
+                            }
                             resizeMode={FastImage.resizeMode.cover}
                         />
                     </View>
