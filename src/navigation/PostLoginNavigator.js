@@ -55,6 +55,10 @@ import LiveNowQuizResult from '../screens/LiveNowQuizResult'
 import AttendanceResult from '../screens/AttendanceResult'
 import TeacherCourse from '../screens/Teachers/TeacherCourse'
 import ParentSubscription from '../screens/ParentSubscription'
+import FazaPackagesStage from '../screens/Faza/FazaPackages'
+import FazaEducationalStage from '../screens/Faza/FazaEducationalStage'
+import FazaReviewCourses from '../screens/Faza/FazaReviewCourses'
+import FazaSubscription from '../screens/Faza/FazaSubscription'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -429,6 +433,42 @@ export const PostLoginNavigator = () => {
                         headerShown: true,
                         headerLeft: backRight,
                     }}
+                />
+                <MainStack.Screen
+                    name="FazaPackagesStage"
+                    component={FazaPackagesStage}
+                    options={{
+                        title: I18n.t('EducationalLevel'),
+                        headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
+                    }}
+                />
+                <MainStack.Screen
+                    name="FazaEducationalStage"
+                    component={FazaEducationalStage}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('EducationalLevel'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="FazaReviewCourses"
+                    component={FazaReviewCourses}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('EducationalLevel'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="FazaSubscription"
+                    component={FazaSubscription}
+                    options={() => ({
+                        headerShown: true,
+                        title: '',
+                        headerLeft: backRight,
+                    })}
                 />
             </MainStack.Navigator>
         </>

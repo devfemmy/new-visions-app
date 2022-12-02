@@ -314,6 +314,10 @@ const Arabic = {
     NoRatingsPresentatthemoment: 'لا يوجد تقيم',
     PreviousClasses: 'الحصص السابقة',
     TeacherCourse: 'المواد الدراسية',
+    FAZA: 'فزعة',
+    Price: 'السعر',
+    GroupConfirmation: 'اختيار المجموعة',
+    GroupDates: 'مواعيد المجموعات',
 }
 
 export default Arabic

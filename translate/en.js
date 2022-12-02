@@ -304,6 +304,10 @@ const English = {
     NoRatingsPresentatthemoment: 'No Ratings Present at the moment',
     PreviousClasses: 'Previous Classes',
     TeacherCourse: 'Courses',
+    FAZA: 'FAZA',
+    Price: 'Price',
+    GroupConfirmation: 'Group confirmation',
+    GroupDates: 'Group dates (choose the appropriate group)',
 }
 
 export default English

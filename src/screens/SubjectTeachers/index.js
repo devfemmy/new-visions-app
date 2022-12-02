@@ -229,13 +229,6 @@ const SubjectTeachers = () => {
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => {
-                        console.log(
-                            searchFilteredData.length,
-                            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                            item.subject?.id,
-                            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                            item
-                        )
                         return (
                             <>
                                 <TeachersDetailCard
