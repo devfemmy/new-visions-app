@@ -152,36 +152,37 @@ const FazaSubscription = () => {
     }
 
     const subscribeToGroup = () => {
+        subscribeExternal()
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        if (Global.UserType == 4 && !iap_activation) {
-            navigation.navigate('ParentSub', {
-                uniqueId: groupData?.subject?.id,
-                type: 4,
-                lesson_id: '',
-                day_id: '',
-            })
-        } else if (Global.UserType == 3) {
-            console.log('hello')
-            if (!iap_activation || Platform.OS === 'android') {
-                subscribeExternal()
-            } else {
-                const subscriptionInfo = {
-                    billNumber: 'ios_bill',
-                    paymentFor: 'FullLesson',
-                    lessonId: '1258',
-                    subjectId: subject_id,
-                    price: 200,
-                }
-                deviceStorage
-                    .saveDataToDevice({
-                        key: 'subscriptionInfo',
-                        value: subscriptionInfo,
-                    })
-                    .then(() => requestPurchase({ sku: iap_id }))
-            }
-        } else {
-            return
-        }
+        // if (Global.UserType == 4 && !iap_activation) {
+        //     navigation.navigate('ParentSub', {
+        //         uniqueId: groupData?.subject?.id,
+        //         type: 4,
+        //         lesson_id: '',
+        //         day_id: '',
+        //     })
+        // } else if (Global.UserType == 3) {
+        //     console.log('hello')
+        //     if (!iap_activation || Platform.OS === 'android') {
+        //         subscribeExternal()
+        //     } else {
+        //         const subscriptionInfo = {
+        //             billNumber: 'ios_bill',
+        //             paymentFor: 'FullLesson',
+        //             lessonId: '1258',
+        //             subjectId: subject_id,
+        //             price: 200,
+        //         }
+        //         deviceStorage
+        //             .saveDataToDevice({
+        //                 key: 'subscriptionInfo',
+        //                 value: subscriptionInfo,
+        //             })
+        //             .then(() => requestPurchase({ sku: iap_id }))
+        //     }
+        // } else {
+        //     return
+        // }
     }
 
     return (
@@ -518,7 +519,9 @@ const FazaSubscription = () => {
             >
                 <TouchableOpacity
                     onPress={() => {
-                        groupData === null ? alert(I18n.t('ChooseGroup')) : null //subscribeToGroup()
+                        groupData === null
+                            ? alert(I18n.t('ChooseGroup'))
+                            : subscribeToGroup()
                     }}
                 >
                     <View style={{ flexDirection: 'row' }}>
