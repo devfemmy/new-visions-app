@@ -10,6 +10,7 @@ import {
     View,
     Text as RNText,
     RefreshControl,
+    Dimensions,
 } from 'react-native'
 import i18n from 'i18n-js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -22,7 +23,7 @@ import { Container, Text } from '../../components/common'
 import { globalStyles } from '../../helpers/globalStyles'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getHomePage } from '../../redux/action'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp, widthp } from '../../utils/responsiveDesign'
 import HeaderTitle from '../../components/common/HeaderTitle'
 import StageCard from '../../components/StageCard'
 import TeachersCard from '../../components/TeachersCard'
@@ -37,6 +38,7 @@ const defaultUri =
     'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/HOME_BG_NEW.jpg?alt=media&token=0c48db74-5d80-4fb3-a43b-fea209a57225'
 
 let session: ''
+const { width, height } = Dimensions.get('window')
 const Home = () => {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
@@ -570,6 +572,47 @@ const Home = () => {
                         )}
                     </>
                 )}
+                {(Global.UserType == 3 || Global.UserType == 4) && (
+                    <>
+                        <View
+                            style={[
+                                styles.containerFlex,
+                                {
+                                    width: '100%',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: heightp(20),
+                                    marginBottom: heightp(20),
+                                },
+                            ]}
+                        >
+                            <Pressable
+                                onPress={() => {
+                                    navigation.navigate('FazaPackagesStage')
+                                }}
+                                style={styles.fazaQuizzesContainer}
+                            >
+                                <Text
+                                    style={styles.textColor}
+                                    text={`${i18n.t('FAZA')}`}
+                                />
+                            </Pressable>
+                            <Pressable
+                                onPress={() => {
+                                    null
+                                }}
+                                style={styles.fazaQuizzesContainer}
+                            >
+                                <Text
+                                    style={styles.textColor}
+                                    text={`${i18n.t('Quizzes')}`}
+                                />
+                            </Pressable>
+                        </View>
+                        <View style={globalStyles.horizontal} />
+                    </>
+                )}
             </ScrollView>
         </ScrollView>
     )
@@ -602,6 +645,21 @@ const styles = StyleSheet.create({
         fontSize: 19,
         fontWeight: '700',
         fontFamily: 'Cairo',
+    },
+    fazaQuizzesContainer: {
+        minHeight: heightp(110),
+        backgroundColor: colors.primary,
+        borderRadius: 8,
+        width: width * 0.42,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: heightp(10),
+        // marginTop: 0,
+    },
+    textColor: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 })
 

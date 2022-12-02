@@ -25,6 +25,7 @@ const PackageStageCard = ({
     reducedHeight,
     eduPress,
     navigation,
+    faza,
 }) => {
     let isActive
     if (group) {
@@ -120,9 +121,13 @@ const PackageStageCard = ({
             ) : (
                 <Pressable
                     onPress={() => {
-                        navigation.navigate('PackagesList', {
-                            stage_id: stage?.id,
-                        })
+                        faza
+                            ? navigation.navigate('FazaEducationalStage', {
+                                  stage_id: stage?.id,
+                              })
+                            : navigation.navigate('PackagesList', {
+                                  stage_id: stage?.id,
+                              })
                     }}
                     style={!dark ? styles.darkContainer : styles.container}
                 >

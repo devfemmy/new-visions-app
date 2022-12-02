@@ -315,6 +315,10 @@ const Arabic = {
     PreviousClasses: 'الحصص السابقة',
     TeacherCourse: 'المواد الدراسية',
     Optional: 'اختياري'
+    FAZA: 'فزعة',
+    Price: 'السعر',
+    GroupConfirmation: 'اختيار المجموعة',
+    GroupDates: 'مواعيد المجموعات',
 }
 
 export default Arabic

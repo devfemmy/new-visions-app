@@ -305,6 +305,10 @@ const English = {
     PreviousClasses: 'Previous Classes',
     TeacherCourse: 'Courses',
     Optional: 'Optional'
+    FAZA: 'FAZA',
+    Price: 'Price',
+    GroupConfirmation: 'Group confirmation',
+    GroupDates: 'Group dates (choose the appropriate group)',
 }
 
 export default English
