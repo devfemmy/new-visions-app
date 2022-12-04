@@ -34,6 +34,8 @@ import { AppContext } from '../../context/AppState'
 import axios from 'axios'
 import colors from '../../helpers/colors'
 import SonListItem from '../Parent/SonListItem'
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
+import { Vimeo } from 'react-native-vimeo-iframe'
 const defaultUri =
     'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/HOME_BG_NEW.jpg?alt=media&token=0c48db74-5d80-4fb3-a43b-fea209a57225'
 
@@ -59,6 +61,8 @@ const Home = () => {
     const [loadingContent, setLoadingContent] = useState(true)
     //
     const [refreshing, setRefreshing] = useState(false)
+    //
+    const [vidId, setVideoId] = useState('')
     //
     function getPackages(params) {
         axios
@@ -215,6 +219,15 @@ const Home = () => {
         }
     }, [])
 
+    const videoCallbacks = {
+        timeupdate: (data) => console.log('timeupdate: ', data),
+        play: (data) => console.log('play: ', data),
+        pause: (data) => console.log('pause: ', data),
+        fullscreenchange: (data) => console.log('fullscreenchange: ', data),
+        ended: (data) => console.log('ended: ', data),
+        controlschange: (data) => console.log('controlschange: ', data),
+    }
+
     return (
         <ScrollView
             contentContainerStyle={[
@@ -228,12 +241,24 @@ const Home = () => {
             }
         >
             <ScrollView showsVerticalScrollIndicator={false}>
-                <HeaderTitle
+                {/* <HeaderTitle
                     pressed={() => navigation.navigate('PackagesStage')}
                     text={i18n.t('Packages')}
-                />
+                /> */}
                 <View style={styles.containerFlex}>
-                    <Pressable
+                    <View
+                        style={{
+                            height: WINDOW_HEIGHT * 0.3,
+                            width: WINDOW_WIDTH * 0.9,
+                        }}
+                    >
+                        <Vimeo
+                            videoId={'753500811'}
+                            params={'api=1&autoplay=0'}
+                            handlers={videoCallbacks}
+                        />
+                    </View>
+                    {/* <Pressable
                         onPress={() => navigation.navigate('PackagesStage')}
                     >
                         <FastImage
@@ -248,7 +273,7 @@ const Home = () => {
                             }}
                             resizeMode={FastImage.resizeMode.cover}
                         />
-                    </Pressable>
+                    </Pressable> */}
                 </View>
                 <View style={globalStyles.horizontal} />
 
