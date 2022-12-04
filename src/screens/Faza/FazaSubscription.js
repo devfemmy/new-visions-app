@@ -229,7 +229,7 @@ const FazaSubscription = () => {
                             ]}
                         >
                             <IonIcons
-                                name="people-circle"
+                                name="ios-reader"
                                 color={colors.primary}
                                 size={30}
                             />
@@ -300,8 +300,8 @@ const FazaSubscription = () => {
                                 },
                             ]}
                         >
-                            <IonIcons
-                                name="people-circle"
+                            <MaterialIcons
+                                name="local-offer"
                                 color={colors.primary}
                                 size={30}
                             />
@@ -385,7 +385,7 @@ const FazaSubscription = () => {
                                     onTintColor={colors.primary}
                                 />
                                 <RNText style={styles.subItemText2}>
-                                    {I18n.t('Students')}
+                                    {`${I18n.t('GroupNumber')} ${index + 1}`}
                                 </RNText>
                             </View>
                             <View
@@ -393,6 +393,10 @@ const FazaSubscription = () => {
                                     globalStyles.horizontal,
                                     {
                                         marginHorizontal: heightp(10),
+                                        borderBottomColor:
+                                            item?.id === groupData?.id
+                                                ? colors.primary
+                                                : 'rgba(112, 112, 112, 0.5)',
                                     },
                                 ]}
                             />
@@ -432,7 +436,10 @@ const FazaSubscription = () => {
                                                 fontWeight: '700',
                                                 fontSize: heightp(13),
                                                 textAlign: 'center',
-                                                color: '#434854',
+                                                color:
+                                                    item?.id === groupData?.id
+                                                        ? colors.primary
+                                                        : '#434854',
                                             },
                                         ]}
                                         text={`${item?.subject?.teacher?.first_name} ${item?.subject?.teacher?.last_name}`}
@@ -466,11 +473,25 @@ const FazaSubscription = () => {
                                             >
                                                 <IonIcons
                                                     name="ios-calendar"
-                                                    color={'#434854'}
+                                                    color={
+                                                        item?.id ===
+                                                        groupData?.id
+                                                            ? colors.primary
+                                                            : '#434854'
+                                                    }
                                                     size={20}
                                                 />
                                                 <RNText
-                                                    style={styles.subItemText3}
+                                                    style={[
+                                                        styles.subItemText3,
+                                                        {
+                                                            color:
+                                                                item?.id ===
+                                                                groupData?.id
+                                                                    ? colors.primary
+                                                                    : '#434854',
+                                                        },
+                                                    ]}
                                                 >
                                                     {isDate(day?.day_id)}
                                                 </RNText>
@@ -485,11 +506,25 @@ const FazaSubscription = () => {
                                             >
                                                 <IonIcons
                                                     name="ios-time-outline"
-                                                    color={'#434854'}
+                                                    color={
+                                                        item?.id ===
+                                                        groupData?.id
+                                                            ? colors.primary
+                                                            : '#434854'
+                                                    }
                                                     size={20}
                                                 />
                                                 <RNText
-                                                    style={styles.subItemText3}
+                                                    style={[
+                                                        styles.subItemText3,
+                                                        {
+                                                            color:
+                                                                item?.id ===
+                                                                groupData?.id
+                                                                    ? colors.primary
+                                                                    : '#434854',
+                                                        },
+                                                    ]}
                                                 >
                                                     {day?.start}
                                                 </RNText>
