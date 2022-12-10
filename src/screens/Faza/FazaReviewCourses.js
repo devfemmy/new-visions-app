@@ -91,7 +91,7 @@ const FazaReviewCourses = () => {
                 contentContainerStyle={[
                     styles.container,
                     globalStyles.container,
-                    globalStyles.wrapper,
+                    // globalStyles.wrapper,
                 ]}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
