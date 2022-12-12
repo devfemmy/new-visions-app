@@ -604,6 +604,7 @@ export default FazaSubscription
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
+        paddingBottom: 50,
     },
     flatlistContent: {
         // flexGrow: 1,

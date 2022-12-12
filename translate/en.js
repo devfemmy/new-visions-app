@@ -308,6 +308,9 @@ const English = {
     Price: 'Price',
     GroupConfirmation: 'Group confirmation',
     GroupDates: 'Group dates (choose the appropriate group)',
+    FreeLive: 'Free Live',
+    AvailableFreeLessons: 'Available free lessons',
+    NotAvailableNow: 'Not Available Now',
 }
 
 export default English

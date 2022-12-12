@@ -142,6 +142,7 @@ const FazaReviewCourses = () => {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
+        paddingBottom: 50,
     },
     textStyle: {
         fontSize: heightp(22),
