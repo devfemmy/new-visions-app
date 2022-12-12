@@ -314,6 +314,7 @@ const Arabic = {
     NoRatingsPresentatthemoment: 'لا يوجد تقيم',
     PreviousClasses: 'الحصص السابقة',
     TeacherCourse: 'المواد الدراسية',
+    Optional: 'اختياري',
     FAZA: 'فزعة',
     Price: 'السعر',
     GroupConfirmation: 'اختيار المجموعة',
@@ -321,6 +322,7 @@ const Arabic = {
     FreeLive: 'بث مجاني',
     AvailableFreeLessons: 'الحصص المجانية',
     NotAvailableNow: 'لم يبدأ البث المجاني بعد',
+    StudyGuide: 'المرشد الطلابي',
 }
 
 export default Arabic
