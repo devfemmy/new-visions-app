@@ -312,7 +312,10 @@ const English = {
     FreeLive: 'Free Live',
     AvailableFreeLessons: 'Available free lessons',
     NotAvailableNow: 'Not Available Now',
-    StudyGuide: 'Study Guide'
+    StudyGuide: 'Study Guide',
+    Send: 'Send',
+    Questionnaire: 'Questionnaire',
+    ABCABCABC: 'A B C A B C A B C ?',
 }
 
 export default English

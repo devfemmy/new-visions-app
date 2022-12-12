@@ -323,6 +323,9 @@ const Arabic = {
     AvailableFreeLessons: 'الحصص المجانية',
     NotAvailableNow: 'لم يبدأ البث المجاني بعد',
     StudyGuide: 'المرشد الطلابي',
+    Send: 'Send',
+    Questionnaire: 'Questionnaire',
+    ABCABCABC: 'A B C A B C A B C ?',
 }
 
 export default Arabic

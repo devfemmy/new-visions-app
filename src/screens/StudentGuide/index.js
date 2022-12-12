@@ -32,9 +32,9 @@ const StudentGuide = () => {
     const [data, setData] = useState(null)
     const [groupData, setGroupData] = useState(null)
     const [
-      onEndReachedCalledDuringMomentum,
-      setOnEndReachedCalledDuringMomentum,
-  ] = useState(false)
+        onEndReachedCalledDuringMomentum,
+        setOnEndReachedCalledDuringMomentum,
+    ] = useState(false)
 
     const getGuidesFunc = async () => {
         setLoading(true)
@@ -42,7 +42,7 @@ const StudentGuide = () => {
             const res = await HomePageService.getStudentGuide()
             const data = res?.data
             if (res?.code === 200) {
-                setLoading(false);
+                setLoading(false)
                 console.log('guides', data)
                 setData(data)
             } else {
@@ -58,7 +58,7 @@ const StudentGuide = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-          getGuidesFunc()
+            getGuidesFunc()
         })
         return unsubscribe
     }, [navigation])
@@ -73,23 +73,23 @@ const StudentGuide = () => {
     }, [])
 
     const navigateTeachersProfile = useCallback(
-      (item) => {
-          navigation.navigate('TeacherProfile', {
-              item,
-              title: `${item?.first_name} ${item?.last_name}`,
-          })
-      },
-      [navigation]
-  )
-  const navigateStudyGuide = useCallback(
-    (item, id) => {
-        navigation.navigate('ChooseStudyDate', {
-            item,
-            guide_id: id,
-        })
-    },
-    [navigation]
-)
+        (item) => {
+            navigation.navigate('TeacherProfile', {
+                item,
+                title: `${item?.first_name} ${item?.last_name}`,
+            })
+        },
+        [navigation]
+    )
+    const navigateStudyGuide = useCallback(
+        (item, id) => {
+            navigation.navigate('ChooseStudyDate', {
+                item,
+                guide_id: id,
+            })
+        },
+        [navigation]
+    )
 
     return (
         <View style={{ flex: 1 }}>
@@ -108,7 +108,7 @@ const StudentGuide = () => {
                     />
                 }
             >
-              <FlatList
+                <FlatList
                     nestedScrollEnabled={true}
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
@@ -132,9 +132,11 @@ const StudentGuide = () => {
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>
-                                  navigateTeachersProfile(item?.user)
+                                    navigateTeachersProfile(item?.user)
                                 }
-                                studyPressed={() => navigateStudyGuide(item?.user, item?.id)}
+                                studyPressed={() =>
+                                    navigateStudyGuide(item?.user, item?.id)
+                                }
                                 city={item?.city?.name}
                                 gender={item?.user?.gender}
                                 rates_count={item?.rates_count}
@@ -153,7 +155,6 @@ const StudentGuide = () => {
                         setOnEndReachedCalledDuringMomentum(false)
                     }}
                 />
-                          
             </ScrollView>
             <Loader visible={loading} />
         </View>
