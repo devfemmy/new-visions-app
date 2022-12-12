@@ -492,7 +492,7 @@ export const PostLoginNavigator = () => {
                     })}
                 />
                 <MainStack.Screen
-                    name="ChooseDate"
+                    name="ChooseStudyDate"
                     component={ChooseStudyDate}
                     options={() => ({
                         headerShown: true,

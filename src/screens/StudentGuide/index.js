@@ -81,6 +81,15 @@ const StudentGuide = () => {
       },
       [navigation]
   )
+  const navigateStudyGuide = useCallback(
+    (item, id) => {
+        navigation.navigate('ChooseStudyDate', {
+            item,
+            guide_id: id,
+        })
+    },
+    [navigation]
+)
 
     return (
         <View style={{ flex: 1 }}>
@@ -123,16 +132,16 @@ const StudentGuide = () => {
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>
-                                  navigateTeachersProfile(item)
+                                  navigateTeachersProfile(item?.user)
                                 }
-                                pressed={() => console.log(item)}
+                                studyPressed={() => navigateStudyGuide(item?.user, item?.id)}
                                 city={item?.city?.name}
-                                gender={item?.gender}
+                                gender={item?.user?.gender}
                                 rates_count={item?.rates_count}
                                 ratings={item?.rate === 0 ? null : item?.rate}
-                                uri={`${IMAGEURL}/${item?.image}`}
-                                image={item?.image}
-                                contents={`${item?.first_name} ${item?.last_name}`}
+                                uri={`${IMAGEURL}/${item?.user?.image}`}
+                                image={item?.user?.image}
+                                contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
                             />
                         </>
                     )}

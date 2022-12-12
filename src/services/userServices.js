@@ -179,4 +179,9 @@ export default class HomePageService {
         const res = await baseAxios.post('/getGuides', data)
         return res?.data || res
     }
+
+    static async getGuideDays(data) {
+        const res = await baseAxios.post('/getGuideDays', data)
+        return res?.data || res
+    }
 }

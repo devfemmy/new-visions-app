@@ -25,6 +25,9 @@ import TeachersDetailCard from '../../components/TeachersDetail'
 
 const ChooseStudyDate = () => {
     const route = useRoute()
+
+    const {item, guide_id} = route.params;
+    console.log('Items', item);
     const navigation = useNavigation()
     const { lang, onLogout } = useContext(AppContext)
     const [loading, setLoading] = useState(false)
@@ -36,14 +39,18 @@ const ChooseStudyDate = () => {
       setOnEndReachedCalledDuringMomentum,
   ] = useState(false)
 
-    const getGuidesFunc = async () => {
+    const getGuidesDaysFunc = async () => {
+
         setLoading(true)
+        const payload = {
+            guide_id,
+        }
         try {
-            const res = await HomePageService.getStudentGuide()
+            const res = await HomePageService.getGuideDays(payload)
             const data = res?.data
             if (res?.code === 200) {
                 setLoading(false);
-                console.log('guides', data)
+                console.log('guides days', data)
                 setData(data)
             } else {
                 alert('This Account is Logged in from another Device.')
@@ -58,14 +65,14 @@ const ChooseStudyDate = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-          getGuidesFunc()
+            getGuidesDaysFunc()
         })
         return unsubscribe
     }, [navigation])
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true)
-        const res = await getGuidesFunc()
+        const res = await getGuidesDaysFunc()
         if (res?.code === 200) {
             setRefreshing(false)
             setData(res?.data?.info[0])
@@ -99,51 +106,6 @@ const ChooseStudyDate = () => {
                     />
                 }
             >
-              <FlatList
-                    nestedScrollEnabled={true}
-                    keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => (
-                        <View
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Text text={I18n.t('NoData')} />
-                        </View>
-                    )}
-                    // ListFooterComponent={renderFooter}
-                    data={data}
-                    showsVerticalScrollIndicator={false}
-                    onEndReachedThreshold={0.5}
-                    renderItem={({ item }) => (
-                        <>
-                            <>{console.log(item.id)}</>
-                            <TeachersDetailCard
-                                // subjectDetails
-                                viewProfile={() =>
-                                  navigateTeachersProfile(item)
-                                }
-                                pressed={() => console.log(item)}
-                                city={item?.city?.name}
-                                gender={item?.gender}
-                                rates_count={item?.rates_count}
-                                ratings={item?.rate === 0 ? null : item?.rate}
-                                uri={`${IMAGEURL}/${item?.image}`}
-                                image={item?.image}
-                                contents={`${item?.first_name} ${item?.last_name}`}
-                            />
-                        </>
-                    )}
-                    initialNumToRender={10}
-                    maxToRenderPerBatch={10}
-                    windowSize={20}
-                    // onEndReached={onEndReached}
-                    onMomentumScrollBegin={() => {
-                        setOnEndReachedCalledDuringMomentum(false)
-                    }}
-                />
                           
             </ScrollView>
             <Loader visible={loading} />
