@@ -319,6 +319,9 @@ const Arabic = {
     Price: 'السعر',
     GroupConfirmation: 'اختيار المجموعة',
     GroupDates: 'مواعيد المجموعات',
+    FreeLive: 'Free Live',
+    AvailableFreeLessons: 'Available free lessons',
+    NotAvailableNow: 'Not Available Now',
 }
 
 export default Arabic
