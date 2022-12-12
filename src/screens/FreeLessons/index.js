@@ -83,6 +83,7 @@ const FreeLessons = () => {
         try {
             const res = await HomePageService.joinLive(payload)
             if (res.code === 200) {
+                setLoading(false)
                 console.log('join ed live already', res)
                 const live_url = res?.data?.live_url
                 const lesson_id = res?.data?.lesson
