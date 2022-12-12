@@ -60,6 +60,8 @@ import FazaEducationalStage from '../screens/Faza/FazaEducationalStage'
 import FazaReviewCourses from '../screens/Faza/FazaReviewCourses'
 import FazaSubscription from '../screens/Faza/FazaSubscription'
 import FreeLessons from '../screens/FreeLessons'
+import StudentGuide from '../screens/StudentGuide'
+import ChooseStudyDate from '../screens/StudentGuide/ChooseDate'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -477,6 +479,24 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('FreeLive'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="StudentGuide"
+                    component={StudentGuide}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('StudyGuide'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="ChooseDate"
+                    component={ChooseStudyDate}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('ChooseDay'),
                         headerLeft: backRight,
                     })}
                 />

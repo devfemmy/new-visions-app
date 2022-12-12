@@ -174,4 +174,9 @@ export default class HomePageService {
         const res = await baseAxios.post('/getFreeLessons', data)
         return res?.data || res
     }
+
+    static async getStudentGuide(data) {
+        const res = await baseAxios.post('/getGuides', data)
+        return res?.data || res
+    }
 }
