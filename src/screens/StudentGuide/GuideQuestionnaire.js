@@ -83,6 +83,16 @@ const GuideQuestionnaire = () => {
         [navigation]
     )
 
+    const changeHandler = (value, id) => {
+        console.log('setQuestionsInput', value.nativeEvent, id)
+        setQuestionsInput((prevState) => [
+            ...prevState,
+            {
+                [id]: value.nativeEvent.text,
+            },
+        ])
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <ScrollView
@@ -129,6 +139,7 @@ const GuideQuestionnaire = () => {
                                     // }}
                                     onEndEditing={(value) => {
                                         const textValue = value.nativeEvent.text
+                                        const id = item?.id
                                         // var values = {}
                                         // for (
                                         //     var i = Number(
@@ -155,8 +166,7 @@ const GuideQuestionnaire = () => {
                                         setQuestionsInput((questionsInput) => [
                                             ...questionsInput,
                                             {
-                                                id: item?.id,
-                                                name: textValue,
+                                                [id]: textValue,
                                             },
                                         ])
                                     }}
