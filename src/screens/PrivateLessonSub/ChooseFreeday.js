@@ -11,6 +11,7 @@ const ChooseFreeDay = ({ freeDays }) => {
     const { setDisabledProps, setDayIdData } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
+    
     useEffect(() => {
         if (activeStage == null) {
             setDisabledProps(false)

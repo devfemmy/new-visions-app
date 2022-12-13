@@ -29,21 +29,27 @@ const GuideQuestionnaire = () => {
     const { lang, onLogout } = useContext(AppContext)
     const [loading, setLoading] = useState(false)
     const [questionsInput, setQuestionsInput] = useState([])
-
-    console.log('questionnaireData?.questions', questionsInput)
-
     const submitQuiz = async () => {
-        setLoading(true)
-        // const payload = {
-        //     id: groupId.toString(),
-        //     type: 1,
-        //     lesson_id: '',
-        //     day_id: '',
-        // }
+        setLoading(true);
+        const payload = {
+            day_id: item?.day_id,
+            answers: questionsInput,
+        }
         try {
-            const res = await HomePageService.subscribeExternal()
+            const res = await HomePageService.subscribeWithGuide(payload)
             if (res.code === 200) {
-                setLoading(false)
+                setLoading(false);
+                Alert.alert(I18n.t('Subscribe'), res?.message, [
+                    {
+                        text: 'Cancel',
+                        onPress: () => navigation.popToTop(),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.popToTop(),
+                    },
+                ])
             } else {
                 setLoading(false)
                 Alert.alert(I18n.t('Subscribe'), res?.message, [
@@ -60,28 +66,29 @@ const GuideQuestionnaire = () => {
             }
             return res
         } catch (err) {
+            console.log('error loading', err);
             setLoading(false)
         }
     }
 
-    const navigateTeachersProfile = useCallback(
-        (item) => {
-            navigation.navigate('TeacherProfile', {
-                item,
-                title: `${item?.first_name} ${item?.last_name}`,
-            })
-        },
-        [navigation]
-    )
-    const navigateStudyGuide = useCallback(
-        (item, id) => {
-            navigation.navigate('ChooseStudyDate', {
-                item,
-                guide_id: id,
-            })
-        },
-        [navigation]
-    )
+    // const navigateTeachersProfile = useCallback(
+    //     (item) => {
+    //         navigation.navigate('TeacherProfile', {
+    //             item,
+    //             title: `${item?.first_name} ${item?.last_name}`,
+    //         })
+    //     },
+    //     [navigation]
+    // )
+    // const navigateStudyGuide = useCallback(
+    //     (item, id) => {
+    //         navigation.navigate('ChooseStudyDate', {
+    //             item,
+    //             guide_id: id,
+    //         })
+    //     },
+    //     [navigation]
+    // )
 
     const changeHandler = (value, id) => {
         console.log('setQuestionsInput', value.nativeEvent, id)
