@@ -38,10 +38,10 @@ import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../helpers/common'
 import { Vimeo } from 'react-native-vimeo-iframe'
 const defaultUri =
     'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/HOME_BG_NEW.jpg?alt=media&token=0c48db74-5d80-4fb3-a43b-fea209a57225'
-const freeLessonsUri = require('../../assets/img/freeLessons.png');
-const guideUri = require('../../assets/img/guide.png');
-const freeLessonsUriAr = require('../../assets/img/free-ar.png');
-const guideUriAr = require('../../assets/img/guide-ar.png');
+const freeLessonsUri = require('../../assets/img/freeLessons.png')
+const guideUri = require('../../assets/img/guide.png')
+const freeLessonsUriAr = require('../../assets/img/free-ar.png')
+const guideUriAr = require('../../assets/img/guide-ar.png')
 
 let session: ''
 const { width, height } = Dimensions.get('window')
@@ -609,7 +609,7 @@ const Home = () => {
                             </Pressable>
                             <Pressable
                                 onPress={() => {
-                                    null
+                                    navigation.navigate('AllMeasurementQuiz')
                                 }}
                                 style={styles.fazaQuizzesContainer}
                             >
@@ -658,7 +658,11 @@ const Home = () => {
                                 height: heightp(180),
                                 borderRadius: 10,
                             }}
-                            source={lang === 'ar' ? freeLessonsUriAr : freeLessonsUri}
+                            source={
+                                lang === 'ar'
+                                    ? freeLessonsUriAr
+                                    : freeLessonsUri
+                            }
                             resizeMode={FastImage.resizeMode.cover}
                         />
                     </Pressable>

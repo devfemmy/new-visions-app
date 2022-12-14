@@ -49,12 +49,11 @@ const LiveNowQuizResult = () => {
             const payload = {
                 quiz_id: item?.id,
             }
-            console.log(payload)
             try {
                 const res = await HomePageService.getMeasurementQuizResult(
                     payload
                 )
-                if (res.code === -2) {
+                if (res.code === -2 || res.code === -99) {
                     setLoading(false)
                     console.log('false data', res)
                     Alert.alert(

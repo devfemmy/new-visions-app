@@ -189,4 +189,19 @@ export default class HomePageService {
         const res = await baseAxios.post('/getGuideDays', data)
         return res?.data || res
     }
+
+    static async getMeasurementQuizzes(data) {
+        const res = await baseAxios.post('/getMeasurementQuizzes', data)
+        return res?.data || res
+    }
+
+    static async getMeasurementQuizQuestions(data) {
+        const res = await baseAxios.post('/getMeasurementQuizQuestions', data)
+        return res?.data || res
+    }
+
+    static async submitMeasurementQuizQuestions(data) {
+        const res = await baseAxios.post('/submitMeasurementQuizQuestions', data)
+        return res?.data || res
+    }
 }

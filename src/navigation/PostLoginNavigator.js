@@ -63,6 +63,8 @@ import FreeLessons from '../screens/FreeLessons'
 import StudentGuide from '../screens/StudentGuide'
 import ChooseStudyDate from '../screens/StudentGuide/ChooseDate'
 import GuideQuestionnaire from '../screens/StudentGuide/GuideQuestionnaire'
+import AllMeasurementQuiz from '../screens/AllMeasurementQuiz'
+import AllMeasurementQuizQuestion from '../screens/AllMeasurementQuiz/AllMeasurementQuizQuestion'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -507,6 +509,24 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: i18n.t('Questions'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name={'AllMeasurementQuizQuestion'}
+                    component={AllMeasurementQuizQuestion}
+                    options={{
+                        title: I18n.t('MeasurementQuiz'),
+                        headerShown: true,
+                        headerLeft: backRight,
+                    }}
+                />
+                <MainStack.Screen
+                    name="AllMeasurementQuiz"
+                    component={AllMeasurementQuiz}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('MeasurementQuiz'),
                         headerLeft: backRight,
                     })}
                 />
