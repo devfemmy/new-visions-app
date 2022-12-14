@@ -376,9 +376,7 @@ const FazaSubscription = () => {
                             >
                                 <CheckBox
                                     value={item?.id === groupData?.id}
-                                    onValueChange={() => {
-                                        setGroupData(item)
-                                    }}
+                                    disabled
                                     style={{ marginRight: 2.5 }}
                                     tintColor={'#C5C5C5'}
                                     onCheckColor={colors.primary}

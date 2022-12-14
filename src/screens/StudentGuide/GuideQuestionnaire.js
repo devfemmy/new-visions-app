@@ -117,7 +117,7 @@ const GuideQuestionnaire = () => {
                                 style={styles.subItemText}
                                 text={item?.question}
                             />
-                            <Text
+                            {/* <Text
                                 style={[
                                     styles.subItemText,
                                     {
@@ -128,7 +128,7 @@ const GuideQuestionnaire = () => {
                                 // text={`${I18n.t('QuestionNumber')} ${
                                 //     item?.id
                                 // }:`}
-                            />
+                            /> */}
                             <View style={styles.formContainer}>
                                 <TextInput
                                     style={styles.input}
