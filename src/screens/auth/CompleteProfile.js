@@ -39,6 +39,9 @@ export function CompleteProfile() {
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(false);
   const [gender, setGender] = useState(0);
+  const [check1, setCheck1] = useState(true);
+  const [check2, setCheck2] = useState(false);
+  const [check3, setCheck3] = useState(false)
   const route = useRoute();
   const {userData} = route?.params;
 
@@ -222,6 +225,9 @@ export function CompleteProfile() {
             </Caption>
           ) : null}
         </View>
+        {/* <Text style={[styles.inputTitle, styles.labelTitle]}>
+            {I18n.t('Gender')}
+          </Text> */}
         <View
           style={{
             flexDirection: viewAlign,
@@ -234,13 +240,12 @@ export function CompleteProfile() {
               alignItems: 'center',
             }}
           >
-            <CheckBox
-              checked={!gender}
-              onPress={() => {
-                setGender(!gender);
-              }}
-            />
-            <Text style={{color: 'black'}}>{I18n.t('Male')}</Text>
+          <CheckBox
+            center
+            title={I18n.t('Male')}
+            checked={gender && check1}
+            onPress={() => setGender(!gender)}
+          />
           </View>
 
           <View
@@ -250,13 +255,26 @@ export function CompleteProfile() {
               alignItems: 'center',
             }}
           >
-            <CheckBox
-              checked={gender}
-              onPress={() => {
-                setGender(!gender);
-              }}
-            />
-            <Text style={{color: 'black'}}>{I18n.t('Female')}</Text>
+          <CheckBox
+            center
+            title={I18n.t('Female')}
+            checked={!gender && check1}
+            onPress={() => setGender(!gender)}
+          />
+          </View>
+          <View
+            style={{
+              flexDirection: viewAlign,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+          <CheckBox
+            center
+            title={I18n.t('Optional')}
+            checked={!check1}
+            onPress={() => setCheck1(!check1)}
+          />
           </View>
         </View>
       </ScrollView>
@@ -301,6 +319,9 @@ input: {
     backgroundColor: 'transparent',
     borderColor: 'transparent',
     borderWidth: 0,
+},
+labelTitle: {
+  backgroundColor: 'red'
 },
 
 formContainer: {

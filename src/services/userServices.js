@@ -96,7 +96,11 @@ export default class HomePageService {
         const res = await baseAxios.post('/subscribeExternal', data)
         return res?.data || res
     }
-    
+
+    static async subscribeWithGuide(data) {
+        const res = await baseAxios.post('/subscribeWithGuide', data)
+        return res?.data || res
+    }
 
     static async startLessonQuiz(data) {
         const res = await baseAxios.post('/startLessonQuiz', data)
@@ -117,7 +121,6 @@ export default class HomePageService {
         const res = await baseAxios.post('/getUserChildren', data)
         return res?.data || res
     }
-
 
     static async sendMessage(data) {
         const res = await baseAxios.post('/sendMessage', data)
@@ -156,19 +159,34 @@ export default class HomePageService {
         const res = await baseAxios.post('/getMeasurementQuizResult', data)
         return res?.data || res
     }
-    
+
     static async getAttendanceQuizResults(data) {
         const res = await baseAxios.post('/getAttendanceQuizResults', data)
         return res?.data || res
     }
-    
+
     static async getReviewCourses(data) {
         const res = await baseAxios.post('/getReviewCourses', data)
         return res?.data || res
     }
-    
+
     static async getReviewCourseDetails(data) {
         const res = await baseAxios.post('/getReviewCourseDetails', data)
+        return res?.data || res
+    }
+
+    static async getFreeLessons(data) {
+        const res = await baseAxios.post('/getFreeLessons', data)
+        return res?.data || res
+    }
+
+    static async getStudentGuide(data) {
+        const res = await baseAxios.post('/getGuides', data)
+        return res?.data || res
+    }
+
+    static async getGuideDays(data) {
+        const res = await baseAxios.post('/getGuideDays', data)
         return res?.data || res
     }
 }

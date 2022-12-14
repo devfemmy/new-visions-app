@@ -59,6 +59,10 @@ import FazaPackagesStage from '../screens/Faza/FazaPackages'
 import FazaEducationalStage from '../screens/Faza/FazaEducationalStage'
 import FazaReviewCourses from '../screens/Faza/FazaReviewCourses'
 import FazaSubscription from '../screens/Faza/FazaSubscription'
+import FreeLessons from '../screens/FreeLessons'
+import StudentGuide from '../screens/StudentGuide'
+import ChooseStudyDate from '../screens/StudentGuide/ChooseDate'
+import GuideQuestionnaire from '../screens/StudentGuide/GuideQuestionnaire'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -467,6 +471,42 @@ export const PostLoginNavigator = () => {
                     options={() => ({
                         headerShown: true,
                         title: '',
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="FreeLessons"
+                    component={FreeLessons}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('FreeLive'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="StudentGuide"
+                    component={StudentGuide}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('StudyGuide'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="ChooseStudyDate"
+                    component={ChooseStudyDate}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('ChooseDay'),
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="GuideQuestionnaire"
+                    component={GuideQuestionnaire}
+                    options={() => ({
+                        headerShown: true,
+                        title: i18n.t('Questions'),
                         headerLeft: backRight,
                     })}
                 />

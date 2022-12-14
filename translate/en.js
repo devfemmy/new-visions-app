@@ -304,10 +304,18 @@ const English = {
     NoRatingsPresentatthemoment: 'No Ratings Present at the moment',
     PreviousClasses: 'Previous Classes',
     TeacherCourse: 'Courses',
+    Optional: 'Optional',
     FAZA: 'FAZA',
     Price: 'Price',
     GroupConfirmation: 'Group confirmation',
     GroupDates: 'Group dates (choose the appropriate group)',
+    FreeLive: 'Free Live',
+    AvailableFreeLessons: 'Available free lessons',
+    NotAvailableNow: 'Not Available Now',
+    StudyGuide: 'Study Guide',
+    Send: 'Send',
+    Questionnaire: 'Questionnaire',
+    ABCABCABC: 'A B C A B C A B C ?',
 }
 
 export default English

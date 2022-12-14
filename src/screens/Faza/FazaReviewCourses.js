@@ -91,7 +91,7 @@ const FazaReviewCourses = () => {
                 contentContainerStyle={[
                     styles.container,
                     globalStyles.container,
-                    globalStyles.wrapper,
+                    // globalStyles.wrapper,
                 ]}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
@@ -142,6 +142,7 @@ const FazaReviewCourses = () => {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
+        paddingBottom: 50,
     },
     textStyle: {
         fontSize: heightp(22),

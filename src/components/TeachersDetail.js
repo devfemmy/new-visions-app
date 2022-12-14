@@ -33,6 +33,7 @@ const TeachersDetailCard = ({
     bookOneLesson,
     pressed,
     subjectDetails,
+    studyPressed,
 }) => {
     const styles = StyleSheet.create({
         container: {
@@ -111,9 +112,7 @@ const TeachersDetailCard = ({
     return (
         <>
             <Pressable
-                onPress={() => {
-                    console.log('pressed')
-                }}
+                onPress={studyPressed}
                 style={[
                     styles.container,
                     // globalStyles.rowBetween,
