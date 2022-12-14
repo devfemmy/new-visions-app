@@ -184,6 +184,15 @@ const FazaSubscription = () => {
         //     return
         // }
     }
+    const navigateTeachersProfile = useCallback(
+        (item) => {
+            navigation.navigate('TeacherProfile', {
+                item,
+                title: `${item?.first_name} ${item?.last_name}`,
+            })
+        },
+        [navigation]
+    )
 
     return (
         <View style={{ flex: 1 }}>
@@ -399,7 +408,8 @@ const FazaSubscription = () => {
                                 ]}
                             />
                             <View style={styles.teacherTimeContainer}>
-                                <View
+                                <Pressable
+                                    onPress={() => navigateTeachersProfile(item?.subject?.teacher)}
                                     style={{
                                         flexDirection: 'column',
                                         justifyContent: 'center',
@@ -442,7 +452,7 @@ const FazaSubscription = () => {
                                         ]}
                                         text={`${item?.subject?.teacher?.first_name} ${item?.subject?.teacher?.last_name}`}
                                     />
-                                </View>
+                                </Pressable>
                                 <View
                                     style={{
                                         flexDirection: 'column',
