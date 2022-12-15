@@ -55,6 +55,8 @@ const Home = () => {
     const packagesArray = data?.homeData?.multi_packages
     const stagesArray = data?.homeData?.stages
     const teachersArray = data?.homeData?.teachers
+    const videoId = data?.homeData?.video
+    console.log('Video gangangaab ====>', videoId)
 
     // console.log('packages on home page', data)
 
@@ -180,6 +182,15 @@ const Home = () => {
         return unsubscribe
     }, [navigation, dispatch])
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
+            setVideoId(id)
+            console.log('the video id is this hrre ====>', id)
+        })
+        return unsubscribe
+    }, [videoId])
+
     const getData = async () => {
         const dataFromAsync = await AsyncStorage.getItem('user')
         session = JSON.parse(dataFromAsync)
@@ -234,187 +245,177 @@ const Home = () => {
 
     return (
         <ScrollView
-            contentContainerStyle={[
-                styles.container,
-                globalStyles.container,
-                globalStyles.wrapper,
-            ]}
+            contentContainerStyle={[styles.container, globalStyles.container]}
             showsVerticalScrollIndicator={false}
             refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.containerFlex}>
-                    <View
-                        style={{
-                            height: WINDOW_HEIGHT * 0.3,
-                            width: WINDOW_WIDTH * 0.9,
-                        }}
-                    >
-                        <Vimeo
-                            videoId={'753500811'}
-                            params={'api=1&autoplay=0'}
-                            handlers={videoCallbacks}
-                        />
-                    </View>
-                </View>
-                <View style={globalStyles.horizontal} />
-
-                <HeaderTitle
-                    pressed={() => navigation.navigate('MultiPackagesStage')}
-                    text={i18n.t('MultiPackages')}
-                />
-                <View style={styles.containerFlex}>
-                    <FlatList
-                        horizontal
-                        keyboardShouldPersistTaps="handled"
-                        contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => (
-                            <View
-                                style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Text text={i18n.t('NoData')} />
-                            </View>
-                        )}
-                        data={packagesArray}
-                        showsVerticalScrollIndicator={false}
-                        onEndReachedThreshold={0.5}
-                        renderItem={({ item }) => {
-                            const uri = `${IMAGEURL}/${item.image}`
-                            // navigation.navigate("MultiPackageDetails", item);
-                            return (
-                                <Pressable
-                                    onPress={() =>
-                                        navigation.navigate(
-                                            'MultiPackageDetails',
-                                            {
-                                                item,
-                                                packageType: 'multi',
-                                            }
-                                        )
-                                    }
-                                >
-                                    <FastImage
-                                        style={{
-                                            width: heightp(210),
-                                            height: heightp(130),
-                                            borderRadius: 10,
-                                            marginRight: heightp(20),
-                                        }}
-                                        source={{
-                                            uri,
-                                            priority: FastImage.priority.normal,
-                                        }}
-                                        resizeMode={FastImage.resizeMode.cover}
-                                    />
-                                </Pressable>
-                            )
-                        }}
+            <View style={styles.containerFlex}>
+                <View
+                    style={{
+                        height: WINDOW_HEIGHT * 0.3,
+                        width: WINDOW_WIDTH * 0.9,
+                    }}
+                >
+                    <Vimeo
+                        videoId={vidId}
+                        params={'api=1&autoplay=0'}
+                        handlers={videoCallbacks}
                     />
                 </View>
-                <View style={globalStyles.horizontal} />
+            </View>
+            <View style={globalStyles.horizontal} />
 
-                {(Global.UserType == 3 || Global.UserType == 4) && (
-                    <>
-                        <HeaderTitle
-                            deleteIcon
-                            pressed={() => navigation.navigate('Subjects')}
-                            text={i18n.t('EducationalLevel')}
-                        />
-                        <View style={styles.containerFlex}>
-                            <FlatList
-                                horizontal
-                                keyboardShouldPersistTaps="handled"
-                                contentContainerStyle={styles.flatlistContent}
-                                ListEmptyComponent={() => (
-                                    <View
-                                        style={{
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Text text={i18n.t('NoData')} />
-                                    </View>
-                                )}
-                                data={stagesArray}
-                                showsVerticalScrollIndicator={false}
-                                onEndReachedThreshold={0.5}
-                                renderItem={({ item }) => {
-                                    const uri = `${IMAGEURL2}${item.image}`
-                                    return (
-                                        <StageCard
-                                            eduPress={() =>
-                                                navigation.navigate(
-                                                    'EducationalStage',
-                                                    {
-                                                        stage_id: item?.id,
-                                                    }
-                                                )
-                                            }
-                                            newPress={() => {}}
-                                            uri={uri}
-                                            text={item.name}
-                                        />
-                                    )
-                                }}
-                            />
+            <HeaderTitle
+                pressed={() => navigation.navigate('MultiPackagesStage')}
+                text={i18n.t('MultiPackages')}
+            />
+            <View style={styles.containerFlex}>
+                <FlatList
+                    horizontal
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={styles.flatlistContent}
+                    ListEmptyComponent={() => (
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text text={i18n.t('NoData')} />
                         </View>
-                        <View style={globalStyles.horizontal} />
-                    </>
-                )}
-                {session?.type == 3 ? (
-                    <>
-                        <HeaderTitle
-                            pressed={() => navigation.navigate('Teachers')}
-                            text={i18n.t('Teachers')}
+                    )}
+                    data={packagesArray}
+                    showsVerticalScrollIndicator={false}
+                    onEndReachedThreshold={0.5}
+                    renderItem={({ item }) => {
+                        const uri = `${IMAGEURL}/${item.image}`
+                        // navigation.navigate("MultiPackageDetails", item);
+                        return (
+                            <Pressable
+                                onPress={() =>
+                                    navigation.navigate('MultiPackageDetails', {
+                                        item,
+                                        packageType: 'multi',
+                                    })
+                                }
+                            >
+                                <FastImage
+                                    style={{
+                                        width: heightp(210),
+                                        height: heightp(130),
+                                        borderRadius: 10,
+                                        marginRight: heightp(20),
+                                    }}
+                                    source={{
+                                        uri,
+                                        priority: FastImage.priority.normal,
+                                    }}
+                                    resizeMode={FastImage.resizeMode.cover}
+                                />
+                            </Pressable>
+                        )
+                    }}
+                />
+            </View>
+            <View style={globalStyles.horizontal} />
+
+            {(Global.UserType == 3 || Global.UserType == 4) && (
+                <>
+                    <HeaderTitle
+                        deleteIcon
+                        pressed={() => navigation.navigate('Subjects')}
+                        text={i18n.t('EducationalLevel')}
+                    />
+                    <View style={styles.containerFlex}>
+                        <FlatList
+                            horizontal
+                            keyboardShouldPersistTaps="handled"
+                            contentContainerStyle={styles.flatlistContent}
+                            ListEmptyComponent={() => (
+                                <View
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Text text={i18n.t('NoData')} />
+                                </View>
+                            )}
+                            data={stagesArray}
+                            showsVerticalScrollIndicator={false}
+                            onEndReachedThreshold={0.5}
+                            renderItem={({ item }) => {
+                                const uri = `${IMAGEURL2}${item.image}`
+                                return (
+                                    <StageCard
+                                        eduPress={() =>
+                                            navigation.navigate(
+                                                'EducationalStage',
+                                                {
+                                                    stage_id: item?.id,
+                                                }
+                                            )
+                                        }
+                                        newPress={() => {}}
+                                        uri={uri}
+                                        text={item.name}
+                                    />
+                                )
+                            }}
                         />
-                        <View style={styles.containerFlex}>
-                            <FlatList
-                                horizontal
-                                keyboardShouldPersistTaps="handled"
-                                contentContainerStyle={styles.flatlistContent}
-                                ListEmptyComponent={() => (
-                                    <View
-                                        style={{
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Text text={i18n.t('NoData')} />
-                                    </View>
-                                )}
-                                data={teachersArray}
-                                showsVerticalScrollIndicator={false}
-                                onEndReachedThreshold={0.5}
-                                renderItem={({ item }) => {
-                                    const uri = `${IMAGEURL}/${item.image}`
-                                    return (
-                                        <TeachersCard
-                                            pressed={() =>
-                                                navigateTeacherProfile(item)
-                                            }
-                                            uri={uri}
-                                            ratings={
-                                                item?.rate === 0
-                                                    ? null
-                                                    : item?.rate
-                                            }
-                                            lastName={item.last_name}
-                                            text={item.first_name}
-                                            image={item.image}
-                                        />
-                                    )
-                                }}
-                            />
-                        </View>
-                    </>
-                ) : (
-                    <>
-                        {/* <SearchBar
+                    </View>
+                    <View style={globalStyles.horizontal} />
+                </>
+            )}
+            {session?.type == 3 ? (
+                <>
+                    <HeaderTitle
+                        pressed={() => navigation.navigate('Teachers')}
+                        text={i18n.t('Teachers')}
+                    />
+                    <View style={styles.containerFlex}>
+                        <FlatList
+                            horizontal
+                            keyboardShouldPersistTaps="handled"
+                            contentContainerStyle={styles.flatlistContent}
+                            ListEmptyComponent={() => (
+                                <View
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Text text={i18n.t('NoData')} />
+                                </View>
+                            )}
+                            data={teachersArray}
+                            showsVerticalScrollIndicator={false}
+                            onEndReachedThreshold={0.5}
+                            renderItem={({ item }) => {
+                                const uri = `${IMAGEURL}/${item.image}`
+                                return (
+                                    <TeachersCard
+                                        pressed={() =>
+                                            navigateTeacherProfile(item)
+                                        }
+                                        uri={uri}
+                                        ratings={
+                                            item?.rate === 0 ? null : item?.rate
+                                        }
+                                        lastName={item.last_name}
+                                        text={item.first_name}
+                                        image={item.image}
+                                    />
+                                )
+                            }}
+                        />
+                    </View>
+                </>
+            ) : (
+                <>
+                    {/* <SearchBar
                         placeholder={i18n.t('Search')}
                         value={searchText}
                         onChangeText={(text) => setSearchText(text)}
@@ -428,7 +429,7 @@ const Home = () => {
                         inputStyle={{ color: colors.dark }}
                         iconColor={colors.dark}
                     /> */}
-                        {/* <TouchableWithoutFeedback
+                    {/* <TouchableWithoutFeedback
                         onPress={() => {
                             // setToggle1(!toggle1)
                         }}
@@ -503,190 +504,187 @@ const Home = () => {
                             />
                         </View>
                     </TouchableWithoutFeedback> */}
-                        {loadingContent ? (
-                            <ContentLoader
-                                viewBox="0 0 380 70"
-                                backgroundColor={colors.darkGray}
-                                foregroundColor={colors.gray}
-                                height={100}
-                                speed={1}
-                            >
-                                {i18n.locale === 'ar' ? (
-                                    <>
-                                        <Rect
-                                            x="300"
-                                            y="0"
-                                            rx="4"
-                                            ry="4"
-                                            width="70"
-                                            height="70"
-                                        />
-                                        <Rect
-                                            x="80"
-                                            y="17"
-                                            rx="4"
-                                            ry="4"
-                                            width="200"
-                                            height="13"
-                                        />
-                                        <Rect
-                                            x="80"
-                                            y="40"
-                                            rx="3"
-                                            ry="3"
-                                            width="200"
-                                            height="10"
-                                        />
-                                    </>
-                                ) : (
-                                    <>
-                                        <Rect
-                                            x="0"
-                                            y="0"
-                                            rx="4"
-                                            ry="4"
-                                            width="70"
-                                            height="70"
-                                        />
-                                        <Rect
-                                            x="80"
-                                            y="17"
-                                            rx="4"
-                                            ry="4"
-                                            width="200"
-                                            height="13"
-                                        />
-                                        <Rect
-                                            x="80"
-                                            y="40"
-                                            rx="3"
-                                            ry="3"
-                                            width="150"
-                                            height="10"
-                                        />
-                                    </>
-                                )}
-                            </ContentLoader>
-                        ) : (
-                            <>
-                                {/* <View style={globalStyles.horizontalMargin} /> */}
-                                <FlatList
-                                    data={searchFilteredData}
-                                    extraData={searchFilteredData}
-                                    renderItem={renderItem}
-                                    keyExtractor={(item) => item.id}
-                                    scrollEnabled={true}
-                                />
-                            </>
-                        )}
-                    </>
-                )}
-                {(Global.UserType == 3 || Global.UserType == 4) && (
-                    <>
-                        <View
-                            style={[
-                                styles.containerFlex,
-                                {
-                                    width: '100%',
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    marginTop: heightp(20),
-                                    marginBottom: heightp(20),
-                                },
-                            ]}
+                    {loadingContent ? (
+                        <ContentLoader
+                            viewBox="0 0 380 70"
+                            backgroundColor={colors.darkGray}
+                            foregroundColor={colors.gray}
+                            height={100}
+                            speed={1}
                         >
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate('FazaPackagesStage')
-                                }}
-                                style={styles.fazaQuizzesContainer}
-                            >
-                                <Text
-                                    style={styles.textColor}
-                                    text={`${i18n.t('FAZA')}`}
-                                />
-                            </Pressable>
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate('AllMeasurementQuiz')
-                                }}
-                                style={styles.fazaQuizzesContainer}
-                            >
-                                <Text
-                                    style={styles.textColor}
-                                    text={`${i18n.t('Quizzes')}`}
-                                />
-                            </Pressable>
-                        </View>
-                        <View style={globalStyles.horizontal} />
-                    </>
-                )}
-                <View style={styles.containerFlex}>
-                    <Pressable
-                        onPress={() => navigation.navigate('PackagesStage')}
-                        style={{
-                            marginTop: heightp(20),
-                        }}
-                    >
-                        <FastImage
-                            style={{
+                            {i18n.locale === 'ar' ? (
+                                <>
+                                    <Rect
+                                        x="300"
+                                        y="0"
+                                        rx="4"
+                                        ry="4"
+                                        width="70"
+                                        height="70"
+                                    />
+                                    <Rect
+                                        x="80"
+                                        y="17"
+                                        rx="4"
+                                        ry="4"
+                                        width="200"
+                                        height="13"
+                                    />
+                                    <Rect
+                                        x="80"
+                                        y="40"
+                                        rx="3"
+                                        ry="3"
+                                        width="200"
+                                        height="10"
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <Rect
+                                        x="0"
+                                        y="0"
+                                        rx="4"
+                                        ry="4"
+                                        width="70"
+                                        height="70"
+                                    />
+                                    <Rect
+                                        x="80"
+                                        y="17"
+                                        rx="4"
+                                        ry="4"
+                                        width="200"
+                                        height="13"
+                                    />
+                                    <Rect
+                                        x="80"
+                                        y="40"
+                                        rx="3"
+                                        ry="3"
+                                        width="150"
+                                        height="10"
+                                    />
+                                </>
+                            )}
+                        </ContentLoader>
+                    ) : (
+                        <>
+                            {/* <View style={globalStyles.horizontalMargin} /> */}
+                            <FlatList
+                                data={searchFilteredData}
+                                extraData={searchFilteredData}
+                                renderItem={renderItem}
+                                keyExtractor={(item) => item.id}
+                                scrollEnabled={true}
+                            />
+                        </>
+                    )}
+                </>
+            )}
+            {(Global.UserType == 3 || Global.UserType == 4) && (
+                <>
+                    <View
+                        style={[
+                            styles.containerFlex,
+                            {
                                 width: '100%',
-                                height: heightp(180),
-                                borderRadius: 10,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginTop: heightp(20),
+                                marginBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        <Pressable
+                            onPress={() => {
+                                navigation.navigate('FazaPackagesStage')
                             }}
-                            source={{
-                                uri: defaultUri,
-                                priority: FastImage.priority.normal,
+                            style={styles.fazaQuizzesContainer}
+                        >
+                            <Text
+                                style={styles.textColor}
+                                text={`${i18n.t('FAZA')}`}
+                            />
+                        </Pressable>
+                        <Pressable
+                            onPress={() => {
+                                navigation.navigate('AllMeasurementStage')
                             }}
-                            resizeMode={FastImage.resizeMode.cover}
-                        />
-                    </Pressable>
-                </View>
-                <View style={globalStyles.horizontal} />
+                            style={styles.fazaQuizzesContainer}
+                        >
+                            <Text
+                                style={styles.textColor}
+                                text={`${i18n.t('Quizzes')}`}
+                            />
+                        </Pressable>
+                    </View>
+                    <View style={globalStyles.horizontal} />
+                </>
+            )}
+            <View style={styles.containerFlex}>
+                <Pressable
+                    onPress={() => navigation.navigate('PackagesStage')}
+                    style={{
+                        marginTop: heightp(20),
+                    }}
+                >
+                    <FastImage
+                        style={{
+                            width: '100%',
+                            height: heightp(180),
+                            borderRadius: 10,
+                        }}
+                        source={{
+                            uri: defaultUri,
+                            priority: FastImage.priority.normal,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                </Pressable>
+            </View>
+            <View style={globalStyles.horizontal} />
 
-                <View style={styles.containerFlex}>
-                    <Pressable
-                        onPress={() => navigation.navigate('FreeLessons')}
+            <View style={styles.containerFlex}>
+                <Pressable
+                    onPress={() => navigation.navigate('FreeLessons')}
+                    style={{
+                        marginTop: heightp(20),
+                    }}
+                >
+                    <FastImage
                         style={{
-                            marginTop: heightp(20),
+                            width: '100%',
+                            height: heightp(180),
+                            borderRadius: 10,
                         }}
-                    >
-                        <FastImage
-                            style={{
-                                width: '100%',
-                                height: heightp(180),
-                                borderRadius: 10,
-                            }}
-                            source={
-                                lang === 'ar'
-                                    ? freeLessonsUriAr
-                                    : freeLessonsUri
-                            }
-                            resizeMode={FastImage.resizeMode.cover}
-                        />
-                    </Pressable>
-                </View>
-                <View style={styles.containerFlex}>
-                    <Pressable
-                        onPress={() => navigation.navigate('StudentGuide')}
+                        source={
+                            lang === 'ar' ? freeLessonsUriAr : freeLessonsUri
+                        }
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                </Pressable>
+            </View>
+            <View style={styles.containerFlex}>
+                <Pressable
+                    onPress={() => navigation.navigate('StudentGuide')}
+                    style={{
+                        marginTop: heightp(20),
+                    }}
+                >
+                    <FastImage
                         style={{
-                            marginTop: heightp(20),
+                            width: '100%',
+                            height: heightp(180),
+                            borderRadius: 10,
                         }}
-                    >
-                        <FastImage
-                            style={{
-                                width: '100%',
-                                height: heightp(180),
-                                borderRadius: 10,
-                            }}
-                            source={lang === 'ar' ? guideUriAr : guideUri}
-                            resizeMode={FastImage.resizeMode.cover}
-                        />
-                    </Pressable>
-                </View>
-                <View style={globalStyles.horizontal} />
-            </ScrollView>
+                        source={lang === 'ar' ? guideUriAr : guideUri}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                </Pressable>
+            </View>
+            <View style={globalStyles.horizontal} />
         </ScrollView>
     )
 }

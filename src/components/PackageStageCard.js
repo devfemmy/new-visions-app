@@ -26,6 +26,7 @@ const PackageStageCard = ({
     eduPress,
     navigation,
     faza,
+    quiz,
 }) => {
     let isActive
     if (group) {
@@ -33,6 +34,7 @@ const PackageStageCard = ({
     } else {
         isActive = activeStage?.name === stage?.name
     }
+    // console.log('sdaaankandknakndksan ksan ', stage)
     const styles = StyleSheet.create({
         container: {
             minHeight: reducedHeight ? heightp(80) : heightp(110),
@@ -121,14 +123,21 @@ const PackageStageCard = ({
             ) : (
                 <Pressable
                     onPress={() => {
-                        faza
-                            ? navigation.navigate('FazaEducationalStage', {
-                                  stage_id: stage?.id,
-                              })
-                            : navigation.navigate('PackagesList', {
-                                  stage_id: stage?.id,
-                              })
+                        if (faza) {
+                            navigation.navigate('FazaEducationalStage', {
+                                stage_id: stage?.id,
+                            })
+                        } else if (quiz) {
+                            navigation.navigate('AllMeasurementQuiz', {
+                                level_id: 14, //stage?.id,
+                            })
+                        } else {
+                            navigation.navigate('PackagesList', {
+                                stage_id: stage?.id,
+                            })
+                        }
                     }}
+                    onPressIn={() => {}}
                     style={!dark ? styles.darkContainer : styles.container}
                 >
                     {group && !reducedHeight ? (

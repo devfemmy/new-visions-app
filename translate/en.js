@@ -316,6 +316,8 @@ const English = {
     Send: 'Send',
     Questionnaire: 'Questionnaire',
     ABCABCABC: 'A B C A B C A B C ?',
+    AllMeasurementQuiz: 'Measurement Questions',
+    GuideQuestionnaire: 'Survey',
 }
 
 export default English

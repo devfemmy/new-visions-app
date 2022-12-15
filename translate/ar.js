@@ -326,6 +326,8 @@ const Arabic = {
     Send: 'Send',
     Questionnaire: 'Questionnaire',
     ABCABCABC: 'A B C A B C A B C ?',
+    AllMeasurementQuiz: 'اختبارات قياس',
+    GuideQuestionnaire: 'استبيان',
 }
 
 export default Arabic

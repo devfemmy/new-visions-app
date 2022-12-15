@@ -345,24 +345,24 @@ const FazaSubscription = () => {
                     ]}
                     text={`${I18n.t('GroupDates')}`}
                 />
-                {options?.map((item, index) => (
+                {options?.map((option, index) => (
                     <Pressable
                         style={[
                             styles.bigCountContainer,
                             {
                                 borderLeftWidth: 10,
                                 backgroundColor:
-                                    item?.id === groupData?.id
+                                    option?.id === groupData?.id
                                         ? '#E0F1B8'
                                         : 'rgba(0, 0, 0, 0.05)',
                                 borderLeftColor:
-                                    item?.id === groupData?.id
+                                    option?.id === groupData?.id
                                         ? colors.primary
                                         : '#C5C5C5',
                             },
                         ]}
                         onPress={() => {
-                            setGroupData(item)
+                            setGroupData(option)
                         }}
                     >
                         <View
@@ -373,26 +373,39 @@ const FazaSubscription = () => {
                         >
                             <View
                                 style={[
-                                    styles.countHalfContainer,
+                                    globalStyles.rowBetween,
                                     {
                                         width: '100%',
-                                        alignItems: 'center',
-                                        justifyContent: 'flex-start',
                                         paddingHorizontal: heightp(10),
                                         marginBottom: heightp(5),
                                     },
                                 ]}
                             >
-                                <CheckBox
-                                    value={item?.id === groupData?.id}
-                                    disabled
-                                    style={{ marginRight: 2.5 }}
-                                    tintColor={'#C5C5C5'}
-                                    onCheckColor={colors.primary}
-                                    onTintColor={colors.primary}
-                                />
+                                <View
+                                    style={[
+                                        styles.countHalfContainer,
+                                        {
+                                            alignItems: 'center',
+                                            justifyContent: 'flex-start',
+                                        },
+                                    ]}
+                                >
+                                    <CheckBox
+                                        value={option?.id === groupData?.id}
+                                        disabled
+                                        style={{ marginRight: 2.5 }}
+                                        tintColor={'#C5C5C5'}
+                                        onCheckColor={colors.primary}
+                                        onTintColor={colors.primary}
+                                    />
+                                    <RNText style={styles.subItemText2}>
+                                        {`${I18n.t('GroupNumber')} ${
+                                            index + 1
+                                        }`}
+                                    </RNText>
+                                </View>
                                 <RNText style={styles.subItemText2}>
-                                    {`${I18n.t('GroupNumber')} ${index + 1}`}
+                                    {item?.start_date}
                                 </RNText>
                             </View>
                             <View
@@ -401,7 +414,7 @@ const FazaSubscription = () => {
                                     {
                                         marginHorizontal: heightp(10),
                                         borderBottomColor:
-                                            item?.id === groupData?.id
+                                            option?.id === groupData?.id
                                                 ? colors.primary
                                                 : 'rgba(112, 112, 112, 0.5)',
                                     },
@@ -409,7 +422,11 @@ const FazaSubscription = () => {
                             />
                             <View style={styles.teacherTimeContainer}>
                                 <Pressable
-                                    onPress={() => navigateTeachersProfile(item?.subject?.teacher)}
+                                    onPress={() =>
+                                        navigateTeachersProfile(
+                                            option?.subject?.teacher
+                                        )
+                                    }
                                     style={{
                                         flexDirection: 'column',
                                         justifyContent: 'center',
@@ -424,11 +441,11 @@ const FazaSubscription = () => {
                                             borderRadius: heightp(60),
                                         }}
                                         source={
-                                            item?.subject?.teacher?.image ===
+                                            option?.subject?.teacher?.image ===
                                             null
                                                 ? defaultUri
                                                 : {
-                                                      uri: `${IMAGEURL}/${item?.subject?.teacher?.image}`,
+                                                      uri: `${IMAGEURL}/${option?.subject?.teacher?.image}`,
                                                       priority:
                                                           FastImage.priority
                                                               .normal,
@@ -445,12 +462,12 @@ const FazaSubscription = () => {
                                                 fontSize: heightp(13),
                                                 textAlign: 'center',
                                                 color:
-                                                    item?.id === groupData?.id
+                                                    option?.id === groupData?.id
                                                         ? colors.primary
                                                         : '#434854',
                                             },
                                         ]}
-                                        text={`${item?.subject?.teacher?.first_name} ${item?.subject?.teacher?.last_name}`}
+                                        text={`${option?.subject?.teacher?.first_name} ${option?.subject?.teacher?.last_name}`}
                                     />
                                 </Pressable>
                                 <View
@@ -460,7 +477,7 @@ const FazaSubscription = () => {
                                         width: '50%',
                                     }}
                                 >
-                                    {item?.days?.map((day, index) => (
+                                    {option?.days?.map((day, index) => (
                                         <View
                                             style={{
                                                 flexDirection: 'row',
@@ -482,7 +499,7 @@ const FazaSubscription = () => {
                                                 <IonIcons
                                                     name="ios-calendar"
                                                     color={
-                                                        item?.id ===
+                                                        option?.id ===
                                                         groupData?.id
                                                             ? colors.primary
                                                             : '#434854'
@@ -494,7 +511,7 @@ const FazaSubscription = () => {
                                                         styles.subItemText3,
                                                         {
                                                             color:
-                                                                item?.id ===
+                                                                option?.id ===
                                                                 groupData?.id
                                                                     ? colors.primary
                                                                     : '#434854',
@@ -515,7 +532,7 @@ const FazaSubscription = () => {
                                                 <IonIcons
                                                     name="ios-time-outline"
                                                     color={
-                                                        item?.id ===
+                                                        option?.id ===
                                                         groupData?.id
                                                             ? colors.primary
                                                             : '#434854'
@@ -527,7 +544,7 @@ const FazaSubscription = () => {
                                                         styles.subItemText3,
                                                         {
                                                             color:
-                                                                item?.id ===
+                                                                option?.id ===
                                                                 groupData?.id
                                                                     ? colors.primary
                                                                     : '#434854',

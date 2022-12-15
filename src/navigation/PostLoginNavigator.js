@@ -65,6 +65,7 @@ import ChooseStudyDate from '../screens/StudentGuide/ChooseDate'
 import GuideQuestionnaire from '../screens/StudentGuide/GuideQuestionnaire'
 import AllMeasurementQuiz from '../screens/AllMeasurementQuiz'
 import AllMeasurementQuizQuestion from '../screens/AllMeasurementQuiz/AllMeasurementQuizQuestion'
+import AllMeasurementStage from '../screens/AllMeasurementQuiz/AllMeasurementStage'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -508,7 +509,7 @@ export const PostLoginNavigator = () => {
                     component={GuideQuestionnaire}
                     options={() => ({
                         headerShown: true,
-                        title: i18n.t('Questions'),
+                        title: i18n.t('GuideQuestionnaire'),
                         headerLeft: backRight,
                     })}
                 />
@@ -526,9 +527,18 @@ export const PostLoginNavigator = () => {
                     component={AllMeasurementQuiz}
                     options={() => ({
                         headerShown: true,
-                        title: i18n.t('MeasurementQuiz'),
+                        title: i18n.t('AllMeasurementQuiz'),
                         headerLeft: backRight,
                     })}
+                />
+                <MainStack.Screen
+                    name="AllMeasurementStage"
+                    component={AllMeasurementStage}
+                    options={{
+                        title: I18n.t('EducationalLevel'),
+                        headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                        headerLeft: backRight,
+                    }}
                 />
             </MainStack.Navigator>
         </>

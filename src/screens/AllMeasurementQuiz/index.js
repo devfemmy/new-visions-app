@@ -31,14 +31,14 @@ const AllMeasurementQuiz = () => {
     const [refreshing, setRefreshing] = useState(false)
     const [loading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
-    // const { level } = route.params
+    const { level_id } = route.params
     const navigation = useNavigation()
-    // console.log(level, '================================')
+    console.log(level_id, '================================')
 
     const getUserMeasurementQuizzes = async () => {
         setLoading(true)
         const payload = {
-            level_id: 14,
+            level_id: level_id,
         }
         try {
             const res = await HomePageService.getMeasurementQuizzes(payload)
@@ -59,9 +59,8 @@ const AllMeasurementQuiz = () => {
     }
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            getUserMeasurementQuizzes()
-        })
+        getUserMeasurementQuizzes()
+        const unsubscribe = navigation.addListener('focus', () => {})
         return unsubscribe
     }, [dispatch])
 

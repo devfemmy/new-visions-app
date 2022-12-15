@@ -170,7 +170,7 @@ const AllMeasurementQuizCard = ({
                                         styles.rowCenter,
                                         {
                                             // backgroundColor: '#ff0',
-                                            width: '88%',
+                                            // width: '88%',
                                         },
                                     ]}
                                 >
@@ -191,7 +191,7 @@ const AllMeasurementQuizCard = ({
                                         />
                                     </View>
                                     <Text
-                                        // numberOfLines={1}
+                                        numberOfLines={1}
                                         fontSize={heightp(13)}
                                         style={styles.text}
                                         text={contents && contents}
