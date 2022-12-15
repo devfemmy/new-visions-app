@@ -99,7 +99,7 @@ const AllMeasurementQuizCard = ({
         text: {
             marginLeft: heightp(5),
             color: colors.dark,
-            fontSize: heightp(16),
+            fontSize: heightp(13),
             fontWeight: 'bold',
         },
         rowCenter: {
