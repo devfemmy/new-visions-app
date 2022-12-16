@@ -318,6 +318,7 @@ const English = {
     ABCABCABC: 'A B C A B C A B C ?',
     AllMeasurementQuiz: 'Measurement Questions',
     GuideQuestionnaire: 'Survey',
+    StartExam: 'Start Exam',
 }
 
 export default English

@@ -113,9 +113,10 @@ const AllMeasurementQuiz = () => {
                             <AllMeasurementQuizCard
                                 pressed={() => {
                                     // console.log('uetm ============>', item)
-                                    item?.final_result === null
-                                        ? navigateNowQuiz(item)
-                                        : null
+                                    // item?.final_result === null
+                                    //     ? navigateNowQuiz(item)
+                                    //     :
+                                    null
                                 }}
                                 uri={`${IMAGEURL}/${item?.photo}`}
                                 image={item?.photo}
@@ -124,7 +125,9 @@ const AllMeasurementQuiz = () => {
                                     lang === 'en' ? item?.title_en : item?.title
                                 }
                                 quizzesResult={() => {
-                                    navigateNowQuizResult(item)
+                                    item?.final_result === null
+                                        ? navigateNowQuiz(item)
+                                        : navigateNowQuizResult(item)
                                 }}
                             />
                         ))}

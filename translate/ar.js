@@ -328,6 +328,7 @@ const Arabic = {
     ABCABCABC: 'A B C A B C A B C ?',
     AllMeasurementQuiz: 'اختبارات قياس',
     GuideQuestionnaire: 'استبيان',
+    StartExam: 'أبدأ الاختبار',
 }
 
 export default Arabic

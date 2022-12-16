@@ -199,37 +199,35 @@ const AllMeasurementQuizCard = ({
                                 </View>
                             </View>
                         </View>
-                        {item?.final_result === null ? (
-                            <></>
-                        ) : (
-                            <Pressable
-                                style={styles.loginBtn}
-                                onPress={quizzesResult}
-                            >
-                                <View style={styles.loginBtnView}>
-                                    <View />
-                                    <RNText
-                                        style={[
-                                            styles.loginText,
-                                            { color: colors.white },
-                                        ]}
-                                    >
-                                        {I18n.t('QuizResults')}
-                                    </RNText>
-                                    <View style={styles.arrowCont}>
-                                        <MaterialIcons
-                                            name={
-                                                lang === 'ar'
-                                                    ? 'arrow-back'
-                                                    : 'arrow-forward'
-                                            }
-                                            size={16}
-                                            color={colors.white}
-                                        />
-                                    </View>
+                        <Pressable
+                            style={styles.loginBtn}
+                            onPress={quizzesResult}
+                        >
+                            <View style={styles.loginBtnView}>
+                                <View />
+                                <RNText
+                                    style={[
+                                        styles.loginText,
+                                        { color: colors.white },
+                                    ]}
+                                >
+                                    {item?.final_result === null
+                                        ? I18n.t('StartExam')
+                                        : I18n.t('QuizResults')}
+                                </RNText>
+                                <View style={styles.arrowCont}>
+                                    <MaterialIcons
+                                        name={
+                                            lang === 'ar'
+                                                ? 'arrow-back'
+                                                : 'arrow-forward'
+                                        }
+                                        size={16}
+                                        color={colors.white}
+                                    />
                                 </View>
-                            </Pressable>
-                        )}
+                            </View>
+                        </Pressable>
                     </View>
                 </View>
             </Pressable>
