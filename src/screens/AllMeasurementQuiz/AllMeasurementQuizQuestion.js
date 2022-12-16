@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { useRoute, useNavigation, StackActions } from '@react-navigation/native'
 import {
     FlatList,
@@ -25,9 +25,11 @@ import {
 } from '../../components/common'
 import { AirbnbRating } from 'react-native-ratings'
 import * as Progress from 'react-native-progress'
+import { AppContext } from '../../context/AppState'
 
 const AllMeasurementQuizQuestion = () => {
     const route = useRoute()
+    const { lang } = useContext(AppContext)
     const { item } = route.params
     const navigation = useNavigation()
     const [quizData, setQuizData] = useState([])
@@ -35,7 +37,7 @@ const AllMeasurementQuizQuestion = () => {
     const [review, setReview] = useState('')
     const [answersInput, setAnswersInput] = useState([])
     const [answer, setAnswer] = useState('')
-    const [numOfMins, setNumOfMins] = useState('')
+    const [numOfMins, setNumOfMins] = useState(0)
     console.log(
         'answer to be submitted in live quiz',
         numOfMins,
@@ -127,7 +129,7 @@ const AllMeasurementQuizQuestion = () => {
             if (res.code === 200) {
                 console.log('submitLessonQuiz res', res)
                 setLoading(false)
-                navigation.goBack()
+                navigation.navigate('Home')
             } else {
                 setLoading(false)
                 console.log('false data', res)
@@ -157,11 +159,11 @@ const AllMeasurementQuizQuestion = () => {
                     <Pressable
                         onPress={() => {
                             console.log('pressed')
-                            if (answersInput.length !== quizData.length) {
-                                alert(`${I18n.t('PleaseAnswerAll')}`)
-                            } else {
-                                submitLessonQuiz()
-                            }
+                            // if (answersInput.length !== quizData.length) {
+                            //     alert(`${I18n.t('PleaseAnswerAll')}`)
+                            // } else {
+                            submitLessonQuiz()
+                            // }
                         }}
                     >
                         <View
@@ -513,67 +515,65 @@ const AllMeasurementQuizQuestion = () => {
         <>
             <KeyboardAwareScrollView style={{ flex: 1 }}>
                 <View style={styles.container}>
-                    {typeof numOfMins !== 'string' ? (
+                    {numOfMins > 0 ? (
                         <>
-                            {/* <CircularProgress
-                            value={0}
-                            maxValue={100}
-                            initialValue={100}
-                            radius={100}
-                            duration={
-                                // numOfMins > 0
-                                //     ? parseInt(numOfMins) * 86400
-                                //     :
-                                90000
-                            }
-                            delay={1000}
-                            progressValueColor={'rgba(155, 186, 82, 1)'}
-                            titleFontSize={16}
-                            titleColor={'rgba(67, 72, 84, 1)'}
-                            titleStyle={{ fontWeight: 'bold' }}
-                            progressValueStyle={{
-                                fontWeight: '100',
-                                color: 'rgba(67, 72, 84, 1)',
-                                fontSize: 36,
-                            }}
-                            circleBackgroundColor={'#fff'}
-                            inActiveStrokeColor={'rgba(233, 233, 233, 1)'}
-                            activeStrokeColor={'rgba(155, 186, 82, 1)'}
-                            progressFormatter={(value) => {
-                                'worklet'
-                                return value.toFixed(2) // 2 decimal places
-                            }}
-                            onAnimationComplete={() => {
-                                Alert.alert(
-                                    `${I18n.t('Quiz')}`,
-                                    `${I18n.t('SubmitQuiz')}`,
-                                    [
-                                        {
-                                            text: 'Ok',
-                                            onPress: () => {
-                                                submitLessonQuiz()
+                            <CircularProgress
+                                value={0}
+                                maxValue={100}
+                                initialValue={100}
+                                radius={100}
+                                duration={numOfMins > 0 ? numOfMins * 60000 : 0}
+                                // delay={1000}
+                                valueSuffix={lang !== 'ar' && '%'}
+                                valuePrefix={lang === 'ar' && '%'}
+                                progressValueColor={'rgba(155, 186, 82, 1)'}
+                                titleFontSize={16}
+                                titleColor={'rgba(67, 72, 84, 1)'}
+                                titleStyle={{ fontWeight: 'bold' }}
+                                progressValueStyle={{
+                                    fontWeight: '100',
+                                    color: 'rgba(67, 72, 84, 1)',
+                                    fontSize: 36,
+                                }}
+                                circleBackgroundColor={'#fff'}
+                                inActiveStrokeColor={'rgba(233, 233, 233, 1)'}
+                                activeStrokeColor={'rgba(155, 186, 82, 1)'}
+                                progressFormatter={(value) => {
+                                    'worklet'
+                                    return value.toFixed(2) // 2 decimal places
+                                }}
+                                onAnimationComplete={() => {
+                                    Alert.alert(
+                                        `${I18n.t('Quiz')}`,
+                                        `${I18n.t('SubmitQuiz')}`,
+                                        [
+                                            {
+                                                text: 'Ok',
+                                                onPress: () => {
+                                                    submitLessonQuiz()
+                                                },
+                                                style: 'cancel',
                                             },
-                                            style: 'cancel',
-                                        },
-                                    ],
+                                        ],
+                                        {
+                                            cancelable: false,
+                                        }
+                                    )
+                                }}
+                            />
+                            <Text
+                                style={[
+                                    styles.title,
                                     {
-                                        cancelable: false,
-                                    }
-                                )
-                            }}
-                        />
-                        <Text
-                            style={[
-                                styles.title,
-                                {
-                                    color: '#000',
-                                    textAlign: 'center',
-                                },
-                            ]}
-                        >
-                            {I18n.t('YouHave')} {numOfMins} {I18n.t('Minutes')}{' '}
-                            {I18n.t('ForThis')} {I18n.t('Quiz')}
-                        </Text> */}
+                                        color: '#000',
+                                        textAlign: 'center',
+                                    },
+                                ]}
+                            >
+                                {I18n.t('YouHave')} {numOfMins}{' '}
+                                {I18n.t('Minutes')} {I18n.t('ForThis')}{' '}
+                                {I18n.t('Quiz')}
+                            </Text>
                         </>
                     ) : (
                         <></>

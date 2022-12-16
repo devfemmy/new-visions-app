@@ -51,11 +51,16 @@ const Home = () => {
 
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
+    const [packagesArray, setPackagesArray] = useState(null)
+    const [stagesArray, setStagesArray] = useState(null)
+    const [teachersArray, setTeachersArray] = useState(null)
+    const [videoId, setVideoId] = useState(null)
+
     const data = useAppSelector((state) => state.homePage)
-    const packagesArray = data?.homeData?.multi_packages
-    const stagesArray = data?.homeData?.stages
-    const teachersArray = data?.homeData?.teachers
-    const videoId = data?.homeData?.video
+    // const packagesArray = data?.homeData?.multi_packages
+    // const stagesArray = data?.homeData?.stages
+    // const teachersArray = data?.homeData?.teachers
+    // const videoId = data?.homeData?.video
     console.log('Video gangangaab ====>', videoId)
 
     // console.log('packages on home page', data)
@@ -68,7 +73,7 @@ const Home = () => {
     //
     const [refreshing, setRefreshing] = useState(false)
     //
-    const [vidId, setVideoId] = useState('')
+    const [vidId, setVidId] = useState('')
     //
     function getPackages(params) {
         axios
@@ -106,6 +111,31 @@ const Home = () => {
                 console.log('response 2', error)
                 // alert(error)
             })
+    }
+
+    const homePage = async () => {
+        showLoadingSpinner(true)
+        try {
+            const res = await HomePageService.homePage()
+            const data = res?.data
+            if (res.code === 200) {
+                showLoadingSpinner(false)
+                setPackagesArray(data?.multi_packages)
+                setStagesArray(data?.stages)
+                setTeachersArray(data?.teachers)
+                const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
+                setVidId(id)
+                // setVideoId(data?.video)
+                // console.log('================================>', data)
+            } else {
+                alert('This Account is Logged in from another Device.')
+                onLogout()
+                // return
+            }
+            return res
+        } catch (err) {
+            showLoadingSpinner(false)
+        }
     }
 
     const navigateTeacherProfile = useCallback(
@@ -157,8 +187,11 @@ const Home = () => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             getData()
-            dispatch(getHomePage())
+            // dispatch(getHomePage())
+            homePage()
             getPackages()
+            // const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
+            // setVideoId(id)
             // Send Notification Token
 
             async function postNotificationToken() {
@@ -182,14 +215,14 @@ const Home = () => {
         return unsubscribe
     }, [navigation, dispatch])
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
-            setVideoId(id)
-            console.log('the video id is this hrre ====>', id)
-        })
-        return unsubscribe
-    }, [videoId])
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
+    //         setVideoId(id)
+    //         console.log('the video id is this hrre ====>', id)
+    //     })
+    //     return unsubscribe
+    // }, [navigation, videoId])
 
     const getData = async () => {
         const dataFromAsync = await AsyncStorage.getItem('user')

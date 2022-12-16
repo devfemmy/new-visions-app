@@ -113,10 +113,13 @@ const AllMeasurementQuiz = () => {
                             <AllMeasurementQuizCard
                                 pressed={() => {
                                     // console.log('uetm ============>', item)
-                                    navigateNowQuiz(item)
+                                    item?.final_result === null
+                                        ? navigateNowQuiz(item)
+                                        : null
                                 }}
                                 uri={`${IMAGEURL}/${item?.photo}`}
                                 image={item?.photo}
+                                item={item}
                                 contents={
                                     lang === 'en' ? item?.title_en : item?.title
                                 }

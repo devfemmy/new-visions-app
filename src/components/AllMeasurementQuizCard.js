@@ -17,7 +17,7 @@ const defaultUri = require('../assets/img/default-profile-picture.jpeg')
 
 const AllMeasurementQuizCard = ({
     contents,
-    subject,
+    item,
     uri,
     image,
     number_of_students,
@@ -199,33 +199,37 @@ const AllMeasurementQuizCard = ({
                                 </View>
                             </View>
                         </View>
-                        <Pressable
-                            style={styles.loginBtn}
-                            onPress={quizzesResult}
-                        >
-                            <View style={styles.loginBtnView}>
-                                <View />
-                                <RNText
-                                    style={[
-                                        styles.loginText,
-                                        { color: colors.white },
-                                    ]}
-                                >
-                                    {I18n.t('QuizResults')}
-                                </RNText>
-                                <View style={styles.arrowCont}>
-                                    <MaterialIcons
-                                        name={
-                                            lang === 'ar'
-                                                ? 'arrow-back'
-                                                : 'arrow-forward'
-                                        }
-                                        size={16}
-                                        color={colors.white}
-                                    />
+                        {item?.final_result === null ? (
+                            <></>
+                        ) : (
+                            <Pressable
+                                style={styles.loginBtn}
+                                onPress={quizzesResult}
+                            >
+                                <View style={styles.loginBtnView}>
+                                    <View />
+                                    <RNText
+                                        style={[
+                                            styles.loginText,
+                                            { color: colors.white },
+                                        ]}
+                                    >
+                                        {I18n.t('QuizResults')}
+                                    </RNText>
+                                    <View style={styles.arrowCont}>
+                                        <MaterialIcons
+                                            name={
+                                                lang === 'ar'
+                                                    ? 'arrow-back'
+                                                    : 'arrow-forward'
+                                            }
+                                            size={16}
+                                            color={colors.white}
+                                        />
+                                    </View>
                                 </View>
-                            </View>
-                        </Pressable>
+                            </Pressable>
+                        )}
                     </View>
                 </View>
             </Pressable>
