@@ -44,7 +44,7 @@ const English = {
     LiveBoadcastTimes: 'Live Broadcast Times',
     StudySubjectList: 'Study Subject List',
     Quizzes: 'Quizzes',
-    QuizzesResults: 'Quizzes Results',
+    QuizzesResults: 'Quizzes Result',
     Subscribtions: 'Subscriptions',
     AboutUs: 'About',
     SignOut: 'SignOut',
