@@ -36,7 +36,9 @@ const LessonCard = ({
         I18n.t('Friday'),
     ]
     const specialIndex = `${stage?.day_id - 1}`
+    console.log('special ----=============>', specialIndex)
     const dayOfWeek = daysOfWeek[specialIndex]
+    console.log('dayOfWeek ----=============>', dayOfWeek)
     const styles = StyleSheet.create({
         container: {
             minHeight: heightp(70),

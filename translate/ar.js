@@ -128,7 +128,7 @@ const Arabic = {
 
     //Quizzes
     Questions: 'أسئلة',
-    Minutes: 'الدقائق',
+    Minutes: 'دقائق',
     Submit: 'إرسال',
 
     //Subscribtions
@@ -170,7 +170,7 @@ const Arabic = {
     PackageDetails: 'الدورات المشتركة',
     Calendar: 'البث المباشر',
     Packages: 'الباقات',
-    MultiPackageBrief: 'نبذة تعريفية عن محور الدورة',
+    MultiPackageBrief: 'نبذة تعريفية عن محاور الدورة',
 
     SubscribeNow: 'اشتراك',
     SubscripePackage: 'اشترك بالدورة الاّن',
@@ -211,7 +211,7 @@ const Arabic = {
 
     Publish: 'ينشر',
 
-    SendQuiz: 'إرسال اختبار',
+    SendQuiz: 'ارسل الاختبار',
 
     QuestionNumber: 'رقم السؤال',
 
@@ -223,7 +223,7 @@ const Arabic = {
 
     SubmitQuiz: 'انتهى الوقت ، إرسال الاختبار!',
 
-    YouHave: 'عندك',
+    YouHave: 'مدة الاختبار',
 
     ForThis: 'لهذا',
 
@@ -277,12 +277,12 @@ const Arabic = {
     Sunday: 'الاحد',
     Monday: 'الاثنين',
     Tuesday: 'الثلاثاء',
-    Wednesday: 'الاربع',
+    Wednesday: 'الاربعاء',
     Thursday: 'الخميس ',
     Friday: 'الجمعة',
     PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
     ChooseChild: 'قم بإختيار احد الابناء للاشتراك',
-    ChooseTheRightDate: 'اختر المواعيد المناسبك لك',
+    ChooseTheRightDate: 'اختر المواعيد المناسبة لك',
     AddAnotherDate: 'أضف تاريخًا آخر',
     Error407Display:
         'تم الموافقة من قبل المعلم على طلبك للاشتراك بالمنهج الخاص يرجى اتمام عملية الدفع',
@@ -329,6 +329,9 @@ const Arabic = {
     AllMeasurementQuiz: 'اختبارات قياس',
     GuideQuestionnaire: 'استبيان',
     StartExam: 'أبدأ الاختبار',
+    DisplaySubjectHours: 'ساعة',
+    DisplaySubjectStudents: 'طالب',
+    FazaStudents: 'طلاب',
 }
 
 export default Arabic

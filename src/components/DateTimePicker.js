@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import {
     View,
     Text,
@@ -15,8 +15,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import colors from '../helpers/colors'
 import { heightp, widthp } from '../utils/responsiveDesign'
 import moment from 'moment'
+import { AppContext } from '../context/AppState'
 
 const CustomDateTimePicker = (props) => {
+    const { lang } = useContext(AppContext)
     const flatListRef = useRef()
 
     const renderFooter = () => {
@@ -130,7 +132,17 @@ const CustomDateTimePicker = (props) => {
                                         }}
                                         key={index}
                                     >
-                                        <Text style={styles.textStyle}>
+                                        <Text
+                                            style={[
+                                                styles.textStyle,
+                                                {
+                                                    textAlign:
+                                                        lang === 'ar'
+                                                            ? 'left'
+                                                            : 'right',
+                                                },
+                                            ]}
+                                        >
                                             {item[props.dataRoute]}
                                         </Text>
                                     </TouchableOpacity>

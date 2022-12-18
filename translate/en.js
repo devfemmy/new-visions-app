@@ -319,6 +319,9 @@ const English = {
     AllMeasurementQuiz: 'Measurement Questions',
     GuideQuestionnaire: 'Survey',
     StartExam: 'Start Exam',
+    DisplaySubjectHours: 'Hours',
+    DisplaySubjectStudents: 'Students',
+    FazaStudents: 'Students',
 }
 
 export default English

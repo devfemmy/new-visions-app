@@ -656,7 +656,7 @@ const Home = () => {
                     <View style={globalStyles.horizontal} />
                 </>
             )}
-            <View style={styles.containerFlex}>
+            {/* <View style={styles.containerFlex}>
                 <Pressable
                     onPress={() => navigation.navigate('PackagesStage')}
                     style={{
@@ -677,7 +677,7 @@ const Home = () => {
                     />
                 </Pressable>
             </View>
-            <View style={globalStyles.horizontal} />
+            <View style={globalStyles.horizontal} /> */}
 
             <View style={styles.containerFlex}>
                 <Pressable

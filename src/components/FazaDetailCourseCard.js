@@ -181,7 +181,7 @@ const FazaDetailCourseCard = ({
                                 text={
                                     number_of_students &&
                                     `${number_of_students} ${I18n.t(
-                                        'Students'
+                                        'FazaStudents'
                                     )}`
                                 }
                                 children={

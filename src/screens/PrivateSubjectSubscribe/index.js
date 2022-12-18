@@ -29,11 +29,11 @@ const dayOptions = [
     { value: '7', label: 'Friday' },
 ]
 const dayArrOptions = [
-    { value: '1', label: 'سبت' },
+    { value: '1', label: 'السبت' },
     { value: '2', label: 'الاحد' },
     { value: '3', label: 'الاثنين' },
     { value: '4', label: 'الثلاثاء' },
-    { value: '5', label: 'الاربع' },
+    { value: '5', label: 'الأربعاء' },
     { value: '6', label: 'الخميس' },
     { value: '7', label: 'الجمعة' },
 ]

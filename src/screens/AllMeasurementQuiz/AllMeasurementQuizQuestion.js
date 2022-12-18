@@ -26,6 +26,8 @@ import {
 import { AirbnbRating } from 'react-native-ratings'
 import * as Progress from 'react-native-progress'
 import { AppContext } from '../../context/AppState'
+import FastImage from 'react-native-fast-image'
+import { IMAGEURL } from '../../utils/functions'
 
 const AllMeasurementQuizQuestion = () => {
     const route = useRoute()
@@ -366,9 +368,27 @@ const AllMeasurementQuizQuestion = () => {
                             },
                         ]}
                     >
-                        {I18n.t('QuestionNumber')} {item?.id}
+                        {I18n.t('QuestionNumber')} {index + 1}
                     </Text>
-                    <Text style={[styles.inputTitle]}>{item?.title}</Text>
+                    {item?.image ? (
+                        <>
+                            <FastImage
+                                style={{
+                                    flex: 1,
+                                    width: WINDOW_WIDTH * 0.9,
+                                    height: WINDOW_HEIGHT * 0.1,
+                                    resizeMode: 'contain',
+                                }}
+                                source={{
+                                    uri: `${IMAGEURL}/${item?.image}`,
+                                    priority: FastImage.priority.normal,
+                                }}
+                                resizeMode={FastImage.resizeMode.contain}
+                            />
+                        </>
+                    ) : (
+                        <Text style={[styles.inputTitle]}>{item?.title}</Text>
+                    )}
 
                     <View
                         style={{
@@ -571,8 +591,7 @@ const AllMeasurementQuizQuestion = () => {
                                 ]}
                             >
                                 {I18n.t('YouHave')} {numOfMins}{' '}
-                                {I18n.t('Minutes')} {I18n.t('ForThis')}{' '}
-                                {I18n.t('Quiz')}
+                                {I18n.t('Minutes')}
                             </Text>
                         </>
                     ) : (
