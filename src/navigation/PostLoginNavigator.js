@@ -517,7 +517,7 @@ export const PostLoginNavigator = () => {
                     name={'AllMeasurementQuizQuestion'}
                     component={AllMeasurementQuizQuestion}
                     options={{
-                        title: I18n.t('MeasurementQuiz'),
+                        title: I18n.t('AllMeasurementQuesion'),
                         headerShown: true,
                         headerLeft: backRight,
                     }}

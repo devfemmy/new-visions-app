@@ -333,6 +333,7 @@ const Arabic = {
     DisplaySubjectStudents: 'طالب',
     FazaStudents: 'طلاب',
     ViewDate: 'عرض المواعيد',
+    AllMeasurementQuesion: 'اختبار قياس',
 }
 
 export default Arabic

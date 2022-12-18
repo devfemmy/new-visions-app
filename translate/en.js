@@ -323,6 +323,7 @@ const English = {
     DisplaySubjectStudents: 'Students',
     FazaStudents: 'Students',
     ViewDate: 'View Dates',
+    AllMeasurementQuesion: 'Measurement Quiz',
 }
 
 export default English
