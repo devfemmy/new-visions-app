@@ -322,6 +322,7 @@ const English = {
     DisplaySubjectHours: 'Hours',
     DisplaySubjectStudents: 'Students',
     FazaStudents: 'Students',
+    ViewDate: 'View Dates',
 }
 
 export default English

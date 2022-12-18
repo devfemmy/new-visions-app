@@ -213,7 +213,7 @@ const LiveNowQuizResult = () => {
                             },
                         ]}
                     >
-                        {I18n.t('QuestionNumber')} {item?.id}
+                        {I18n.t('QuestionNumber')} {index + 1}
                     </Text>
                     <Text style={[styles.inputTitle]}>{item?.title}</Text>
 

@@ -332,6 +332,7 @@ const Arabic = {
     DisplaySubjectHours: 'ساعة',
     DisplaySubjectStudents: 'طالب',
     FazaStudents: 'طلاب',
+    ViewDate: 'عرض المواعيد',
 }
 
 export default Arabic

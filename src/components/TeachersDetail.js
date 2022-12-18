@@ -91,7 +91,7 @@ const TeachersDetailCard = ({
         loginBtnView: {
             flex: 1,
             borderRadius: 40,
-            backgroundColor: 'rgba(238, 238, 239, 1)',
+            backgroundColor: 'rgba(155, 186, 82, 1)',
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -102,7 +102,7 @@ const TeachersDetailCard = ({
             height: 30,
             borderRadius: 15,
             justifyContent: 'center',
-            backgroundColor: 'rgba(238, 238, 239, 1)',
+            backgroundColor: 'rgba(155, 186, 82, 1)',
             overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
@@ -112,7 +112,7 @@ const TeachersDetailCard = ({
     return (
         <>
             <Pressable
-                onPress={studyPressed}
+                onPress={() => {}}
                 style={[
                     styles.container,
                     // globalStyles.rowBetween,
@@ -164,11 +164,17 @@ const TeachersDetailCard = ({
                                     </View>
                                 }
                             />
-                            <Ionicons
-                                name="arrow-forward-circle"
-                                size={20}
-                                color={'rgba(155, 186, 82, 1)'}
-                            />
+                            <Pressable onPress={studyPressed}>
+                                <Ionicons
+                                    name={
+                                        lang === 'ar'
+                                            ? 'arrow-back-circle'
+                                            : 'arrow-forward-circle'
+                                    }
+                                    size={20}
+                                    color={'rgba(155, 186, 82, 1)'}
+                                />
+                            </Pressable>
                         </View>
                         {/* <Text
                             numberOfLines={1}
@@ -397,9 +403,9 @@ const TeachersDetailCard = ({
                     <View style={styles.loginBtnView}>
                         <View />
                         <RNText
-                            style={[styles.loginText, { color: colors.dark }]}
+                            style={[styles.loginText, { color: colors.white }]}
                         >
-                            {I18n.t('ViewProfile')}
+                            {I18n.t('ViewDate')}
                         </RNText>
                         <View style={styles.arrowCont}>
                             <MaterialIcons
@@ -409,7 +415,7 @@ const TeachersDetailCard = ({
                                         : 'arrow-forward'
                                 }
                                 size={16}
-                                color={colors.black}
+                                color={colors.white}
                             />
                         </View>
                     </View>

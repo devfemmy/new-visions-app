@@ -132,7 +132,8 @@ const StudentGuide = () => {
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>
-                                    navigateTeachersProfile(item?.user)
+                                    // navigateTeachersProfile(item?.user)
+                                    navigateStudyGuide(item?.user, item?.id)
                                 }
                                 studyPressed={() =>
                                     navigateStudyGuide(item?.user, item?.id)
