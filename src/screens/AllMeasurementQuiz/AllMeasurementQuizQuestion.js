@@ -189,7 +189,7 @@ const AllMeasurementQuizQuestion = () => {
                         </View>
                     </Pressable>
                 </View>
-                <Text style={styles.footerTitle}>{I18n.t('Rate')}</Text>
+                {/* <Text style={styles.footerTitle}>{I18n.t('Rate')}</Text>
                 <View
                     style={[
                         styles.borderContainer,
@@ -340,7 +340,7 @@ const AllMeasurementQuizQuestion = () => {
                             </Text>
                         </View>
                     </Pressable>
-                </View>
+                </View> */}
             </View>
         )
     }

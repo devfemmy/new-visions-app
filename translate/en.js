@@ -324,6 +324,7 @@ const English = {
     FazaStudents: 'Students',
     ViewDate: 'View Dates',
     AllMeasurementQuesion: 'Measurement Quiz',
+    StudyGuideViewProfile: 'View profile',
 }
 
 export default English

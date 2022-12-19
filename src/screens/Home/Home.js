@@ -323,6 +323,7 @@ const Home = () => {
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => {
+                        console.log('renderItem', item)
                         const uri = `${IMAGEURL}/${item.image}`
                         // navigation.navigate("MultiPackageDetails", item);
                         return (

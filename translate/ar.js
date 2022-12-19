@@ -334,6 +334,7 @@ const Arabic = {
     FazaStudents: 'طلاب',
     ViewDate: 'عرض المواعيد',
     AllMeasurementQuesion: 'اختبار قياس',
+    StudyGuideViewProfile: 'الملف الشخصي',
 }
 
 export default Arabic

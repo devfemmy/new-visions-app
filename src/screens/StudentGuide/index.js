@@ -21,7 +21,7 @@ import HomePageService from '../../services/userServices'
 import { AppContext } from '../../context/AppState'
 import I18n from 'i18n-js'
 import { Text } from '../../components/common'
-import TeachersDetailCard from '../../components/TeachersDetail'
+import StudentGuideCard from '../../components/StudentGuideCard'
 
 const StudentGuide = () => {
     const route = useRoute()
@@ -129,9 +129,13 @@ const StudentGuide = () => {
                     renderItem={({ item }) => (
                         <>
                             <>{console.log(item.id)}</>
-                            <TeachersDetailCard
+                            <StudentGuideCard
                                 // subjectDetails
-                                viewProfile={() =>
+                                viewProfile={
+                                    () => navigateTeachersProfile(item?.user)
+                                    // navigateStudyGuide(item?.user, item?.id)
+                                }
+                                viewDate={() =>
                                     // navigateTeachersProfile(item?.user)
                                     navigateStudyGuide(item?.user, item?.id)
                                 }
