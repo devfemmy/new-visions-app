@@ -407,7 +407,6 @@ const Teachers = () => {
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => (
                         <>
-                            <>{console.log(item.id)}</>
                             <TeachersDetailCard
                                 // subjectDetails
                                 viewProfile={() =>

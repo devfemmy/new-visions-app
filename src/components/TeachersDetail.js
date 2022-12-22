@@ -91,7 +91,7 @@ const TeachersDetailCard = ({
         loginBtnView: {
             flex: 1,
             borderRadius: 40,
-            backgroundColor: 'rgba(155, 186, 82, 1)',
+            backgroundColor: 'rgba(239, 239, 239, 1)',
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -102,7 +102,7 @@ const TeachersDetailCard = ({
             height: 30,
             borderRadius: 15,
             justifyContent: 'center',
-            backgroundColor: 'rgba(155, 186, 82, 1)',
+            backgroundColor: 'rgba(239, 239, 239, 1)',
             overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
@@ -403,9 +403,9 @@ const TeachersDetailCard = ({
                     <View style={styles.loginBtnView}>
                         <View />
                         <RNText
-                            style={[styles.loginText, { color: colors.white }]}
+                            style={[styles.loginText, { color: colors.dark }]}
                         >
-                            {I18n.t('ViewDate')}
+                            {I18n.t('ViewProfile')}
                         </RNText>
                         <View style={styles.arrowCont}>
                             <MaterialIcons
@@ -415,7 +415,7 @@ const TeachersDetailCard = ({
                                         : 'arrow-forward'
                                 }
                                 size={16}
-                                color={colors.white}
+                                color={colors.black}
                             />
                         </View>
                     </View>
