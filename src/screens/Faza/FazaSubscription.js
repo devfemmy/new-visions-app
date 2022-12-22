@@ -431,7 +431,7 @@ const FazaSubscription = () => {
                                         flexDirection: 'column',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        width: '50%',
+                                        width: '28%',
                                     }}
                                 >
                                     <FastImage
@@ -474,7 +474,7 @@ const FazaSubscription = () => {
                                     style={{
                                         flexDirection: 'column',
                                         alignItems: 'center',
-                                        width: '50%',
+                                        width: '72%',
                                     }}
                                 >
                                     {option?.days?.map((day, index) => (
