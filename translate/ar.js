@@ -335,6 +335,7 @@ const Arabic = {
     ViewDate: 'عرض المواعيد',
     AllMeasurementQuesion: 'اختبار قياس',
     StudyGuideViewProfile: 'الملف الشخصي',
+    BookNow: 'احجز الان',
 }
 
 export default Arabic

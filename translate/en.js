@@ -325,6 +325,7 @@ const English = {
     ViewDate: 'View Dates',
     AllMeasurementQuesion: 'Measurement Quiz',
     StudyGuideViewProfile: 'View profile',
+    BookNow: 'Book Now',
 }
 
 export default English

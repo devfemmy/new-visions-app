@@ -54,7 +54,7 @@ const TeachersCourseCard = ({
         },
         //
         loginBtn: {
-            width: '48%',
+            width: '95%', // 48%
             flexDirection: 'row',
             height: 25,
             justifyContent: 'center',
@@ -190,24 +190,13 @@ const TeachersCourseCard = ({
                     }}
                 >
                     <View style={styles.loginBtnView}>
-                        {/* <View /> */}
                         <RNText style={styles.loginText}>
-                            {I18n.t('SubscribeToOneLesson')}
+                            {I18n.t('BookNow')}
                         </RNText>
-                        {/* <View style={styles.arrowCont}>
-                            <MaterialIcons
-                                name={
-                                    lang === 'ar'
-                                        ? 'arrow-back'
-                                        : 'arrow-forward'
-                                }
-                                size={14}
-                                color={colors.white}
-                            />
-                        </View> */}
                     </View>
                 </Pressable>
-                <Pressable
+                {/*  SubscribeToOneLesson */}
+                {/* <Pressable
                     style={styles.loginBtn}
                     onPress={() => {
                         console.log('pressed onPressSubscribePrivateTeachers')
@@ -215,23 +204,11 @@ const TeachersCourseCard = ({
                     }}
                 >
                     <View style={styles.loginBtnView}>
-                        {/* <View /> */}
                         <RNText style={styles.loginText}>
                             {I18n.t('SubscribeToFullSubject')}
                         </RNText>
-                        {/* <View style={styles.arrowCont}>
-                            <MaterialIcons
-                                name={
-                                    lang === 'ar'
-                                        ? 'arrow-back'
-                                        : 'arrow-forward'
-                                }
-                                size={16}
-                                color={colors.white}
-                            />
-                        </View> */}
                     </View>
-                </Pressable>
+                </Pressable> */}
             </View>
         </Pressable>
     )
