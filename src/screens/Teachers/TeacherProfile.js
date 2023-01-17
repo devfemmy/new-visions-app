@@ -233,7 +233,7 @@ const TeacherProfile = () => {
                                         item: item,
                                     })
                                 }
-                                text={I18n.t('TeacherCourse')}
+                                text={I18n.t('TeacherCourseNew')}
                             />
                         </>
                         <FlatList
@@ -408,6 +408,19 @@ const TeacherProfile = () => {
                                 marginVertical: heightp(10),
                             }}
                         >
+                            <RNText
+                                style={[
+                                    styles.subItemText2,
+                                    {
+                                        // color: colors.primary,
+                                        textAlign: 'center',
+                                        paddingTop: heightp(5),
+                                        paddingBottom: heightp(20),
+                                    },
+                                ]}
+                            >
+                                {I18n.t('TeacherProfileVideo')}
+                            </RNText>
                             <Vimeo
                                 videoId={vidId}
                                 params={'api=1&autoplay=0'}
@@ -587,6 +600,12 @@ const styles = StyleSheet.create({
     },
     containerFlex: {
         marginBottom: heightp(20),
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import I18n from 'i18n-js'
@@ -37,7 +37,13 @@ export const RootBottomTabNavigator = () => {
                 marginHorizontal: 16,
             }}
         >
-            <MenuIcon width={20} height={20} />
+            <View
+                style={{
+                    transform: [{ rotate: lang === 'ar' ? '180deg' : '0deg' }],
+                }}
+            >
+                <MenuIcon width={20} height={20} />
+            </View>
         </TouchableOpacity>
     )
     const LogoTitle = () => <LogoIcon width={100} height={30} />

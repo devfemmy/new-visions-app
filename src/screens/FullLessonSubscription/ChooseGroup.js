@@ -1,15 +1,16 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text as RNText } from 'react-native'
 import I18n from 'i18n-js'
 import { SubContext } from '.'
 import StageCard from '../../components/StageCard'
 import { Text } from '../../components/common'
+import { heightp } from '../../utils/responsiveDesign'
 
 const ChooseGroup = (subjectGroupData) => {
     const items = subjectGroupData?.subjectGroupData
-    console.log("subjectGroupData", subjectGroupData)
+    console.log('subjectGroupData', subjectGroupData)
     const { setGroupId, setDisabledProps } = useContext(SubContext)
     const [activeStage, setActiveStage] = useState(null)
     const [activeLevel, setActiveLevel] = useState(null)
@@ -28,9 +29,28 @@ const ChooseGroup = (subjectGroupData) => {
             color: 'white',
             fontWeight: 'bold',
         },
+        subItemText2: {
+            fontSize: heightp(15),
+            lineHeight: heightp(20),
+            textAlign: 'right',
+            color: '#434854',
+        },
     })
     return (
         <View style={styles.container}>
+            <RNText
+                style={[
+                    styles.subItemText2,
+                    {
+                        // color: colors.primary,
+                        textAlign: 'center',
+                        paddingTop: heightp(5),
+                        paddingBottom: heightp(20),
+                    },
+                ]}
+            >
+                {I18n.t('GroupGroupSelect')}
+            </RNText>
             {items.length > 0 ? (
                 items?.map((item, index) => (
                     <>

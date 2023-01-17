@@ -128,7 +128,19 @@ export default function Subscriptions({}) {
                             marginBottom: 20,
                         }}
                     />
-
+                    <Text
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: colors.primary,
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(5),
+                            },
+                        ]}
+                    >
+                        {I18n.t('ViewSubscriptions')}
+                    </Text>
                     <ScrollView style={{ marginBottom: 20 }}>
                         <TouchableWithoutFeedback
                             onPress={() => {
@@ -417,5 +429,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })

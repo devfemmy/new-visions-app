@@ -135,6 +135,29 @@ const FreeLessons = () => {
                         resizeMode={FastImage.resizeMode.cover}
                     />
                 </View>
+                <View>
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: '#fff',
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('FreeLiveExtra')}
+                    </RNText>
+                </View>
+                <View
+                    style={[
+                        globalStyles.horizontal,
+                        {
+                            marginBottom: heightp(5),
+                        },
+                    ]}
+                />
                 <View
                     style={[
                         styles.bigCountContainer,

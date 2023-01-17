@@ -107,6 +107,29 @@ const ChooseStudyDate = () => {
                     />
                 }
             >
+                <View>
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: '#fff',
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('ChooseLessonNew')}
+                    </RNText>
+                </View>
+                <View
+                    style={[
+                        globalStyles.horizontal,
+                        {
+                            marginBottom: heightp(5),
+                        },
+                    ]}
+                />
                 <FlatList
                     nestedScrollEnabled={true}
                     keyboardShouldPersistTaps="handled"
@@ -209,5 +232,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontWeight: 'bold',
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })

@@ -1,4 +1,10 @@
-import { View, ImageBackground, FlatList } from 'react-native'
+import {
+    View,
+    ImageBackground,
+    FlatList,
+    Text as RNText,
+    StyleSheet,
+} from 'react-native'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -15,6 +21,7 @@ import { Share } from 'react-native'
 import Toast from 'react-native-toast-message'
 import Screen from '../../components/Screen'
 import { Text } from '../../components/common'
+import { heightp } from '../../utils/responsiveDesign'
 
 export default function MultiPackagesList({ route, navigation }) {
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
@@ -117,12 +124,27 @@ export default function MultiPackagesList({ route, navigation }) {
             {multiPackages.length > 0 ||
             multiPackages === null ||
             multiPackages === undefined ? (
-                <FlatList
-                    data={multiPackages}
-                    extraData={multiPackages}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                />
+                <>
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: colors.primary,
+                                textAlign: 'center',
+                                paddingTop: heightp(10),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('PackagesNew')}
+                    </RNText>
+                    <FlatList
+                        data={multiPackages}
+                        extraData={multiPackages}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.id}
+                    />
+                </>
             ) : (
                 <View
                     style={{
@@ -138,3 +160,12 @@ export default function MultiPackagesList({ route, navigation }) {
         </Screen>
     )
 }
+
+const styles = StyleSheet.create({
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
+    },
+})

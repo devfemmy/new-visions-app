@@ -10,8 +10,8 @@ const English = {
     Registration: 'Registration',
     Create: 'Create',
     Account: 'Account',
-    DontHaveAnAccount: 'Dont Have An Account?',
-    ForgotPassword: 'Forgot Password',
+    DontHaveAnAccount: "You don't have an account at New Visions ?",
+    ForgotPassword: 'Forgot Password?',
     CreateANewAccount: 'Create A New Account',
 
     ContinueWithGoogle: 'Login with Google',
@@ -71,6 +71,7 @@ const English = {
     TimeForSubject: 'Time For Subject',
     NoOfChapters: 'No. of Chapters',
     EducationalLevel: 'Educational Stages',
+    EducationalLevelNew: 'Choose your learning stage',
     DownloadBook: 'Download Book',
     Description: 'Description',
     Subscribe: 'Subscribe',
@@ -124,7 +125,7 @@ const English = {
 
     // Quizzes
     Questions: 'Questions',
-    Minutes: 'Minutes',
+    Minutes: 'minutes',
     Submit: 'Submit',
 
     // Subscribtions
@@ -147,8 +148,13 @@ const English = {
     VerificationCode: 'Verification Code',
     SendVerificationCodeByEmail: 'Send reset password code by E-mail',
     SendVerificationCodeByPhone: 'Send reset password code by phone number',
+    SendVerificationCodeByPhoneNew:
+        'Enter your phone number to reset your password',
     PleaseEnterTheCode: 'Kindly enter the code that was sent to you',
-    CodeConfirmation: 'Confirmation Code Sent Via Email',
+    PleaseEnterTheCodeNew:
+        'You will receive text message to reset your password',
+    CodeConfirmation:
+        'Your account has been created successfully, Check your email to verify you account',
     Verify: 'Verify',
     VerifyComplete: 'Verify Successfully',
     PasswordChangeComplete:
@@ -158,8 +164,11 @@ const English = {
 
     MultiPackages: 'MultiPackages',
     MultiPackageBrief: 'Brief about the course',
+    MultiPackageNdw: 'Group details',
     SubscripePackage: 'Subscribe Now',
     SubscribeNow: 'Subscribe Now',
+    SubscribeNowNew: 'Subscribe now',
+    SubjectChooseDate: 'Choose the perfect date for you',
     PackageDetails: 'Package Details',
     Subscripe: 'Subscribe',
 
@@ -215,7 +224,7 @@ const English = {
 
     SubmitQuiz: 'Time up, Submit Quiz!',
 
-    YouHave: 'You Have',
+    YouHave: 'Test time',
 
     ForThis: 'For This',
 
@@ -223,9 +232,10 @@ const English = {
 
     AddYourReview: 'Add your review',
 
-    TimeOfSubject: 'Time Of Subject',
+    TimeOfSubject: 'Number of hours',
 
-    NoOfStudents: 'No Of Students',
+    NoOfStudents: 'Number of students',
+    ChooseTheTeacher: 'Choose the teacher',
 
     Download: 'Download',
 
@@ -238,6 +248,7 @@ const English = {
     NoData: 'No Data',
     Welcome: 'Welcome',
     SearchTeachers: 'Search Teachers',
+    GroupTeachers: 'Group teachers',
     SearchSubjects: 'Search Subjects',
     Bio: 'Bio',
     RatingsAndComments: 'Ratings and Comments',
@@ -252,9 +263,10 @@ const English = {
     Edit: 'Edit',
     EditProfile: 'Edit Profile',
     Save: 'Save',
-    PrivateSubjectSubscribe: 'Private Lesson Subscriptions',
-    ChooseTheRightDate: 'Choose your right time',
-    AddAnotherDate: 'Add another date',
+    PrivateSubjectSubscribe: 'Private subject subscription',
+    ChooseTheRightDate:
+        'Choose your own date to subscribe to the private subject (day - time)',
+    AddAnotherDate: 'Add new date',
     Saturday: 'Saturday',
     Sunday: 'Sunday',
     Monday: 'Monday',
@@ -270,11 +282,18 @@ const English = {
     Previous: 'Previous',
     NextNew: 'Next',
     SelectGroup: 'Select Group',
-    SelectDate: 'Please select the date',
+    PackagesNew:
+        'Your package meet your need - choose the package that suits you',
+    SelectDate:
+        'Thank you - the teacher will contact you to confirm your subscription.',
     PrivateSubjectSubscription: 'Private subject subscription',
     NoAvailableLessons: 'No available lessons',
     ChooseGroup: 'Choose the Group',
-    GroupDays: 'Group Days',
+    GroupDays: 'Choose date',
+    GroupDaysExtra: 'Choose the lesson',
+    GroupDaysNew: 'To confirm the date- see the date details (days - time).',
+    GroupGroupSelect:
+        'Book your group flexibly - select dates that fit your schedule',
     Error407Display:
         'Your request to subscribe for private subject has been approved by the teacher. Please complete the payment process',
     SendRequest: 'Subscription 945 SAR',
@@ -295,21 +314,28 @@ const English = {
     Privatesubjectsubscribes: 'Private subject subscribes',
     Writeyourmessage: 'Write your message',
     SR: 'sr.',
-    Subscribefor: 'Subscribe for',
+    Subscribefor: 'Subscribe',
+    SubscribeforNew: 'Subject subscription price',
     Rscourse: 'Rs / course',
-    SARlesson: 'SAR / lesson',
+    SARlesson: 'SAR for lesson',
     Reservationofthesyllabus: 'Reservation of the syllabus',
-    CurriculumReservation: 'Curriculum Reservation',
+    CurriculumReservation: 'Full subject subscibe',
+    TeacherProfileVideo: "Watch the teacher's demo demonstration",
     NoDataPresentatthemoment: 'No Data Present at the moment',
     NoRatingsPresentatthemoment: 'No Ratings Present at the moment',
     PreviousClasses: 'Previous Classes',
     TeacherCourse: 'Courses',
+    TeacherCourseNew: 'Teacher subjects',
+    ViewSubscriptions: 'View subscriptions',
+    ChooseTeacherNew: 'Choose the teacher according to your class and the materials you need',
     Optional: 'Optional',
     FAZA: 'FAZA',
     Price: 'Price',
     GroupConfirmation: 'Group confirmation',
-    GroupDates: 'Group dates (choose the appropriate group)',
-    FreeLive: 'Free Live',
+    GroupDates: 'Choose the perfect dates for you',
+    FreeLive: 'Free Lessons',
+    FreeLiveExtra:
+        'Wherever you are, improve your educational level by joining the free classes offered by our platform for you!',
     AvailableFreeLessons: 'Available free lessons',
     NotAvailableNow: 'Not Available Now',
     StudyGuide: 'Study Guide',
@@ -322,10 +348,25 @@ const English = {
     DisplaySubjectHours: 'Hours',
     DisplaySubjectStudents: 'Students',
     FazaStudents: 'Students',
-    ViewDate: 'View Dates',
+    ViewDate: 'View dates',
     AllMeasurementQuesion: 'Measurement Quiz',
     StudyGuideViewProfile: 'View profile',
     BookNow: 'Book Now',
+    HelloUsername: 'Hello',
+    StudyGuideNew:
+        'You can choose your own guide to help you with what you need',
+    ChooseLessonNew: "It's your choice, choose the perfect date for you",
+    SurveyNew:
+        'Please - answer all the questions: to help us knowing the problems you face and in order to implement the appropriate counseling programs for you to solve and overcome the problems',
+    SurveyNew2:
+        "The information included in this questionnaire is kept strictly confidential, and only the guide can see it in order to preserve the student's privacy.",
+    SendNew2: 'Subscripe now',
+    FazaText: 'Whenever your exam New Vision helps you!',
+    FazaText2: 'Choose the subject where you need help with',
+    QuizNew:
+        'To measure your skills and identify your strengths and weaknesses in the subject, answer the following questions',
+    QuizResultNew:
+        'See the details of the test result with its correct questions and answers',
 }
 
 export default English

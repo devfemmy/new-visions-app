@@ -252,9 +252,47 @@ export default function MultiPackageDetails({ route }) {
                         }}
                         resizeMode={FastImage.resizeMode.cover}
                     />
-                    <Text style={[styles.subItemText, { alignSelf: 'center' }]}>
-                        {description.title}
-                    </Text>
+                    <View
+                        style={[
+                            // styles.bigCountContainer,
+                            {
+                                backgroundColor: 'rgba(155, 186, 82, 1)',
+                                paddingVertical: heightp(10),
+                                marginVertical: heightp(10),
+                                alignSelf: 'center',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: '95%',
+                                borderRadius: 10,
+                            },
+                        ]}
+                    >
+                        <Text
+                            style={[
+                                styles.subItemText,
+                                { alignSelf: 'center', color: '#fff' },
+                            ]}
+                        >
+                            {description.title}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            margin: 10,
+                            marginVertical: 5,
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text
+                            style={[
+                                styles.subItemText,
+                                { color: colors.primary, marginHorizontal: 10 },
+                            ]}
+                        >
+                            {I18n.t('MultiPackageNdw')}
+                        </Text>
+                    </View>
                     <View style={styles.countContainer}>
                         <View style={styles.countHalfContainer}>
                             <IonIcons
@@ -362,7 +400,7 @@ export default function MultiPackageDetails({ route }) {
                                 { color: colors.primary, marginHorizontal: 10 },
                             ]}
                         >
-                            {I18n.t('Teachers')}
+                            {I18n.t('GroupTeachers')}
                         </Text>
                     </View>
                     {description && (
@@ -458,8 +496,7 @@ export default function MultiPackageDetails({ route }) {
                                             },
                                         ]}
                                     >
-                                        {I18n.t('SubscribeNow')}{' '}
-                                        {description.price} {I18n.t('SAR')}
+                                        {I18n.t('SubscribeNowNew')}
                                     </Text>
                                     <FontAwesome
                                         name={

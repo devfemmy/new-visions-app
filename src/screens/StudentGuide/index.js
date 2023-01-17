@@ -108,6 +108,29 @@ const StudentGuide = () => {
                     />
                 }
             >
+                <View>
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: '#fff',
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('StudyGuideNew')}
+                    </RNText>
+                </View>
+                <View
+                    style={[
+                        globalStyles.horizontal,
+                        {
+                            marginBottom: heightp(5),
+                        },
+                    ]}
+                />
                 <FlatList
                     nestedScrollEnabled={true}
                     keyboardShouldPersistTaps="handled"
@@ -175,5 +198,11 @@ const styles = StyleSheet.create({
     },
     flatlistContent: {
         // flexGrow: 1,
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })

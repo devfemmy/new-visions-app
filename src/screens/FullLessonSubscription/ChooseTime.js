@@ -1,10 +1,11 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import I18n from 'i18n-js'
 import { SubContext } from '.'
 import StageCard from '../../components/StageCard'
+import { heightp } from '../../utils/responsiveDesign'
 
 const ChooseTime = ({ getGroupDaysData, lesson_price }) => {
     // console.log('getGroupDays', getGroupDaysData)
@@ -21,9 +22,28 @@ const ChooseTime = ({ getGroupDaysData, lesson_price }) => {
     }, [activeStage, setDisabledProps])
     const styles = StyleSheet.create({
         container: {},
+        subItemText2: {
+            fontSize: heightp(15),
+            lineHeight: heightp(20),
+            textAlign: 'right',
+            color: '#434854',
+        },
     })
     return (
         <View style={styles.container}>
+            <Text
+                style={[
+                    styles.subItemText2,
+                    {
+                        // color: colors.primary,
+                        textAlign: 'center',
+                        paddingTop: heightp(5),
+                        paddingBottom: heightp(20),
+                    },
+                ]}
+            >
+                {I18n.t('GroupDaysNew')}
+            </Text>
             {getGroupDaysData?.map((item, index) => {
                 const daysOfWeek = [
                     I18n.t('Saturday'),

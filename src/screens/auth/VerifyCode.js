@@ -131,11 +131,18 @@ export default function VerifyConfirmPassword({ route, navigation }) {
                         name="paper-plane"
                         size={90}
                     />
-                    <Text style={styles.textbold}>
-                        {' '}
-                        {i18n.t('PleaseEnterTheCode')}{' '}
-                    </Text>
                     <Text
+                        style={[
+                            styles.textbold,
+                            {
+                                textAlign: 'center',
+                            },
+                        ]}
+                    >
+                        {' '}
+                        {i18n.t('PleaseEnterTheCodeNew')}{' '}
+                    </Text>
+                    {/* <Text
                         style={[
                             styles.textbold,
                             { fontSize: heightp(12), marginBottom: 0 },
@@ -152,7 +159,7 @@ export default function VerifyConfirmPassword({ route, navigation }) {
                         ]}
                     >
                         {'Resend the verification code again'}
-                    </Text>
+                    </Text> */}
                     <Text
                         style={
                             (styles.text,

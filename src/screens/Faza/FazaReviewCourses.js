@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { useNavigation, useRoute } from '@react-navigation/native'
+import I18n from 'i18n-js'
 import i18n from 'i18n-js'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import {
@@ -8,6 +9,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     View,
+    Text as RNText,
 } from 'react-native'
 import { Container, Text } from '../../components/common'
 import FazaDetailCourseCard from '../../components/FazaDetailCourseCard'
@@ -101,6 +103,29 @@ const FazaReviewCourses = () => {
                     />
                 }
             >
+                <View>
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                color: colors.primary,
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('FazaText')}
+                    </RNText>
+                </View>
+                <View
+                    style={[
+                        globalStyles.horizontal,
+                        {
+                            marginBottom: heightp(15),
+                        },
+                    ]}
+                />
                 <View
                     style={{
                         backgroundColor: colors.primary,
@@ -109,6 +134,18 @@ const FazaReviewCourses = () => {
                 >
                     <Text style={styles.textStyle} text={levelSubject} />
                 </View>
+                <RNText
+                    style={[
+                        styles.subItemText2,
+                        {
+                            textAlign: 'center',
+                            paddingTop: heightp(10),
+                            paddingBottom: heightp(5),
+                        },
+                    ]}
+                >
+                    {I18n.t('FazaText2')}
+                </RNText>
                 <View style={globalStyles.horizontalMargin} />
                 {levelDatas?.length > 0 ? (
                     <View>
@@ -158,6 +195,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginTop: heightp(20),
         marginBottom: heightp(25),
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })
 

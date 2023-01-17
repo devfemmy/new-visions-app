@@ -30,7 +30,7 @@ const GuideQuestionnaire = () => {
     const [loading, setLoading] = useState(false)
     const [questionsInput, setQuestionsInput] = useState([])
     const submitQuiz = async () => {
-        setLoading(true);
+        setLoading(true)
         const payload = {
             day_id: item?.day_id,
             answers: questionsInput,
@@ -38,7 +38,7 @@ const GuideQuestionnaire = () => {
         try {
             const res = await HomePageService.subscribeWithGuide(payload)
             if (res.code === 200) {
-                setLoading(false);
+                setLoading(false)
                 Alert.alert(I18n.t('Subscribe'), res?.message, [
                     {
                         text: 'Cancel',
@@ -66,7 +66,7 @@ const GuideQuestionnaire = () => {
             }
             return res
         } catch (err) {
-            console.log('error loading', err);
+            console.log('error loading', err)
             setLoading(false)
         }
     }
@@ -111,6 +111,29 @@ const GuideQuestionnaire = () => {
                 style={{ flex: 1, flexGrow: 1 }}
                 showsVerticalScrollIndicator={false}
             >
+                <View>
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: '#fff',
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('SurveyNew')}
+                    </RNText>
+                </View>
+                <View
+                    style={[
+                        globalStyles.horizontal,
+                        {
+                            marginBottom: heightp(5),
+                        },
+                    ]}
+                />
                 {questionData?.questions.map((item, index) => {
                     return (
                         <View
@@ -257,6 +280,29 @@ const GuideQuestionnaire = () => {
                     windowSize={20}
                 /> */}
             </ScrollView>
+            <View>
+                <View
+                    style={[
+                        globalStyles.horizontal,
+                        {
+                            marginVertical: heightp(5),
+                        },
+                    ]}
+                />
+                <RNText
+                    style={[
+                        styles.subItemText2,
+                        {
+                            // color: '#fff',
+                            textAlign: 'center',
+                            paddingTop: heightp(5),
+                            paddingBottom: heightp(20),
+                        },
+                    ]}
+                >
+                    {I18n.t('SurveyNew2')}
+                </RNText>
+            </View>
             <View
                 style={{
                     backgroundColor: colors.primary,
@@ -284,7 +330,7 @@ const GuideQuestionnaire = () => {
                                 },
                             ]}
                         >
-                            {I18n.t('Send')}
+                            {I18n.t('SendNew2')}
                         </RNText>
                     </View>
                 </TouchableOpacity>
@@ -328,5 +374,11 @@ const styles = StyleSheet.create({
         // marginBottom: 15,
         height: 50,
         backgroundColor: 'rgba(70, 79, 84, 0.091)',
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })

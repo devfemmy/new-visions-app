@@ -10,7 +10,7 @@ const Arabic = {
     Registration: 'انشاء حساب جديد',
     Create: 'انشاء',
     Account: ' حساب',
-    DontHaveAnAccount: 'ليس لديك حساب؟',
+    DontHaveAnAccount: 'ليس لديك حساب في منصة نيو فيجين؟',
     ForgotPassword: 'هل نسيت كلمة السر؟',
     CreateANewAccount: 'انشاء حساب جديد',
     ContinueWithGoogle: 'الدخول بحساب جوجل',
@@ -77,6 +77,7 @@ const Arabic = {
     TimeForSubject: 'وقت الماده الدراسية',
     NoOfChapters: 'عدد الفصول',
     EducationalLevel: 'المستوى التعليمي',
+    EducationalLevelNew: 'اختر مرحلتك التعليمية',
     DownloadBook: 'تنزيل الكتاب',
     Description: 'وصف',
     Subscribe: 'اشتراك',
@@ -154,8 +155,13 @@ const Arabic = {
         'ارسل رمز اعادة تعيين كلمة المرور عن طريق البريد الالكتروني',
     SendVerificationCodeByPhone:
         'ارسل رمز اعادة تعيين كلمة المرور عن طريق رقم الهاتف',
+    SendVerificationCodeByPhoneNew:
+        'ادخل رقم الموبايل الذي قمت باستخدامه لتسجيل حساب نيو فيجين الخاص بك لاعادة تعيين كلمة المرور',
     PleaseEnterTheCode: 'الرجاء ادخال الرمز الذي تم ارساله اليك',
-    CodeConfirmation: 'تأكيد الرمز',
+    PleaseEnterTheCodeNew:
+        'ستصلك رسالة نصية لرمز اعادة تعيين كلمة المرور الخاصة بك',
+    CodeConfirmation:
+        'لقد قمت بإنشاء حسابك بنجاح يرجى التحقق من بريدك الالكتروني لتفعيل حسابك , يمكنك العودة لتسجيل الدخول عبر التطبيق',
     Verify: 'تحقق',
     VerifyComplete: 'تم التحقق بنجاح',
     PasswordChangeComplete: 'تم تغيير كلمة المرور بنجاح بنجاح',
@@ -171,8 +177,11 @@ const Arabic = {
     Calendar: 'البث المباشر',
     Packages: 'الباقات',
     MultiPackageBrief: 'نبذة تعريفية عن محاور الدورة',
+    MultiPackageNdw: 'تفاصيل المجموعة',
 
     SubscribeNow: 'اشتراك',
+    SubjectChooseDate: 'اختر المواد التي تناسبك',
+    SubscribeNowNew: 'اشترك في الباقة الان',
     SubscripePackage: 'اشترك بالدورة الاّن',
     Share: 'مشاركة',
     Details: 'التفاصيل',
@@ -232,8 +241,9 @@ const Arabic = {
     WriteHere: 'اكتب هنا.....',
 
     TimeOfSubject: 'عدد ساعات المادة',
+    ChooseTheTeacher: 'اختر المعلم الذي تفضله',
 
-    NoOfStudents: 'لا يوجد طلاب',
+    NoOfStudents: 'عدد الطلاب',
 
     Download: 'تحميل الكتاب',
 
@@ -247,6 +257,7 @@ const Arabic = {
     NoData: 'لا يوجد',
     Welcome: 'مرحبا',
     SearchTeachers: 'ابحث عن المعلمين',
+    GroupTeachers: 'معلمي المجموعة',
     SearchSubjects: 'ابحث عن مادة',
     Bio: 'Bio',
     RatingsAndComments: 'التقييمات والتعليقات',
@@ -268,11 +279,17 @@ const Arabic = {
     Previous: 'السابق',
     NextNew: 'التالي',
     SelectGroup: 'اختيار التوقيت',
-    SelectDate: 'الرجاء اختيار التاريخ',
+    PackagesNew: 'باقتك قد حاجتك - اختر الباقة اللي تناسبك',
+    SelectDate:
+        'شكرا لك - سيقوم المعلم بالتواصل معك لتأكيد المواعيد الخاصة بك .',
     PrivateSubjectSubscription: 'اشتراك منهج خاص',
     NoAvailableLessons: 'لا يوجد دروس',
     ChooseGroup: 'اختار المجموعة',
-    GroupDays: 'مواعيد الحضور',
+    GroupDays: 'تحديد الموعد',
+    GroupDaysExtra: 'اختر الدرس',
+    GroupDaysNew:
+        'لتأكيد الموعد - قم بالاطلاع على تفاصيل الموعد ( الايام - الوقت ) الخاصة به',
+    GroupGroupSelect: 'احجز مجموعتك بمرونة - حدد المواعيد التي تناسب جدولك',
     Saturday: 'سبت ',
     Sunday: 'الاحد',
     Monday: 'الاثنين',
@@ -280,10 +297,11 @@ const Arabic = {
     Wednesday: 'الاربعاء',
     Thursday: 'الخميس ',
     Friday: 'الجمعة',
-    PrivateSubjectSubscribe: 'اشتراكات الدرس الخاص',
+    PrivateSubjectSubscribe: 'اشتراكات المنهج الكامل بموعد خاص',
     ChooseChild: 'قم بإختيار احد الابناء للاشتراك',
-    ChooseTheRightDate: 'اختر المواعيد المناسبة لك',
-    AddAnotherDate: 'أضف تاريخًا آخر',
+    ChooseTheRightDate:
+        'قم باختيار موعدك الخاص لاشتراكك بالمنهج الكامل (اليوم - الوقت)',
+    AddAnotherDate: 'قم باضافة موعد اخر',
     Error407Display:
         'تم الموافقة من قبل المعلم على طلبك للاشتراك بالمنهج الخاص يرجى اتمام عملية الدفع',
     SendRequest: 'اشترك 945 ريال',
@@ -305,21 +323,28 @@ const Arabic = {
     //
     Writeyourmessage: 'اكتب رسالتك',
     SR: 'ريال',
-    Subscribefor: 'اشترك',
+    Subscribefor: 'اشترك', // ---- ريال للحصة
+    SubscribeforNew: 'سعر الاشتراك للمنهج',
     Rscourse: 'ريال / للمنهج.',
-    SARlesson: 'ريال / للحصة.',
+    SARlesson: ' ريال للحصة',
     Reservationofthesyllabus: 'حجز متابعة منهج',
-    CurriculumReservation: 'حجز منهج',
+    CurriculumReservation: 'حجز منهج كامل',
+    TeacherProfileVideo: 'قم بالاطلاع على الشرح التجريبي للمعلم',
     NoDataPresentatthemoment: 'لا يوجد فيديو',
     NoRatingsPresentatthemoment: 'لا يوجد تقيم',
     PreviousClasses: 'الحصص السابقة',
     TeacherCourse: 'المواد الدراسية',
+    TeacherCourseNew: 'المواد التي يدرسها المعلم',
+    ViewSubscriptions: 'قم بالاطلاع على اشتراكات',
+    ChooseTeacherNew: 'اختر المعلّم وفقًا لصفك والمواد التي تحتاجها',
     Optional: 'اختياري',
     FAZA: 'فزعة',
     Price: 'السعر',
     GroupConfirmation: 'اختيار المجموعة',
-    GroupDates: 'مواعيد المجموعات',
-    FreeLive: 'بث مجاني',
+    GroupDates: 'اختر المواعيد اللي تناسبك',
+    FreeLive: 'الحصص المجانية',
+    FreeLiveExtra:
+        'أينما كنت , حسن مستواك التعليمي بالانضمام الى الحصص المجانية المقدمة من منصتنا لأجلك !',
     AvailableFreeLessons: 'الحصص المجانية',
     NotAvailableNow: 'لم يبدأ البث المجاني بعد',
     StudyGuide: 'المرشد الطلابي',
@@ -336,6 +361,20 @@ const Arabic = {
     AllMeasurementQuesion: 'اختبار قياس',
     StudyGuideViewProfile: 'الملف الشخصي',
     BookNow: 'احجز الان',
+    HelloUsername: 'مرحبا',
+    StudyGuideNew: 'يمكنك اختيار المرشد الخاص بك لاستشارته بكل ما تحتاجه',
+    ChooseLessonNew: 'القرار لك! حدّد الوقت الذي يناسب برنامجك',
+    SurveyNew:
+        'من فضلك - قم بالاجابة لجميع اسئلة الاستبيان : بهدف التعرف على المشكلات التي تواجهها ومن اجل تنفيذ البرامج الارشادية المناسبة لك لحل وتجاوز للمشكلات',
+    SurveyNew2:
+        'المعلومات المدونة في هذا الاستبيان تحاط بالسرية التامة ولا يطلع عليها سوى المرشد الطلابي حفاظا على خصوصية الطالب',
+    SendNew2: 'احجز الان',
+    FazaText: 'متى ما كان اختبارك نيو فيجن تفزعلك !',
+    FazaText2: 'اختر المادة اللي محتاج لها فزعة',
+    QuizNew:
+        'لقياس مهاراتك وتحديد جوانب القوة والضعف لديك في المادة العلمية - اجب عن الاسئلة التالية',
+    QuizResultNew:
+        'الاطلاع على تفاصيل نتيجة الاختبار بالاسئلة والاجابة الصحيحة الخاصة به',
 }
 
 export default Arabic

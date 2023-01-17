@@ -460,6 +460,17 @@ const LiveNowQuizResult = () => {
                             alignItems: 'center',
                         }}
                     />
+                    <Text
+                        style={[
+                            styles.subItemText2,
+                            {
+                                textAlign: 'center',
+                                paddingBottom: heightp(15),
+                            },
+                        ]}
+                    >
+                        {I18n.t('QuizResultNew')}
+                    </Text>
                 </View>
                 <FlatList
                     // nestedScrollEnabled
@@ -617,5 +628,11 @@ const styles = StyleSheet.create({
         lineHeight: 33,
         letterSpacing: 0.31,
         color: '#3F3B3E',
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })

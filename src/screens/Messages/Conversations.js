@@ -1,7 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
+import I18n from 'i18n-js'
 import i18n from 'i18n-js'
 import React, { useContext, useEffect, useState } from 'react'
-import { FlatList, TouchableOpacity, View } from 'react-native'
+import {
+    FlatList,
+    TouchableOpacity,
+    View,
+    Text as RNText,
+    StyleSheet,
+} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
@@ -71,6 +78,19 @@ const Conversation = () => {
                 inputStyle={{ color: colors.dark }}
                 iconColor={colors.dark}
             />
+            <RNText
+                style={[
+                    styles.subItemText2,
+                    {
+                        // color: colors.primary,
+                        textAlign: 'center',
+                        paddingTop: heightp(10),
+                        paddingBottom: heightp(10),
+                    },
+                ]}
+            >
+                {I18n.t('ViewSubscriptions')}
+            </RNText>
             <View>
                 <FlatList
                     always={false}
@@ -212,3 +232,12 @@ const Conversation = () => {
 }
 
 export default Conversation
+
+const styles = StyleSheet.create({
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
+    },
+})

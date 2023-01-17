@@ -141,7 +141,7 @@ export default function VerifyEnterEmail({ navigation }) {
                                 { marginTop: heightp(10) },
                             ]}
                         >
-                            {`${i18n.t('ForgotPassword')}?`}
+                            {`${i18n.t('ForgotPassword')}`}
                         </Text>
                         <Text
                             style={[
@@ -149,7 +149,7 @@ export default function VerifyEnterEmail({ navigation }) {
                                 { fontSize: heightp(12), marginBottom: 0 },
                             ]}
                         >
-                            {i18n.t('SendVerificationCodeByPhone')}
+                            {i18n.t('SendVerificationCodeByPhoneNew')}
                         </Text>
                     </View>
                     <View style={styles.input}>

@@ -8,6 +8,7 @@ import {
     ScrollView,
     StyleSheet,
     View,
+    Text as RNText,
 } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
@@ -125,6 +126,19 @@ const SubjectDetails = () => {
                             iconColor={colors.dark}
                         />
                     </View>
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: colors.primary,
+                                textAlign: 'center',
+                                paddingTop: heightp(10),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('SubjectChooseDate')}
+                    </RNText>
                     <FlatList
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}

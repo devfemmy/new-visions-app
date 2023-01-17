@@ -106,9 +106,14 @@ const FullLessonSubscription = () => {
     const subscribeToFullLesson = () => {
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
         if (Global.UserType == 4 && !iap_activation) {
-            navigation.navigate('ParentSub', {uniqueId: groupId.toString(), type: 1, lesson_id: '',day_id: ''})
-        }else if (Global.UserType == 3) {
-            console.log('hello');
+            navigation.navigate('ParentSub', {
+                uniqueId: groupId.toString(),
+                type: 1,
+                lesson_id: '',
+                day_id: '',
+            })
+        } else if (Global.UserType == 3) {
+            console.log('hello')
             if (!iap_activation || Platform.OS === 'android') {
                 subscribeExternal()
             } else {
@@ -184,19 +189,18 @@ const FullLessonSubscription = () => {
                             previousBtnText={I18n.t('Previous')}
                             finishBtnText={
                                 Global.UserType == 4
-                                    ?  `${I18n.t(
-                                        'Subscribefor'
-                                    )} ${lesson_price} ${I18n.t('Rscourse')}`
-                                    : `${I18n.t(
-                                          'Subscribefor'
-                                      )} ${lesson_price} ${I18n.t('Rscourse')}`
+                                    ? `${I18n.t('SubscribeforNew')}`
+                                    : `${I18n.t('SubscribeforNew')} `
                             }
+                            //${I18n.t(
+                            // 'Subscribefor'
+                            // )} ${lesson_price} ${I18n.t('Rscourse')}
                             onSubmit={
                                 Global.UserType == 4
                                     ? subscribeToFullLesson
                                     : subscribeToFullLesson
                             }
-                            label={I18n.t('GroupDays')}
+                            label={I18n.t('GroupDays')} // Choose date
                             nextBtnStyle={{
                                 backgroundColor: colors.primary,
                                 // width: '100%',

@@ -46,9 +46,8 @@ const guideUriAr = require('../../assets/img/guide-ar.png')
 let session: ''
 const { width, height } = Dimensions.get('window')
 const Home = () => {
-    const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
+    const { onLogout, lang, showLoadingSpinner, initUUID, onLogin, user } =
         useContext(AppContext)
-
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const [packagesArray, setPackagesArray] = useState(null)
@@ -284,6 +283,11 @@ const Home = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
+            <HeaderTitle
+                deleteIcon
+                pressed={() => {}}
+                text={`${i18n.t('HelloUsername')} ${user?.first_name}`}
+            />
             <View style={styles.containerFlex}>
                 <View
                     style={{
@@ -360,7 +364,7 @@ const Home = () => {
                     <HeaderTitle
                         deleteIcon
                         pressed={() => navigation.navigate('Subjects')}
-                        text={i18n.t('EducationalLevel')}
+                        text={i18n.t('EducationalLevelNew')}
                     />
                     <View style={styles.containerFlex}>
                         <FlatList

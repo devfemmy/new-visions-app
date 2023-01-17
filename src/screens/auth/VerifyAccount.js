@@ -73,11 +73,18 @@ export default function VerifyAccount({ route, navigation }) {
                         name="paper-plane"
                         size={90}
                     />
-                    <Text style={styles.textbold}>
+                    <Text
+                        style={[
+                            styles.textbold,
+                            {
+                                textAlign: 'center',
+                            },
+                        ]}
+                    >
                         {' '}
                         {i18n.t('CodeConfirmation')}{' '}
                     </Text>
-                    <Text
+                    {/* <Text
                         style={[
                             styles.textbold,
                             { fontSize: heightp(12), marginBottom: 0 },
@@ -94,7 +101,7 @@ export default function VerifyAccount({ route, navigation }) {
                         ]}
                     >
                         {'Resend the verification code again'}
-                    </Text>
+                    </Text> */}
                     <Text
                         style={
                             (styles.text,
@@ -121,7 +128,7 @@ export default function VerifyAccount({ route, navigation }) {
                                 width: '100%',
                             }}
                             keyboardType="decimal-pad"
-                            returnKeyType='done'
+                            returnKeyType="done"
                             onChangeText={setCodeInput}
                             value={CodeInput}
                             right={

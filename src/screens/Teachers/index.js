@@ -386,6 +386,19 @@ const Teachers = () => {
                         inputStyle={{ color: colors.dark }}
                         iconColor={colors.dark}
                     />
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: colors.primary,
+                                textAlign: 'center',
+                                paddingTop: heightp(10),
+                                paddingBottom: heightp(5),
+                            },
+                        ]}
+                    >
+                        {I18n.t('ChooseTeacherNew')}
+                    </RNText>
                 </View>
                 <FlatList
                     nestedScrollEnabled={true}
@@ -520,6 +533,12 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 12,
         textAlign: 'center',
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })
 

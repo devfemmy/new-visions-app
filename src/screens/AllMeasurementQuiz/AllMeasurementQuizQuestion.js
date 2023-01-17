@@ -535,6 +535,19 @@ const AllMeasurementQuizQuestion = () => {
         <>
             <KeyboardAwareScrollView style={{ flex: 1 }}>
                 <View style={styles.container}>
+                    <Text
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: colors.primary,
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('QuizNew')}
+                    </Text>
                     {numOfMins > 0 ? (
                         <>
                             <CircularProgress
@@ -748,5 +761,11 @@ const styles = StyleSheet.create({
         lineHeight: 33,
         letterSpacing: 0.31,
         color: '#3F3B3E',
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })

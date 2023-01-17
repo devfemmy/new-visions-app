@@ -138,7 +138,7 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
                         {
                             text: 'Ok',
                             onPress: () => {
-                                // navigation.navigate('Home')
+                                navigation.navigate('Home')
                             },
                             style: 'cancel',
                         },

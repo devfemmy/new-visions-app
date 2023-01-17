@@ -10,6 +10,7 @@ import {
     ScrollView,
     StyleSheet,
     View,
+    Text as RNText,
 } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
 import { Container, Text } from '../../components/common'
@@ -211,6 +212,19 @@ const SubjectTeachers = () => {
           style={styles.searchBar}
           /> */}
             </View>
+            <RNText
+                style={[
+                    styles.subItemText2,
+                    {
+                        // color: colors.primary,
+                        textAlign: 'center',
+                        paddingTop: heightp(5),
+                        paddingBottom: heightp(20),
+                    },
+                ]}
+            >
+                {I18n.t('ChooseTheTeacher')}
+            </RNText>
             <View style={styles.containerFlex}>
                 <FlatList
                     keyboardShouldPersistTaps="handled"
@@ -273,6 +287,12 @@ const styles = StyleSheet.create({
     },
     containerFlex: {
         marginBottom: heightp(60),
+    },
+    subItemText2: {
+        fontSize: heightp(15),
+        lineHeight: heightp(20),
+        textAlign: 'right',
+        color: '#434854',
     },
 })
 
