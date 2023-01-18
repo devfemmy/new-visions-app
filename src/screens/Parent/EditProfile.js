@@ -150,8 +150,8 @@ class EditProfile extends Component {
                 {
                     // config
                     headers: {
-                        'Content-Type': 'multipart/form-data;',
-                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json;',
+                        // 'Access-Control-Allow-Origin': '*',
                         Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
@@ -217,14 +217,14 @@ class EditProfile extends Component {
 
     getUpdatedProfile = ({ lang, onLogin }) => {
         axios
-            .post(
+            .get(
                 'https://www.newvisions.sa/api/getUserProfile', // URL
                 // data,
                 {
                     // config
                     headers: {
                         'Content-Type': 'application/json;',
-                        'Access-Control-Allow-Origin': '*',
+                        // 'Access-Control-Allow-Origin': '*',
                         Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
@@ -283,12 +283,12 @@ class EditProfile extends Component {
             const { user, lang, onLogin } = this.context
             this.setState({ loading: true })
 
-            console.log('<<<PHOTO>>>', photo)
+            console.log('<<<==========PHOTO================>>>', photo)
             const data = new FormData()
             data.append('first_name', firstname)
             data.append('last_name', lastname)
             data.append('phone', phone)
-            data.append('image', photo ? photo : '')
+            data.append('image', photo ? photo : avatarUrl)
             data.append('gender', user?.gender)
 
             this.updateProfile({ data, lang, onLogin })

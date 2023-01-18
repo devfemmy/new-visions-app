@@ -19,6 +19,7 @@ const English = {
 
     // Forgot Password
     EnterYourEmailToRestYourPassword: 'Enter your Email to reset your Password',
+    EnterYourNewPassword: 'Enter your new password',
     SendVerificationCode: 'Send Verification Code',
 
     UserName: 'User Name',
@@ -327,7 +328,8 @@ const English = {
     TeacherCourse: 'Courses',
     TeacherCourseNew: 'Teacher subjects',
     ViewSubscriptions: 'View subscriptions',
-    ChooseTeacherNew: 'Choose the teacher according to your class and the materials you need',
+    ChooseTeacherNew:
+        'Choose the teacher according to your class and the materials you need',
     Optional: 'Optional',
     FAZA: 'FAZA',
     Price: 'Price',

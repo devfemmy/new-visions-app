@@ -144,6 +144,7 @@ const Arabic = {
     VAT: 'ضريبة القيمة المضافة',
     Title: 'عنوان',
     BillNumber: 'رقم الفاتوره',
+    EnterYourNewPassword: 'أدخل كلمة المرور الجديدة الخاصة بك',
 
     languageSelector: 'Select Language',
     And: ' و ',

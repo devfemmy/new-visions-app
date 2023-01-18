@@ -128,7 +128,7 @@ export default function ResetPassword({ route, navigation }) {
                             { marginTop: heightp(10), textAlign: 'center' },
                         ]}
                     >
-                        {`${i18n.t('ForgotPassword')}?`}
+                        {`${i18n.t('ForgotPassword')}`}
                     </Text>
                     <Text
                         style={[
@@ -140,7 +140,7 @@ export default function ResetPassword({ route, navigation }) {
                             },
                         ]}
                     >
-                        {i18n.t('EnterYourEmailToRestYourPassword')}
+                        {i18n.t('EnterYourNewPassword')}
                     </Text>
                 </View>
                 <View style={styles.content}>
