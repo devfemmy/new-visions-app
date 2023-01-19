@@ -170,7 +170,7 @@ const TeacherProfile = () => {
                         flexGrow: 1,
                     },
                     globalStyles.container,
-                    globalStyles.wrapper,
+                    // globalStyles.wrapper,
                 ]}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
