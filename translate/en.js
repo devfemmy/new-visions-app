@@ -369,6 +369,7 @@ const English = {
         'To measure your skills and identify your strengths and weaknesses in the subject, answer the following questions',
     QuizResultNew:
         'See the details of the test result with its correct questions and answers',
+    SelectRequiredDay: 'Please select the required day',
 }
 
 export default English

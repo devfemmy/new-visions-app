@@ -137,15 +137,10 @@ const PrivateLessonSubscription = () => {
                 openModal(res?.message)
             } else {
                 setLoading(false)
-                Alert.alert(I18n.t('Subscribe'), res?.message, [
-                    {
-                        text: 'Cancel',
-                        onPress: () => navigation.popToTop(),
-                        style: 'cancel',
-                    },
+                Alert.alert(I18n.t('Subscribe'), I18n.t('SelectRequiredDay'), [
                     {
                         text: 'OK',
-                        onPress: () => navigation.popToTop(),
+                        onPress: () => {},
                     },
                 ])
             }
