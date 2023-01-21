@@ -47,7 +47,7 @@ function LoginForm({ submitLogin, onAppleButtonPress, signInGoogle }) {
                 />
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate('VerifyEnterEmail')
+                        navigation.navigate('ResetPassword')
                     }}
                 >
                     <OtherText

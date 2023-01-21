@@ -5,6 +5,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     ActivityIndicator,
+    Pressable,
 } from 'react-native'
 import axios from 'axios'
 import { Button, Text, Icon } from 'react-native-elements'
@@ -24,6 +25,9 @@ export default function ResetPassword({ route, navigation }) {
         useContext(AppContext)
     const [loading, setLoading] = useState(false)
     const [PasswordInput, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(true)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(true)
+
     const [PasswordConfirmationInput, setPasswordConfirmation] = useState('')
     const VerifyAPI = () => {
         setLoading(true)
@@ -175,13 +179,16 @@ export default function ResetPassword({ route, navigation }) {
                                 // borderBottomColor: 'white',
                                 width: '100%',
                             }}
-                            secureTextEntry={true}
+                            secureTextEntry={showPassword ? true : false}
                             onChangeText={setPassword}
                             value={PasswordInput}
                             right={
                                 <TextInput.Icon
                                     color={colors.primary}
-                                    name="lock"
+                                    name={showPassword ? 'eye' : 'eye-off'}
+                                    onPress={() => {
+                                        setShowPassword(!showPassword)
+                                    }}
                                 />
                             }
                         />
@@ -218,13 +225,20 @@ export default function ResetPassword({ route, navigation }) {
                                 // borderBottomColor: 'white',
                                 width: '100%',
                             }}
-                            secureTextEntry={true}
+                            secureTextEntry={showConfirmPassword ? true : false}
                             onChangeText={setPasswordConfirmation}
                             value={PasswordConfirmationInput}
                             right={
                                 <TextInput.Icon
                                     color={colors.primary}
-                                    name="lock"
+                                    name={
+                                        showConfirmPassword ? 'eye' : 'eye-off'
+                                    }
+                                    onPress={() => {
+                                        setShowConfirmPassword(
+                                            !showConfirmPassword
+                                        )
+                                    }}
                                 />
                             }
                         />
