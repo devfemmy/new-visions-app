@@ -82,7 +82,7 @@ const StudentGuideCard = ({
         },
 
         loginBtn: {
-            width: '100%',
+            width: '45%',
             flexDirection: 'row',
             height: 35,
             justifyContent: 'center',
@@ -407,7 +407,7 @@ const StudentGuideCard = ({
                         justifyContent: 'space-between',
                     }}
                 >
-                    {/* <Pressable style={styles.loginBtn} onPress={viewProfile}>
+                    <Pressable style={styles.loginBtn} onPress={viewProfile}>
                         <View style={styles.loginBtnView}>
                             <View />
                             <RNText
@@ -430,7 +430,7 @@ const StudentGuideCard = ({
                                 />
                             </View>
                         </View>
-                    </Pressable> */}
+                    </Pressable>
                     <Pressable style={styles.loginBtn} onPress={viewDate}>
                         <View
                             style={[

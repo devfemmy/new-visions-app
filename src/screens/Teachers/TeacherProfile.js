@@ -223,7 +223,7 @@ const TeacherProfile = () => {
                         </View>
                     </View>
                 </View>
-                {courses.length > 0 && (
+                {/* {courses.length > 0 && (
                     <View style={styles.containerFlex}>
                         <>
                             <HeaderTitle
@@ -398,7 +398,7 @@ const TeacherProfile = () => {
                             </View>
                         </View>
                     </View>
-                )}
+                )} */}
                 <View style={styles.borderContainer}>
                     {teachersData?.video?.length > 0 ? (
                         <View
