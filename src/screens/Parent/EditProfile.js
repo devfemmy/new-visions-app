@@ -562,7 +562,7 @@ class EditProfile extends Component {
 
                             <View
                                 style={{
-                                    marginTop: heightp(90),
+                                    marginTop: heightp(30),
                                 }}
                             >
                                 <AppButton
@@ -620,7 +620,7 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         fontSize: heightp(14),
-        height: 35,
+        height: 50,
         fontFamily: 'Cairo-Regular',
         color: 'rgba(70, 79, 84, 1)',
     },
@@ -632,7 +632,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 2,
         marginBottom: 15,
-        height: 65,
+        // height: 65,
         backgroundColor: 'rgba(70, 79, 84, 0.091)',
     },
 
