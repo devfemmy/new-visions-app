@@ -357,6 +357,15 @@ const AllMeasurementQuizQuestion = () => {
             setAnswersInput(updatedList)
         }
 
+        const regex = /(<([^>]+)>)/gi
+
+        const secondRegEx = /((&nbsp;))*/gim
+
+        const isHTML =
+            /<(?=.*? .*?\/ ?>|br|hr|input|!--|wbr)[a-z]+.*?>|<([a-z]+).*?<\/\1>/i.test(
+                item?.title
+            )
+
         return (
             <>
                 <View style={styles.containerFlex} key={item?.id}>
@@ -387,7 +396,15 @@ const AllMeasurementQuizQuestion = () => {
                             />
                         </>
                     ) : (
-                        <Text style={[styles.inputTitle]}>{item?.title}</Text>
+                        <>
+                            <Text style={[styles.inputTitle]}>
+                                {isHTML
+                                    ? item?.title
+                                          ?.replace(regex, '')
+                                          .replace(secondRegEx, '')
+                                    : item?.title}
+                            </Text>
+                        </>
                     )}
 
                     <View

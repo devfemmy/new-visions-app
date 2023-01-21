@@ -377,6 +377,8 @@ const Arabic = {
     QuizResultNew:
         'الاطلاع على تفاصيل نتيجة الاختبار بالاسئلة والاجابة الصحيحة الخاصة به',
     SelectRequiredDay: 'يرجى اختيار اليوم المطلوب',
+    FreeLessons: 'الحصص المجانية',
+    StudentGuide: 'المرشد الطلابي',
 }
 
 export default Arabic

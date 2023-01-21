@@ -370,6 +370,8 @@ const English = {
     QuizResultNew:
         'See the details of the test result with its correct questions and answers',
     SelectRequiredDay: 'Please select the required day',
+    FreeLessons: 'Free Lessons',
+    StudentGuide: 'Student Guide',
 }
 
 export default English

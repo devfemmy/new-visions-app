@@ -283,84 +283,25 @@ const Home = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-            <HeaderTitle
-                deleteIcon
-                pressed={() => {}}
+            <Text
+                style={styles.headerText}
+                fontSize={heightp(21)}
                 text={`${i18n.t('HelloUsername')} ${user?.first_name}`}
             />
-            <View style={styles.containerFlex}>
-                <View
+            <View style={[styles.containerFlex]}>
+                <Vimeo
+                    videoId={vidId}
+                    params={'api=1&autoplay=0'}
+                    handlers={videoCallbacks}
                     style={{
-                        height: WINDOW_HEIGHT * 0.3,
-                        width: WINDOW_WIDTH * 0.9,
-                    }}
-                >
-                    <Vimeo
-                        videoId={vidId}
-                        params={'api=1&autoplay=0'}
-                        handlers={videoCallbacks}
-                    />
-                </View>
-            </View>
-            <View style={globalStyles.horizontal} />
-
-            <HeaderTitle
-                pressed={() => navigation.navigate('MultiPackagesStage')}
-                text={i18n.t('MultiPackages')}
-            />
-            <View style={styles.containerFlex}>
-                <FlatList
-                    horizontal
-                    keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => (
-                        <View
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Text text={i18n.t('NoData')} />
-                        </View>
-                    )}
-                    data={packagesArray}
-                    showsVerticalScrollIndicator={false}
-                    onEndReachedThreshold={0.5}
-                    renderItem={({ item }) => {
-                        console.log('renderItem', item)
-                        const uri = `${IMAGEURL}/${item.image}`
-                        // navigation.navigate("MultiPackageDetails", item);
-                        return (
-                            <Pressable
-                                onPress={() =>
-                                    navigation.navigate('MultiPackageDetails', {
-                                        item,
-                                        packageType: 'multi',
-                                    })
-                                }
-                            >
-                                <FastImage
-                                    style={{
-                                        width: heightp(210),
-                                        height: heightp(130),
-                                        borderRadius: 10,
-                                        marginRight: heightp(20),
-                                    }}
-                                    source={{
-                                        uri,
-                                        priority: FastImage.priority.normal,
-                                    }}
-                                    resizeMode={FastImage.resizeMode.cover}
-                                />
-                            </Pressable>
-                        )
+                        height: WINDOW_HEIGHT * 0.275,
+                        borderRadius: 14,
                     }}
                 />
             </View>
-            <View style={globalStyles.horizontal} />
 
             {(Global.UserType == 3 || Global.UserType == 4) && (
-                <>
+                <View style={styles.newWrapper}>
                     <HeaderTitle
                         deleteIcon
                         pressed={() => navigation.navigate('Subjects')}
@@ -387,28 +328,252 @@ const Home = () => {
                             renderItem={({ item }) => {
                                 const uri = `${IMAGEURL2}${item.image}`
                                 return (
-                                    <StageCard
-                                        eduPress={() =>
+                                    // <StageCard
+                                    //     eduPress={() =>
+                                    //         navigation.navigate(
+                                    //             'EducationalStage',
+                                    //             {
+                                    //                 stage_id: item?.id,
+                                    //             }
+                                    //         )
+                                    //     }
+                                    //     newPress={() => {}}
+                                    //     uri={uri}
+                                    //     text={item.name}
+                                    // />
+                                    <Pressable
+                                        onPress={() => {
                                             navigation.navigate(
                                                 'EducationalStage',
                                                 {
                                                     stage_id: item?.id,
                                                 }
                                             )
-                                        }
-                                        newPress={() => {}}
-                                        uri={uri}
-                                        text={item.name}
-                                    />
+                                        }}
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginRight: heightp(15),
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                minHeight: heightp(60),
+                                                backgroundColor: colors.primary,
+                                                borderRadius: 32,
+                                                width: widthp(95),
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                paddingHorizontal: heightp(10),
+                                            }}
+                                        >
+                                            <FastImage
+                                                style={{
+                                                    width: heightp(50),
+                                                    height: heightp(40),
+                                                    borderRadius: 10,
+                                                }}
+                                                source={{
+                                                    uri,
+                                                    priority:
+                                                        FastImage.priority
+                                                            .normal,
+                                                }}
+                                                resizeMode={
+                                                    FastImage.resizeMode.cover
+                                                }
+                                            />
+                                        </View>
+                                        <Text
+                                            style={{
+                                                color: 'rgba(32, 32, 32, 1)',
+                                                fontWeight: '500',
+                                                paddingTop: 5,
+                                            }}
+                                            text={item.name}
+                                            fontSize={heightp(13)}
+                                        />
+                                    </Pressable>
                                 )
                             }}
                         />
                     </View>
-                    <View style={globalStyles.horizontal} />
-                </>
+                    {/* <View style={globalStyles.horizontal} /> */}
+                </View>
             )}
+
+            <View style={[styles.newWrapper, globalStyles.rowBetween]}>
+                {(Global.UserType == 3 || Global.UserType == 4) && (
+                    <Pressable
+                        onPress={() => {
+                            navigation.navigate('AllMeasurementStage')
+                        }}
+                        style={{
+                            alignItems: 'center',
+                        }}
+                    >
+                        <FastImage
+                            style={{
+                                width: heightp(75),
+                                height: heightp(75),
+                            }}
+                            source={require('../../assets/img/quizzes_new.png')}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                        <Text
+                            style={{
+                                color: 'rgba(32, 32, 32, 1)',
+                                fontWeight: '500',
+                                paddingTop: 5,
+                            }}
+                            text={`${i18n.t('Quizzes')}`}
+                            fontSize={heightp(11)}
+                        />
+                    </Pressable>
+                )}
+                <Pressable
+                    onPress={() => navigation.navigate('StudentGuide')}
+                    style={{
+                        alignItems: 'center',
+                    }}
+                >
+                    <FastImage
+                        style={{
+                            width: heightp(75),
+                            height: heightp(75),
+                        }}
+                        source={require('../../assets/img/studentGuide_new.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <Text
+                        style={{
+                            color: 'rgba(32, 32, 32, 1)',
+                            fontWeight: '500',
+                            paddingTop: 5,
+                        }}
+                        text={`${i18n.t('StudentGuide')}`} // study guide
+                        fontSize={heightp(11)}
+                    />
+                </Pressable>
+                <Pressable
+                    onPress={() => navigation.navigate('FreeLessons')}
+                    style={{
+                        alignItems: 'center',
+                    }}
+                >
+                    <FastImage
+                        style={{
+                            width: heightp(75),
+                            height: heightp(75),
+                        }}
+                        source={require('../../assets/img/freeLessons_new.png')}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <Text
+                        style={{
+                            color: 'rgba(32, 32, 32, 1)',
+                            fontWeight: '500',
+                            paddingTop: 5,
+                        }}
+                        text={`${i18n.t('FreeLessons')}`} //free lessons
+                        fontSize={heightp(11)}
+                    />
+                </Pressable>
+                {(Global.UserType == 3 || Global.UserType == 4) && (
+                    <Pressable
+                        onPress={() => {
+                            navigation.navigate('FazaPackagesStage')
+                        }}
+                        style={{
+                            alignItems: 'center',
+                        }}
+                    >
+                        <FastImage
+                            style={{
+                                width: heightp(75),
+                                height: heightp(75),
+                            }}
+                            source={require('../../assets/img/faza_new.png')}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                        <Text
+                            style={{
+                                color: 'rgba(32, 32, 32, 1)',
+                                fontWeight: '500',
+                                paddingTop: 5,
+                            }}
+                            text={`${i18n.t('FAZA')}`}
+                            fontSize={heightp(11)}
+                        />
+                    </Pressable>
+                )}
+            </View>
+            {/* <View style={globalStyles.horizontal} /> */}
+
+            <View style={styles.newWrapper}>
+                <HeaderTitle
+                    pressed={() => navigation.navigate('MultiPackagesStage')}
+                    text={i18n.t('MultiPackages')}
+                />
+                <View style={styles.containerFlex}>
+                    <FlatList
+                        horizontal
+                        keyboardShouldPersistTaps="handled"
+                        contentContainerStyle={styles.flatlistContent}
+                        ListEmptyComponent={() => (
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text text={i18n.t('NoData')} />
+                            </View>
+                        )}
+                        data={packagesArray}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        onEndReachedThreshold={0.5}
+                        renderItem={({ item }) => {
+                            console.log('renderItem', item)
+                            const uri = `${IMAGEURL}/${item.image}`
+                            // navigation.navigate("MultiPackageDetails", item);
+                            return (
+                                <Pressable
+                                    onPress={() =>
+                                        navigation.navigate(
+                                            'MultiPackageDetails',
+                                            {
+                                                item,
+                                                packageType: 'multi',
+                                            }
+                                        )
+                                    }
+                                >
+                                    <FastImage
+                                        style={{
+                                            width: heightp(210),
+                                            height: heightp(130),
+                                            borderRadius: 10,
+                                            marginRight: heightp(20),
+                                        }}
+                                        source={{
+                                            uri,
+                                            priority: FastImage.priority.normal,
+                                        }}
+                                        resizeMode={FastImage.resizeMode.cover}
+                                    />
+                                </Pressable>
+                            )
+                        }}
+                    />
+                </View>
+            </View>
+
+            {/* <View style={globalStyles.horizontal} /> */}
+
             {session?.type == 3 ? (
-                <>
+                <View style={styles.newWrapper}>
                     <HeaderTitle
                         pressed={() => navigation.navigate('Teachers')}
                         text={i18n.t('Teachers')}
@@ -430,8 +595,10 @@ const Home = () => {
                             )}
                             data={teachersArray}
                             showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             onEndReachedThreshold={0.5}
                             renderItem={({ item }) => {
+                                console.log('renderItem', item)
                                 const uri = `${IMAGEURL}/${item.image}`
                                 return (
                                     <TeachersCard
@@ -450,7 +617,7 @@ const Home = () => {
                             }}
                         />
                     </View>
-                </>
+                </View>
             ) : (
                 <>
                     {/* <SearchBar
@@ -620,7 +787,7 @@ const Home = () => {
                     )}
                 </>
             )}
-            {(Global.UserType == 3 || Global.UserType == 4) && (
+            {/* {(Global.UserType == 3 || Global.UserType == 4) && (
                 <>
                     <View
                         style={[
@@ -660,7 +827,7 @@ const Home = () => {
                     </View>
                     <View style={globalStyles.horizontal} />
                 </>
-            )}
+            )} */}
             {/* <View style={styles.containerFlex}>
                 <Pressable
                     onPress={() => navigation.navigate('PackagesStage')}
@@ -684,7 +851,7 @@ const Home = () => {
             </View>
             <View style={globalStyles.horizontal} /> */}
 
-            <View style={styles.containerFlex}>
+            {/* <View style={styles.containerFlex}>
                 <Pressable
                     onPress={() => navigation.navigate('FreeLessons')}
                     style={{
@@ -722,7 +889,7 @@ const Home = () => {
                     />
                 </Pressable>
             </View>
-            <View style={globalStyles.horizontal} />
+            <View style={globalStyles.horizontal} /> */}
         </ScrollView>
     )
 }
@@ -734,7 +901,7 @@ const styles = StyleSheet.create({
         // flexGrow: 1,
     },
     containerFlex: {
-        marginBottom: heightp(20),
+        // marginBottom: heightp(20),
     },
     subItem: {
         backgroundColor: colors.primary,
@@ -769,6 +936,16 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    headerText: {
+        fontWeight: 'bold',
+    },
+    newWrapper: {
+        backgroundColor: '#rgba(250, 250, 250, 1)',
+        paddingHorizontal: 15,
+        paddingVertical: heightp(10),
+        borderRadius: 18,
+        marginVertical: heightp(5),
     },
 })
 

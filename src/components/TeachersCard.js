@@ -9,11 +9,7 @@ import { Rating, AirbnbRating } from 'react-native-ratings'
 
 const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
     <Pressable onPress={pressed}>
-        <View
-            style={[
-                styles.container,
-            ]}
-        >
+        <View style={[styles.container]}>
             <FastImage
                 style={{
                     width: image === null ? heightp(80) : heightp(80),
@@ -32,14 +28,26 @@ const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
             />
         </View>
         <View style={styles.lowerContainer}>
-            <Text numberOfLines={1} style={styles.textColor} text={text} />
-            <Text numberOfLines={1} style={styles.textColor} text={lastName} />
-            {/* <Text
+            <Text
                 numberOfLines={1}
+                fontSize={heightp(9)}
                 style={styles.textColor}
+                text={`${text} ${lastName}`}
+            />
+            {/* <Text numberOfLines={1} style={styles.textColor} text={lastName} /> */}
+            <Text
+                numberOfLines={1}
+                fontSize={heightp(9)}
+                style={[
+                    styles.textColor,
+                    {
+                        paddingBottom: 5,
+                        fontWeight: '500',
+                    },
+                ]}
                 text={ratings && ratings}
-            /> */}
-            <AirbnbRating
+            />
+            {/* <AirbnbRating
                 size={12}
                 imageSize={10}
                 defaultRating={ratings ? ratings : 0}
@@ -62,7 +70,7 @@ const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
                     height: '40%',
                     paddingRight: heightp(12),
                 }}
-            />
+            /> */}
         </View>
     </Pressable>
 )
@@ -70,25 +78,26 @@ const TeachersCard = ({ text, uri, lastName, pressed, image, ratings }) => (
 const styles = StyleSheet.create({
     container: {
         minHeight: heightp(90),
-        backgroundColor: 'rgba(67, 72, 84, 0.2)',
-        borderRadius: 8,
-        width: widthp(121),
-        marginRight: heightp(20),
+        backgroundColor: 'rgba(67, 72, 84, 0.15)',
+        borderTopEndRadius: 8,
+        borderTopLeftRadius: 8,
+        width: widthp(101),
+        marginRight: heightp(10),
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: heightp(10),
+        // paddingHorizontal: heightp(5),
     },
     textColor: {
-        color: 'white',
-        fontWeight: 'bold',
+        color: 'rgba(67, 72, 84, 1)',
+        fontWeight: '700',
     },
     lowerContainer: {
-        backgroundColor: 'rgba(67, 72, 84, 1)',
-        height: heightp(90),
-        marginRight: heightp(20),
-        width: widthp(121),
+        backgroundColor: 'rgba(67, 72, 84, 0.15)',
+        // height: heightp(90),
+        marginRight: heightp(10),
+        width: widthp(101),
         alignItems: 'center',
-        paddingHorizontal: heightp(10),
+        // paddingHorizontal: heightp(5),
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
     },
