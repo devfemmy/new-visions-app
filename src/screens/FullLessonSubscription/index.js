@@ -189,12 +189,13 @@ const FullLessonSubscription = () => {
                             previousBtnText={I18n.t('Previous')}
                             finishBtnText={
                                 Global.UserType == 4
-                                    ? `${I18n.t('SubscribeforNew')}`
-                                    : `${I18n.t('SubscribeforNew')} `
+                                    ? `${I18n.t(
+                                          'Subscribefor'
+                                      )} ${lesson_price} ${I18n.t('Rscourse')}`
+                                    : `${I18n.t(
+                                          'Subscribefor'
+                                      )} ${lesson_price} ${I18n.t('Rscourse')} `
                             }
-                            //${I18n.t(
-                            // 'Subscribefor'
-                            // )} ${lesson_price} ${I18n.t('Rscourse')}
                             onSubmit={
                                 Global.UserType == 4
                                     ? subscribeToFullLesson

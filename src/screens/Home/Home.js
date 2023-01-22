@@ -283,11 +283,13 @@ const Home = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-            <Text
-                style={styles.headerText}
-                fontSize={heightp(21)}
-                text={`${i18n.t('HelloUsername')} ${user?.first_name}`}
-            />
+            <View style={globalStyles.rowBetween}>
+                <Text
+                    style={styles.headerText}
+                    fontSize={heightp(21)}
+                    text={`${i18n.t('HelloUsername')} ${user?.first_name}`}
+                />
+            </View>
             <View style={[styles.containerFlex]}>
                 <Vimeo
                     videoId={vidId}
@@ -535,7 +537,7 @@ const Home = () => {
                         showsHorizontalScrollIndicator={false}
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => {
-                            console.log('renderItem', item)
+                            // console.log('renderItem', item)
                             const uri = `${IMAGEURL}/${item.image}`
                             // navigation.navigate("MultiPackageDetails", item);
                             return (
@@ -598,7 +600,7 @@ const Home = () => {
                             showsHorizontalScrollIndicator={false}
                             onEndReachedThreshold={0.5}
                             renderItem={({ item }) => {
-                                console.log('renderItem', item)
+                                // console.log('renderItem', item)
                                 const uri = `${IMAGEURL}/${item.image}`
                                 return (
                                     <TeachersCard

@@ -14,13 +14,14 @@ import {
     View,
 } from 'react-native'
 import { globalStyles } from '../../helpers/globalStyles'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp, widthp } from '../../utils/responsiveDesign'
 import { Loader } from '../../components/Loader'
 import HomePageService from '../../services/userServices'
 import { AppContext } from '../../context/AppState'
 import I18n from 'i18n-js'
 import { Text } from '../../components/common'
 import colors from '../../helpers/colors'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const GuideQuestionnaire = () => {
     const route = useRoute()
@@ -35,10 +36,12 @@ const GuideQuestionnaire = () => {
             day_id: item?.day_id,
             answers: questionsInput,
         }
+        console.log('============== submit', payload)
         try {
             const res = await HomePageService.subscribeWithGuide(payload)
             if (res.code === 200) {
                 setLoading(false)
+                console.log('============== successful ==============', res)
                 Alert.alert(I18n.t('Subscribe'), res?.message, [
                     {
                         text: 'Cancel',
@@ -51,11 +54,12 @@ const GuideQuestionnaire = () => {
                     },
                 ])
             } else {
+                console.log('============== Failed to ==============', res)
                 setLoading(false)
                 Alert.alert(I18n.t('Subscribe'), res?.message, [
                     {
                         text: 'Cancel',
-                        onPress: () => navigation.popToTop(),
+                        onPress: () => console.log('Cancelled'),
                         style: 'cancel',
                     },
                     {
@@ -101,53 +105,54 @@ const GuideQuestionnaire = () => {
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <ScrollView
-                contentContainerStyle={[
-                    styles.container,
-                    globalStyles.container,
-                    // globalStyles.wrapper,
-                ]}
-                style={{ flex: 1, flexGrow: 1 }}
-                showsVerticalScrollIndicator={false}
+        <>
+            <KeyboardAwareScrollView
+                keyboardDismissMode="on-drag"
+                contentContainerStyle={{
+                    flex: 1,
+                }}
             >
-                <View>
-                    <RNText
+                <ScrollView
+                    contentContainerStyle={[styles.container]}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View>
+                        <RNText
+                            style={[
+                                styles.subItemText2,
+                                {
+                                    // color: '#fff',
+                                    textAlign: 'center',
+                                    paddingTop: heightp(5),
+                                    paddingBottom: heightp(20),
+                                },
+                            ]}
+                        >
+                            {I18n.t('SurveyNew')}
+                        </RNText>
+                    </View>
+                    <View
                         style={[
-                            styles.subItemText2,
+                            globalStyles.horizontal,
                             {
-                                // color: '#fff',
-                                textAlign: 'center',
-                                paddingTop: heightp(5),
-                                paddingBottom: heightp(20),
+                                marginBottom: heightp(5),
                             },
                         ]}
-                    >
-                        {I18n.t('SurveyNew')}
-                    </RNText>
-                </View>
-                <View
-                    style={[
-                        globalStyles.horizontal,
-                        {
-                            marginBottom: heightp(5),
-                        },
-                    ]}
-                />
-                {questionData?.questions.map((item, index) => {
-                    return (
-                        <View
-                            style={{
-                                backgroundColor: '#fff',
-                                paddingVertical: heightp(10),
-                                marginVertical: heightp(5),
-                            }}
-                        >
-                            <Text
-                                style={styles.subItemText}
-                                text={item?.question}
-                            />
-                            {/* <Text
+                    />
+                    {questionData?.questions.map((item, index) => {
+                        return (
+                            <View
+                                style={{
+                                    backgroundColor: '#fff',
+                                    paddingVertical: heightp(10),
+                                    marginVertical: heightp(5),
+                                }}
+                            >
+                                <Text
+                                    style={styles.subItemText}
+                                    text={item?.question}
+                                />
+                                {/* <Text
                                 style={[
                                     styles.subItemText,
                                     {
@@ -159,53 +164,62 @@ const GuideQuestionnaire = () => {
                                 //     item?.id
                                 // }:`}
                             /> */}
-                            <View style={styles.formContainer}>
-                                <TextInput
-                                    style={styles.input}
-                                    autoCapitalize="none"
-                                    placeholderTextColor="#000000"
-                                    // onChangeText={(text) => {
-                                    //     console.log(text)
-                                    // }}
-                                    onEndEditing={(value) => {
-                                        const textValue = value.nativeEvent.text
-                                        const id = item?.id
-                                        // var values = {}
-                                        // for (
-                                        //     var i = Number(
-                                        //         questionData?.questions[0]?.id
-                                        //     );
-                                        //     i < questionData?.questions.length;
-                                        //     ++i
-                                        // ) {
-                                        //     values[i] = ''
-                                        // }
-                                        // console.log('values', values)
-                                        // Object.keys(values).forEach((key) => {
-                                        //     const numKey = Number(key)
-                                        //     console.log(
-                                        //         'adey here =========>',
-                                        //         typeof numKey,
-                                        //         values[numKey],
-                                        //         typeof item?.id
-                                        //     )
-                                        //     if (numKey === item?.id) {
-                                        //         values[numKey] = textValue
-                                        //     }
-                                        // })
-                                        setQuestionsInput((questionsInput) => [
-                                            ...questionsInput,
-                                            {
-                                                [id]: textValue,
-                                            },
-                                        ])
-                                    }}
-                                />
+                                <View style={styles.formContainer}>
+                                    <TextInput
+                                        style={styles.input}
+                                        autoCapitalize="none"
+                                        placeholderTextColor="#000000"
+                                        // onChangeText={(text) => {
+                                        //     console.log(text)
+                                        // }}
+                                        onEndEditing={(value) => {
+                                            const textValue =
+                                                value.nativeEvent.text
+                                            const id = item?.id
+                                            // var values = {}
+                                            // for (
+                                            //     var i = Number(
+                                            //         questionData?.questions[0]?.id
+                                            //     );
+                                            //     i < questionData?.questions.length;
+                                            //     ++i
+                                            // ) {
+                                            //     values[i] = ''
+                                            // }
+                                            // console.log('values', values)
+                                            // Object.keys(values).forEach((key) => {
+                                            //     const numKey = Number(key)
+                                            //     console.log(
+                                            //         'adey here =========>',
+                                            //         typeof numKey,
+                                            //         values[numKey],
+                                            //         typeof item?.id
+                                            //     )
+                                            //     if (numKey === item?.id) {
+                                            //         values[numKey] = textValue
+                                            //     }
+                                            // })
+                                            // setQuestionsInput(
+                                            //     (questionsInput) => [
+                                            //         ...questionsInput,
+                                            //         {
+                                            //             [id]: textValue,
+                                            //         },
+                                            //     ]
+                                            // )
+                                            setQuestionsInput(
+                                                (questionsInput) => ({
+                                                    ...questionsInput,
+                                                    [id]: textValue,
+                                                })
+                                            )
+                                        }}
+                                    />
+                                </View>
                             </View>
-                        </View>
-                    )
-                })}
-                {/* <FlatList
+                        )
+                    })}
+                    {/* <FlatList
                     nestedScrollEnabled={true}
                     keyboardShouldPersistTaps="handled"
                     contentContainerStyle={styles.flatlistContent}
@@ -279,64 +293,65 @@ const GuideQuestionnaire = () => {
                     maxToRenderPerBatch={10}
                     windowSize={20}
                 /> */}
-            </ScrollView>
-            <View>
+                </ScrollView>
+                <View>
+                    <View
+                        style={[
+                            globalStyles.horizontal,
+                            {
+                                marginVertical: heightp(5),
+                            },
+                        ]}
+                    />
+                    <RNText
+                        style={[
+                            styles.subItemText2,
+                            {
+                                // color: '#fff',
+                                textAlign: 'center',
+                                paddingTop: heightp(5),
+                                paddingBottom: heightp(20),
+                            },
+                        ]}
+                    >
+                        {I18n.t('SurveyNew2')}
+                    </RNText>
+                </View>
                 <View
-                    style={[
-                        globalStyles.horizontal,
-                        {
-                            marginVertical: heightp(5),
-                        },
-                    ]}
-                />
-                <RNText
-                    style={[
-                        styles.subItemText2,
-                        {
-                            // color: '#fff',
-                            textAlign: 'center',
-                            paddingTop: heightp(5),
-                            paddingBottom: heightp(20),
-                        },
-                    ]}
-                >
-                    {I18n.t('SurveyNew2')}
-                </RNText>
-            </View>
-            <View
-                style={{
-                    backgroundColor: colors.primary,
-                    width: '90%',
-                    height: 45,
-                    alignSelf: 'center',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginVertical: 20,
-                    borderRadius: 20,
-                }}
-            >
-                <TouchableOpacity
-                    onPress={() => {
-                        submitQuiz()
+                    style={{
+                        backgroundColor: colors.primary,
+                        width: '90%',
+                        height: 45,
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginVertical: 20,
+                        borderRadius: 20,
                     }}
                 >
-                    <View style={{ flexDirection: 'row' }}>
-                        <RNText
-                            style={[
-                                styles.subItemText,
-                                {
-                                    marginHorizontal: 20,
-                                    color: colors.white,
-                                },
-                            ]}
-                        >
-                            {I18n.t('SendNew2')}
-                        </RNText>
-                    </View>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity
+                        onPress={() => {
+                            submitQuiz()
+                        }}
+                    >
+                        <View style={{ flexDirection: 'row' }}>
+                            <RNText
+                                style={[
+                                    styles.subItemText,
+                                    {
+                                        marginHorizontal: 20,
+                                        color: colors.white,
+                                    },
+                                ]}
+                            >
+                                {I18n.t('SendNew2')}
+                            </RNText>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAwareScrollView>
             <Loader visible={loading} />
-        </View>
+        </>
     )
 }
 
@@ -346,6 +361,7 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         paddingBottom: 50,
+        paddingHorizontal: widthp(15),
     },
     flatlistContent: {
         // flexGrow: 1,

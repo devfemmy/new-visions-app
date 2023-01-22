@@ -109,7 +109,7 @@ const Conversation = () => {
                         </View>
                     )}
                     renderItem={({ item }) => {
-                        console.log('renderItem', item)
+                        // console.log('renderItem', item)
                         const uri = `${IMAGEURL}/${item?.image}`
                         return (
                             <View>
