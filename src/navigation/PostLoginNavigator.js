@@ -66,6 +66,7 @@ import GuideQuestionnaire from '../screens/StudentGuide/GuideQuestionnaire'
 import AllMeasurementQuiz from '../screens/AllMeasurementQuiz'
 import AllMeasurementQuizQuestion from '../screens/AllMeasurementQuiz/AllMeasurementQuizQuestion'
 import AllMeasurementStage from '../screens/AllMeasurementQuiz/AllMeasurementStage'
+import GuideProfile from '../screens/StudentGuide/GuideProfile'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -539,6 +540,15 @@ export const PostLoginNavigator = () => {
                         headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
                         headerLeft: backRight,
                     }}
+                />
+                <MainStack.Screen
+                    name="GuideProfile"
+                    component={GuideProfile}
+                    options={({ route }) => ({
+                        headerShown: true,
+                        title: route.params.title,
+                        headerLeft: backRight,
+                    })}
                 />
             </MainStack.Navigator>
         </>

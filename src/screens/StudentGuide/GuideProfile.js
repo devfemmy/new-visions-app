@@ -40,7 +40,7 @@ import { Loader } from '../../components/Loader'
 
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
-const TeacherProfile = () => {
+const GuideProfile = () => {
     const flatListRef = useRef()
     const route = useRoute()
     const dispatch = useAppDispatch()
@@ -223,7 +223,7 @@ const TeacherProfile = () => {
                         </View>
                     </View>
                 </View>
-                {courses.length > 0 && (
+                {/* {courses.length > 0 && (
                     <View style={styles.containerFlex}>
                         <>
                             <HeaderTitle
@@ -398,7 +398,7 @@ const TeacherProfile = () => {
                             </View>
                         </View>
                     </View>
-                )}
+                )} */}
                 <View style={styles.borderContainer}>
                     {teachersData?.video?.length > 0 ? (
                         <View
@@ -419,7 +419,7 @@ const TeacherProfile = () => {
                                     },
                                 ]}
                             >
-                                {I18n.t('TeacherProfileVideo')}
+                                {I18n.t('GuideProfileVideo')}
                             </RNText>
                             <Vimeo
                                 videoId={vidId}
@@ -434,7 +434,7 @@ const TeacherProfile = () => {
                         />
                     )}
                 </View>
-                <View
+                {/* <View
                     style={[
                         styles.borderContainer,
                         {
@@ -531,7 +531,7 @@ const TeacherProfile = () => {
                             text={I18n.t('NoRatingsPresentatthemoment')}
                         />
                     )}
-                </View>
+                </View> */}
             </ScrollView>
         </>
     )
@@ -609,4 +609,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default TeacherProfile
+export default GuideProfile

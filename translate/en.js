@@ -322,6 +322,7 @@ const English = {
     Reservationofthesyllabus: 'Reservation of the syllabus',
     CurriculumReservation: 'Full subject subscibe',
     TeacherProfileVideo: "Watch the teacher's demo demonstration",
+    GuideProfileVideo: "Watch the guide's demo demonstration",
     NoDataPresentatthemoment: 'No Data Present at the moment',
     NoRatingsPresentatthemoment: 'No Ratings Present at the moment',
     PreviousClasses: 'Previous Classes',

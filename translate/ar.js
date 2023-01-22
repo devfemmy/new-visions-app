@@ -331,6 +331,7 @@ const Arabic = {
     Reservationofthesyllabus: 'حجز متابعة منهج',
     CurriculumReservation: 'حجز منهج كامل',
     TeacherProfileVideo: 'قم بالاطلاع على الشرح التجريبي للمعلم',
+    GuideProfileVideo: 'قم بالاطلاع على الشرح التجريبي للمرشد الطلابي',
     NoDataPresentatthemoment: 'لا يوجد فيديو',
     NoRatingsPresentatthemoment: 'لا يوجد تقيم',
     PreviousClasses: 'الحصص السابقة',

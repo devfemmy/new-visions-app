@@ -74,7 +74,7 @@ const StudentGuide = () => {
 
     const navigateTeachersProfile = useCallback(
         (item) => {
-            navigation.navigate('TeacherProfile', {
+            navigation.navigate('GuideProfile', {
                 item,
                 title: `${item?.first_name} ${item?.last_name}`,
             })
