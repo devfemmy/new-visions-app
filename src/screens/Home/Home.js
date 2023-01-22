@@ -326,6 +326,7 @@ const Home = () => {
                             )}
                             data={stagesArray}
                             showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             onEndReachedThreshold={0.5}
                             renderItem={({ item }) => {
                                 const uri = `${IMAGEURL2}${item.image}`
