@@ -202,6 +202,15 @@ const LiveNowQuizResult = () => {
             }
         }
 
+        const regex = /(<([^>]+)>)/gi
+
+        const secondRegEx = /((&nbsp;))*/gim
+
+        const isHTML =
+            /<(?=.*? .*?\/ ?>|br|hr|input|!--|wbr)[a-z]+.*?>|<([a-z]+).*?<\/\1>/i.test(
+                item?.title
+            )
+
         return (
             <>
                 <View style={styles.containerFlex} key={item?.id}>
@@ -215,7 +224,33 @@ const LiveNowQuizResult = () => {
                     >
                         {I18n.t('QuestionNumber')} {index + 1}
                     </Text>
-                    <Text style={[styles.inputTitle]}>{item?.title}</Text>
+                    {item?.image ? (
+                        <>
+                            <FastImage
+                                style={{
+                                    flex: 1,
+                                    width: WINDOW_WIDTH * 0.9,
+                                    height: WINDOW_HEIGHT * 0.1,
+                                    resizeMode: 'contain',
+                                }}
+                                source={{
+                                    uri: `${IMAGEURL}/${item?.image}`,
+                                    priority: FastImage.priority.normal,
+                                }}
+                                resizeMode={FastImage.resizeMode.contain}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Text style={[styles.inputTitle]}>
+                                {isHTML
+                                    ? item?.title
+                                          ?.replace(regex, '')
+                                          .replace(secondRegEx, '')
+                                    : item?.title}
+                            </Text>
+                        </>
+                    )}
 
                     <View
                         style={{
