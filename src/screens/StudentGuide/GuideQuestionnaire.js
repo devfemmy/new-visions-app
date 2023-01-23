@@ -33,7 +33,7 @@ const GuideQuestionnaire = () => {
     const submitQuiz = async () => {
         setLoading(true)
         const payload = {
-            day_id: item?.day_id,
+            day_id: item?.id,
             answers: questionsInput,
         }
         console.log('============== submit', payload)
