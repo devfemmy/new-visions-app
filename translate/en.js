@@ -373,6 +373,7 @@ const English = {
     SelectRequiredDay: 'Please select the required day',
     FreeLessons: 'Free Lessons',
     StudentGuide: 'Student Guide',
+    FazaSubscriptions: 'Faza Subscriptions',
 }
 
 export default English

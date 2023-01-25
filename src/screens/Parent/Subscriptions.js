@@ -32,6 +32,7 @@ export default function Subscriptions({}) {
     const [toggle3, setToggle3] = useState(false)
     const [toggle4, setToggle4] = useState(false)
     const [toggle5, setToggle5] = useState(false)
+    const [toggle6, setToggle6] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [isVisibleItem, setIsVisibleItem] = useState({})
     const { id } = route.params
@@ -41,8 +42,9 @@ export default function Subscriptions({}) {
 
     function getSonSubscriptions() {
         axios
-            .post('https://newvisions.sa/api/getChildPayments', {
-                child_id: route.params.id,
+            .post('https://newvisions.sa/api/getUserSubscription', {
+                // getChildPayments (this can be returned whenever the child API wants to be used)
+                // child_id: route.params.id,
             })
             .then((response) => {
                 if (
@@ -54,7 +56,7 @@ export default function Subscriptions({}) {
                         const data = response.data.data
                         setSubscriptions(data)
                         showLoadingSpinner(false)
-                        console.log('typeof', typeof data)
+                        console.log('typeof', data)
                     } else if (response.data.code == 403) {
                         alert('This Account is Logged in from another Device.')
                         onLogout()
@@ -294,6 +296,39 @@ export default function Subscriptions({}) {
                                     data={subscriptions?.PrivateSubjectPayments}
                                     extraData={
                                         subscriptions?.PrivateSubjectPayments
+                                    }
+                                    renderItem={renderItem}
+                                    keyExtractor={(item) => item.id}
+                                    ListEmptyComponent={EmptyItem}
+                                />
+                            </View>
+                        )}
+                        <TouchableWithoutFeedback
+                            onPress={() => {
+                                setToggle6(!toggle6)
+                            }}
+                        >
+                            <View style={styles.subItem}>
+                                <Text style={styles.subItemText}>
+                                    {I18n.t('FazaSubscriptions')}
+                                </Text>
+                                <FontAwesome
+                                    name={
+                                        toggle6
+                                            ? 'arrow-circle-down'
+                                            : 'arrow-circle-left'
+                                    }
+                                    color={colors.white}
+                                    size={30}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
+                        {subscriptions?.ReviewCoursesPayments && toggle6 && (
+                            <View>
+                                <FlatList
+                                    data={subscriptions?.ReviewCoursesPayments}
+                                    extraData={
+                                        subscriptions?.ReviewCoursesPayments
                                     }
                                     renderItem={renderItem}
                                     keyExtractor={(item) => item.id}

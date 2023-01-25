@@ -380,6 +380,7 @@ const Arabic = {
     SelectRequiredDay: 'يرجى اختيار اليوم المطلوب',
     FreeLessons: 'الحصص المجانية',
     StudentGuide: 'المرشد الطلابي',
+    FazaSubscriptions: 'اشتركات الفزعة',
 }
 
 export default Arabic
