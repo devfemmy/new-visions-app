@@ -141,8 +141,9 @@ android {
         applicationId "com.app.newVisions"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 23
+        versionCode 50
         versionName "1.1.5"
+        multiDexEnabled true
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         missingDimensionStrategy 'store', 'play'
         if (isNewArchitectureEnabled()) {
@@ -294,6 +295,10 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation "androidx.work:work-runtime-ktx:2.7.0"
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

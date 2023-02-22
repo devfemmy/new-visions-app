@@ -61,6 +61,8 @@ export default function UserType({ navigation }) {
                             </View>
                         </TouchableOpacity>
 
+                        <Text style={styles.textLbl2}>Testing apk</Text>
+
                         <View style={styles.content}>
                             <Image
                                 style={styles.logo}
@@ -272,6 +274,13 @@ const styles = StyleSheet.create({
     content: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    textLbl2: {
+        color: colors.dark,
+        fontFamily: 'Cairo-Bold',
+        fontSize: 30,
+        paddingTop: 10,
+        textAlign: 'center',
     },
     textLbl: {
         color: colors.dark,

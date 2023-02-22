@@ -10,6 +10,7 @@ buildscript {
         targetSdkVersion = 31
         googlePlayServicesVersion = "+" // default: "+"
         firebaseMessagingVersion = "21.1.0" // default: "21.1.0"
+        androidXCore = "1.6.0"
 
         if (System.properties['os.arch'] == "aarch64") {
             // For M1 Users we need to use the NDK 24 which added support for aarch64
@@ -22,7 +23,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
+        // jcenter()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.1.1")
@@ -58,6 +59,11 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
-        jcenter()
+        // jcenter()
     }
 }
+
+configurations.all {   
+    resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
+}
+
