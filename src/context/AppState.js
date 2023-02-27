@@ -30,7 +30,7 @@ export class AppState extends React.Component {
 
     initState = (user, lang) => {
         i18n.locale = lang
-        if (lang !== 'ar') {
+        if (lang === 'ar') {
             I18nManager.forceRTL(false)
             this.setState({ user, lang, rtl: false, isLoading: false })
             if (I18nManager.isRTL) RNRestart.Restart()

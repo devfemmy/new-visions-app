@@ -1,5 +1,5 @@
 const Globals = {
-  currentLang: 'en',
+  currentLang: 'ar',
   authToken: null,
   UserType: null,
 };

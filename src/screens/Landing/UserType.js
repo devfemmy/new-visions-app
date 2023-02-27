@@ -51,7 +51,7 @@ export default function UserType({ navigation }) {
                         <TouchableOpacity
                             style={styles.touchLang}
                             onPress={() => {
-                                changeLang(langTo)
+                                // changeLang(langTo)
                             }}
                         >
                             <View style={styles.lang}>
