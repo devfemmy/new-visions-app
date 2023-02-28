@@ -45,7 +45,7 @@ export class AppState extends React.Component {
         // this.setState({ loadingSpinner: true })
         i18n.locale = lang
         this.setState({ lang })
-        if (lang !== 'ar') {
+        if (lang === 'ar') {
             if (I18nManager.isRTL) {
                 await I18nManager.forceRTL(false)
                 this.setState({ lang, rtl: false }, () =>

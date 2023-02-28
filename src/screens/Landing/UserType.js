@@ -51,7 +51,7 @@ export default function UserType({ navigation }) {
                         <TouchableOpacity
                             style={styles.touchLang}
                             onPress={() => {
-                                // changeLang(langTo)
+                                changeLang(langTo)
                             }}
                         >
                             <View style={styles.lang}>
@@ -60,8 +60,6 @@ export default function UserType({ navigation }) {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-
-                        <Text style={styles.textLbl2}>Testing apk</Text>
 
                         <View style={styles.content}>
                             <Image
