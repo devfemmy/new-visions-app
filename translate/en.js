@@ -374,6 +374,11 @@ const English = {
     FreeLessons: 'Free Lessons',
     StudentGuide: 'Student Guide',
     FazaSubscriptions: 'Faza Subscriptions',
+
+    // new design translation
+    DiscoverNewVisions: 'Discover New Visions',
+    CreateANewAccount2: 'Create A New Account',
+    PleaseAddVerificationCode: 'Please add verification code',
 }
 
 export default English

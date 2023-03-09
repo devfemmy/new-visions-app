@@ -13,7 +13,7 @@ export function SocialButtons({signInGoogle, onAppleButtonPress}) {
 
   return (
     <View style={{ marginVertical: 15 }}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         activeOpacity={0.7}
         style={[
           styles.socialBtn,
@@ -32,7 +32,7 @@ export function SocialButtons({signInGoogle, onAppleButtonPress}) {
             {I18n.t('ContinueWithGoogle')}
           </Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {isIOS ? (
         <TouchableOpacity
           activeOpacity={0.7}

@@ -381,6 +381,11 @@ const Arabic = {
     FreeLessons: 'الحصص المجانية',
     StudentGuide: 'المرشد الطلابي',
     FazaSubscriptions: 'اشتركات الفزعة',
+
+    // new design translation
+    DiscoverNewVisions: 'اكتشف نيو فيجن',
+    CreateANewAccount2: 'تسجيل حساب جديد',
+    PleaseAddVerificationCode: 'الرجاء ادخال  الكود',
 }
 
 export default Arabic

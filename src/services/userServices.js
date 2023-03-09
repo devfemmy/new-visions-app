@@ -201,7 +201,19 @@ export default class HomePageService {
     }
 
     static async submitMeasurementQuizQuestions(data) {
-        const res = await baseAxios.post('/submitMeasurementQuizQuestions', data)
+        const res = await baseAxios.post(
+            '/submitMeasurementQuizQuestions',
+            data
+        )
+        return res?.data || res
+    }
+    // new design update
+    static async login(data) {
+        const res = await baseAxios.post('/login', data)
+        return res?.data || res
+    }
+    static async verifyAccount(data) {
+        const res = await baseAxios.post('/verifyAccount', data)
         return res?.data || res
     }
 }

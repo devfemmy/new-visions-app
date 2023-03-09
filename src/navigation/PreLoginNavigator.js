@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Login from '../screens/auth/login'
+// import Login from '../screens/auth/login'
 import UserType from '../screens/Landing/UserType'
 import WelcomeStep from '../screens/Landing/WelcomeStep'
 import Registration from '../screens/auth/SignUp'
@@ -10,17 +10,86 @@ import VerifyConfirmPassword from '../screens/auth/VerifyCode'
 import ResetPassword from '../screens/auth/ResetPassword'
 import SplashScreen from 'react-native-splash-screen'
 import { CompleteProfile } from '../screens/auth/CompleteProfile'
+import BackIcon from '../assets/img/back.svg'
+import ForwardIcon from '../assets/img/forward.svg'
+import Landing from '../screens/newAuthentication/Landing'
+import { AppContext } from '../context/AppState'
+import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { heightp } from '../utils/responsiveDesign'
+import { CardStyleInterpolators } from '@react-navigation/stack'
+import colors from '../helpers/colors'
+import Login from '../screens/newAuthentication/login'
+import OtpVerification from '../screens/newAuthentication/OtpVerification'
 
 const Stack = createNativeStackNavigator()
 
-const PreLoginNavigator = () => (
-    <Stack.Navigator initialRouteName="UserType" headerMode="none">
-        <Stack.Screen
+const PreLoginNavigator = () => {
+    const navigation = useNavigation()
+    const { lang } = useContext(AppContext)
+    const backRight = () => (
+        <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{
+                marginHorizontal: 16,
+            }}
+        >
+            {lang === 'ar' ? (
+                <ForwardIcon width={20} height={20} />
+            ) : (
+                <BackIcon width={20} height={20} />
+            )}
+        </TouchableOpacity>
+    )
+    return (
+        <Stack.Navigator
+            initialRouteName="Landing"
+            headerMode="none"
+            screenOptions={() => ({
+                headerShown: true,
+                headerShadowVisible: false,
+                headerTitleStyle: {
+                    fontWeight: '500',
+                    fontSize: heightp(14),
+                },
+                headerBackTitleVisible: false,
+                headerTitleAlign: 'center',
+                headerTintColor: colors.black,
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            })}
+        >
+            <Stack.Screen
+                name="Landing"
+                component={Landing}
+                options={{
+                    title: 'Landing',
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="Login"
+                component={Login}
+                options={() => ({
+                    headerShown: true,
+                    title: '',
+                    headerLeft: backRight,
+                })}
+            />
+            <Stack.Screen
+                name="OtpVerification"
+                component={OtpVerification}
+                options={() => ({
+                    headerShown: true,
+                    title: '',
+                    headerLeft: backRight,
+                })}
+            />
+            {/* <Stack.Screen
             name="UserType"
             component={UserType}
             options={{
                 title: 'UserType',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -28,7 +97,7 @@ const PreLoginNavigator = () => (
             component={WelcomeStep}
             options={{
                 title: 'WelcomeStep',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -36,7 +105,7 @@ const PreLoginNavigator = () => (
             component={Login}
             options={{
                 title: 'Login',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -44,7 +113,7 @@ const PreLoginNavigator = () => (
             component={Registration}
             options={{
                 title: 'SignUp',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -52,7 +121,7 @@ const PreLoginNavigator = () => (
             component={VerifyAccount}
             options={{
                 title: 'VerifyAccount',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -60,7 +129,7 @@ const PreLoginNavigator = () => (
             component={VerifyEnterEmail}
             options={{
                 title: 'VerifyEnterEmail',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -68,7 +137,7 @@ const PreLoginNavigator = () => (
             component={VerifyConfirmPassword}
             options={{
                 title: 'VerifyCode',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -76,7 +145,7 @@ const PreLoginNavigator = () => (
             component={ResetPassword}
             options={{
                 title: 'ResetPassword',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+                headerShown: false,
             }}
         />
         <Stack.Screen
@@ -84,10 +153,11 @@ const PreLoginNavigator = () => (
             component={CompleteProfile}
             options={{
                 title: 'CompleteProfile',
-                headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push', */,
+                headerShown: false,
             }}
-        />
-    </Stack.Navigator>
-)
+        /> */}
+        </Stack.Navigator>
+    )
+}
 
 export default PreLoginNavigator
