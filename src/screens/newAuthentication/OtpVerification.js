@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         height: 47.5,
         justifyContent: 'center',
         alignSelf: 'center',
-        marginVertical: 10,
+        marginVertical: 25,
     },
     loginBtnView: {
         flex: 1,
