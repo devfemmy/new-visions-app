@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     label: {
-        color: colors.black,
+        color: 'rgba(67, 72, 84, 1)', // colors.black
         fontSize: 16,
         fontFamily: 'Cairo-Regular',
     },

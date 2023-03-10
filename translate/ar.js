@@ -386,6 +386,9 @@ const Arabic = {
     DiscoverNewVisions: 'اكتشف نيو فيجن',
     CreateANewAccount2: 'تسجيل حساب جديد',
     PleaseAddVerificationCode: 'الرجاء ادخال  الكود',
+    ContinueWithGoogle: 'تسجيل الدخول عبر جوجل',
+    ContinueWithApple: 'تسجيل الدخول عبر ابل',
+    AccountType: 'نوع الحساب',
 }
 
 export default Arabic

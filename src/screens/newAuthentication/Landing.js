@@ -32,7 +32,11 @@ export default function Landing({ navigation }) {
                         <LandingImage />
                     </View>
 
-                    <View>
+                    <View
+                        style={{
+                            marginBottom: 10,
+                        }}
+                    >
                         <TouchableOpacity
                             style={styles.loginBtn}
                             onPress={() => discoverClicked()}
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     loginBtn: {
         width: '80%',
         flexDirection: 'row',
-        height: 47.5,
+        height: 45,
         justifyContent: 'center',
         alignSelf: 'center',
         marginVertical: 10,

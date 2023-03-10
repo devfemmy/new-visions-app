@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     },
     socialLogin: {
         paddingHorizontal: heightp(25),
+        paddingTop: heightp(40),
     },
     LoginBtn: {
         width: '55%',

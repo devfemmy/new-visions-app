@@ -216,4 +216,8 @@ export default class HomePageService {
         const res = await baseAxios.post('/verifyAccount', data)
         return res?.data || res
     }
+    static async completeData(data) {
+        const res = await baseAxios.post('/completeData', data)
+        return res?.data || res
+    }
 }

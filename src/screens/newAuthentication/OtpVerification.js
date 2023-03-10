@@ -35,7 +35,7 @@ function OtpVerification() {
             if (res.code === 200) {
                 console.log('response', res)
                 showLoadingSpinner(false)
-                // navigation.navigate('OtpVerification')
+                navigation.navigate('RegisterUserData')
             } else {
                 showLoadingSpinner(false)
                 alert(res.message)

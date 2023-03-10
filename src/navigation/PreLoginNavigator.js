@@ -21,6 +21,8 @@ import { CardStyleInterpolators } from '@react-navigation/stack'
 import colors from '../helpers/colors'
 import Login from '../screens/newAuthentication/login'
 import OtpVerification from '../screens/newAuthentication/OtpVerification'
+import RegisterUserData from '../screens/newAuthentication/RegisterUserData'
+import RegisterStages from '../screens/newAuthentication/RegisterStages'
 
 const Stack = createNativeStackNavigator()
 
@@ -78,6 +80,24 @@ const PreLoginNavigator = () => {
             <Stack.Screen
                 name="OtpVerification"
                 component={OtpVerification}
+                options={() => ({
+                    headerShown: true,
+                    title: '',
+                    headerLeft: backRight,
+                })}
+            />
+            <Stack.Screen
+                name="RegisterUserData"
+                component={RegisterUserData}
+                options={() => ({
+                    headerShown: true,
+                    title: '',
+                    headerLeft: backRight,
+                })}
+            />
+            <Stack.Screen
+                name="RegisterStages"
+                component={RegisterStages}
                 options={() => ({
                     headerShown: true,
                     title: '',

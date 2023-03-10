@@ -14,8 +14,8 @@ const English = {
     ForgotPassword: 'Forgot Password?',
     CreateANewAccount: 'Create A New Account',
 
-    ContinueWithGoogle: 'Login with Google',
-    ContinueWithApple: 'Login with Apple',
+    // ContinueWithGoogle: 'Login with Google',
+    // ContinueWithApple: 'Login with Apple',
 
     // Forgot Password
     EnterYourEmailToRestYourPassword: 'Enter your Email to reset your Password',
@@ -379,6 +379,9 @@ const English = {
     DiscoverNewVisions: 'Discover New Visions',
     CreateANewAccount2: 'Create A New Account',
     PleaseAddVerificationCode: 'Please add verification code',
+    ContinueWithGoogle: 'Continue with google',
+    ContinueWithApple: 'Continue with Apple ID',
+    AccountType: 'Account type',
 }
 
 export default English
