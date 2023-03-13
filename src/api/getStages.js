@@ -5,14 +5,14 @@ export const getStages = ({ setIsLoading, setStages }) => {
   setIsLoading(true);
   axios
     .post(
-      'https://newvisions.sa/api/getStages', // URL
+      'https://mo.visionsplus.net/api/getStages', // URL
       {},
       {
         // config
         headers: {
           'Content-Type': 'application/json',
           'Acess-Control-Allow-Origin': '*',
-          Authorization: `Bearer ${Global.AuthenticationToken}`,
+          // Authorization: `Bearer ${Global.AuthenticationToken}`,
           Accept: 'application/json',
         },
       }

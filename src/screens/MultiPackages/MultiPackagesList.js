@@ -30,7 +30,7 @@ export default function MultiPackagesList({ route, navigation }) {
     const [multiPackages, setMultiPackages] = useState([])
     function getMultiPackages(params) {
         axios
-            .post('https://newvisions.sa/api/getMultiPackages', {
+            .post('https://mo.visionsplus.net/api/getMultiPackages', {
                 stage_id: route.params.stage_id,
             })
             .then((response) => {
@@ -79,7 +79,7 @@ export default function MultiPackagesList({ route, navigation }) {
     const shareDetails = async (item) => {
         try {
             const result = await Share.share({
-                url: 'https://newvisions.sa/multi_package/' + item.id,
+                url: 'https://mo.visionsplus.net/multi_package/' + item.id,
             })
             if (result.action === Share.sharedAction) {
                 if (result.activityType) {

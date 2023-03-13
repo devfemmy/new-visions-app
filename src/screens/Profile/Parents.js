@@ -16,7 +16,7 @@ export default function Parents({ navigation }) {
     const getParents = (value) => {
         //showLoadingSpinner(true);
         axios
-            .post('https://newvisions.sa/api/getUserParents', {})
+            .post('https://mo.visionsplus.net/api/getUserParents', {})
             .then((response) => {
                 if (
                     response != undefined &&
@@ -53,7 +53,7 @@ export default function Parents({ navigation }) {
 
     function ApproveParent(item) {
         axios
-            .post('https://newvisions.sa/api/approveParentRequest', {
+            .post('https://mo.visionsplus.net/api/approveParentRequest', {
                 request_id: item.id,
             })
             .then((response) => {
@@ -88,7 +88,7 @@ export default function Parents({ navigation }) {
 
     function disApproveParent(item) {
         axios
-            .post('https://newvisions.sa/api/disapproveParentRequest', {
+            .post('https://mo.visionsplus.net/api/disapproveParentRequest', {
                 request_id: item.id,
             })
             .then((response) => {

@@ -2,7 +2,7 @@ import {axios} from 'axios';
 import Global from '../../Global';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://www.newvisions.sa/api/',
+  baseURL: 'https://mo.visionsplus.net/api/',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -13,7 +13,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async config => {
     if (Global.AuthenticationToken) {
-      config.headers.authorization = `Bearer ${Global.AuthenticationToken}`;
+      // config.headers.authorization = `Bearer ${Global.AuthenticationToken}`;
     }
     return config;
   },

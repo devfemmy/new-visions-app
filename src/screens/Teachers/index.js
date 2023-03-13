@@ -204,7 +204,7 @@ const Teachers = () => {
                     headers: {
                         'Content-Type': 'application/json',
                         'Acess-Control-Allow-Origin': '*',
-                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
                         version: 3,
@@ -276,7 +276,7 @@ const Teachers = () => {
                     headers: {
                         'Content-Type': 'application/json',
                         'Acess-Control-Allow-Origin': '*',
-                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
                         version: 3,
@@ -347,7 +347,7 @@ const Teachers = () => {
                     headers: {
                         'Content-Type': 'application/json',
                         'Acess-Control-Allow-Origin': '*',
-                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
                         version: 3,

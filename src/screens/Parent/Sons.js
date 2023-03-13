@@ -45,7 +45,7 @@ export default function Sons({ navigation }) {
         //alert(searchMail);
         showLoadingSpinner(true)
         axios
-            .post('https://newvisions.sa/api/addNewChild', {
+            .post('https://mo.visionsplus.net/api/addNewChild', {
                 email: searchMail,
             })
             .then((response) => {
@@ -88,7 +88,7 @@ export default function Sons({ navigation }) {
     const getChildren = (value) => {
         //showLoadingSpinner(true);
         axios
-            .post('https://newvisions.sa/api/getUserChildren', {})
+            .post('https://mo.visionsplus.net/api/getUserChildren', {})
             .then((response) => {
                 //alert(response.data.code);
                 if (

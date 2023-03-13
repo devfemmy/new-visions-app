@@ -5,7 +5,7 @@ export const subscribeToMultiPackage = async ({ subscribeData, setLoading }) => 
   setLoading(true);
   try {
     const response = await axios.post(
-      'https://newvisions.sa/api/subscribeToMultiPackage',
+      'https://mo.visionsplus.net/api/subscribeToMultiPackage',
       subscribeData,
       {
         headers: {

@@ -6,7 +6,7 @@ export const subscribeOneLesson = async ({ subscribeData, setLoading }) => {
   setLoading(true);
   try {
     const response = await axios.post(
-      'https://newvisions.sa/api/subscribeToOneLesson',
+      'https://mo.visionsplus.net/api/subscribeToOneLesson',
       subscribeData,
       {
         headers: {

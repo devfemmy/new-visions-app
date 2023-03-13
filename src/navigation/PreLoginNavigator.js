@@ -23,6 +23,7 @@ import Login from '../screens/newAuthentication/login'
 import OtpVerification from '../screens/newAuthentication/OtpVerification'
 import RegisterUserData from '../screens/newAuthentication/RegisterUserData'
 import RegisterStages from '../screens/newAuthentication/RegisterStages'
+import { AuthStackNavigator } from './AuthStackNavigator'
 
 const Stack = createNativeStackNavigator()
 
@@ -104,6 +105,13 @@ const PreLoginNavigator = () => {
                     headerLeft: backRight,
                 })}
             />
+            <Stack.Screen
+                    name="Home"
+                    component={AuthStackNavigator}
+                    options={() => ({
+                        headerShown: false,
+                    })}
+                />
             {/* <Stack.Screen
             name="UserType"
             component={UserType}

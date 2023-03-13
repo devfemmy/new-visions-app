@@ -21,11 +21,11 @@ const errorHandler = (WrappedComponent, axios) => {
                 async (config) => {
                     const authToken = await AsyncStorage.getItem('token')
                     if (authToken != null) {
-                        config.headers.Authorization = 'Bearer ' + authToken
+                        // config.headers.Authorization = 'Bearer ' + authToken
                     }
                     debugger
                     config.baseURL = API_URL_Prod
-                    config.headers.version = '3'
+                    config.headers.version = '4'
                     config.headers.platform =
                         Platform.OS === 'ios' ? 'IOS' : 'Android'
                     config.headers['content-type'] = 'application/json'

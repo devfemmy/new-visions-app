@@ -53,7 +53,7 @@ const Settings = () => {
             <Pressable
                 style={styles.modalDetails}
                 onPress={() => {
-                    navigation.navigate('WebView', {live_url: 'https://newvisions.sa/about_us'})
+                    navigation.navigate('WebView', {live_url: 'https://mo.visionsplus.net/about_us'})
                 }}
             >
                 <View
@@ -84,7 +84,7 @@ const Settings = () => {
             <Pressable
                 style={styles.modalDetails}
                 onPress={() => {
-                    navigation.navigate('WebView', {live_url: 'https://newvisions.sa/terms_and_conditions'})
+                    navigation.navigate('WebView', {live_url: 'https://mo.visionsplus.net/terms_and_conditions'})
                 }}
             >
                 <View
@@ -115,7 +115,7 @@ const Settings = () => {
             <Pressable
                 style={styles.modalDetails}
                 onPress={() => {
-                    navigation.navigate('WebView', {live_url: 'https://newvisions.sa/contact_us'})
+                    navigation.navigate('WebView', {live_url: 'https://mo.visionsplus.net/contact_us'})
                 }}
             >
                 <View

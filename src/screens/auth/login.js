@@ -154,7 +154,7 @@ function Login() {
     const submitLogin = (values) => {
         showLoadingSpinner(true)
         axios
-            .post('https://newvisions.sa/api/login', {
+            .post('https://mo.visionsplus.net/api/login', {
                 email: values.email,
                 password: values.password,
             })

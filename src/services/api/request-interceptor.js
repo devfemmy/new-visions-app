@@ -8,8 +8,7 @@ export const reqInterceptor = async (req) => {
     req.headers.Accept = 'application/json'
     req.headers.version = 4
     if (token) {
-        console.log('token', token)
-        req.headers.Authorization = `Bearer ${token}`
+        // req.headers.Authorization = `Bearer ${token}`
         req.headers.lang = I18n.locale
     }
     return req

@@ -6,7 +6,7 @@ export const checkCoupon = ({ code, setCouponIsLoading, setCouponData }) => {
   setCouponIsLoading(true);
   axios
     .post(
-      'https://newvisions.sa/api/checkCoupon', // URL
+      'https://mo.visionsplus.net/api/checkCoupon', // URL
       {
         code,
       },
@@ -15,7 +15,7 @@ export const checkCoupon = ({ code, setCouponIsLoading, setCouponData }) => {
         headers: {
           'Content-Type': 'application/json',
           'Acess-Control-Allow-Origin': '*',
-          Authorization: `Bearer ${Global.AuthenticationToken}`,
+          // Authorization: `Bearer ${Global.AuthenticationToken}`,
           Accept: 'application/json',
         },
       }

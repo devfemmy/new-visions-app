@@ -9,13 +9,13 @@ export const restoreSubscription = async ({ billNumber, setIsLoading }) => {
     .then(() => {
       axios
         .post(
-          'https://newvisions.sa/api/restoreSubscription',
+          'https://mo.visionsplus.net/api/restoreSubscription',
           { bill_number: billNumber },
           {
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
-              Authorization: `Bearer ${Global.AuthenticationToken}`,
+              // Authorization: `Bearer ${Global.AuthenticationToken}`,
             },
           }
         )

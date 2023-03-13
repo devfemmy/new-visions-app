@@ -16,8 +16,8 @@ export const API_URL_Prod =
   "https://www.newvisions.sa/api/";
 
 // fetch header
-export const createHeader = (token) => {
-  let headers = new Headers();
-  if (token) headers.append("Authorization", `Bearer ${token}`);
-  return headers;
-};
+// export const createHeader = (token) => {
+//   let headers = new Headers();
+//   if (token) headers.append("Authorization", `Bearer ${token}`);
+//   return headers;
+// };

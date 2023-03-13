@@ -60,15 +60,13 @@ const Home = () => {
     // const stagesArray = data?.homeData?.stages
     // const teachersArray = data?.homeData?.teachers
     // const videoId = data?.homeData?.video
-    console.log('Video gangangaab ====>', videoId)
-
     // console.log('packages on home page', data)
 
     const [packages, setPackages] = useState([])
     //
     const [searchText, setSearchText] = useState('')
     const [sons, setSons] = useState([])
-    const [loadingContent, setLoadingContent] = useState(true)
+    const [loadingContent, setLoadingContent] = useState(false)
     //
     const [refreshing, setRefreshing] = useState(false)
     //
@@ -76,9 +74,9 @@ const Home = () => {
     //
     function getPackages(params) {
         axios
-            .post('https://newvisions.sa/api/getPackages', {})
+            .post('https://mo.visionsplus.net/api/getPackages', {})
             .then((response) => {
-                console.log('success message xxxxx', response)
+                console.log('success message xxxxx', response.data)
                 if (
                     response != undefined &&
                     response.data != undefined &&
@@ -91,7 +89,7 @@ const Home = () => {
                         showLoadingSpinner(false)
                         console.log(packages)
                     } else if (response?.data?.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        // alert('This Account is Logged in from another Device.')
                         onLogout()
                         showLoadingSpinner(false)
                     } else if (response?.data?.code == 407) {
@@ -127,7 +125,7 @@ const Home = () => {
                 // setVideoId(data?.video)
                 // console.log('================================>', data)
             } else {
-                alert('This Account is Logged in from another Device.')
+                // alert('This Account is Logged in from another Device.')
                 onLogout()
                 // return
             }
@@ -151,8 +149,9 @@ const Home = () => {
     const getChildren = (value) => {
         //showLoadingSpinner(true);
         axios
-            .post('https://newvisions.sa/api/getUserChildren', {})
+            .post('https://mo.visionsplus.net/api/getUserChildren', {})
             .then((response) => {
+                console.log('home response', response.data)
                 //alert(response.data.code);
                 if (
                     response != undefined &&
@@ -163,9 +162,8 @@ const Home = () => {
                         const data = response.data.data
                         setSons(data)
                         setLoadingContent(false)
-                        console.log(sons)
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        // alert('This Account is Logged in from another Device.')
                         onLogout()
                     } else {
                         showLoadingSpinner(false)
@@ -198,7 +196,6 @@ const Home = () => {
                 const payload = {
                     token: fcmtoken,
                 }
-                console.log('e plemnty ooooo', payload)
                 try {
                     const res = await HomePageService.postNotificationData(
                         payload

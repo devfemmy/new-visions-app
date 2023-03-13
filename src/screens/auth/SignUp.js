@@ -291,7 +291,7 @@ function Registration({ navigation }) {
                                             }}
                                             onPress={() => {
                                                 Linking.openURL(
-                                                    'https://newvisions.sa/terms_and_conditions'
+                                                    'https://mo.visionsplus.net/terms_and_conditions'
                                                 )
                                             }}
                                         >

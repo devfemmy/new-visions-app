@@ -5,13 +5,13 @@ export const privateLessonPaymentSuccess = async ({ subscribeData, setLoading })
   setLoading(true);
   try {
     const response = await axios.post(
-      'https://newvisions.sa/api/privateCoursePaySuccess',
+      'https://mo.visionsplus.net/api/privateCoursePaySuccess',
       subscribeData,
       {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          Authorization: `Bearer ${Global.AuthenticationToken}`,
+          // Authorization: `Bearer ${Global.AuthenticationToken}`,
         },
       }
     );

@@ -13,7 +13,7 @@ export default function Landing({ navigation }) {
     const [focusPar, setFocusPar] = useState(false)
 
     const discoverClicked = () => {
-        navigation.navigate('Login')
+        navigation.navigate('Home')
     }
     const createClicked = () => {
         navigation.navigate('Login')
