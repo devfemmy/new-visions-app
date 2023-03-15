@@ -42,7 +42,7 @@ export default function PackagesList({ route, navigation }) {
                         showLoadingSpinner(false)
                         return response
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {

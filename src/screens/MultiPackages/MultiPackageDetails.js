@@ -1,3 +1,5 @@
+/* eslint-disable no-lonely-if */
+/* eslint-disable no-console */
 /* eslint-disable no-else-return */
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
@@ -82,7 +84,7 @@ export default function MultiPackageDetails({ route }) {
                         setDescription(data)
                         showLoadingSpinner(false)
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {
@@ -151,33 +153,38 @@ export default function MultiPackageDetails({ route }) {
         }
     }
     const subscribeMultiPackage = (value) => {
-        //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        if (value === 'parent') {
-            console.log('her')
-            navigation.navigate('ParentSub', {
-                uniqueId,
-                type: 2,
-                lesson_id: '',
-                day_id: '',
-            })
-        } else {
-            console.log('student')
-            if (!iap_activation || Platform.OS === 'android') {
-                subscribeExternal()
+        const userToken = Global.AuthenticationToken;
+        if (userToken === '' || userToken === null) {
+            console.log('RUNNING THIS')
+            navigation.navigate('LoginModal', {name: 'modal'})
+        }else {
+            if (value === 'parent') {
+                console.log('her')
+                navigation.navigate('ParentSub', {
+                    uniqueId,
+                    type: 2,
+                    lesson_id: '',
+                    day_id: '',
+                })
             } else {
-                const subscriptionInfo = {
-                    billNumber: 'ios_bill',
-                    paymentFor: 'Multipackage',
-                    lessonId: '1258',
-                    subjectId: 12345,
-                    price: 200,
+                console.log('student')
+                if (!iap_activation || Platform.OS === 'android') {
+                    subscribeExternal()
+                } else {
+                    const subscriptionInfo = {
+                        billNumber: 'ios_bill',
+                        paymentFor: 'Multipackage',
+                        lessonId: '1258',
+                        subjectId: 12345,
+                        price: 200,
+                    }
+                    deviceStorage
+                        .saveDataToDevice({
+                            key: 'subscriptionInfo',
+                            value: subscriptionInfo,
+                        })
+                        .then(() => requestPurchase({ sku: iapId }))
                 }
-                deviceStorage
-                    .saveDataToDevice({
-                        key: 'subscriptionInfo',
-                        value: subscriptionInfo,
-                    })
-                    .then(() => requestPurchase({ sku: iapId }))
             }
         }
     }

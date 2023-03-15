@@ -54,7 +54,7 @@ const ChooseStudyDate = () => {
                 console.log('guides days', data)
                 setData(data)
             } else {
-                alert('This Account is Logged in from another Device.')
+                console.log('account is logged in another device')
                 onLogout()
                 // return
             }

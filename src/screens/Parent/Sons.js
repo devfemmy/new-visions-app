@@ -62,7 +62,7 @@ export default function Sons({ navigation }) {
                         console.log(sons)
                     } else if (response.data.code == 403) {
                         //alert(11);
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {
@@ -102,7 +102,7 @@ export default function Sons({ navigation }) {
                         setLoadingContent(false)
                         console.log(sons)
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                     } else {
                         showLoadingSpinner(false)

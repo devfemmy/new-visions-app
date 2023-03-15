@@ -86,7 +86,7 @@ const FazaSubscription = () => {
                 setData(data?.info[0])
                 setOptions(data?.teachers)
             } else {
-                alert('This Account is Logged in from another Device.')
+                console.log('account is logged in another device')
                 onLogout()
                 // return
             }

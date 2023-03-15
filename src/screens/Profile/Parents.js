@@ -29,7 +29,7 @@ export default function Parents({ navigation }) {
                         setLoadingContent(false)
                         console.log(parents)
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                     } else {
                         showLoadingSpinner(false)
@@ -68,7 +68,7 @@ export default function Parents({ navigation }) {
                         getParents()
                         console.log(parents)
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                     } else {
                         showLoadingSpinner(false)
@@ -102,7 +102,7 @@ export default function Parents({ navigation }) {
                         setLoadingContent(true)
                         getParents()
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                     } else {
                         showLoadingSpinner(false)

@@ -80,6 +80,15 @@ const PreLoginNavigator = () => {
                 })}
             />
             <Stack.Screen
+                name="LoginModal"
+                component={Login}
+                options={() => ({
+                headerShown: false,
+                presentation: 'modal',
+                // cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                })}
+            />
+            <Stack.Screen
                 name="OtpVerification"
                 component={OtpVerification}
                 options={() => ({

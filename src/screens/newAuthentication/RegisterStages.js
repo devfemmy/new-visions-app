@@ -44,7 +44,7 @@ function RegisterStages() {
                 setStagesArray(data)
             } else {
                 showLoadingSpinner(false)
-                // alert('This Account is Logged in from another Device.')
+                // console.log('account is logged in another device')
             }
             return res
         } catch (err) {
@@ -65,7 +65,7 @@ function RegisterStages() {
                 setLoading(false)
                 setLevelsArray(data)
             } else {
-                // alert('This Account is Logged in from another Device.')
+                // console.log('account is logged in another device')
                 // onLogout()
                 // return
             }

@@ -46,7 +46,7 @@ export default function MultiPackagesList({ route, navigation }) {
                         showLoadingSpinner(false)
                         console.log(multiPackages)
                     } else if (response.data.code == 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                         showLoadingSpinner(false)
                     } else {

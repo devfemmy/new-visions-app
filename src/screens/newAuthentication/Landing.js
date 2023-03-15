@@ -16,7 +16,7 @@ export default function Landing({ navigation }) {
         navigation.navigate('Home')
     }
     const createClicked = () => {
-        navigation.navigate('Login')
+        navigation.navigate('Login', {name: 'Login'})
     }
     return (
         <>

@@ -76,7 +76,7 @@ const PrivateLessonSubscription = () => {
                 )
                 if (res.code === 403) {
                     setLoading(false)
-                    alert('This Account is Logged in from another Device.')
+                    console.log('account is logged in another device')
                     onLogout()
                 } else {
                     const data = res?.data

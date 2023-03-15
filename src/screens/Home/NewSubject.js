@@ -58,7 +58,7 @@ const HomeSubject = () => {
                 setLevelDatas(data)
                 // console.log('wwwwwwwwww data zooooooooooooooom', data)
             } else {
-                alert('This Account is Logged in from another Device.')
+                console.log('account is logged in another device')
                 onLogout()
                 // return
             }

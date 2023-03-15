@@ -89,7 +89,7 @@ const Home = () => {
                         showLoadingSpinner(false)
                         console.log(packages)
                     } else if (response?.data?.code == 403) {
-                        // alert('This Account is Logged in from another Device.')
+                        // console.log('account is logged in another device')
                         onLogout()
                         showLoadingSpinner(false)
                     } else if (response?.data?.code == 407) {
@@ -125,7 +125,7 @@ const Home = () => {
                 // setVideoId(data?.video)
                 console.log('================================>', data)
             } else {
-                // alert('This Account is Logged in from another Device.')
+                // console.log('account is logged in another device')
                 onLogout()
                 // return
             }
@@ -163,7 +163,7 @@ const Home = () => {
                         setSons(data)
                         setLoadingContent(false)
                     } else if (response.data.code == 403) {
-                        // alert('This Account is Logged in from another Device.')
+                        // console.log('account is logged in another device')
                         onLogout()
                     } else {
                         showLoadingSpinner(false)

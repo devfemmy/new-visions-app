@@ -4,6 +4,7 @@ import { I18nManager } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid'
 import RNRestart from 'react-native-restart'
+import Global from '../../Global'
 
 export const AppContext = React.createContext({
     user: null,
@@ -77,6 +78,7 @@ export class AppState extends React.Component {
 
     onLogout = () => {
         console.log('onLogout => ')
+        Global.AuthenticationToken = '' || null;
         this.setState({ user: null }, () => AsyncStorage.removeItem('user'))
     }
 

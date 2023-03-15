@@ -2,7 +2,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 import * as Yup from 'yup'
 import i18n from 'i18n-js'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 //
 import colors from '../../../helpers/colors'
 import defaultStyles from '../../../helpers/styles'
@@ -20,7 +20,10 @@ const validateLoginForm = Yup.object().shape({
 })
 
 function LoginForm({ submitLogin, onAppleButtonPress, signInGoogle }) {
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const route = useRoute();
+    const {name} = route.params;
+    console.log('name', name);
     return (
         <View style={styles.container}>
             <AppForm

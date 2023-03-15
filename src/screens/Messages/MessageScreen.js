@@ -85,7 +85,7 @@ class MessageScreen extends Component {
             try {
                 const res = await HomePageService.getMessageById(payload)
                 if (res.code === 403) {
-                    alert('This Account is Logged in from another Device.')
+                    console.log('account is logged in another device')
                     onLogout()
                 } else {
                     const data = res?.data[0]
@@ -146,7 +146,7 @@ class MessageScreen extends Component {
                 })
                 .then((response) => {
                     if (response?.data.code === 403) {
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         onLogout()
                     } else {
                         const data = response?.data
@@ -193,7 +193,7 @@ class MessageScreen extends Component {
                         this.setState({
                             isLoading: true,
                         })
-                        alert('This Account is Logged in from another Device.')
+                        console.log('account is logged in another device')
                         // onLogOut()
                         // return
                     } else if (response.data.code === 403) {

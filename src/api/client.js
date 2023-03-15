@@ -37,7 +37,7 @@ export const setInterceptors = (axios) => {
                 response.data.code != undefined
             ) {
                 if (response.data.code == 403) {
-                    alert('This Account is Logged in from another Device.')
+                    // console.log('account is logged in another device')
                     return response
                 } else if (response.data.code == 402) {
                     alert(

@@ -73,7 +73,7 @@ const TeacherProfile = () => {
                 // Global.UserType = ''
                 // Global.UserGender = ''
                 // LoggedIn = false
-                alert('This Account is Logged in from another Device.')
+                console.log('account is logged in another device')
                 onLogOut()
                 // return
             } else {

@@ -12,12 +12,14 @@ import Lottie from '../../components/Lottie'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { AppContext } from '../../context/AppState'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
 import I18n from 'i18n-js'
+import Global from '../../../Global'
 
 function OtpVerification() {
-    const { showLoadingSpinner, loadingSpinner } = useContext(AppContext)
+    const { showLoadingSpinner, loadingSpinner, onLogin } = useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
     const route = useRoute()
@@ -36,7 +38,12 @@ function OtpVerification() {
                 console.log('response', res)
                 showLoadingSpinner(false)
                 navigation.navigate('RegisterUserData')
-            } else {
+            }else if (res.code === 201){
+                console.log('response login', res.data)
+                setUserInfo(res?.data)
+            }
+            
+            else {
                 showLoadingSpinner(false)
                 alert(res.message)
             }
@@ -46,7 +53,19 @@ function OtpVerification() {
             showLoadingSpinner(false)
         }
     }
-
+    const setUserInfo = (userData) => {
+        showLoadingSpinner(false)
+        console.log('yoooooooooooo', userData.remember_token)
+        Global.AuthenticationToken = userData.remember_token
+        AsyncStorage.setItem('token', Global.AuthenticationToken)
+        Global.Image = userData.image
+        Global.UserName = userData.first_name + userData.last_name
+        Global.phone = userData.phone
+        Global.email = userData.email
+        Global.UserId = userData.id
+        Global.UserType = String(userData.type)
+        onLogin(userData, true)
+    }
     return (
         <>
             {!loadingSpinner && (
