@@ -27,7 +27,7 @@ const HeaderTitle = ({ text, icon, pressed, deleteIcon }) => {
                         onPress={pressed}
                         style={styles.text}
                         fontSize={heightp(13)}
-                        text={i18n.t('SeeAll')}
+                        text={i18n.t('SeeMore')}
                     />
                     {lang === 'ar' ? (
                         <ArabIcon width={11} height={11} />
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     text: {
         marginRight: heightp(5),
         fontSize: heightp(13),
+        fontWeight: '200',
     },
     lowerBox: {
         justifyContent: 'center',

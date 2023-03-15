@@ -382,6 +382,10 @@ const English = {
     ContinueWithGoogle: 'Continue with google',
     ContinueWithApple: 'Continue with Apple ID',
     AccountType: 'Account type',
+    SeeMore: 'see more',
+    FirstPrimary: 'First Primary',
+    FirstMiddle: 'First Middle',
+    FirstSecondary: 'First Secondary',
 }
 
 export default English

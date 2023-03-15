@@ -389,6 +389,10 @@ const Arabic = {
     ContinueWithGoogle: 'تسجيل الدخول عبر جوجل',
     ContinueWithApple: 'تسجيل الدخول عبر ابل',
     AccountType: 'نوع الحساب',
+    SeeMore: 'مشاهدة المزيد',
+    FirstPrimary: 'اول ابتدائي',
+    FirstMiddle: 'اول متوسط',
+    FirstSecondary: 'أول ثانوي',
 }
 
 export default Arabic

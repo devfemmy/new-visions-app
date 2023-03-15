@@ -67,6 +67,7 @@ import AllMeasurementQuiz from '../screens/AllMeasurementQuiz'
 import AllMeasurementQuizQuestion from '../screens/AllMeasurementQuiz/AllMeasurementQuizQuestion'
 import AllMeasurementStage from '../screens/AllMeasurementQuiz/AllMeasurementStage'
 import GuideProfile from '../screens/StudentGuide/GuideProfile'
+import HomeSubject from '../screens/Home/NewSubject'
 const MainStack = createStackNavigator()
 
 export const PostLoginNavigator = () => {
@@ -544,6 +545,15 @@ export const PostLoginNavigator = () => {
                 <MainStack.Screen
                     name="GuideProfile"
                     component={GuideProfile}
+                    options={({ route }) => ({
+                        headerShown: true,
+                        title: route.params.title,
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="HomeSubject"
+                    component={HomeSubject}
                     options={({ route }) => ({
                         headerShown: true,
                         title: route.params.title,

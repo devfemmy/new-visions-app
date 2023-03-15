@@ -123,7 +123,7 @@ const Home = () => {
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                 setVidId(id)
                 // setVideoId(data?.video)
-                // console.log('================================>', data)
+                console.log('================================>', data)
             } else {
                 // alert('This Account is Logged in from another Device.')
                 onLogout()
@@ -177,7 +177,7 @@ const Home = () => {
             })
             .catch((error) => {
                 showLoadingSpinner(false)
-                alert(error)
+                // alert(error)
             })
     }
 
@@ -284,7 +284,9 @@ const Home = () => {
                 <Text
                     style={styles.headerText}
                     fontSize={heightp(21)}
-                    text={`${i18n.t('HelloUsername')} ${user?.first_name}`}
+                    text={`${i18n.t('HelloUsername')} ${
+                        user ? user?.first_name : ''
+                    }`}
                 />
             </View>
             <View style={[styles.containerFlex]}>
