@@ -21,8 +21,8 @@ import AppTextInput from '../../components/TextInput'
 
 function RegisterUserData() {
     const { showLoadingSpinner, loadingSpinner } = useContext(AppContext)
-    const sourceLot = require('../../assets/Lottie/green-dots-loader.json');
-    let emailFlag = false;
+    const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
+    let emailFlag = false
     const navigation = useNavigation()
     const route = useRoute()
     const { user } = route.params
@@ -37,7 +37,8 @@ function RegisterUserData() {
     const registerUserDataFunc = async () => {
         if (
             firstName !== '' &&
-            lastName !== '' && emailAddress !== '' &&
+            lastName !== '' &&
+            emailAddress !== '' &&
             accountType !== '' &&
             gender !== ''
         ) {
@@ -139,7 +140,11 @@ function RegisterUserData() {
                                         autoCorrect={false}
                                         name="emailAddress"
                                         keyboardType="default"
-                                        labelName={emailFlag ? I18n.t('Email') : I18n.t('PhoneNumber')}
+                                        labelName={
+                                            !emailFlag
+                                                ? I18n.t('Email')
+                                                : I18n.t('PhoneNumber')
+                                        }
                                     />
                                     {/* account type */}
                                     <View
@@ -394,6 +399,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         marginTop: heightp(50),
+        marginBottom: heightp(50),
     },
     loginBtnView: {
         flex: 1,

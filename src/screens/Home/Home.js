@@ -151,7 +151,7 @@ const Home = () => {
         axios
             .post('https://mo.visionsplus.net/api/getUserChildren', {})
             .then((response) => {
-                console.log('home response', response.data)
+                // console.log('home response', response.data)
                 //alert(response.data.code);
                 if (
                     response != undefined &&

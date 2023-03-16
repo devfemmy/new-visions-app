@@ -29,7 +29,8 @@ function RegisterStages() {
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
     const route = useRoute()
-    const { firstName, lastName, accountType, gender, user } = route.params
+    const { firstName, lastName, accountType, gender, emailAddress, user } =
+        route.params
     const [loading, setLoading] = useState(false)
     const [stagesArray, setStagesArray] = useState([])
     const [levelsArray, setLevelsArray] = useState([])
@@ -122,6 +123,8 @@ function RegisterStages() {
                     ? '4'
                     : '2',
             level_id: currentLevel,
+            email: emailAddress,
+            phone: user?.phone,
         }
         console.log('payload', payload)
         try {

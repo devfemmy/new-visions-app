@@ -65,6 +65,7 @@ const Home = () => {
     const bg_colors_ = ['#C9EB7AC7', '#FFC59B8A', '#D3E9FF', '#917CFF88']
 
     const data = useAppSelector((state) => state.homePage)
+    console.log('=============> user in the home page', user)
 
     const [packages, setPackages] = useState([])
     //
@@ -177,7 +178,7 @@ const Home = () => {
         axios
             .post('https://mo.visionsplus.net/api/getUserChildren', {})
             .then((response) => {
-                console.log('home response', response.data)
+                // console.log('home response', response.data)
                 //alert(response.data.code);
                 if (
                     response != undefined &&
@@ -234,7 +235,7 @@ const Home = () => {
                 }
             }
             postNotificationToken()
-            getChildren()
+            // getChildren()
         })
         return unsubscribe
     }, [navigation, dispatch])

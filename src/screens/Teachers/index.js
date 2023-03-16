@@ -351,7 +351,7 @@ const Teachers = () => {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 3,
+                        version: 4,
                     },
                 }
             )
