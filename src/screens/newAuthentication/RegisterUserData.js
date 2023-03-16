@@ -9,24 +9,26 @@ import {
     Pressable,
     Alert,
 } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import I18n from 'i18n-js'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { heightp, widthp } from '../../utils/responsiveDesign'
 import Lottie from '../../components/Lottie'
-import { useNavigation, useRoute } from '@react-navigation/native'
 import { AppContext } from '../../context/AppState'
 import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
-import I18n from 'i18n-js'
 import AppTextInput from '../../components/TextInput'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function RegisterUserData() {
     const { showLoadingSpinner, loadingSpinner } = useContext(AppContext)
-    const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
+    const sourceLot = require('../../assets/Lottie/green-dots-loader.json');
+    let emailFlag = false;
     const navigation = useNavigation()
     const route = useRoute()
     const { user } = route.params
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
+    const [emailAddress, setEmailAddress] = useState('')
     const [accountType, setAccountType] = useState('student')
     const [gender, setGender] = useState('male')
 
@@ -35,16 +37,17 @@ function RegisterUserData() {
     const registerUserDataFunc = async () => {
         if (
             firstName !== '' &&
-            lastName !== '' &&
+            lastName !== '' && emailAddress !== '' &&
             accountType !== '' &&
             gender !== ''
         ) {
             navigation.navigate('RegisterStages', {
-                user: user,
-                firstName: firstName,
-                lastName: lastName,
-                accountType: accountType,
-                gender: gender,
+                user,
+                firstName,
+                emailAddress,
+                lastName,
+                accountType,
+                gender,
             })
         } else if (firstName === '' && lastName === '') {
             Alert.alert(
@@ -122,6 +125,21 @@ function RegisterUserData() {
                                         name="lastName"
                                         keyboardType="default"
                                         labelName={I18n.t('LastName')}
+                                    />
+                                    <AppTextInput
+                                        onChangeText={setEmailAddress}
+                                        style={{
+                                            width: '100%',
+                                            paddingHorizontal: heightp(20),
+                                            fontSize: heightp(20),
+                                            color: '#000',
+                                        }}
+                                        //
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        name="emailAddress"
+                                        keyboardType="default"
+                                        labelName={emailFlag ? I18n.t('Email') : I18n.t('PhoneNumber')}
                                     />
                                     {/* account type */}
                                     <View
