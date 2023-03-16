@@ -44,7 +44,7 @@ export default function Parents({ navigation }) {
                         console.log(parents)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                     } else {
                         showLoadingSpinner(false)
                         Toast.show({
@@ -67,9 +67,23 @@ export default function Parents({ navigation }) {
 
     function ApproveParent(item) {
         axios
-            .post('https://mo.visionsplus.net/api/approveParentRequest', {
-                request_id: item.id,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/approveParentRequest',
+                {
+                    request_id: item.id,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&
@@ -83,7 +97,7 @@ export default function Parents({ navigation }) {
                         console.log(parents)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                     } else {
                         showLoadingSpinner(false)
                         Toast.show({
@@ -131,7 +145,7 @@ export default function Parents({ navigation }) {
                         getParents()
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                     } else {
                         showLoadingSpinner(false)
                         Toast.show({

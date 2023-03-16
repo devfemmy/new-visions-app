@@ -94,7 +94,7 @@ export default function Attendance({}) {
                         console.log(attendance)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)
@@ -143,7 +143,7 @@ export default function Attendance({}) {
                         console.log(attendance)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)
@@ -195,7 +195,7 @@ export default function Attendance({}) {
                         Alert.alert(response.data.message)
                     } else if (response.data.code === 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)

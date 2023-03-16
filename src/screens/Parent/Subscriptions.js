@@ -73,7 +73,7 @@ export default function Subscriptions({}) {
                         console.log('typeof', data)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)

@@ -77,7 +77,7 @@ export default function Sons({ navigation }) {
                     } else if (response.data.code == 403) {
                         //alert(11);
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)
@@ -117,7 +117,7 @@ export default function Sons({ navigation }) {
                         console.log(sons)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
-                        onLogout()
+                        // onLogout()
                     } else {
                         showLoadingSpinner(false)
                         Toast.show({
