@@ -11,9 +11,9 @@ export const DATE_FORMAT_HEJRI = "iYYYY/iMM/iDD";
 
 // Api URL
 export const API_URL_UAT =
-"https://www.newvisions.sa/api/";
+"https://mo.visionsplus.net/api/";
 export const API_URL_Prod =
-  "https://www.newvisions.sa/api/";
+  "https://mo.visionsplus.net/api/";
 
 // fetch header
 // export const createHeader = (token) => {

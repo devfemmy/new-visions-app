@@ -62,7 +62,7 @@ function Registration({ navigation }) {
     const SignupAPI = (values) => {
         setLoading(true)
         axios
-            .post('https://www.newvisions.sa/api/signup', {
+            .post('https://mo.visionsplus.net/api/signup', {
                 first_name: values.firstName,
                 last_name: values.lastName,
                 email: values.email,

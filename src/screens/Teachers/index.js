@@ -198,7 +198,7 @@ const Teachers = () => {
 
         axios
             .post(
-                `https://www.newvisions.sa/api/getTeachers?page=${page}`, // URL
+                `https://mo.visionsplus.net/api/getTeachers?page=${page}`, // URL
                 payload, // data
                 {
                     // config
@@ -270,7 +270,7 @@ const Teachers = () => {
 
         axios
             .post(
-                `https://www.newvisions.sa/api/getTeachers?page=${1}`, // URL
+                `https://mo.visionsplus.net/api/getTeachers?page=${1}`, // URL
                 payload, // data
                 {
                     // config
@@ -341,7 +341,7 @@ const Teachers = () => {
         }
         axios
             .post(
-                `https://www.newvisions.sa/api/getTeachers?page=${Page}`, // URL
+                `https://mo.visionsplus.net/api/getTeachers?page=${Page}`, // URL
                 payload, // data
                 {
                     // config

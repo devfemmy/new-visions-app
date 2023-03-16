@@ -32,7 +32,7 @@ export default function ResetPassword({ route, navigation }) {
     const VerifyAPI = () => {
         setLoading(true)
         axios
-            .post('https://www.newvisions.sa/api/resetPassword', {
+            .post('https://mo.visionsplus.net/api/resetPassword', {
                 phone:
                     route.params.phone != undefined ? route.params.phone : null,
                 password: PasswordInput,
