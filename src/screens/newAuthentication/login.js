@@ -158,6 +158,7 @@ function Login() {
         try {
             const res = await HomePageService.login(payload)
             console.log('response', res)
+            navigation.goBack()
             if (res.code === 200) {
                 showLoadingSpinner(false)
                 navigation.navigate('OtpVerification', {
