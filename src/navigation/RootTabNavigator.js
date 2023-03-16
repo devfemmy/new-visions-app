@@ -28,7 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const RootBottomTab = createBottomTabNavigator()
 let session: ''
 export const RootBottomTabNavigator = () => {
-    const { lang } = useContext(AppContext)
+    const { lang, user } = useContext(AppContext)
     const navigation = useNavigation()
     const HeaderLeft = () => (
         <TouchableOpacity
@@ -147,17 +147,17 @@ export const RootBottomTabNavigator = () => {
                 name={I18n.t('Subjects')}
                 component={Subject}
             />
-
+            {user &&
             <RootBottomTab.Screen
-                options={{
-                    headerShown: true,
-                    headerLeft: backRight,
-                    unmountOnBlur: true,
-                }}
-                name={I18n.t('Teachers')}
-                component={Teachers}
-            />
-
+            options={{
+                headerShown: true,
+                headerLeft: backRight,
+                unmountOnBlur: true,
+            }}
+            name={I18n.t('Teachers')}
+            component={Teachers}
+        />  
+            }
             {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{
@@ -183,7 +183,8 @@ export const RootBottomTabNavigator = () => {
                     component={Conversation}
                 />
             )}
-            <RootBottomTab.Screen
+            {user && 
+                <RootBottomTab.Screen
                 options={{
                     headerShown: session?.type == 4,
                     headerLeft: backRight,
@@ -193,7 +194,8 @@ export const RootBottomTabNavigator = () => {
                 component={
                     session?.type == 4 ? ParentProfileNavigator : Profile
                 }
-            />
+            />  
+            }
         </RootBottomTab.Navigator>
     )
 }
