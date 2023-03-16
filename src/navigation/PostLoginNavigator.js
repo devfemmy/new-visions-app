@@ -77,8 +77,8 @@ export const PostLoginNavigator = () => {
     const backRight = () => (
         <TouchableOpacity
             onPress={() => {
-                // navigation.goBack()
-                navigation.dispatch(popAction)
+                navigation.goBack()
+                // navigation.dispatch(popAction)
             }}
             style={{
                 marginHorizontal: 16,
