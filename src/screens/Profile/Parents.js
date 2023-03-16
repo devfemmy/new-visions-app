@@ -9,14 +9,28 @@ import ParentListItem from './ParentListItem'
 import Toast from 'react-native-toast-message'
 
 export default function Parents({ navigation }) {
-    const { onLogout, showLoadingSpinner } = useContext(AppContext)
+    const { onLogout, showLoadingSpinner, lang } = useContext(AppContext)
     const [parents, setParents] = useState([])
     const [loadingContent, setLoadingContent] = useState(true)
 
     const getParents = (value) => {
         //showLoadingSpinner(true);
         axios
-            .post('https://mo.visionsplus.net/api/getUserParents', {})
+            .post(
+                'https://mo.visionsplus.net/api/getUserParents',
+                {},
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&
@@ -88,9 +102,23 @@ export default function Parents({ navigation }) {
 
     function disApproveParent(item) {
         axios
-            .post('https://mo.visionsplus.net/api/disapproveParentRequest', {
-                request_id: item.id,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/disapproveParentRequest',
+                {
+                    request_id: item.id,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&

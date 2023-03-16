@@ -18,12 +18,12 @@ import { useLayoutEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { heightp } from '../../utils/responsiveDesign'
 
-export default function Attendance({ }) {
+export default function Attendance({}) {
     const navigation = useNavigation()
     const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
         useContext(AppContext)
-    const route = useRoute();
-    const {userStatus} = route.params;
+    const route = useRoute()
+    const { userStatus } = route.params
 
     const months = [
         'January',
@@ -61,11 +61,25 @@ export default function Attendance({ }) {
     function getAttendance(id, month) {
         console.log('params', route.params.id)
         axios
-            .post('https://mo.visionsplus.net/api/getAttendance', {
-                // child_id: route.params.id,
-                month: monthNo,
-                year: yearNo,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/getAttendance',
+                {
+                    // child_id: route.params.id,
+                    month: monthNo,
+                    year: yearNo,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&
@@ -96,11 +110,25 @@ export default function Attendance({ }) {
     function getChildAttendance(id, month) {
         console.log('getting child attendance', route.params.id)
         axios
-            .post('https://mo.visionsplus.net/api/getChildAttendance', {
-                child_id: route.params.id,
-                month: monthNo,
-                year: yearNo,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/getChildAttendance',
+                {
+                    child_id: route.params.id,
+                    month: monthNo,
+                    year: yearNo,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&
@@ -132,11 +160,25 @@ export default function Attendance({ }) {
     function attendanceVideoClicked(id, type) {
         showLoadingSpinner(true)
         axios
-            .post('https://mo.visionsplus.net/api/getRecords', {
-                // child_id: route.params.id,
-                attendance_id: id.toString(),
-                type: type.toString(),
-            })
+            .post(
+                'https://mo.visionsplus.net/api/getRecords',
+                {
+                    // child_id: route.params.id,
+                    attendance_id: id.toString(),
+                    type: type.toString(),
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 showLoadingSpinner(false)
                 console.log(response.data)
@@ -252,10 +294,9 @@ export default function Attendance({ }) {
         //setMonthNo(monthNo);
         if (userStatus === 'Parent') {
             getChildAttendance()
-        }else {
-        getAttendance(route.params.id, monthNo)
+        } else {
+            getAttendance(route.params.id, monthNo)
         }
-       
     }, [monthNo])
 
     useLayoutEffect(() => {

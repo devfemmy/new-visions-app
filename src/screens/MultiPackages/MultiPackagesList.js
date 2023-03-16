@@ -30,9 +30,23 @@ export default function MultiPackagesList({ route, navigation }) {
     const [multiPackages, setMultiPackages] = useState([])
     function getMultiPackages(params) {
         axios
-            .post('https://mo.visionsplus.net/api/getMultiPackages', {
-                stage_id: route.params.stage_id,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/getMultiPackages',
+                {
+                    stage_id: route.params.stage_id,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&

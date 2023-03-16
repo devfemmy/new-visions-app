@@ -42,10 +42,24 @@ export default function Subscriptions({}) {
 
     function getSonSubscriptions() {
         axios
-            .post('https://mo.visionsplus.net/api/getUserSubscription', {
-                // getChildPayments (this can be returned whenever the child API wants to be used)
-                // child_id: route.params.id,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/getUserSubscription',
+                {
+                    // getChildPayments (this can be returned whenever the child API wants to be used)
+                    // child_id: route.params.id,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&

@@ -45,9 +45,23 @@ export default function Sons({ navigation }) {
         //alert(searchMail);
         showLoadingSpinner(true)
         axios
-            .post('https://mo.visionsplus.net/api/addNewChild', {
-                email: searchMail,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/addNewChild',
+                {
+                    email: searchMail,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 if (
                     response != undefined &&
@@ -126,12 +140,11 @@ export default function Sons({ navigation }) {
     }, [])
 
     function SubscriptionsClicked(item) {
-        navigation.navigate('Subscriptions', {id: item})
+        navigation.navigate('Subscriptions', { id: item })
     }
 
-
     function AttendanceClicked(item) {
-        navigation.navigate('Attendance', {id: item, userStatus: 'Parent'})
+        navigation.navigate('Attendance', { id: item, userStatus: 'Parent' })
     }
 
     const renderItem = ({ item }) => (

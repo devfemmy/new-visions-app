@@ -63,9 +63,23 @@ export default function MultiPackageDetails({ route }) {
 
     async function getMultiPackageDetails(params) {
         return await axios
-            .post('https://mo.visionsplus.net/api/getMultiPackageDetails', {
-                package_id: item?.id,
-            })
+            .post(
+                'https://mo.visionsplus.net/api/getMultiPackageDetails',
+                {
+                    package_id: item?.id,
+                },
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 4,
+                    },
+                }
+            )
             .then((response) => {
                 console.log('response', response?.data)
                 if (
@@ -153,11 +167,11 @@ export default function MultiPackageDetails({ route }) {
         }
     }
     const subscribeMultiPackage = (value) => {
-        const userToken = Global.AuthenticationToken;
+        const userToken = Global.AuthenticationToken
         if (userToken === '' || userToken === null) {
             console.log('RUNNING THIS')
-            navigation.navigate('LoginModal', {name: 'modal'})
-        }else {
+            navigation.navigate('LoginModal', { name: 'modal' })
+        } else {
             if (value === 'parent') {
                 console.log('her')
                 navigation.navigate('ParentSub', {
