@@ -19,7 +19,8 @@ import I18n from 'i18n-js'
 import Global from '../../../Global'
 
 function OtpVerification() {
-    const { showLoadingSpinner, loadingSpinner, onLogin } = useContext(AppContext)
+    const { showLoadingSpinner, loadingSpinner, onLogin } =
+        useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
     const route = useRoute()
@@ -37,13 +38,13 @@ function OtpVerification() {
             if (res.code === 200) {
                 console.log('response', res)
                 showLoadingSpinner(false)
-                navigation.navigate('RegisterUserData')
-            }else if (res.code === 201){
+                navigation.navigate('RegisterUserData', {
+                    user: res?.data,
+                })
+            } else if (res.code === 201) {
                 console.log('response login', res.data)
                 setUserInfo(res?.data)
-            }
-            
-            else {
+            } else {
                 showLoadingSpinner(false)
                 alert(res.message)
             }

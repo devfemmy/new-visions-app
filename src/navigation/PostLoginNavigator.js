@@ -7,7 +7,7 @@ import {
 import i18n from 'i18n-js'
 
 import { TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useNavigation } from '@react-navigation/native'
 import colors from '../helpers/colors'
 import { heightp } from '../utils/responsiveDesign'
 import DrawerNavigator from './DrawerNavigator'
@@ -73,9 +73,13 @@ const MainStack = createStackNavigator()
 export const PostLoginNavigator = () => {
     const navigation = useNavigation()
     const { lang } = useContext(AppContext)
+    const popAction = StackActions.pop(0)
     const backRight = () => (
         <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+                // navigation.goBack()
+                navigation.dispatch(popAction)
+            }}
             style={{
                 marginHorizontal: 16,
             }}

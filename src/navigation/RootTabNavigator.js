@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useNavigation } from '@react-navigation/native'
 import I18n from 'i18n-js'
 import Teachers from '../screens/Teachers'
 import Calendar from '../screens/Calendar'
@@ -59,7 +59,9 @@ export const RootBottomTabNavigator = () => {
     )
     const backRight = () => (
         <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+                navigation.goBack()
+            }}
             style={{
                 marginHorizontal: 16,
             }}

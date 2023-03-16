@@ -20,10 +20,10 @@ const validateLoginForm = Yup.object().shape({
 })
 
 function LoginForm({ submitLogin, onAppleButtonPress, signInGoogle }) {
-    const navigation = useNavigation();
-    const route = useRoute();
-    const {name} = route.params;
-    console.log('name', name);
+    const navigation = useNavigation()
+    const route = useRoute()
+    // const { name } = route.params
+    // console.log('name', name)
     return (
         <View style={styles.container}>
             <AppForm
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         paddingTop: heightp(40),
     },
     LoginBtn: {
-        width: '55%',
+        width: '60%',
         flexDirection: 'row',
         height: 47.5,
         justifyContent: 'center',

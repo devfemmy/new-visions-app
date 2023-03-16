@@ -33,6 +33,7 @@ import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
 import { AppContext } from '../../context/AppState'
 import Global from '../../../Global'
+import NavigateLogin from '../../components/NewAuthReRoute/NavigateLogin'
 
 const ResponseCache = {}
 const Teachers = () => {
@@ -42,7 +43,7 @@ const Teachers = () => {
     const route = useRoute()
     const [isLoading, setIsLoading] = useState(false)
     // const [page, setPage] = useState(0)
-    const { lang, onLogOut } = useContext(AppContext)
+    const { lang, onLogOut, user } = useContext(AppContext)
     const [dataForTeachers, setDataForTeachers] = useState([])
 
     // New use state
@@ -359,151 +360,175 @@ const Teachers = () => {
                 setCurrentSerachValue(SerachValue)
                 SetresponseValue(response.data?.data?.data || [])
                 ResponseCache[
-                    JSON.stringify({ page: Page, search: SerachValue })
+                    JSON.stringify({
+                        page: Page,
+                        search: SerachValue,
+                    })
                 ] = response.data?.data?.data || []
                 setMaxPages(Math.ceil(response.data.data.total / 10))
                 GetExtraCache()
             })
             .catch((error) => {
                 console.log('errrrrrorrrrr wey dey here', error)
-                alert(error)
+                // alert(error)
             })
     }, [Page, LoadedPage])
 
     return (
-        <View style={styles.containerFlex}>
-            <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
-                <View style={{ marginBottom: 15 }}>
-                    <SearchBar
-                        placeholder={I18n.t('SearchTeachers')}
-                        value={searchText}
-                        onChangeText={(text) => {
-                            setSearchText(text)
-                            setSerachValue(text)
-                            SearchExtraCache(text)
-                        }}
-                        style={[styles.searchBar, { color: colors.dark }]}
-                        inputStyle={{ color: colors.dark }}
-                        iconColor={colors.dark}
-                    />
-                    <RNText
-                        style={[
-                            styles.subItemText2,
-                            {
-                                // color: colors.primary,
-                                textAlign: 'center',
-                                paddingTop: heightp(10),
-                                paddingBottom: heightp(5),
-                            },
-                        ]}
+        <>
+            {user ? (
+                <View style={styles.containerFlex}>
+                    <ScrollView
+                        ref={scrollRef}
+                        showsVerticalScrollIndicator={false}
                     >
-                        {I18n.t('ChooseTeacherNew')}
-                    </RNText>
-                </View>
-                <FlatList
-                    nestedScrollEnabled={true}
-                    keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => (
-                        <View
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
+                        <View style={{ marginBottom: 15 }}>
+                            <SearchBar
+                                placeholder={I18n.t('SearchTeachers')}
+                                value={searchText}
+                                onChangeText={(text) => {
+                                    setSearchText(text)
+                                    setSerachValue(text)
+                                    SearchExtraCache(text)
+                                }}
+                                style={[
+                                    styles.searchBar,
+                                    { color: colors.dark },
+                                ]}
+                                inputStyle={{ color: colors.dark }}
+                                iconColor={colors.dark}
+                            />
+                            <RNText
+                                style={[
+                                    styles.subItemText2,
+                                    {
+                                        // color: colors.primary,
+                                        textAlign: 'center',
+                                        paddingTop: heightp(10),
+                                        paddingBottom: heightp(5),
+                                    },
+                                ]}
+                            >
+                                {I18n.t('ChooseTeacherNew')}
+                            </RNText>
+                        </View>
+                        <FlatList
+                            nestedScrollEnabled={true}
+                            keyboardShouldPersistTaps="handled"
+                            contentContainerStyle={styles.flatlistContent}
+                            ListEmptyComponent={() => (
+                                <View
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Text text={I18n.t('NoData')} />
+                                </View>
+                            )}
+                            // ListFooterComponent={renderFooter}
+                            data={responseValue}
+                            showsVerticalScrollIndicator={false}
+                            onEndReachedThreshold={0.5}
+                            renderItem={({ item }) => (
+                                <>
+                                    <TeachersDetailCard
+                                        // subjectDetails
+                                        viewProfile={() =>
+                                            navigateTeachersProfile(item)
+                                        }
+                                        pressed={() =>
+                                            navigateSubjectsDetails(item)
+                                        }
+                                        city={item?.city?.name}
+                                        gender={item?.gender}
+                                        rates_count={item?.rates_count}
+                                        ratings={
+                                            item?.rate === 0 ? null : item?.rate
+                                        }
+                                        uri={`${IMAGEURL}/${item?.image}`}
+                                        image={item?.image}
+                                        contents={`${item?.first_name} ${item?.last_name}`}
+                                    />
+                                </>
+                            )}
+                            initialNumToRender={10}
+                            maxToRenderPerBatch={10}
+                            windowSize={20}
+                            // onEndReached={onEndReached}
+                            onMomentumScrollBegin={() => {
+                                setOnEndReachedCalledDuringMomentum(false)
+                            }}
+                        />
+                    </ScrollView>
+                    <View
+                        style={{
+                            flexDirection:
+                                lang === 'ar' ? 'row-reverse' : 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            marginVertical: 10,
+                            // marginBottom: heightp(10),
+                        }}
+                    >
+                        <TouchableOpacity
+                            disabled={!PagePrev}
+                            onPress={() => {
+                                GetTeachersPrev()
                             }}
                         >
-                            <Text text={I18n.t('NoData')} />
-                        </View>
-                    )}
-                    // ListFooterComponent={renderFooter}
-                    data={responseValue}
-                    showsVerticalScrollIndicator={false}
-                    onEndReachedThreshold={0.5}
-                    renderItem={({ item }) => (
-                        <>
-                            <TeachersDetailCard
-                                // subjectDetails
-                                viewProfile={() =>
-                                    navigateTeachersProfile(item)
-                                }
-                                pressed={() => navigateSubjectsDetails(item)}
-                                city={item?.city?.name}
-                                gender={item?.gender}
-                                rates_count={item?.rates_count}
-                                ratings={item?.rate === 0 ? null : item?.rate}
-                                uri={`${IMAGEURL}/${item?.image}`}
-                                image={item?.image}
-                                contents={`${item?.first_name} ${item?.last_name}`}
-                            />
-                        </>
-                    )}
-                    initialNumToRender={10}
-                    maxToRenderPerBatch={10}
-                    windowSize={20}
-                    // onEndReached={onEndReached}
-                    onMomentumScrollBegin={() => {
-                        setOnEndReachedCalledDuringMomentum(false)
-                    }}
-                />
-            </ScrollView>
-            <View
-                style={{
-                    flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    marginVertical: 10,
-                    // marginBottom: heightp(10),
-                }}
-            >
-                <TouchableOpacity
-                    disabled={!PagePrev}
-                    onPress={() => {
-                        GetTeachersPrev()
-                    }}
-                >
-                    <View
-                        style={{
-                            backgroundColor: PagePrev ? colors.primary : 'grey',
-                            borderRadius: 5,
-                            paddingHorizontal: 40,
-                            paddingVertical: 8,
-                        }}
-                    >
+                            <View
+                                style={{
+                                    backgroundColor: PagePrev
+                                        ? colors.primary
+                                        : 'grey',
+                                    borderRadius: 5,
+                                    paddingHorizontal: 40,
+                                    paddingVertical: 8,
+                                }}
+                            >
+                                <Text
+                                    text={I18n.t('Previous')}
+                                    style={{ color: 'white' }}
+                                />
+                            </View>
+                        </TouchableOpacity>
                         <Text
-                            text={I18n.t('Previous')}
-                            style={{ color: 'white' }}
+                            text={` ${I18n.t('Page')} ${Page}`}
+                            style={{ color: 'black' }}
                         />
-                    </View>
-                </TouchableOpacity>
-                <Text
-                    text={` ${I18n.t('Page')} ${Page}`}
-                    style={{ color: 'black' }}
-                />
 
-                <TouchableOpacity
-                    disabled={Page === MaxPages}
-                    onPress={() => {
-                        GetTeachersNext()
-                    }}
-                >
-                    <View
-                        style={{
-                            backgroundColor:
-                                MaxPages === Page
-                                    ? 'rgb(59,63,73)'
-                                    : 'yellowgreen',
-                            borderRadius: 5,
-                            paddingHorizontal: 40,
-                            paddingVertical: 8,
-                        }}
-                    >
-                        <Text
-                            text={I18n.t('Next')}
-                            style={{ color: 'white' }}
-                        />
+                        <TouchableOpacity
+                            disabled={Page === MaxPages}
+                            onPress={() => {
+                                GetTeachersNext()
+                            }}
+                        >
+                            <View
+                                style={{
+                                    backgroundColor:
+                                        MaxPages === Page
+                                            ? 'rgb(59,63,73)'
+                                            : 'yellowgreen',
+                                    borderRadius: 5,
+                                    paddingHorizontal: 40,
+                                    paddingVertical: 8,
+                                }}
+                            >
+                                <Text
+                                    text={I18n.t('Next')}
+                                    style={{ color: 'white' }}
+                                />
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                </TouchableOpacity>
-            </View>
-        </View>
+                </View>
+            ) : (
+                <>
+                    <NavigateLogin />
+                </>
+            )}
+        </>
     )
 }
 const styles = StyleSheet.create({

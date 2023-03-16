@@ -20,13 +20,16 @@ import { WINDOW_WIDTH } from '../../helpers/common'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Text } from '../../components/common'
 import ContentLoader, { Rect } from 'react-content-loader/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import Global from '../../../Global'
 
 function RegisterStages() {
-    const { showLoadingSpinner, loadingSpinner } = useContext(AppContext)
+    const { showLoadingSpinner, loadingSpinner, onLogin, lang } =
+        useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
     const route = useRoute()
-    const { firstName, lastName, accountType, gender } = route.params
+    const { firstName, lastName, accountType, gender, user } = route.params
     const [loading, setLoading] = useState(false)
     const [stagesArray, setStagesArray] = useState([])
     const [levelsArray, setLevelsArray] = useState([])
@@ -40,7 +43,7 @@ function RegisterStages() {
             const data = res?.data
             if (res.code === 200) {
                 showLoadingSpinner(false)
-                console.log('data fetched here in get stages', data)
+                // console.log('data fetched here in get stages', data)
                 setStagesArray(data)
             } else {
                 showLoadingSpinner(false)
@@ -75,9 +78,33 @@ function RegisterStages() {
         }
     }
 
+    const setUserInfoToken = (userData) => {
+        showLoadingSpinner(false)
+        Global.AuthenticationToken = userData.remember_token
+        AsyncStorage.setItem(
+            'token',
+            Global.AuthenticationToken || userData.remember_token
+        )
+        // console.log('userData.remember_token', userData.remember_token)
+    }
+    const setUserInfo = (userData) => {
+        showLoadingSpinner(false)
+        // console.log('yoooooooooooo', userData.remember_token)
+        Global.AuthenticationToken = userData.remember_token
+        AsyncStorage.setItem('token', Global.AuthenticationToken)
+        Global.Image = userData.image
+        Global.UserName = userData.first_name + userData.last_name
+        Global.phone = userData.phone
+        Global.email = userData.email
+        Global.UserId = userData.id
+        Global.UserType = String(userData.type)
+        onLogin(userData, true)
+    }
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             getStages()
+            setUserInfoToken(user)
         })
         return unsubscribe
     }, [navigation])
@@ -96,11 +123,13 @@ function RegisterStages() {
                     : '2',
             level_id: currentLevel,
         }
+        console.log('payload', payload)
         try {
             const res = await HomePageService.completeData(payload)
             if (res.code === 200) {
                 console.log('response', res)
                 showLoadingSpinner(false)
+                setUserInfo(user)
                 // navigation.navigate('OtpVerification')
             } else {
                 showLoadingSpinner(false)
@@ -268,6 +297,11 @@ function RegisterStages() {
                                                                                         fontWeight:
                                                                                             '500',
                                                                                         paddingTop: 5,
+                                                                                        textAlign:
+                                                                                            lang !==
+                                                                                            'ar'
+                                                                                                ? 'left'
+                                                                                                : 'right',
                                                                                     }}
                                                                                     text={
                                                                                         item?.name

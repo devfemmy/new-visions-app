@@ -390,7 +390,7 @@ const Arabic = {
     ContinueWithApple: 'تسجيل الدخول عبر ابل',
     AccountType: 'نوع الحساب',
     SeeMore: 'مشاهدة المزيد',
-    FirstPrimary: 'اول ابتدائي',
+    FirstPrimary: 'ابتدائي',
     FirstMiddle: 'اول متوسط',
     FirstSecondary: 'أول ثانوي',
 }

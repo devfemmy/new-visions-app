@@ -383,9 +383,9 @@ const English = {
     ContinueWithApple: 'Continue with Apple ID',
     AccountType: 'Account type',
     SeeMore: 'see more',
-    FirstPrimary: 'First Primary',
-    FirstMiddle: 'First Middle',
-    FirstSecondary: 'First Secondary',
+    FirstPrimary: 'Primary',
+    FirstMiddle: 'Middle',
+    FirstSecondary: 'Secondary',
 }
 
 export default English

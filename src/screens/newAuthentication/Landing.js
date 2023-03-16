@@ -5,6 +5,7 @@ import colors from '../../helpers/colors'
 import { AppContext } from '../../context/AppState'
 import Toast from 'react-native-toast-message'
 import LandingImage from '../../assets/img/landing-img.svg'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Landing({ navigation }) {
     const { changeLang, lang, showLoadingSpinner } = useContext(AppContext)
@@ -16,7 +17,8 @@ export default function Landing({ navigation }) {
         navigation.navigate('Home')
     }
     const createClicked = () => {
-        navigation.navigate('Login', {name: 'Login'})
+        AsyncStorage.clear()
+        navigation.navigate('Login', { name: 'Login' })
     }
     return (
         <>

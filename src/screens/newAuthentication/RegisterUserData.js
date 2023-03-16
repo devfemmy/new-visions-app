@@ -17,19 +17,20 @@ import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
 import I18n from 'i18n-js'
 import AppTextInput from '../../components/TextInput'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function RegisterUserData() {
     const { showLoadingSpinner, loadingSpinner } = useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
     const route = useRoute()
-    // const { phoneNumber } = route.params
+    const { user } = route.params
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [accountType, setAccountType] = useState('student')
     const [gender, setGender] = useState('male')
 
-    console.log('the data here in the RegisterUserData', firstName, lastName)
+    // console.log('the data here in the RegisterUserData', firstName, lastName)
 
     const registerUserDataFunc = async () => {
         if (
@@ -39,6 +40,7 @@ function RegisterUserData() {
             gender !== ''
         ) {
             navigation.navigate('RegisterStages', {
+                user: user,
                 firstName: firstName,
                 lastName: lastName,
                 accountType: accountType,
@@ -68,248 +70,285 @@ function RegisterUserData() {
         <>
             {!loadingSpinner && (
                 <View style={styles.container}>
-                    <ScrollView
-                        keyboardShouldPersistTaps="handled"
-                        showsVerticalScrollIndicator={false}
+                    <KeyboardAwareScrollView
+                        keyboardDismissMode="on-drag"
+                        contentContainerStyle={{
+                            flex: 1,
+                        }}
                     >
-                        <View style={styles.center}>
-                            <Image
-                                style={styles.logo}
-                                source={require('../../assets/img/logo-New.png')}
-                            />
-                            {/* input */}
-                            <View
-                                style={{
-                                    flex: 1,
-                                    paddingHorizontal: widthp(20),
-                                    paddingTop: heightp(10),
-                                }}
-                            >
-                                <AppTextInput
-                                    onChangeText={setFirstName}
-                                    style={{
-                                        width: '100%',
-                                        paddingHorizontal: heightp(20),
-                                        fontSize: heightp(20),
-                                        color: '#000',
-                                    }}
-                                    //
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    name="firstName"
-                                    keyboardType="default"
-                                    labelName={I18n.t('FirstName')}
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <View style={styles.center}>
+                                <Image
+                                    style={styles.logo}
+                                    source={require('../../assets/img/logo-New.png')}
                                 />
-                                <AppTextInput
-                                    onChangeText={setLastName}
+                                {/* input */}
+                                <View
                                     style={{
-                                        width: '100%',
-                                        paddingHorizontal: heightp(20),
-                                        fontSize: heightp(20),
-                                        color: '#000',
+                                        flex: 1,
+                                        paddingHorizontal: widthp(20),
+                                        paddingTop: heightp(10),
                                     }}
-                                    //
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    name="lastName"
-                                    keyboardType="default"
-                                    labelName={I18n.t('LastName')}
-                                />
-                                {/* account type */}
-                                <View style={{ flex: 1, marginVertical: 10 }}>
-                                    <Text style={styles.label}>
-                                        {I18n.t('AccountType')}
-                                    </Text>
-                                    <View
+                                >
+                                    <AppTextInput
+                                        onChangeText={setFirstName}
                                         style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-between',
-                                            height: 45,
+                                            width: '100%',
+                                            paddingHorizontal: heightp(20),
+                                            fontSize: heightp(20),
+                                            color: '#000',
                                         }}
+                                        //
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        name="firstName"
+                                        keyboardType="default"
+                                        labelName={I18n.t('FirstName')}
+                                    />
+                                    <AppTextInput
+                                        onChangeText={setLastName}
+                                        style={{
+                                            width: '100%',
+                                            paddingHorizontal: heightp(20),
+                                            fontSize: heightp(20),
+                                            color: '#000',
+                                        }}
+                                        //
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        name="lastName"
+                                        keyboardType="default"
+                                        labelName={I18n.t('LastName')}
+                                    />
+                                    {/* account type */}
+                                    <View
+                                        style={{ flex: 1, marginVertical: 10 }}
                                     >
-                                        <Pressable
-                                            style={
-                                                accountType === 'student'
-                                                    ? styles.checkedContainer
-                                                    : styles.uncheckedContainer
-                                            }
-                                            onPress={() => {
-                                                setAccountType('student')
+                                        <Text style={styles.label}>
+                                            {I18n.t('AccountType')}
+                                        </Text>
+                                        <View
+                                            style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-between',
+                                                height: 45,
                                             }}
                                         >
-                                            {accountType === 'student' ? (
-                                                <View style={styles.checkedDot}>
+                                            <Pressable
+                                                style={
+                                                    accountType === 'student'
+                                                        ? styles.checkedContainer
+                                                        : styles.uncheckedContainer
+                                                }
+                                                onPress={() => {
+                                                    setAccountType('student')
+                                                }}
+                                            >
+                                                {accountType === 'student' ? (
                                                     <View
                                                         style={
-                                                            styles.checkWhite
+                                                            styles.checkedDot
+                                                        }
+                                                    >
+                                                        <View
+                                                            style={
+                                                                styles.checkWhite
+                                                            }
+                                                        />
+                                                    </View>
+                                                ) : (
+                                                    <View
+                                                        style={
+                                                            styles.uncheckedDot
                                                         }
                                                     />
-                                                </View>
-                                            ) : (
-                                                <View
-                                                    style={styles.uncheckedDot}
-                                                />
-                                            )}
-                                            <Text
-                                                style={[
-                                                    styles.label,
-                                                    {
-                                                        color:
-                                                            accountType ===
-                                                            'student'
-                                                                ? 'rgba(255, 255, 255, 1)'
-                                                                : 'rgba(67, 72, 84, 1)',
-                                                    },
-                                                ]}
+                                                )}
+                                                <Text
+                                                    style={[
+                                                        styles.label,
+                                                        {
+                                                            color:
+                                                                accountType ===
+                                                                'student'
+                                                                    ? 'rgba(255, 255, 255, 1)'
+                                                                    : 'rgba(67, 72, 84, 1)',
+                                                        },
+                                                    ]}
+                                                >
+                                                    {I18n.t('Student')}
+                                                </Text>
+                                                <View />
+                                            </Pressable>
+                                            <Pressable
+                                                style={
+                                                    accountType === 'parent'
+                                                        ? styles.checkedContainer
+                                                        : styles.uncheckedContainer
+                                                }
+                                                onPress={() => {
+                                                    setAccountType('parent')
+                                                }}
                                             >
-                                                {I18n.t('Student')}
-                                            </Text>
-                                            <View />
-                                        </Pressable>
-                                        <Pressable
-                                            style={
-                                                accountType === 'parent'
-                                                    ? styles.checkedContainer
-                                                    : styles.uncheckedContainer
-                                            }
-                                            onPress={() => {
-                                                setAccountType('parent')
+                                                {accountType === 'parent' ? (
+                                                    <View
+                                                        style={
+                                                            styles.checkedDot
+                                                        }
+                                                    >
+                                                        <View
+                                                            style={
+                                                                styles.checkWhite
+                                                            }
+                                                        />
+                                                    </View>
+                                                ) : (
+                                                    <View
+                                                        style={
+                                                            styles.uncheckedDot
+                                                        }
+                                                    />
+                                                )}
+                                                <Text
+                                                    style={[
+                                                        styles.label,
+                                                        {
+                                                            color:
+                                                                accountType ===
+                                                                'parent'
+                                                                    ? 'rgba(255, 255, 255, 1)'
+                                                                    : 'rgba(67, 72, 84, 1)',
+                                                        },
+                                                    ]}
+                                                >
+                                                    {I18n.t('Parent')}
+                                                </Text>
+                                                <View />
+                                            </Pressable>
+                                        </View>
+                                    </View>
+                                    {/* gender type */}
+                                    <View
+                                        style={{ flex: 1, marginVertical: 10 }}
+                                    >
+                                        <Text style={styles.label}>
+                                            {I18n.t('Gender')}
+                                        </Text>
+                                        <View
+                                            style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-between',
+                                                height: 45,
                                             }}
                                         >
-                                            {accountType === 'parent' ? (
-                                                <View style={styles.checkedDot}>
+                                            <Pressable
+                                                style={
+                                                    gender === 'male'
+                                                        ? styles.checkedContainer
+                                                        : styles.uncheckedContainer
+                                                }
+                                                onPress={() => {
+                                                    setGender('male')
+                                                }}
+                                            >
+                                                {gender === 'male' ? (
                                                     <View
                                                         style={
-                                                            styles.checkWhite
+                                                            styles.checkedDot
+                                                        }
+                                                    >
+                                                        <View
+                                                            style={
+                                                                styles.checkWhite
+                                                            }
+                                                        />
+                                                    </View>
+                                                ) : (
+                                                    <View
+                                                        style={
+                                                            styles.uncheckedDot
                                                         }
                                                     />
-                                                </View>
-                                            ) : (
-                                                <View
-                                                    style={styles.uncheckedDot}
-                                                />
-                                            )}
-                                            <Text
-                                                style={[
-                                                    styles.label,
-                                                    {
-                                                        color:
-                                                            accountType ===
-                                                            'parent'
-                                                                ? 'rgba(255, 255, 255, 1)'
-                                                                : 'rgba(67, 72, 84, 1)',
-                                                    },
-                                                ]}
+                                                )}
+                                                <Text
+                                                    style={[
+                                                        styles.label,
+                                                        {
+                                                            color:
+                                                                gender ===
+                                                                'male'
+                                                                    ? 'rgba(255, 255, 255, 1)'
+                                                                    : 'rgba(67, 72, 84, 1)',
+                                                        },
+                                                    ]}
+                                                >
+                                                    {I18n.t('Male')}
+                                                </Text>
+                                                <View />
+                                            </Pressable>
+                                            <Pressable
+                                                style={
+                                                    gender === 'female'
+                                                        ? styles.checkedContainer
+                                                        : styles.uncheckedContainer
+                                                }
+                                                onPress={() => {
+                                                    setGender('female')
+                                                }}
                                             >
-                                                {I18n.t('Parent')}
-                                            </Text>
-                                            <View />
-                                        </Pressable>
+                                                {gender === 'female' ? (
+                                                    <View
+                                                        style={
+                                                            styles.checkedDot
+                                                        }
+                                                    >
+                                                        <View
+                                                            style={
+                                                                styles.checkWhite
+                                                            }
+                                                        />
+                                                    </View>
+                                                ) : (
+                                                    <View
+                                                        style={
+                                                            styles.uncheckedDot
+                                                        }
+                                                    />
+                                                )}
+                                                <Text
+                                                    style={[
+                                                        styles.label,
+                                                        {
+                                                            color:
+                                                                gender ===
+                                                                'female'
+                                                                    ? 'rgba(255, 255, 255, 1)'
+                                                                    : 'rgba(67, 72, 84, 1)',
+                                                        },
+                                                    ]}
+                                                >
+                                                    {I18n.t('Female')}
+                                                </Text>
+                                                <View />
+                                            </Pressable>
+                                        </View>
                                     </View>
                                 </View>
-                                {/* gender type */}
-                                <View style={{ flex: 1, marginVertical: 10 }}>
-                                    <Text style={styles.label}>
-                                        {I18n.t('Gender')}
-                                    </Text>
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-between',
-                                            height: 45,
-                                        }}
-                                    >
-                                        <Pressable
-                                            style={
-                                                gender === 'male'
-                                                    ? styles.checkedContainer
-                                                    : styles.uncheckedContainer
-                                            }
-                                            onPress={() => {
-                                                setGender('male')
-                                            }}
-                                        >
-                                            {gender === 'male' ? (
-                                                <View style={styles.checkedDot}>
-                                                    <View
-                                                        style={
-                                                            styles.checkWhite
-                                                        }
-                                                    />
-                                                </View>
-                                            ) : (
-                                                <View
-                                                    style={styles.uncheckedDot}
-                                                />
-                                            )}
-                                            <Text
-                                                style={[
-                                                    styles.label,
-                                                    {
-                                                        color:
-                                                            gender === 'male'
-                                                                ? 'rgba(255, 255, 255, 1)'
-                                                                : 'rgba(67, 72, 84, 1)',
-                                                    },
-                                                ]}
-                                            >
-                                                {I18n.t('Male')}
-                                            </Text>
-                                            <View />
-                                        </Pressable>
-                                        <Pressable
-                                            style={
-                                                gender === 'female'
-                                                    ? styles.checkedContainer
-                                                    : styles.uncheckedContainer
-                                            }
-                                            onPress={() => {
-                                                setGender('female')
-                                            }}
-                                        >
-                                            {gender === 'female' ? (
-                                                <View style={styles.checkedDot}>
-                                                    <View
-                                                        style={
-                                                            styles.checkWhite
-                                                        }
-                                                    />
-                                                </View>
-                                            ) : (
-                                                <View
-                                                    style={styles.uncheckedDot}
-                                                />
-                                            )}
-                                            <Text
-                                                style={[
-                                                    styles.label,
-                                                    {
-                                                        color:
-                                                            gender === 'female'
-                                                                ? 'rgba(255, 255, 255, 1)'
-                                                                : 'rgba(67, 72, 84, 1)',
-                                                    },
-                                                ]}
-                                            >
-                                                {I18n.t('Female')}
-                                            </Text>
-                                            <View />
-                                        </Pressable>
+                                <TouchableOpacity
+                                    style={styles.loginBtn}
+                                    onPress={() => registerUserDataFunc()}
+                                >
+                                    <View style={styles.loginBtnView}>
+                                        <Text style={styles.loginText}>
+                                            {I18n.t('Next')}
+                                        </Text>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity
-                                style={styles.loginBtn}
-                                onPress={() => registerUserDataFunc()}
-                            >
-                                <View style={styles.loginBtnView}>
-                                    <Text style={styles.loginText}>
-                                        {I18n.t('Next')}
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
+                        </ScrollView>
+                    </KeyboardAwareScrollView>
                 </View>
             )}
 
@@ -371,14 +410,17 @@ const styles = StyleSheet.create({
         paddingVertical: heightp(10),
     },
     checkedDot: {
-        width: 25,
-        height: '100%',
+        width: 30,
+        height: 30,
         borderRadius: 50,
         padding: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: 'rgba(255, 255, 255, 1)',
     },
     checkWhite: {
-        height: '100%',
+        height: 20,
+        width: 20,
         borderRadius: 50,
         backgroundColor: 'rgba(155, 186, 82, 1)',
     },
@@ -395,7 +437,7 @@ const styles = StyleSheet.create({
     },
     uncheckedDot: {
         width: 25,
-        height: '100%',
+        height: 25,
         borderRadius: 50,
         backgroundColor: 'rgba(217, 217, 217, 1)',
     },

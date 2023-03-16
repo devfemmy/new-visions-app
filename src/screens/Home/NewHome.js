@@ -52,24 +52,19 @@ const Home = () => {
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const [packagesArray, setPackagesArray] = useState(null)
-    const [stagesArray, setStagesArray] = useState(null)
+    const [stagesArray, setStagesArray] = useState([])
     const [teachersArray, setTeachersArray] = useState(null)
     const [subjectsArray, setSubjectsArray] = useState(null)
     const [videoId, setVideoId] = useState(null)
     //
     const [filterModal, setFilterModal] = useState(false)
-    const [filterOption, setFilterOption] = useState(i18n.t('FirstPrimary'))
+    const [filterOption, setFilterOption] = useState({})
     //
     const colors_ = ['#9BBA52', '#F37529', '#59A7F2', '#917CFF']
 
     const bg_colors_ = ['#C9EB7AC7', '#FFC59B8A', '#D3E9FF', '#917CFF88']
 
     const data = useAppSelector((state) => state.homePage)
-    // const packagesArray = data?.homeData?.multi_packages
-    // const stagesArray = data?.homeData?.stages
-    // const teachersArray = data?.homeData?.teachers
-    // const videoId = data?.homeData?.video
-    // console.log('packages on home page', data)
 
     const [packages, setPackages] = useState([])
     //
@@ -80,6 +75,7 @@ const Home = () => {
     const [refreshing, setRefreshing] = useState(false)
     //
     const [vidId, setVidId] = useState('')
+    console.log('stagesArray', filterOption)
     //
     function getPackages(params) {
         axios
@@ -127,7 +123,7 @@ const Home = () => {
             if (res.code === 200) {
                 showLoadingSpinner(false)
                 setPackagesArray(data?.multi_packages)
-                setStagesArray(data?.stages)
+                // setStagesArray(data?.stages)
                 setTeachersArray(data?.teachers)
                 setSubjectsArray(data?.subjects)
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
@@ -138,6 +134,26 @@ const Home = () => {
                 // console.log('account is logged in another device')
                 onLogout()
                 // return
+            }
+            return res
+        } catch (err) {
+            showLoadingSpinner(false)
+        }
+    }
+
+    const getStages = async () => {
+        // showLoadingSpinner(true)
+        try {
+            const res = await HomePageService.getStages()
+            const data = res?.data
+            if (res.code === 200) {
+                showLoadingSpinner(false)
+                // console.log('data fetched here in get stages', data)
+                setStagesArray(data)
+                setFilterOption(data[0])
+            } else {
+                showLoadingSpinner(false)
+                // console.log('account is logged in another device')
             }
             return res
         } catch (err) {
@@ -192,6 +208,8 @@ const Home = () => {
     }
 
     useEffect(() => {
+        getStages()
+
         const unsubscribe = navigation.addListener('focus', () => {
             getData()
             // dispatch(getHomePage())
@@ -300,7 +318,14 @@ const Home = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-            <View style={globalStyles.rowBetween}>
+            <View
+                style={[
+                    globalStyles.rowBetween,
+                    {
+                        flexDirection: lang === 'ar' ? 'row-reverse' : 'row',
+                    },
+                ]}
+            >
                 <Text
                     style={styles.headerText}
                     fontSize={heightp(21)}
@@ -331,7 +356,9 @@ const Home = () => {
                         }}
                         style={styles.text}
                         fontSize={heightp(13)}
-                        text={`${filterOption}`}
+                        text={`${
+                            stagesArray.length > 0 ? filterOption?.name : ''
+                        }`}
                     />
                 </Pressable>
             </View>
@@ -339,75 +366,60 @@ const Home = () => {
             <View style={styles.filterUpperContainer}>
                 <View>
                     {filterModal && (
-                        <View style={styles.filterShadow}>
-                            <Pressable
-                                onPress={() => {
-                                    setFilterOption(i18n.t('FirstPrimary'))
-                                    setFilterModal(!filterModal)
-                                }}
-                                style={styles.filterOptions}
-                            >
-                                <Text
-                                    style={styles.text}
-                                    fontSize={heightp(12)}
-                                    text={`${i18n.t('FirstPrimary')}`}
-                                />
-                                <MaterialCommunityIcons
-                                    name="chevron-down"
-                                    size={20}
-                                    color={'#000'}
-                                    style={{
-                                        transform: [{ rotate: '270deg' }],
-                                    }}
-                                />
-                            </Pressable>
-                            <Pressable
-                                style={styles.filterOptions}
-                                onPress={() => {
-                                    setFilterOption(i18n.t('FirstMiddle'))
-                                    setFilterModal(!filterModal)
-                                }}
-                            >
-                                <Text
-                                    style={styles.text}
-                                    fontSize={heightp(12)}
-                                    text={`${i18n.t('FirstMiddle')}`}
-                                />
-                                <MaterialCommunityIcons
-                                    name="chevron-down"
-                                    size={20}
-                                    color={'#000'}
-                                    style={{
-                                        transform: [{ rotate: '270deg' }],
-                                    }}
-                                />
-                            </Pressable>
-                            <Pressable
-                                style={styles.filterOptions}
-                                onPress={() => {
-                                    setFilterOption(i18n.t('FirstSecondary'))
-                                    setFilterModal(!filterModal)
-                                }}
-                            >
-                                <Text
-                                    style={styles.text}
-                                    fontSize={heightp(12)}
-                                    text={`${i18n.t('FirstSecondary')}`}
-                                />
-                                <MaterialCommunityIcons
-                                    name="chevron-down"
-                                    size={20}
-                                    color={'#000'}
-                                    style={{
-                                        transform: [{ rotate: '270deg' }],
-                                    }}
-                                />
-                            </Pressable>
+                        <View
+                            style={[
+                                styles.filterShadow,
+                                {
+                                    left: lang === 'ar' ? 0 : 200,
+                                    right: lang === 'ar' ? 200 : 0,
+                                },
+                            ]}
+                        >
+                            {stagesArray?.map((item) => {
+                                return (
+                                    <Pressable
+                                        onPress={() => {
+                                            setFilterOption(item)
+                                            setFilterModal(!filterModal)
+                                        }}
+                                        style={[
+                                            styles.filterOptions,
+                                            {
+                                                flexDirection:
+                                                    lang === 'ar'
+                                                        ? 'row-reverse'
+                                                        : 'row',
+                                            },
+                                        ]}
+                                    >
+                                        <Text
+                                            style={styles.text}
+                                            fontSize={heightp(12)}
+                                            text={`${item?.name}`}
+                                        />
+                                        <MaterialCommunityIcons
+                                            name="chevron-down"
+                                            size={20}
+                                            color={'#000'}
+                                            style={{
+                                                transform: [
+                                                    {
+                                                        rotate:
+                                                            lang === 'ar'
+                                                                ? '90deg'
+                                                                : '270deg',
+                                                    },
+                                                ],
+                                            }}
+                                        />
+                                    </Pressable>
+                                )
+                            })}
                         </View>
                     )}
                 </View>
             </View>
-            {filterOption === i18n.t('FirstPrimary') ? (
+            {filterOption?.name === i18n.t('FirstPrimary') ? (
                 <>
                     <View
                         style={[
@@ -461,13 +473,13 @@ const Home = () => {
                                     return (
                                         <Pressable
                                             onPress={() => {
-                                                navigateHomeSubject(item)
+                                                // navigateHomeSubject(item)
                                             }}
                                             style={{
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
                                                 width: heightp(100),
-                                                height: heightp(120),
+                                                height: heightp(130),
                                                 borderRadius: 10,
                                                 marginRight: heightp(20),
                                                 // padding: heightp(15),
@@ -501,11 +513,11 @@ const Home = () => {
                                                         index % colors_.length
                                                     ],
                                                     fontWeight: '900',
-                                                    paddingTop: 5,
+                                                    paddingTop: 2.5,
                                                     textAlign: 'center',
                                                 }}
                                                 text={`${item?.title}`}
-                                                fontSize={heightp(11)}
+                                                fontSize={heightp(10.5)}
                                             />
                                         </Pressable>
                                     )
@@ -559,10 +571,9 @@ const Home = () => {
                                                 flexDirection: 'row',
                                                 justifyContent: 'space-between',
                                                 alignItems: 'center',
-                                                height: WINDOW_HEIGHT * 0.15,
+                                                height: WINDOW_HEIGHT * 0.18,
                                                 borderRadius: 10,
                                                 marginVertical: heightp(10),
-                                                paddingHorizontal: widthp(10),
                                                 paddingHorizontal: widthp(10),
                                                 paddingVertical: heightp(15),
                                                 backgroundColor:
@@ -606,7 +617,10 @@ const Home = () => {
                                                         color: 'rgba(67, 72, 84, 1)',
                                                         fontWeight: '500',
                                                         paddingTop: 5,
-                                                        textAlign: 'center',
+                                                        textAlign:
+                                                            lang !== 'ar'
+                                                                ? 'left'
+                                                                : 'right',
                                                     }}
                                                     text={`${item?.title}`}
                                                     fontSize={heightp(14)}
@@ -731,7 +745,7 @@ const Home = () => {
                                     return (
                                         <Pressable
                                             onPress={() => {
-                                                navigateHomeSubject(item)
+                                                // navigateHomeSubject(item)
                                             }}
                                         >
                                             <FastImage
@@ -833,7 +847,6 @@ const Home = () => {
                             },
                         ]}
                     >
-                        {/* {(Global.UserType == 3 || Global.UserType == 4) && ( */}
                         <Pressable
                             onPress={() => {
                                 navigation.navigate('AllMeasurementStage')
@@ -1228,7 +1241,6 @@ const styles = StyleSheet.create({
         zIndex: 999,
     },
     filterShadow: {
-        left: 200,
         // top: -30,
         width: width * 0.4,
         paddingHorizontal: widthp(20),

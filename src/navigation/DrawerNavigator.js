@@ -33,7 +33,7 @@ const Drawer = createDrawerNavigator()
 let session: ''
 const DrawerNavigator = () => {
     const navigation = useNavigation()
-    const { lang } = useContext(AppContext)
+    const { lang, user } = useContext(AppContext)
     const backRight = () => (
         <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -97,38 +97,40 @@ const DrawerNavigator = () => {
                     <View style={styles.itemList}>
                         <DrawerItemList {...props} />
                     </View>
-                    <TouchableOpacity
-                        onPress={() => {
-                            console.log('log out function')
-                            onLogout()
-                        }}
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'flex-start',
-                            paddingHorizontal: 20,
-                            height: WINDOW_HEIGHT * 0.1,
-                            backgroundColor: colors.white,
-                        }}
-                    >
-                        <Ionicons
-                            name={'log-out'}
-                            size={20}
-                            color={colors.primary}
-                            // style={{ paddingRight: 15 }}
-                        />
-                        <Text
+                    {user && (
+                        <TouchableOpacity
+                            onPress={() => {
+                                console.log('log out function')
+                                onLogout()
+                            }}
                             style={{
-                                ...defaultStyles.text,
-                                fontSize: 14,
-                                color: colors.primary,
-                                fontWeight: '700',
-                                fontStyle: 'normal',
-                                paddingRight: 35,
+                                flexDirection: 'row',
+                                alignItems: 'flex-start',
+                                paddingHorizontal: 20,
+                                height: WINDOW_HEIGHT * 0.1,
+                                backgroundColor: colors.white,
                             }}
                         >
-                            {I18n.t('logout')}
-                        </Text>
-                    </TouchableOpacity>
+                            <Ionicons
+                                name={'log-out'}
+                                size={20}
+                                color={colors.primary}
+                                // style={{ paddingRight: 15 }}
+                            />
+                            <Text
+                                style={{
+                                    ...defaultStyles.text,
+                                    fontSize: 14,
+                                    color: colors.primary,
+                                    fontWeight: '700',
+                                    fontStyle: 'normal',
+                                    paddingRight: 35,
+                                }}
+                            >
+                                {I18n.t('logout')}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
                 </DrawerContentScrollView>
             </View>
         )
@@ -288,24 +290,26 @@ const DrawerNavigator = () => {
                         ),
                     }}
                 /> */}
-                <Drawer.Screen
-                    name={I18n.t('DeleteMembership')}
-                    component={DeleteMembership}
-                    options={{
-                        // headerShown: true,
-                        // headerLeft: backRight,
-                        // unmountOnBlur: true,
-                        // headerTransparent: true,
-                        headerTintColor: colors.black,
-                        drawerIcon: () => (
-                            <MaterialIcons
-                                name={'delete'}
-                                size={20}
-                                color={colors.primary}
-                            />
-                        ),
-                    }}
-                />
+                {user && (
+                    <Drawer.Screen
+                        name={I18n.t('DeleteMembership')}
+                        component={DeleteMembership}
+                        options={{
+                            // headerShown: true,
+                            // headerLeft: backRight,
+                            // unmountOnBlur: true,
+                            // headerTransparent: true,
+                            headerTintColor: colors.black,
+                            drawerIcon: () => (
+                                <MaterialIcons
+                                    name={'delete'}
+                                    size={20}
+                                    color={colors.primary}
+                                />
+                            ),
+                        }}
+                    />
+                )}
                 <Drawer.Screen
                     name={I18n.t('AboutUs')}
                     component={Settings}

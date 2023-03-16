@@ -7,9 +7,10 @@ import {
 import i18n from 'i18n-js'
 
 import { TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useNavigation } from '@react-navigation/native'
 import colors from '../helpers/colors'
 import { heightp } from '../utils/responsiveDesign'
+
 import DrawerNavigator from './DrawerNavigator'
 import Notification from '../screens/Notification/Notification'
 import SubjectDetails from '../screens/SubjectDetails'
@@ -67,14 +68,20 @@ import AllMeasurementQuiz from '../screens/AllMeasurementQuiz'
 import AllMeasurementQuizQuestion from '../screens/AllMeasurementQuiz/AllMeasurementQuizQuestion'
 import AllMeasurementStage from '../screens/AllMeasurementQuiz/AllMeasurementStage'
 import GuideProfile from '../screens/StudentGuide/GuideProfile'
+import HomeSubject from '../screens/Home/NewSubject'
 const MainStack = createStackNavigator()
 
 export const AuthStackNavigator = () => {
     const navigation = useNavigation()
     const { lang } = useContext(AppContext)
+    const popAction = StackActions.pop()
+
     const backRight = () => (
         <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+                // navigation.goBack()
+                navigation.dispatch(popAction)
+            }}
             style={{
                 marginHorizontal: 16,
             }}
@@ -544,6 +551,15 @@ export const AuthStackNavigator = () => {
                 <MainStack.Screen
                     name="GuideProfile"
                     component={GuideProfile}
+                    options={({ route }) => ({
+                        headerShown: true,
+                        title: route.params.title,
+                        headerLeft: backRight,
+                    })}
+                />
+                <MainStack.Screen
+                    name="HomeSubject"
+                    component={HomeSubject}
                     options={({ route }) => ({
                         headerShown: true,
                         title: route.params.title,
