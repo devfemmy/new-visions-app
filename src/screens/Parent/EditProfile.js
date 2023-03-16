@@ -145,7 +145,7 @@ class EditProfile extends Component {
         // setIsLoading(true)
         axios
             .post(
-                'https://www.newvisions.sa/api/editUserProfile', // URL
+                'https://mo.visionsplus.net/api/editUserProfile', // URL
                 data,
                 {
                     // config
@@ -218,7 +218,7 @@ class EditProfile extends Component {
     getUpdatedProfile = ({ lang, onLogin }) => {
         axios
             .get(
-                'https://www.newvisions.sa/api/getUserProfile', // URL
+                'https://mo.visionsplus.net/api/getUserProfile', // URL
                 // data,
                 {
                     // config

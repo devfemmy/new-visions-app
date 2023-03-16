@@ -24,7 +24,7 @@ export default function VerifyAccount({ route, navigation }) {
     const VerifyAPI = () => {
         setLoading(true)
         axios
-            .post('https://www.newvisions.sa/api/verifyAccount', {
+            .post('https://mo.visionsplus.net/api/verifyAccount', {
                 phone: route.params.phone,
                 code: CodeInput,
             })
