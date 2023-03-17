@@ -94,7 +94,7 @@ function RegisterStages() {
         Global.AuthenticationToken = userData.remember_token
         AsyncStorage.setItem('token', Global.AuthenticationToken)
         Global.Image = userData.image
-        Global.UserName = userData.first_name + userData.last_name
+        Global.UserName = firstName + lastName
         Global.phone = userData.phone
         Global.email = userData.email
         Global.UserId = userData.id
@@ -130,9 +130,17 @@ function RegisterStages() {
         try {
             const res = await HomePageService.completeData(payload)
             if (res.code === 200) {
-                console.log('response', res)
+                console.log('response from complete data', res);
+                console.log('response', user);
                 showLoadingSpinner(false)
-                setUserInfo(user)
+                const newUser = {
+                    first_name: firstName,
+                    last_name: lastName,
+                    phone: user.phone,
+                    remember_token: user.remember_token,
+                    type: user.type
+                }
+                setUserInfo(newUser)
                 // navigation.navigate('OtpVerification')
             } else {
                 showLoadingSpinner(false)

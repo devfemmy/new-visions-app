@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
     },
     checkedContainer: {
         backgroundColor: 'rgba(155, 186, 82, 1)',
-        height: '100%',
+        minHeight: heightp(50),
         width: '45%',
         borderRadius: 50,
         flexDirection: 'row',
@@ -450,7 +450,7 @@ const styles = StyleSheet.create({
     },
     uncheckedContainer: {
         backgroundColor: 'rgba(67, 72, 84, 0.05)',
-        height: '100%',
+        minHeight: heightp(50),
         width: '45%',
         borderRadius: 50,
         flexDirection: 'row',

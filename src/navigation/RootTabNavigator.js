@@ -158,7 +158,7 @@ export const RootBottomTabNavigator = () => {
             component={Teachers}
         />  
             }
-            {session?.type == 3 && (
+            {/* {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{
                         headerShown: true,
@@ -168,7 +168,7 @@ export const RootBottomTabNavigator = () => {
                     name={I18n.t('LiveNow')}
                     component={Calendar}
                 />
-            )}
+            )} */}
             {/* {Global.UserType == 3 &&
         <RootBottomTab.Screen name={I18n.t("Subscriptions")} component={HomeNavigation} />
       } */}

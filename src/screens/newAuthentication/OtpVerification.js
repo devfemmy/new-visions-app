@@ -35,13 +35,13 @@ function OtpVerification() {
         }
         try {
             const res = await HomePageService.verifyAccount(payload)
-            if (res.code === 200) {
+            if (res.code === 201) {
                 console.log('response', res)
                 showLoadingSpinner(false)
                 navigation.navigate('RegisterUserData', {
                     user: res?.data,
                 })
-            } else if (res.code === 201) {
+            } else if (res.code === 200) {
                 console.log('response login', res.data)
                 setUserInfo(res?.data)
             } else {

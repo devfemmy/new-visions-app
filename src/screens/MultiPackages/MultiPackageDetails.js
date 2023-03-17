@@ -203,31 +203,37 @@ export default function MultiPackageDetails({ route }) {
         }
     }
     const subscribeSinglePackage = (value) => {
-        if (value === 'parent') {
-            navigation.navigate('ParentSub', {
-                uniqueId,
-                type: 2,
-                lesson_id: '',
-                day_id: '',
-            })
-        } else {
-            console.log('student')
-            if (!iap_activation || Platform.OS === 'android') {
-                subscribeExternal()
+        const userToken = Global.AuthenticationToken
+        if (userToken === '' || userToken === null) {
+            console.log('RUNNING THIS')
+            navigation.navigate('LoginModal', { name: 'modal' })
+        }else {
+            if (value === 'parent') {
+                navigation.navigate('ParentSub', {
+                    uniqueId,
+                    type: 2,
+                    lesson_id: '',
+                    day_id: '',
+                })
             } else {
-                const subscriptionInfo = {
-                    billNumber: 'ios_bill',
-                    paymentFor: 'Singlepackage',
-                    lessonId: '1258',
-                    subjectId: 12345,
-                    price: 200,
+                console.log('student')
+                if (!iap_activation || Platform.OS === 'android') {
+                    subscribeExternal()
+                } else {
+                    const subscriptionInfo = {
+                        billNumber: 'ios_bill',
+                        paymentFor: 'Singlepackage',
+                        lessonId: '1258',
+                        subjectId: 12345,
+                        price: 200,
+                    }
+                    deviceStorage
+                        .saveDataToDevice({
+                            key: 'subscriptionInfo',
+                            value: subscriptionInfo,
+                        })
+                        .then(() => requestPurchase({ sku: iapId }))
                 }
-                deviceStorage
-                    .saveDataToDevice({
-                        key: 'subscriptionInfo',
-                        value: subscriptionInfo,
-                    })
-                    .then(() => requestPurchase({ sku: iapId }))
             }
         }
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
