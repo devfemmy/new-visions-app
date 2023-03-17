@@ -35,7 +35,8 @@ function RegisterStages() {
     const [stagesArray, setStagesArray] = useState([])
     const [levelsArray, setLevelsArray] = useState([])
     const [currentIndex, setCurrentIndex] = useState(null)
-    const [currentLevel, setCurrentLevel] = useState(null)
+    const [currentLevel, setCurrentLevel] = useState(null);
+    const [stageId, setStageId] = useState('1');
 
     const getStages = async () => {
         showLoadingSpinner(true)
@@ -58,7 +59,9 @@ function RegisterStages() {
 
     const getSubjectLevels = async (stage) => {
         setLevelsArray([])
-        setLoading(true)
+        setLoading(true);
+        setStageId(stage);
+
         const payload = {
             stage_id: stage,
         }
@@ -126,19 +129,17 @@ function RegisterStages() {
             email: emailAddress,
             phone: user?.phone,
         }
-        console.log('payload', payload)
         try {
             const res = await HomePageService.completeData(payload)
             if (res.code === 200) {
-                console.log('response from complete data', res);
-                console.log('response', user);
                 showLoadingSpinner(false)
                 const newUser = {
                     first_name: firstName,
                     last_name: lastName,
                     phone: user.phone,
                     remember_token: user.remember_token,
-                    type: user.type
+                    type: user.type,
+                    stage_id: stageId
                 }
                 setUserInfo(newUser)
                 // navigation.navigate('OtpVerification')
