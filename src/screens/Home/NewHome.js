@@ -65,7 +65,7 @@ const Home = () => {
     const bg_colors_ = ['#C9EB7AC7', '#FFC59B8A', '#D3E9FF', '#917CFF88']
 
     const data = useAppSelector((state) => state.homePage)
-    console.log('=============> user in the home page', user)
+    // console.log('=============> user in the home page', user)
 
     const [packages, setPackages] = useState([])
     //
@@ -116,10 +116,14 @@ const Home = () => {
             })
     }
 
-    const homePage = async () => {
+    const homePage = async (stage_id) => {
         showLoadingSpinner(true)
+        const payload = {
+            stage_id: stage_id,
+        }
+        console.log('payload', payload)
         try {
-            const res = await HomePageService.homePage()
+            const res = await HomePageService.homePage(payload)
             const data = res?.data
             if (res.code === 200) {
                 showLoadingSpinner(false)
@@ -151,7 +155,14 @@ const Home = () => {
                 showLoadingSpinner(false)
                 // console.log('data fetched here in get stages', data)
                 setStagesArray(data)
-                setFilterOption(data[0])
+                let defaultStage = data.map((item) => {
+                    if (item?.id === user?.stage_id) {
+                        setFilterOption(item)
+                        return item
+                    } else {
+                        return null
+                    }
+                })
             } else {
                 showLoadingSpinner(false)
                 // console.log('account is logged in another device')
@@ -209,12 +220,11 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getStages()
-
         const unsubscribe = navigation.addListener('focus', () => {
+            getStages()
             getData()
             // dispatch(getHomePage())
-            homePage()
+            homePage(user?.stage_id)
             getPackages()
             // const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
             // setVideoId(id)
@@ -252,7 +262,7 @@ const Home = () => {
     const getData = async () => {
         const dataFromAsync = await AsyncStorage.getItem('user')
         session = JSON.parse(dataFromAsync)
-        console.log('data in the async storage', session)
+        // console.log('data in the async storage', session)
     }
 
     function SubscriptionsClicked(item) {
