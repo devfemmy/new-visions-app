@@ -29,7 +29,7 @@ const StudentGuide = () => {
     const { lang, onLogout } = useContext(AppContext)
     const [loading, setLoading] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
-    const [data, setData] = useState(null)
+    const [data, setData] = useState([])
     const [groupData, setGroupData] = useState(null)
     const [
         onEndReachedCalledDuringMomentum,
@@ -41,16 +41,19 @@ const StudentGuide = () => {
         try {
             const res = await HomePageService.getStudentGuide()
             const data = res?.data
+            console.log('res from getGuidesFunc', loading, res)
             if (res?.code === 200) {
                 setLoading(false)
                 console.log('guides', data)
                 setData(data)
             } else {
-                console.log('account is logged in another device')
-                onLogout()
+                setData(data)
+                console.log('account is logged in another device', loading)
+                setLoading(false)
+                // onLogout()
                 // return
             }
-            return res
+            // return res
         } catch (err) {
             setLoading(false)
         }
@@ -92,100 +95,105 @@ const StudentGuide = () => {
     )
 
     return (
-        <View style={{ flex: 1 }}>
-            <ScrollView
-                contentContainerStyle={[
-                    styles.container,
-                    globalStyles.container,
-                    // globalStyles.wrapper,
-                ]}
-                style={{ flex: 1, flexGrow: 1 }}
-                showsVerticalScrollIndicator={false}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
-            >
-                <View>
-                    <RNText
+        <>
+            <View style={{ flex: 1 }}>
+                <ScrollView
+                    contentContainerStyle={[
+                        styles.container,
+                        globalStyles.container,
+                        // globalStyles.wrapper,
+                    ]}
+                    style={{ flex: 1, flexGrow: 1 }}
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
+                    <View>
+                        <RNText
+                            style={[
+                                styles.subItemText2,
+                                {
+                                    // color: '#fff',
+                                    textAlign: 'center',
+                                    paddingTop: heightp(5),
+                                    paddingBottom: heightp(20),
+                                },
+                            ]}
+                        >
+                            {I18n.t('StudyGuideNew')}
+                        </RNText>
+                    </View>
+                    <View
                         style={[
-                            styles.subItemText2,
+                            globalStyles.horizontal,
                             {
-                                // color: '#fff',
-                                textAlign: 'center',
-                                paddingTop: heightp(5),
-                                paddingBottom: heightp(20),
+                                marginBottom: heightp(5),
                             },
                         ]}
-                    >
-                        {I18n.t('StudyGuideNew')}
-                    </RNText>
-                </View>
-                <View
-                    style={[
-                        globalStyles.horizontal,
-                        {
-                            marginBottom: heightp(5),
-                        },
-                    ]}
-                />
-                <FlatList
-                    nestedScrollEnabled={true}
-                    keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={styles.flatlistContent}
-                    ListEmptyComponent={() => (
-                        <View
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Text text={I18n.t('NoData')} />
-                        </View>
-                    )}
-                    // ListFooterComponent={renderFooter}
-                    data={data}
-                    showsVerticalScrollIndicator={false}
-                    onEndReachedThreshold={0.5}
-                    renderItem={({ item }) => (
-                        <>
-                            <>{console.log(item.id)}</>
-                            <StudentGuideCard
-                                // subjectDetails
-                                viewProfile={
-                                    () => navigateTeachersProfile(item?.user)
-                                    // navigateStudyGuide(item?.user, item?.id)
-                                }
-                                viewDate={() =>
-                                    // navigateTeachersProfile(item?.user)
-                                    navigateStudyGuide(item?.user, item?.id)
-                                }
-                                studyPressed={() =>
-                                    navigateStudyGuide(item?.user, item?.id)
-                                }
-                                city={item?.city?.name}
-                                gender={item?.user?.gender}
-                                rates_count={item?.rates_count}
-                                ratings={item?.rate === 0 ? null : item?.rate}
-                                uri={`${IMAGEURL}/${item?.user?.image}`}
-                                image={item?.user?.image}
-                                contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
-                            />
-                        </>
-                    )}
-                    initialNumToRender={10}
-                    maxToRenderPerBatch={10}
-                    windowSize={20}
-                    // onEndReached={onEndReached}
-                    onMomentumScrollBegin={() => {
-                        setOnEndReachedCalledDuringMomentum(false)
-                    }}
-                />
-            </ScrollView>
+                    />
+                    <FlatList
+                        nestedScrollEnabled={true}
+                        keyboardShouldPersistTaps="handled"
+                        contentContainerStyle={styles.flatlistContent}
+                        ListEmptyComponent={() => (
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text text={I18n.t('NoData')} />
+                            </View>
+                        )}
+                        // ListFooterComponent={renderFooter}
+                        data={data}
+                        showsVerticalScrollIndicator={false}
+                        onEndReachedThreshold={0.5}
+                        renderItem={({ item }) => (
+                            <>
+                                <>{console.log(item.id)}</>
+                                <StudentGuideCard
+                                    // subjectDetails
+                                    viewProfile={
+                                        () =>
+                                            navigateTeachersProfile(item?.user)
+                                        // navigateStudyGuide(item?.user, item?.id)
+                                    }
+                                    viewDate={() =>
+                                        // navigateTeachersProfile(item?.user)
+                                        navigateStudyGuide(item?.user, item?.id)
+                                    }
+                                    studyPressed={() =>
+                                        navigateStudyGuide(item?.user, item?.id)
+                                    }
+                                    city={item?.city?.name}
+                                    gender={item?.user?.gender}
+                                    rates_count={item?.rates_count}
+                                    ratings={
+                                        item?.rate === 0 ? null : item?.rate
+                                    }
+                                    uri={`${IMAGEURL}/${item?.user?.image}`}
+                                    image={item?.user?.image}
+                                    contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
+                                />
+                            </>
+                        )}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
+                        windowSize={20}
+                        // onEndReached={onEndReached}
+                        onMomentumScrollBegin={() => {
+                            setOnEndReachedCalledDuringMomentum(false)
+                        }}
+                    />
+                </ScrollView>
+            </View>
             <Loader visible={loading} />
-        </View>
+        </>
     )
 }
 

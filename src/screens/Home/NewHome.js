@@ -156,15 +156,20 @@ const Home = () => {
                 // //('data fetched here in get stages', data)
                 setStagesArray(data)
                 let defaultStage = data.map((item) => {
-                    if (item?.id === user?.stage_id) {
-                        setFilterOption(item);
-                        console.log('item returned')
+                    if (item?.id === user?.level_id) {
+                        setFilterOption(item)
+                        console.log('item returned xxxxxxxxxxxxxx', item)
                         return item
                     } else {
                         const userToken = Global.AuthenticationToken
                         if (userToken === '' || userToken === null) {
-                        const defaultFilterObject = {"id": 3, "image": "/stages/secondary.png", "name": "Secondary", "package_image": "/package_stages/secondary.png"}
-                        setFilterOption(defaultFilterObject)
+                            const defaultFilterObject = {
+                                id: 3,
+                                image: '/stages/secondary.png',
+                                name: i18n.t('FirstSecondary'),
+                                package_image: '/package_stages/secondary.png',
+                            }
+                            setFilterOption(defaultFilterObject)
                         }
                         return null
                     }
@@ -317,15 +322,23 @@ const Home = () => {
         controlschange: (data) => console.log('controlschange: ', data),
     }
 
-    const navigateHomeSubject = useCallback(
+    const navigateSubjectsDetails = useCallback(
         (item) => {
-            navigation.navigate('HomeSubject', {
-                item,
-                title: `${item?.title}`,
-            })
+            const { id, title, image } = item
+            const uri = `${IMAGEURL}/${image}`
+            if (id)
+                navigation.navigate('DisplaySubject', {
+                    subjectId: id,
+                    title,
+                    uri,
+                })
         },
         [navigation]
     )
+
+    const navigateAllSubjects = useCallback(() => {
+        navigation.navigate('SubjectDetails')
+    }, [navigation])
 
     return (
         <ScrollView
@@ -461,7 +474,7 @@ const Home = () => {
                     <View style={styles.newWrapper}>
                         <HeaderTitle
                             pressed={() => {
-                                // navigation.navigate('MultiPackagesStage')
+                                navigateAllSubjects()
                             }}
                             text={i18n.t('Subjects')}
                         />
@@ -490,7 +503,11 @@ const Home = () => {
                                     return (
                                         <Pressable
                                             onPress={() => {
-                                                navigateHomeSubject(item)
+                                                console.log(
+                                                    'item in single subject',
+                                                    item
+                                                )
+                                                navigateSubjectsDetails(item)
                                             }}
                                             style={{
                                                 justifyContent: 'center',
@@ -732,7 +749,7 @@ const Home = () => {
                     <View style={styles.newWrapper}>
                         <HeaderTitle
                             pressed={() => {
-                                // navigation.navigate('MultiPackagesStage')
+                                navigateAllSubjects()
                             }}
                             text={i18n.t('Subjects')}
                         />
@@ -762,7 +779,11 @@ const Home = () => {
                                     return (
                                         <Pressable
                                             onPress={() => {
-                                                navigateHomeSubject(item)
+                                                console.log(
+                                                    'item in single subject',
+                                                    item
+                                                )
+                                                navigateSubjectsDetails(item)
                                             }}
                                         >
                                             <FastImage
@@ -969,7 +990,7 @@ const Home = () => {
                         {/* )} */}
                     </View>
 
-                    {session?.type == 3 ? (
+                    {user ? (
                         <View style={styles.newWrapper}>
                             <HeaderTitle
                                 pressed={() => navigation.navigate('Teachers')}

@@ -51,7 +51,7 @@ export default function ProfileHeader() {
                 ></Image>
             </View>
             <View style={styles.avatar}>
-                {user?.image === null || user?.image === '' ? (
+                {user?.image === null || user?.image === '' || !user?.image ? (
                     <Image
                         source={require('../../assets/img/default-profile-picture.jpeg')}
                     ></Image>
