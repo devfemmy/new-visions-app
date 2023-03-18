@@ -58,7 +58,11 @@ const DisplaySubject = () => {
 
     const subscribeToLessons = useCallback(
         (tag) => {
-            if (subjectId)
+            const userToken = Global.AuthenticationToken
+            if(userToken === '' || userToken === null) {
+                navigation.navigate('LoginModal', {name: 'Modal'})
+            }
+            else if (subjectId)
                 navigation.navigate('SubjectTeachers', {
                     subject_id: subjectId,
                     tag,
