@@ -35,11 +35,11 @@ const StudentGuide = () => {
         onEndReachedCalledDuringMomentum,
         setOnEndReachedCalledDuringMomentum,
     ] = useState(false)
-
     const getGuidesFunc = async () => {
-        setLoading(true)
+        // setLoading(true)
         try {
             const res = await HomePageService.getStudentGuide()
+            setLoading(false)
             const data = res?.data
             console.log('res from getGuidesFunc', loading, res)
             if (res?.code === 200) {
@@ -48,7 +48,6 @@ const StudentGuide = () => {
                 setData(data)
             } else {
                 setData(data)
-                console.log('account is logged in another device', loading)
                 setLoading(false)
                 // onLogout()
                 // return

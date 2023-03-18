@@ -44,10 +44,12 @@ const FreeLessons = () => {
         try {
             const res = await HomePageService.getFreeLessons()
             const data = res?.data
+            setLoading(false)
             if (res?.code === 200) {
                 setLoading(false)
                 setData(data)
             } else {
+                setLoading(false)
                 console.log('account is logged in another device')
                 onLogout()
                 // return
@@ -60,7 +62,7 @@ const FreeLessons = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            getFreeLessonsFunc()
+            // getFreeLessonsFunc()
         })
         return unsubscribe
     }, [navigation])

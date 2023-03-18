@@ -78,6 +78,7 @@ import AllMeasurementQuiz from '../screens/AllMeasurementQuiz'
 import AllMeasurementQuizQuestion from '../screens/AllMeasurementQuiz/AllMeasurementQuizQuestion'
 import AllMeasurementStage from '../screens/AllMeasurementQuiz/AllMeasurementStage'
 import GuideProfile from '../screens/StudentGuide/GuideProfile'
+import { faListSquares } from '@fortawesome/free-solid-svg-icons'
 
 const Stack = createNativeStackNavigator()
 
@@ -184,10 +185,11 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="Notification"
-                component={Notification}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: I18n.t('Notification'),
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
@@ -220,28 +222,31 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="Calendar"
-                component={Calendar}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: I18n.t('Calendar'),
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
             <Stack.Screen
                 name="MeasurementQuiz"
-                component={MeasurementQuiz}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: I18n.t('MeasurementQuiz'),
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
             <Stack.Screen
                 name="MeasurementTestResults"
-                component={MeasurementTestResults}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: I18n.t('QuizzesResults'),
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
@@ -328,10 +333,11 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="ChatScreen"
-                component={MessageScreen}
-                options={({ route }) => ({
-                    headerShown: true,
-                    title: route.params.title,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
@@ -346,28 +352,31 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="FullLesson"
-                component={FullLessonSubscription}
-                options={({ route }) => ({
-                    headerShown: true,
-                    title: I18n.t('FullLessonSubscription'),
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
             <Stack.Screen
                 name="PrivateSubjectSubscribe"
-                component={PrivateSubjectSubscribe}
-                options={({ route }) => ({
-                    headerShown: true,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
-                    title: I18n.t('PrivateSubjectSubscribe'),
                 })}
             />
             <Stack.Screen
                 name="PrivateLesson"
-                component={PrivateLessonSubscription}
-                options={({ route }) => ({
-                    headerShown: true,
-                    title: I18n.t('PrivateLessonsSubscriptions'),
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
@@ -393,20 +402,23 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="Profile"
-                component={Profile}
-                options={{
-                    title: 'Profile',
-                    headerShown: false /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
-                }}
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
+                    headerLeft: backRight,
+                })}
             />
             <Stack.Screen
                 name="EditProfile"
-                component={EditProfile}
-                options={{
-                    title: I18n.t('EditProfile'),
-                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
-                }}
+                })}
             />
 
             <Stack.Screen
@@ -459,12 +471,13 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="ParentSub"
-                component={ParentSubscription}
-                options={{
-                    title: I18n.t('Subscribefor'),
-                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
-                }}
+                })}
             />
             <Stack.Screen
                 options={{
@@ -476,13 +489,14 @@ const PreLoginNavigator = () => {
                 component={Subscriptions}
             />
             <Stack.Screen
-                options={{
-                    title: I18n.t('Attendance'),
-                    headerShown: true /*animationTypeForReplace: state.isSignout ? 'pop' : 'push',*/,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
-                }}
+                })}
                 name={'Attendance'}
-                component={Attendance}
             />
             <Stack.Screen
                 options={{
@@ -495,21 +509,23 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name={'LiveNowQuiz'}
-                component={LiveNowQuiz}
-                options={{
-                    title: I18n.t('MeasurementQuiz'),
-                    headerShown: true,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
-                }}
+                })}
             />
             <Stack.Screen
                 name={'LiveNowQuizResult'}
-                component={LiveNowQuizResult}
-                options={{
-                    title: I18n.t('QuizzesResults'),
-                    headerShown: true,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
-                }}
+                })}
             />
             <Stack.Screen
                 name="FazaPackagesStage"
@@ -522,10 +538,11 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="FazaEducationalStage"
-                component={FazaEducationalStage}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: I18n.t('EducationalLevel'),
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
@@ -540,27 +557,30 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name="FazaSubscription"
-                component={FazaSubscription}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: '',
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
             <Stack.Screen
                 name="FreeLessons"
-                component={FreeLessons}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: I18n.t('FreeLive'),
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
             <Stack.Screen
                 name="StudentGuide"
-                component={StudentGuide}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
+                    headerShown: false,
+                    presentation: 'modal',
                     title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
@@ -585,19 +605,21 @@ const PreLoginNavigator = () => {
             />
             <Stack.Screen
                 name={'AllMeasurementQuizQuestion'}
-                component={AllMeasurementQuizQuestion}
-                options={{
-                    title: I18n.t('AllMeasurementQuesion'),
-                    headerShown: true,
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
-                }}
+                })}
             />
             <Stack.Screen
                 name="AllMeasurementQuiz"
-                component={AllMeasurementQuiz}
+                component={Login}
                 options={() => ({
-                    headerShown: true,
-                    title: I18n.t('AllMeasurementQuiz'),
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
