@@ -160,6 +160,10 @@ const Home = () => {
                         setFilterOption(item)
                         console.log('item returned xxxxxxxxxxxxxx', item)
                         return item
+                    } else if (item?.id === user?.stage_id) {
+                        setFilterOption(item)
+                        console.log('item returned xxxxxxxxxxxxxx', item)
+                        return item
                     } else {
                         const userToken = Global.AuthenticationToken
                         if (userToken === '' || userToken === null) {
