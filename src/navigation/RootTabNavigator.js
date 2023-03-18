@@ -24,6 +24,7 @@ import Global from '../../Global'
 import Conversation from '../screens/Messages/Conversations'
 import HomeNavigation from './HomeNavigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import SubjectDetails from '../screens/SubjectDetails'
 
 const RootBottomTab = createBottomTabNavigator()
 let session: ''
@@ -145,19 +146,19 @@ export const RootBottomTabNavigator = () => {
                     unmountOnBlur: true,
                 }}
                 name={I18n.t('Subjects')}
-                component={Subject}
+                component={SubjectDetails}
             />
-            {user &&
-            <RootBottomTab.Screen
-            options={{
-                headerShown: true,
-                headerLeft: backRight,
-                unmountOnBlur: true,
-            }}
-            name={I18n.t('Teachers')}
-            component={Teachers}
-        />  
-            }
+            {user && (
+                <RootBottomTab.Screen
+                    options={{
+                        headerShown: true,
+                        headerLeft: backRight,
+                        unmountOnBlur: true,
+                    }}
+                    name={I18n.t('Teachers')}
+                    component={Teachers}
+                />
+            )}
             {/* {session?.type == 3 && (
                 <RootBottomTab.Screen
                     options={{
@@ -183,19 +184,21 @@ export const RootBottomTabNavigator = () => {
                     component={Conversation}
                 />
             )}
-            {user && 
+            {user && (
                 <RootBottomTab.Screen
-                options={{
-                    headerShown: session?.type == 4,
-                    headerLeft: backRight,
-                    unmountOnBlur: true,
-                }}
-                name={session?.type == 3 ? I18n.t('Profile') : I18n.t('Sons')}
-                component={
-                    session?.type == 4 ? ParentProfileNavigator : Profile
-                }
-            />  
-            }
+                    options={{
+                        headerShown: session?.type == 4,
+                        headerLeft: backRight,
+                        unmountOnBlur: true,
+                    }}
+                    name={
+                        session?.type == 3 ? I18n.t('Profile') : I18n.t('Sons')
+                    }
+                    component={
+                        session?.type == 4 ? ParentProfileNavigator : Profile
+                    }
+                />
+            )}
         </RootBottomTab.Navigator>
     )
 }

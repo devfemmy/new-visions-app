@@ -30,8 +30,8 @@ const SubjectDetails = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
     const route = useRoute()
-    const { onLogout } = useContext(AppContext)
-    const { level } = route.params
+    const { onLogout, user } = useContext(AppContext)
+    // const { level } = route.params
     // const data = useAppSelector((state)=> console.log(state, 'hello'));
     const { subject } = useAppSelector((state) => state.subPage)
     const [searchText, setSearchText] = useState()
@@ -43,7 +43,7 @@ const SubjectDetails = () => {
     const getSubject = async () => {
         setLoading(true)
         const payload = {
-            level,
+            level: user?.level_id,
         }
         try {
             const res = await HomePageService.getSubjects(payload)
@@ -55,6 +55,7 @@ const SubjectDetails = () => {
             } else {
                 console.log('account is logged in another device')
                 onLogout()
+                setLoading(false)
                 // return
             }
             return res
@@ -64,12 +65,12 @@ const SubjectDetails = () => {
     }
 
     useEffect(() => {
+        getSubject()
         const unsubscribe = navigation.addListener('focus', () => {
             // console.log('<<<<<tabs Refreshed>>>>>>')
-            getSubject()
         })
         return unsubscribe
-    }, [dispatch, level])
+    }, [dispatch, user])
 
     const navigateSubjectsDetails = useCallback(
         (item) => {

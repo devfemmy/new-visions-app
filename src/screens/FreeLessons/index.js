@@ -36,8 +36,8 @@ const FreeLessons = () => {
     const { lang, onLogout } = useContext(AppContext)
     const [loading, setLoading] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
-    const [data, setData] = useState(null)
-    const [groupData, setGroupData] = useState(null)
+    const [data, setData] = useState([])
+    const [groupData, setGroupData] = useState([])
 
     const getFreeLessonsFunc = async () => {
         setLoading(true)

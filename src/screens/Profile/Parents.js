@@ -7,6 +7,7 @@ import axios from 'axios'
 import ContentLoader, { Rect, Circle } from 'react-content-loader/native'
 import ParentListItem from './ParentListItem'
 import Toast from 'react-native-toast-message'
+import Global from '../../../Global'
 
 export default function Parents({ navigation }) {
     const { onLogout, showLoadingSpinner, lang } = useContext(AppContext)
@@ -24,7 +25,7 @@ export default function Parents({ navigation }) {
                     headers: {
                         'Content-Type': 'application/json',
                         'Acess-Control-Allow-Origin': '*',
-                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
                         version: 4,
@@ -37,12 +38,14 @@ export default function Parents({ navigation }) {
                     response.data != undefined &&
                     response.data.code != undefined
                 ) {
+                    console.log('getParents', response?.data)
                     if (response.data.code == 200) {
                         const data = response.data.data
                         setParents(data)
                         setLoadingContent(false)
                         console.log(parents)
                     } else if (response.data.code == 403) {
+                        setLoadingContent(false)
                         console.log('account is logged in another device')
                         // onLogout()
                     } else {
@@ -96,6 +99,7 @@ export default function Parents({ navigation }) {
                         getParents()
                         console.log(parents)
                     } else if (response.data.code == 403) {
+                        setLoadingContent(false)
                         console.log('account is logged in another device')
                         // onLogout()
                     } else {
@@ -144,6 +148,7 @@ export default function Parents({ navigation }) {
                         setLoadingContent(true)
                         getParents()
                     } else if (response.data.code == 403) {
+                        setLoadingContent(false)
                         console.log('account is logged in another device')
                         // onLogout()
                     } else {
