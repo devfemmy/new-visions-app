@@ -22,13 +22,13 @@ import AppTextInput from '../../components/TextInput'
 function RegisterUserData() {
     const { showLoadingSpinner, loadingSpinner } = useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
-    let emailFlag = false
     const navigation = useNavigation()
     const route = useRoute()
-    const { user } = route.params
+    const { user, emailFlag } = route.params
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [emailAddress, setEmailAddress] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
     const [accountType, setAccountType] = useState('student')
     const [gender, setGender] = useState('male')
 
@@ -38,17 +38,18 @@ function RegisterUserData() {
         if (
             firstName !== '' &&
             lastName !== '' &&
-            emailAddress !== '' &&
+            emailAddress || phoneNumber !== '' &&
             accountType !== '' &&
             gender !== ''
         ) {
             navigation.navigate('RegisterStages', {
                 user,
                 firstName,
-                emailAddress,
+                emailAddress : user?.email || emailAddress,
                 lastName,
                 accountType,
                 gender,
+                phoneNumber
             })
         } else if (firstName === '' && lastName === '') {
             Alert.alert(
@@ -128,7 +129,7 @@ function RegisterUserData() {
                                         labelName={I18n.t('LastName')}
                                     />
                                     <AppTextInput
-                                        onChangeText={setEmailAddress}
+                                        onChangeText={!emailFlag ? setEmailAddress: setPhoneNumber}
                                         style={{
                                             width: '100%',
                                             paddingHorizontal: heightp(20),

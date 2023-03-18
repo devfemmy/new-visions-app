@@ -54,39 +54,66 @@ function Login() {
                 type,
             })
             .then(async (response) => {
-                if (response.data.code === 200) {
-                    console.log('response hereee', response.data)
-                    if (response.data.data?.type == 2) {
-                        Global.UserType = 'Teacher'
-                    }
-                    if (response.data.data.type == 3) {
-                        Global.UserType = 'Student'
-                    }
-                    if (response.data.data.type == 4) {
-                        Global.UserType = 'Parent'
-                    }
-                    Global.LoggedIn = true
-                    if (
-                        response.data.data.phone === '123456' ||
-                        response.data.data.phone === 123456
-                    ) {
-                        const responseData = response?.data?.data
-                        Global.AuthenticationToken =
-                            responseData?.remember_token
-                        AsyncStorage.setItem(
-                            'token',
-                            Global.AuthenticationToken
-                        )
-                        navigation.navigate('CompleteProfile', {
-                            userData: responseData,
+                // if (res.code === 201) {
+                //     console.log('response', res)
+                //     showLoadingSpinner(false)
+                //     navigation.navigate('RegisterUserData', {
+                //         user: res?.data,
+                //     })
+                // } else if (res.code === 200) {
+                //     console.log('response login', res.data)
+                //     setUserInfo(res?.data)
+                // } else {
+                //     showLoadingSpinner(false)
+                //     alert(res.message)
+                // }
+                // return res
+                    console.log('response hereee', response.data);
+                    const responseData = response.data;
+                    if (responseData.code === 200) {
+                        console.log('response', responseData)
+                        showLoadingSpinner(false)
+                        navigation.navigate('RegisterUserData', {
+                            user: responseData?.data,
+                            emailFlag: true,
                         })
+                    } else if (responseData.code === 200) {
+                        console.log('response login', responseData.data)
+                        setUserInfo(responseData?.data)
                     } else {
-                        // replace('Main');
-                        setUserInfo(response.data.data)
+                        showLoadingSpinner(false)
+                        alert(responseData.message)
                     }
-                } else {
-                    alert(JSON.stringify(response.data.message))
-                }
+                    // return res
+                    // if (response.data.data?.type == 2) {
+                    //     Global.UserType = 'Teacher'
+                    // }
+                    // if (response.data.data.type == 3) {
+                    //     Global.UserType = 'Student'
+                    // }
+                    // if (response.data.data.type == 4) {
+                    //     Global.UserType = 'Parent'
+                    // }
+                    // Global.LoggedIn = true
+                    // if (
+                    //     response.data.data.phone === '123456' ||
+                    //     response.data.data.phone === 123456
+                    // ) {
+                    //     const responseData = response?.data?.data
+                    //     Global.AuthenticationToken =
+                    //         responseData?.remember_token
+                    //     AsyncStorage.setItem(
+                    //         'token',
+                    //         Global.AuthenticationToken
+                    //     )
+                    //     console.log(responseData, 'social login')
+                    //     navigation.navigate('CompleteProfile', {
+                    //         userData: responseData,
+                    //     })
+                    // } else {
+                    //     // replace('Main');
+                    //     setUserInfo(response.data.data)
+                    // }
             })
             .catch((error) => {
                 alert(error)
@@ -177,7 +204,6 @@ function Login() {
 
     const setUserInfo = (userData) => {
         showLoadingSpinner(false)
-        console.log('yoooooooooooo', userData.remember_token)
         Global.AuthenticationToken = userData.remember_token
         AsyncStorage.setItem('token', Global.AuthenticationToken)
         Global.Image = userData.image
@@ -186,7 +212,7 @@ function Login() {
         Global.email = userData.email
         Global.UserId = userData.id
         Global.UserType = String(userData.type)
-        // onLogin(userData, true)
+        onLogin(userData, true)
     }
 
     return (

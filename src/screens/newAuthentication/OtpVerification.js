@@ -40,6 +40,7 @@ function OtpVerification() {
                 showLoadingSpinner(false)
                 navigation.navigate('RegisterUserData', {
                     user: res?.data,
+                    emailFlag: false
                 })
             } else if (res.code === 200) {
                 console.log('response login', res.data)

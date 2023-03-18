@@ -65,7 +65,7 @@ const Home = () => {
     const bg_colors_ = ['#C9EB7AC7', '#FFC59B8A', '#D3E9FF', '#917CFF88']
 
     const data = useAppSelector((state) => state.homePage)
-    // console.log('=============> user in the home page', user)
+    // //('=============> user in the home page', user)
 
     const [packages, setPackages] = useState([])
     //
@@ -76,13 +76,13 @@ const Home = () => {
     const [refreshing, setRefreshing] = useState(false)
     //
     const [vidId, setVidId] = useState('')
-    console.log('stagesArray', filterOption)
+    //('stagesArray', filterOption)
     //
     function getPackages(params) {
         axios
             .post('https://mo.visionsplus.net/api/getPackages', {})
             .then((response) => {
-                console.log('success message xxxxx', response.data)
+                //('success message xxxxx', response.data)
                 if (
                     response != undefined &&
                     response.data != undefined &&
@@ -90,28 +90,28 @@ const Home = () => {
                 ) {
                     if (response?.data?.code == 200) {
                         const data = response?.data?.data?.data
-                        // console.log('multi Packages: ' + data)
+                        // //('multi Packages: ' + data)
                         setPackages(data)
                         showLoadingSpinner(false)
-                        console.log(packages)
+                        //(packages)
                     } else if (response?.data?.code == 403) {
-                        // console.log('account is logged in another device')
+                        // //('account is logged in another device')
                         onLogout()
                         showLoadingSpinner(false)
                     } else if (response?.data?.code == 407) {
                         onLogout()
-                        console.log('response 3')
+                        //('response 3')
                         showLoadingSpinner(false)
                     } else {
                         showLoadingSpinner(false)
-                        console.log('response 1')
+                        //('response 1')
                         // alert(response.data.message)
                     }
                 }
             })
             .catch((error) => {
                 showLoadingSpinner(false)
-                console.log('response 2', error)
+                //('response 2', error)
                 // alert(error)
             })
     }
@@ -121,7 +121,7 @@ const Home = () => {
         const payload = {
             stage_id: stage_id,
         }
-        console.log('payload', payload)
+        //('payload', payload)
         try {
             const res = await HomePageService.homePage(payload)
             const data = res?.data
@@ -134,9 +134,9 @@ const Home = () => {
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                 setVidId(id)
                 // setVideoId(data?.video)
-                console.log('================================>', data)
+                //('================================>', data)
             } else {
-                // console.log('account is logged in another device')
+                // //('account is logged in another device')
                 onLogout()
                 // return
             }
@@ -153,13 +153,19 @@ const Home = () => {
             const data = res?.data
             if (res.code === 200) {
                 showLoadingSpinner(false)
-                // console.log('data fetched here in get stages', data)
+                // //('data fetched here in get stages', data)
                 setStagesArray(data)
                 let defaultStage = data.map((item) => {
                     if (item?.id === user?.stage_id) {
-                        setFilterOption(item)
+                        setFilterOption(item);
+                        console.log('item returned')
                         return item
                     } else {
+                        const userToken = Global.AuthenticationToken
+                        if (userToken === '' || userToken === null) {
+                        const defaultFilterObject = {"id": 3, "image": "/stages/secondary.png", "name": "Secondary", "package_image": "/package_stages/secondary.png"}
+                        setFilterOption(defaultFilterObject)
+                        }
                         return null
                     }
                 })
@@ -175,7 +181,7 @@ const Home = () => {
 
     const navigateTeacherProfile = useCallback(
         (item) => {
-            console.log('item wey dey here', item)
+            //('item wey dey here', item)
             navigation.navigate('TeacherProfile', {
                 item,
                 title: `${item?.first_name} ${item?.last_name}`,
@@ -189,7 +195,7 @@ const Home = () => {
         axios
             .post('https://mo.visionsplus.net/api/getUserChildren', {})
             .then((response) => {
-                // console.log('home response', response.data)
+                // //('home response', response.data)
                 //alert(response.data.code);
                 if (
                     response != undefined &&
@@ -201,7 +207,7 @@ const Home = () => {
                         setSons(data)
                         setLoadingContent(false)
                     } else if (response.data.code == 403) {
-                        // console.log('account is logged in another device')
+                        // //('account is logged in another device')
                         onLogout()
                     } else {
                         showLoadingSpinner(false)
@@ -220,8 +226,8 @@ const Home = () => {
     }
 
     useEffect(() => {
+        getStages()
         const unsubscribe = navigation.addListener('focus', () => {
-            getStages()
             getData()
             // dispatch(getHomePage())
             homePage(user?.stage_id)
@@ -241,7 +247,7 @@ const Home = () => {
                     )
                     return res
                 } catch (err) {
-                    console.log(err, 'error')
+                    //(err, 'error')
                 }
             }
             postNotificationToken()
@@ -254,7 +260,7 @@ const Home = () => {
     //     const unsubscribe = navigation.addListener('focus', () => {
     //         const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
     //         setVideoId(id)
-    //         console.log('the video id is this hrre ====>', id)
+    //         //('the video id is this hrre ====>', id)
     //     })
     //     return unsubscribe
     // }, [navigation, videoId])
@@ -262,7 +268,7 @@ const Home = () => {
     const getData = async () => {
         const dataFromAsync = await AsyncStorage.getItem('user')
         session = JSON.parse(dataFromAsync)
-        // console.log('data in the async storage', session)
+        // //('data in the async storage', session)
     }
 
     function SubscriptionsClicked(item) {
@@ -279,7 +285,7 @@ const Home = () => {
             status={item.status}
             subClick={() => {
                 SubscriptionsClicked(item.user_id)
-                console.log('Subscriptions', item)
+                //('Subscriptions', item)
             }}
             attendanceClick={() => {
                 AttendanceClicked(item.user_id)
@@ -296,7 +302,7 @@ const Home = () => {
     const onRefresh = useCallback(async () => {
         setRefreshing(true)
         const res = await dispatch(getHomePage())
-        console.log('response', res?.payload)
+        //('response', res?.payload)
         if (res?.payload?.code === 200) {
             setRefreshing(false)
         }
@@ -484,7 +490,7 @@ const Home = () => {
                                     return (
                                         <Pressable
                                             onPress={() => {
-                                                // navigateHomeSubject(item)
+                                                navigateHomeSubject(item)
                                             }}
                                             style={{
                                                 justifyContent: 'center',
@@ -750,13 +756,13 @@ const Home = () => {
                                 showsHorizontalScrollIndicator={false}
                                 onEndReachedThreshold={0.5}
                                 renderItem={({ item }) => {
-                                    // console.log('renderItem', item)
+                                    // //('renderItem', item)
                                     const uri = `${IMAGEURL}/${item.image}`
                                     // navigation.navigate("MultiPackageDetails", item);
                                     return (
                                         <Pressable
                                             onPress={() => {
-                                                // navigateHomeSubject(item)
+                                                navigateHomeSubject(item)
                                             }}
                                         >
                                             <FastImage
@@ -810,7 +816,7 @@ const Home = () => {
                                 showsHorizontalScrollIndicator={false}
                                 onEndReachedThreshold={0.5}
                                 renderItem={({ item }) => {
-                                    // console.log('renderItem', item)
+                                    // //('renderItem', item)
                                     const uri = `${IMAGEURL}/${item.image}`
                                     // navigation.navigate("MultiPackageDetails", item);
                                     return (
@@ -991,7 +997,7 @@ const Home = () => {
                                     showsHorizontalScrollIndicator={false}
                                     onEndReachedThreshold={0.5}
                                     renderItem={({ item }) => {
-                                        // console.log('renderItem', item)
+                                        // //('renderItem', item)
                                         const uri = `${IMAGEURL}/${item.image}`
                                         return (
                                             <TeachersCard
