@@ -33,20 +33,20 @@ export class AppState extends React.Component {
         i18n.locale = lang
         I18nManager.forceRTL(false)
         this.setState({ user, lang, rtl: false, isLoading: false })
-        // if (lang !== 'ar') {
-        //     if (I18nManager.isRTL) RNRestart.Restart()
-        // } else {
-        //     I18nManager.forceRTL(true)
-        //     this.setState({ user, lang, rtl: true, isLoading: false })
-        //     if (!I18nManager.isRTL) RNRestart.Restart()
-        // }
+        if (lang !== 'ar') {
+            if (I18nManager.isRTL) RNRestart.Restart()
+        } else {
+            I18nManager.forceRTL(true)
+            this.setState({ user, lang, rtl: true, isLoading: false })
+            if (!I18nManager.isRTL) RNRestart.Restart()
+        }
     }
 
     changeLang = async (lang) => {
         // this.setState({ loadingSpinner: true })
         i18n.locale = lang
         this.setState({ lang })
-        if (lang === 'ar') {
+        if (lang !== 'ar') {
             if (I18nManager.isRTL) {
                 await I18nManager.forceRTL(false)
                 this.setState({ lang, rtl: false }, () =>
@@ -78,7 +78,7 @@ export class AppState extends React.Component {
 
     onLogout = () => {
         console.log('onLogout => ')
-        Global.AuthenticationToken = '' || null;
+        Global.AuthenticationToken = '' || null
         this.setState({ user: null }, () => AsyncStorage.removeItem('user'))
     }
 
