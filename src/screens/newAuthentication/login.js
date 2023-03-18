@@ -70,7 +70,7 @@ function Login() {
                 // return res
                     console.log('response hereee', response.data);
                     const responseData = response.data;
-                    if (responseData.code === 200) {
+                    if (responseData.code === 201) {
                         console.log('response', responseData)
                         showLoadingSpinner(false)
                         navigation.navigate('RegisterUserData', {
