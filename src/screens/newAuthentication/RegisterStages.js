@@ -29,14 +29,22 @@ function RegisterStages() {
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
     const route = useRoute()
-    const { firstName, lastName, accountType, gender, emailAddress, user, phoneNumber } =
-        route.params
+    const {
+        firstName,
+        lastName,
+        accountType,
+        gender,
+        emailAddress,
+        user,
+        phoneNumber,
+    } = route.params
     const [loading, setLoading] = useState(false)
     const [stagesArray, setStagesArray] = useState([])
     const [levelsArray, setLevelsArray] = useState([])
     const [currentIndex, setCurrentIndex] = useState(null)
-    const [currentLevel, setCurrentLevel] = useState(null);
-    const [stageId, setStageId] = useState('1');
+    const [currentLevel, setCurrentLevel] = useState(null)
+    const [currentStage, setCurrentStage] = useState(null)
+    const [stageId, setStageId] = useState('1')
 
     const getStages = async () => {
         showLoadingSpinner(true)
@@ -59,8 +67,8 @@ function RegisterStages() {
 
     const getSubjectLevels = async (stage) => {
         setLevelsArray([])
-        setLoading(true);
-        setStageId(stage);
+        setLoading(true)
+        setStageId(stage)
 
         const payload = {
             stage_id: stage,
@@ -126,6 +134,7 @@ function RegisterStages() {
                     ? '4'
                     : '2',
             level_id: currentLevel,
+            stage_id: currentStage?.id,
             email: emailAddress,
             phone: user?.phone || phoneNumber,
         }
@@ -139,7 +148,7 @@ function RegisterStages() {
                     phone: user.phone,
                     remember_token: user.remember_token,
                     type: user.type,
-                    stage_id: stageId
+                    stage_id: stageId,
                 }
                 setUserInfo(newUser)
                 // navigation.navigate('OtpVerification')
@@ -186,6 +195,7 @@ function RegisterStages() {
                                                     }
                                                     onPress={() => {
                                                         setCurrentIndex(index)
+                                                        setCurrentStage(stage)
                                                         getSubjectLevels(
                                                             stage?.id
                                                         )
@@ -293,7 +303,7 @@ function RegisterStages() {
                                                                                         'rgba(216, 216, 216, 1)',
                                                                                     borderBottomWidth:
                                                                                         index ===
-                                                                                        stagesArray.length -
+                                                                                        levelsArray.length -
                                                                                             1
                                                                                             ? 0
                                                                                             : 1,
@@ -310,7 +320,7 @@ function RegisterStages() {
                                                                                             '500',
                                                                                         paddingTop: 5,
                                                                                         textAlign:
-                                                                                            lang !==
+                                                                                            lang ===
                                                                                             'ar'
                                                                                                 ? 'left'
                                                                                                 : 'right',
@@ -412,10 +422,10 @@ const styles = StyleSheet.create({
     },
     flatlistContent: {
         // flexGrow: 1,
-        backgroundColor: 'rgba(255, 255, 255, 1)',
+        backgroundColor: 'rgba(250, 250, 249, 1)',
         paddingHorizontal: widthp(20),
         paddingVertical: heightp(5),
-        borderRadius: 5,
+        borderRadius: 10,
         //
         shadowColor: 'rgba(0,0,0,0.2)',
         shadowOffset: {

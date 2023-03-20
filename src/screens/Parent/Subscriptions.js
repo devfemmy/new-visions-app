@@ -23,6 +23,7 @@ import Modal from 'react-native-modal'
 import IconText from '../../components/IconText'
 import { Text as CustomText } from '../../components/common'
 import { useRoute } from '@react-navigation/native'
+import Global from '../../../Global'
 
 export default function Subscriptions({}) {
     const route = useRoute()
@@ -37,7 +38,7 @@ export default function Subscriptions({}) {
     const [isVisibleItem, setIsVisibleItem] = useState({})
     const { id } = route.params
     console.log('params', id)
-    const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
+    const { onLogout, lang, showLoadingSpinner, initUUID, onLogin, user } =
         useContext(AppContext)
 
     function getSonSubscriptions() {
@@ -53,7 +54,7 @@ export default function Subscriptions({}) {
                     headers: {
                         'Content-Type': 'application/json',
                         'Acess-Control-Allow-Origin': '*',
-                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Authorization: `Bearer ${user?.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
                         version: 4,
@@ -66,11 +67,11 @@ export default function Subscriptions({}) {
                     response.data != undefined &&
                     response.data.code != undefined
                 ) {
+                    console.log('==================> typeof', response?.data)
                     if (response.data.code == 200) {
                         const data = response.data.data
                         setSubscriptions(data)
                         showLoadingSpinner(false)
-                        console.log('typeof', data)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
                         // onLogout()

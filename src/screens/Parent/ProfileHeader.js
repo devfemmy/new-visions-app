@@ -13,7 +13,9 @@ export default function ProfileHeader() {
                 ></Image>
             </View>
             <View style={styles.avatar}>
-                <Image source={require('../../assets/img/default-profile-picture.jpeg')}></Image>
+                <Image
+                    source={require('../../assets/img/default-profile-picture.jpeg')}
+                ></Image>
             </View>
             <Text style={styles.MainText}>{Global.UserName}</Text>
             <Text style={styles.subText}>{Global.email}</Text>

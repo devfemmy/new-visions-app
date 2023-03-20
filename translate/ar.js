@@ -393,6 +393,9 @@ const Arabic = {
     FirstPrimary: 'ابتدائي',
     FirstMiddle: 'اول متوسط',
     FirstSecondary: 'أول ثانوي',
+    ChooseYourStageOfStudy: 'اختر مرحلتك الدراسية',
+    ChooseYourClass: 'اختر صفك',
+    Apply: 'تطبيق',
 }
 
 export default Arabic

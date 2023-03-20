@@ -30,7 +30,7 @@ export default function SonListItem({
     return (
         <View style={styles.rowItem}>
             <View>
-                {user?.image === null || user?.image === '' ? (
+                {user?.image === null || user?.image === '' || !user?.image ? (
                     <Image
                         source={require('../../assets/img/default-profile-picture.jpeg')}
                         style={styles.img}

@@ -386,6 +386,9 @@ const English = {
     FirstPrimary: 'Primary',
     FirstMiddle: 'Middle',
     FirstSecondary: 'Secondary',
+    ChooseYourStageOfStudy: 'Choose your stage of study',
+    ChooseYourClass: 'Choose your class',
+    Apply: 'Apply',
 }
 
 export default English
