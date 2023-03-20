@@ -18,6 +18,8 @@ import { AppContext } from '../../context/AppState'
 import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
 import AppTextInput from '../../components/TextInput'
+const defaultUri =
+    'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=68b6dab7-4a8e-4093-9b7a-994a951eda7a'
 
 function RegisterUserData() {
     const { showLoadingSpinner, loadingSpinner } = useContext(AppContext)
@@ -36,20 +38,17 @@ function RegisterUserData() {
 
     const registerUserDataFunc = async () => {
         if (
-            firstName !== '' &&
-            lastName !== '' &&
-            emailAddress || phoneNumber !== '' &&
-            accountType !== '' &&
-            gender !== ''
+            (firstName !== '' && lastName !== '' && emailAddress) ||
+            (phoneNumber !== '' && accountType !== '' && gender !== '')
         ) {
             navigation.navigate('RegisterStages', {
                 user,
                 firstName,
-                emailAddress : user?.email || emailAddress,
+                emailAddress: user?.email || emailAddress,
                 lastName,
                 accountType,
                 gender,
-                phoneNumber
+                phoneNumber,
             })
         } else if (firstName === '' && lastName === '') {
             Alert.alert(
@@ -88,7 +87,7 @@ function RegisterUserData() {
                             <View style={styles.center}>
                                 <Image
                                     style={styles.logo}
-                                    source={require('../../assets/img/logo-New.png')}
+                                    source={{ uri: defaultUri }}
                                 />
                                 {/* input */}
                                 <View
@@ -129,7 +128,11 @@ function RegisterUserData() {
                                         labelName={I18n.t('LastName')}
                                     />
                                     <AppTextInput
-                                        onChangeText={!emailFlag ? setEmailAddress: setPhoneNumber}
+                                        onChangeText={
+                                            !emailFlag
+                                                ? setEmailAddress
+                                                : setPhoneNumber
+                                        }
                                         style={{
                                             width: '100%',
                                             paddingHorizontal: heightp(20),

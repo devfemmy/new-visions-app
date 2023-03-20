@@ -17,6 +17,8 @@ import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
 import I18n from 'i18n-js'
 import Global from '../../../Global'
+const defaultUri =
+    'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=68b6dab7-4a8e-4093-9b7a-994a951eda7a'
 
 function OtpVerification() {
     const { showLoadingSpinner, loadingSpinner, onLogin } =
@@ -40,7 +42,7 @@ function OtpVerification() {
                 showLoadingSpinner(false)
                 navigation.navigate('RegisterUserData', {
                     user: res?.data,
-                    emailFlag: false
+                    emailFlag: false,
                 })
             } else if (res.code === 200) {
                 console.log('response login', res.data)
@@ -79,7 +81,7 @@ function OtpVerification() {
                         <View style={styles.center}>
                             <Image
                                 style={styles.logo}
-                                source={require('../../assets/img/logo-New.png')}
+                                source={{ uri: defaultUri }}
                             />
                             {/* otp input */}
                             <View

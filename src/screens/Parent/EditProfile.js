@@ -4,7 +4,7 @@ import {
     Pressable,
     TextInput,
     Image,
-    Text,
+    Text as RNText,
     StatusBar,
     StyleSheet,
     Dimensions,
@@ -20,15 +20,21 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { globalStyles } from '../../helpers/globalStyles'
 import AppButton from '../../components/Button'
 import I18n from 'i18n-js'
-import { heightp } from '../../utils/responsiveDesign'
+import { heightp, widthp } from '../../utils/responsiveDesign'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FastImage from 'react-native-fast-image'
-import { IMAGEURL } from '../../utils/functions'
+import { IMAGEURL, IMAGEURL2 } from '../../utils/functions'
 import Global from '../../../Global'
 import axios from 'axios'
 import { Alert } from 'react-native'
 import RNRestart from 'react-native-restart'
 import { replace } from '../../../Navigator'
+import HomePageService from '../../services/userServices'
+import Modal from 'react-native-modal'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Text } from '../../components/common'
+import ContentLoader, { Rect, Circle } from 'react-content-loader/native'
 
 const Layout = {
     height: Dimensions.get('window').height,
@@ -50,17 +56,28 @@ class EditProfile extends Component {
             place: '',
             dateOfBirth: '',
             organization: '',
-            avatarUrl: '',
+            avatarUrl: null,
             avatar: null,
             loading: false,
             select: false,
             id: '',
             toggleTypePicker: false,
+            stageOption: {},
             error: false,
+            //
+            stagesArray: [],
+            isVisibleStage: false,
+            currentIndex: null,
+            currentStage: {},
+            levelsArray: [],
+            isVisibleLevel: false,
+            currentIndexLevel: null,
+            currentLevel: '',
         }
     }
     async componentDidMount() {
         await this.getSession()
+        await this.getStages()
         this.props.navigation.addListener('focus', () => {
             this.onReload()
         })
@@ -138,10 +155,12 @@ class EditProfile extends Component {
 
     onReload = () => {
         this.getSession()
+        this.getStages()
     }
 
     updateProfile = ({ data, lang, onLogin }) => {
         console.log('data', data, 'lang', lang)
+        const { user } = this.context
         // setIsLoading(true)
         axios
             .post(
@@ -152,7 +171,7 @@ class EditProfile extends Component {
                     headers: {
                         'Content-Type': 'application/json;',
                         // 'Access-Control-Allow-Origin': '*',
-                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Authorization: `Bearer ${user?.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
                         version: 4,
@@ -196,13 +215,17 @@ class EditProfile extends Component {
                     )
                     return response.data.code
                 } else if (response.data.code !== 200) {
+                    this.setState({ loading: false })
                     console.log('request failed')
                     console.log(response.data)
+                    alert(response.data.message)
                     return response.data.code
 
                     // console.log(JSON.stringify(response.data.message));
                 } else {
                     console.log(response)
+                    this.setState({ loading: false })
+                    alert(response.data.message)
                     return response.data.code
                 }
             })
@@ -216,6 +239,8 @@ class EditProfile extends Component {
     }
 
     getUpdatedProfile = ({ lang, onLogin }) => {
+        const { user } = this.context
+
         axios
             .get(
                 'https://mo.visionsplus.net/api/getUserProfile', // URL
@@ -225,10 +250,10 @@ class EditProfile extends Component {
                     headers: {
                         'Content-Type': 'application/json;',
                         // 'Access-Control-Allow-Origin': '*',
-                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Authorization: `Bearer ${user?.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 3,
+                        version: 4,
                     },
                 }
             )
@@ -279,17 +304,32 @@ class EditProfile extends Component {
                 email,
                 avatarUrl,
                 toggleTypePicker,
+                currentLevel,
             } = this.state
             const { user, lang, onLogin } = this.context
             this.setState({ loading: true })
 
-            console.log('<<<==========PHOTO================>>>', photo)
+            console.log(
+                avatarUrl,
+                currentLevel,
+                '<<<==========PHOTO================>>>',
+                photo
+            )
             const data = new FormData()
             data.append('first_name', firstname)
             data.append('last_name', lastname)
             data.append('phone', phone)
-            data.append('image', photo ? photo : avatarUrl)
-            data.append('gender', user?.gender)
+            data.append('bio', '')
+            if (photo) {
+                data.append('image', photo ? photo : null)
+            }
+            // if (user?.gender) {
+            data.append('gender', user?.gender ? user?.gender : null)
+            // }
+            data.append(
+                'level_id',
+                currentLevel ? currentLevel : user?.stage_id
+            )
 
             this.updateProfile({ data, lang, onLogin })
         } catch (error) {
@@ -346,247 +386,663 @@ class EditProfile extends Component {
             )
         }
     }
-    render() {
-        const { firstname, lastname, email, phone, toggleTypePicker } =
-            this.state
+
+    getStages = async () => {
         const { user } = this.context
-        console.log('this.context.user', user)
+        // showLoadingSpinner(true)
+        try {
+            const res = await HomePageService.getStages()
+            const data = res?.data
+            if (res.code === 200) {
+                // showLoadingSpinner(false)
+                this.setState({
+                    stagesArray: data,
+                })
+                data.map((item) => {
+                    if (item?.id === user?.level_id) {
+                        this.setState({
+                            stageOption: item,
+                        })
+                        console.log('item returned xxxxxxxxxxxxxx', item)
+                        return item
+                    } else if (item?.id === user?.stage_id) {
+                        this.setState({
+                            stageOption: item,
+                        })
+                        console.log('item returned xxxxxxxxxxxxxx', item)
+                        return item
+                    } else {
+                        const userToken = Global.AuthenticationToken
+                        if (userToken === '' || userToken === null) {
+                            const defaultFilterObject = {
+                                id: 3,
+                                image: '/stages/secondary.png',
+                                name: I18n.t('FirstSecondary'),
+                                package_image: '/package_stages/secondary.png',
+                            }
+                            this.setState({
+                                stageOption: defaultFilterObject,
+                            })
+                        }
+                        return null
+                    }
+                })
+            } else {
+                // showLoadingSpinner(false)
+                // console.log('account is logged in another device')
+            }
+            return res
+        } catch (err) {
+            // showLoadingSpinner(false)
+        }
+    }
+
+    getSubjectLevels = async () => {
+        this.setState({ loading: true })
+
+        const payload = {
+            stage_id: this.state.currentStage?.id,
+        }
+        try {
+            const res = await HomePageService.getLevels(payload)
+            const data = res?.data
+            if (res.code === 200) {
+                this.setState({ loading: false })
+                this.setState({
+                    levelsArray: data,
+                    isVisibleLevel: !this.state.isVisibleLevel,
+                })
+            } else {
+                // console.log('account is logged in another device')
+                // onLogout()
+                // return
+            }
+            return res
+        } catch (err) {
+            this.setState({ loading: false })
+        }
+    }
+
+    render() {
+        const {
+            firstname,
+            lastname,
+            email,
+            phone,
+            toggleTypePicker,
+            stageOption,
+            isVisibleStage,
+            currentIndex,
+            currentStage,
+            levelsArray,
+            isVisibleLevel,
+            currentIndexLevel,
+            currentLevel,
+            stagesArray,
+            loading,
+        } = this.state
+        const { user, lang } = this.context
+        // console.log('this.context.user', user)
         return (
-            <SafeAreaView style={styles.container}>
-                <StatusBar
-                    translucent={false}
-                    barStyle="dark-content"
-                    backgroundColor={colors.white}
-                />
-                <KeyboardAwareScrollView
-                    keyboardDismissMode="on-drag"
-                    contentContainerStyle={{
-                        flex: 1,
-                    }}
-                >
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        keyboardShouldPersistTaps="handled"
+            <>
+                <SafeAreaView style={styles.container}>
+                    <StatusBar
+                        translucent={false}
+                        barStyle="dark-content"
+                        backgroundColor={colors.white}
+                    />
+                    <KeyboardAwareScrollView
+                        keyboardDismissMode="on-drag"
+                        contentContainerStyle={{
+                            flex: 1,
+                        }}
                     >
-                        <View style={styles.content}>
-                            <View
-                                style={{
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    marginVertical: 5,
-                                }}
-                            >
-                                {this.pix()}
-                                <Pressable
-                                    style={styles.icon}
-                                    onPress={() => {
-                                        this.setState({
-                                            toggleTypePicker: !toggleTypePicker,
-                                        })
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                            keyboardShouldPersistTaps="handled"
+                        >
+                            <View style={styles.content}>
+                                <View
+                                    style={{
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        marginVertical: 5,
                                     }}
                                 >
-                                    <Ionicons
-                                        name="camera"
-                                        size={17}
-                                        color={colors.white}
-                                    />
-                                </Pressable>
+                                    {this.pix()}
+                                    <Pressable
+                                        style={styles.icon}
+                                        onPress={() => {
+                                            this.setState({
+                                                toggleTypePicker:
+                                                    !toggleTypePicker,
+                                            })
+                                        }}
+                                    >
+                                        <Ionicons
+                                            name="camera"
+                                            size={17}
+                                            color={colors.white}
+                                        />
+                                    </Pressable>
+                                </View>
                             </View>
-                        </View>
 
-                        <View
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginVertical: heightp(5),
-                            }}
-                        >
-                            <Text
-                                style={[
-                                    styles.inputTitle,
-                                    {
-                                        fontWeight: '700',
-                                        fontSize: heightp(16),
-                                    },
-                                ]}
-                            >
-                                {`${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`}
-                            </Text>
-                        </View>
-                        {toggleTypePicker && (
                             <View
                                 style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
+                                    justifyContent: 'center',
                                     alignItems: 'center',
                                     marginVertical: heightp(5),
-                                    paddingHorizontal: heightp(150),
                                 }}
                             >
-                                <Pressable
+                                <RNText
                                     style={[
+                                        styles.inputTitle,
                                         {
-                                            paddingHorizontal: 7.5,
-                                            paddingVertical: 7.5,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            backgroundColor:
-                                                'rgba(70, 79, 84, 1)',
-                                            borderRadius: 20,
+                                            fontWeight: '700',
+                                            fontSize: heightp(16),
                                         },
                                     ]}
-                                    onPress={() => {
-                                        this.selectCameraTapped()
+                                >
+                                    {`${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`}
+                                </RNText>
+                            </View>
+                            {toggleTypePicker && (
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        marginVertical: heightp(5),
+                                        paddingHorizontal: heightp(150),
                                     }}
                                 >
-                                    <Ionicons
-                                        name="camera"
-                                        size={17}
-                                        color={colors.white}
-                                    />
-                                </Pressable>
-                                <Pressable
-                                    style={[
-                                        {
-                                            paddingHorizontal: 7.5,
-                                            paddingVertical: 7.5,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            backgroundColor:
-                                                'rgba(70, 79, 84, 1)',
-                                            borderRadius: 20,
-                                        },
-                                    ]}
-                                    onPress={() => {
-                                        this.selectFileTapped()
+                                    <Pressable
+                                        style={[
+                                            {
+                                                paddingHorizontal: 7.5,
+                                                paddingVertical: 7.5,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                backgroundColor:
+                                                    'rgba(70, 79, 84, 1)',
+                                                borderRadius: 20,
+                                            },
+                                        ]}
+                                        onPress={() => {
+                                            this.selectCameraTapped()
+                                        }}
+                                    >
+                                        <Ionicons
+                                            name="camera"
+                                            size={17}
+                                            color={colors.white}
+                                        />
+                                    </Pressable>
+                                    <Pressable
+                                        style={[
+                                            {
+                                                paddingHorizontal: 7.5,
+                                                paddingVertical: 7.5,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                backgroundColor:
+                                                    'rgba(70, 79, 84, 1)',
+                                                borderRadius: 20,
+                                            },
+                                        ]}
+                                        onPress={() => {
+                                            this.selectFileTapped()
+                                        }}
+                                    >
+                                        <Ionicons
+                                            name="folder-open"
+                                            size={17}
+                                            color={colors.white}
+                                        />
+                                    </Pressable>
+                                </View>
+                            )}
+
+                            <View style={styles.card}>
+                                <View style={styles.form}>
+                                    <View style={styles.formContainer}>
+                                        <View style={globalStyles.rowBetween}>
+                                            <RNText style={styles.inputTitle}>
+                                                {I18n.t('FirstName')}
+                                            </RNText>
+                                            <Ionicons
+                                                name="create-outline"
+                                                size={20}
+                                                color={'rgba(70, 79, 84, 1)'}
+                                            />
+                                        </View>
+                                        <TextInput
+                                            style={styles.input}
+                                            autoCapitalize="none"
+                                            defaultValue={firstname}
+                                            placeholderTextColor="#000000"
+                                            onChangeText={(firstname) =>
+                                                this.setState({ firstname })
+                                            }
+                                        />
+                                    </View>
+                                    <View style={styles.formContainer}>
+                                        <View style={globalStyles.rowBetween}>
+                                            <RNText style={styles.inputTitle}>
+                                                {I18n.t('LastName')}
+                                            </RNText>
+                                            <Ionicons
+                                                name="create-outline"
+                                                size={20}
+                                                color={'rgba(70, 79, 84, 1)'}
+                                            />
+                                        </View>
+                                        <TextInput
+                                            style={styles.input}
+                                            autoCapitalize="none"
+                                            defaultValue={lastname}
+                                            placeholderTextColor="#000000"
+                                            onChangeText={(lastname) =>
+                                                this.setState({ lastname })
+                                            }
+                                        />
+                                    </View>
+
+                                    <View style={styles.formContainer}>
+                                        <View style={globalStyles.rowBetween}>
+                                            <RNText style={styles.inputTitle}>
+                                                {I18n.t('Email')}
+                                            </RNText>
+                                            <Ionicons
+                                                name="create-outline"
+                                                size={20}
+                                                color={'rgba(70, 79, 84, 1)'}
+                                            />
+                                        </View>
+                                        <TextInput
+                                            style={styles.input}
+                                            autoCapitalize="none"
+                                            defaultValue={email}
+                                            placeholderTextColor="#000000"
+                                            onChangeText={(email) =>
+                                                this.setState({ email })
+                                            }
+                                        />
+                                    </View>
+
+                                    <View style={styles.phoneContainer}>
+                                        <View style={globalStyles.rowBetween}>
+                                            <RNText style={styles.inputTitle}>
+                                                {I18n.t('PhoneNumber')}
+                                            </RNText>
+                                            <Ionicons
+                                                name="create-outline"
+                                                size={20}
+                                                color={'rgba(70, 79, 84, 1)'}
+                                            />
+                                        </View>
+                                        <TextInput
+                                            style={styles.input}
+                                            autoCapitalize="none"
+                                            defaultValue={phone}
+                                            placeholderTextColor="#000000"
+                                            onChangeText={(phone) =>
+                                                this.setState({ phone })
+                                            }
+                                        />
+                                    </View>
+                                    <Pressable
+                                        style={styles.formContainer}
+                                        onPress={() => {
+                                            this.setState({
+                                                isVisibleStage: !isVisibleStage,
+                                            })
+                                        }}
+                                    >
+                                        <View style={globalStyles.rowBetween}>
+                                            <RNText style={styles.inputTitle}>
+                                                {I18n.t('ChooseYourClass')}
+                                            </RNText>
+                                            <Ionicons
+                                                name="create-outline"
+                                                size={20}
+                                                color={'rgba(70, 79, 84, 1)'}
+                                            />
+                                        </View>
+                                        <RNText
+                                            style={{
+                                                width: '100%',
+                                                fontSize: heightp(14),
+                                                height: 50,
+                                                fontFamily: 'Cairo-Regular',
+                                                color: 'rgba(70, 79, 84, 1)',
+                                                // textAlign:
+                                                //     lang === 'ar'
+                                                //         ? 'right'
+                                                //         : 'left',
+                                            }}
+                                        >
+                                            {this.state.stageOption?.name}
+                                        </RNText>
+                                    </Pressable>
+                                </View>
+
+                                <View
+                                    style={{
+                                        marginTop: heightp(30),
                                     }}
                                 >
-                                    <Ionicons
-                                        name="folder-open"
-                                        size={17}
-                                        color={colors.white}
-                                    />
-                                </Pressable>
-                            </View>
-                        )}
-
-                        <View style={styles.card}>
-                            <View style={styles.form}>
-                                <View style={styles.formContainer}>
-                                    <View style={globalStyles.rowBetween}>
-                                        <Text style={styles.inputTitle}>
-                                            {I18n.t('FirstName')}
-                                        </Text>
-                                        <Ionicons
-                                            name="create-outline"
-                                            size={20}
-                                            color={'rgba(70, 79, 84, 1)'}
-                                        />
-                                    </View>
-                                    <TextInput
-                                        style={styles.input}
-                                        autoCapitalize="none"
-                                        defaultValue={firstname}
-                                        placeholderTextColor="#000000"
-                                        onChangeText={(firstname) =>
-                                            this.setState({ firstname })
-                                        }
-                                    />
-                                </View>
-                                <View style={styles.formContainer}>
-                                    <View style={globalStyles.rowBetween}>
-                                        <Text style={styles.inputTitle}>
-                                            {I18n.t('LastName')}
-                                        </Text>
-                                        <Ionicons
-                                            name="create-outline"
-                                            size={20}
-                                            color={'rgba(70, 79, 84, 1)'}
-                                        />
-                                    </View>
-                                    <TextInput
-                                        style={styles.input}
-                                        autoCapitalize="none"
-                                        defaultValue={lastname}
-                                        placeholderTextColor="#000000"
-                                        onChangeText={(lastname) =>
-                                            this.setState({ lastname })
-                                        }
-                                    />
-                                </View>
-
-                                <View style={styles.formContainer}>
-                                    <View style={globalStyles.rowBetween}>
-                                        <Text style={styles.inputTitle}>
-                                            {I18n.t('Email')}
-                                        </Text>
-                                        <Ionicons
-                                            name="create-outline"
-                                            size={20}
-                                            color={'rgba(70, 79, 84, 1)'}
-                                        />
-                                    </View>
-                                    <TextInput
-                                        style={styles.input}
-                                        autoCapitalize="none"
-                                        defaultValue={email}
-                                        placeholderTextColor="#000000"
-                                        onChangeText={(email) =>
-                                            this.setState({ email })
-                                        }
-                                    />
-                                </View>
-
-                                <View style={styles.phoneContainer}>
-                                    <View style={globalStyles.rowBetween}>
-                                        <Text style={styles.inputTitle}>
-                                            {I18n.t('PhoneNumber')}
-                                        </Text>
-                                        <Ionicons
-                                            name="create-outline"
-                                            size={20}
-                                            color={'rgba(70, 79, 84, 1)'}
-                                        />
-                                    </View>
-                                    <TextInput
-                                        style={styles.input}
-                                        autoCapitalize="none"
-                                        defaultValue={phone}
-                                        placeholderTextColor="#000000"
-                                        onChangeText={(phone) =>
-                                            this.setState({ phone })
-                                        }
+                                    <AppButton
+                                        color="primary"
+                                        title={I18n.t('Save')}
+                                        onPress={() => {
+                                            console.log('hereee')
+                                            this.uploadAvatar()
+                                            // navigation.navigate('SignUp')
+                                        }}
                                     />
                                 </View>
                             </View>
-
-                            <View
-                                style={{
-                                    marginTop: heightp(30),
-                                }}
-                            >
-                                <AppButton
-                                    color="primary"
-                                    title={I18n.t('Save')}
-                                    onPress={() => {
-                                        console.log('hereee')
-                                        this.uploadAvatar()
-                                        // navigation.navigate('SignUp')
-                                    }}
-                                />
-                            </View>
+                        </ScrollView>
+                    </KeyboardAwareScrollView>
+                    {this.state.loading ? (
+                        <View style={styles.popUp2}>
+                            <ActivityIndicator
+                                size="large"
+                                color="rgba(70, 79, 84, 1)"
+                            />
                         </View>
-                    </ScrollView>
-                </KeyboardAwareScrollView>
-                {this.state.loading ? (
-                    <View style={styles.popUp2}>
-                        <ActivityIndicator
-                            size="large"
-                            color="rgba(70, 79, 84, 1)"
-                        />
+                    ) : null}
+                </SafeAreaView>
+                <Modal
+                    onBackdropPress={() => {
+                        this.setState({
+                            isVisibleStage: !isVisibleStage,
+                        })
+                    }}
+                    isVisible={isVisibleStage}
+                >
+                    <View style={styles.modal}>
+                        <View style={globalStyles.rowBetween}>
+                            <View />
+                            <Text
+                                style={{
+                                    color: 'rgba(0, 0, 0, 1)',
+                                    fontWeight: '500',
+                                    textAlign: 'center',
+                                    // paddingHorizontal: widthp(2.5),
+                                }}
+                                text={`${
+                                    isVisibleLevel
+                                        ? I18n.t('ChooseYourClass')
+                                        : I18n.t('ChooseYourStageOfStudy')
+                                }`}
+                                fontSize={heightp(11)}
+                            />
+                            <Pressable
+                                onPress={() => {
+                                    {
+                                        isVisibleLevel
+                                            ? this.setState({
+                                                  isVisibleLevel:
+                                                      !isVisibleLevel,
+                                              })
+                                            : this.setState({
+                                                  isVisibleStage:
+                                                      !isVisibleStage,
+                                              })
+                                    }
+                                }}
+                                style={{
+                                    backgroundColor: 'rgba(250, 250, 249, 1)',
+                                    borderRadius: 20,
+                                    padding: 5,
+                                }}
+                            >
+                                <MaterialCommunityIcons
+                                    name="close"
+                                    size={20}
+                                    color={'#000'}
+                                />
+                            </Pressable>
+                        </View>
+                        {isVisibleLevel ? (
+                            <>
+                                <View
+                                    style={[
+                                        globalStyles.rowBetween,
+                                        {
+                                            flexDirection: 'column',
+                                        },
+                                    ]}
+                                >
+                                    {levelsArray?.map((item, index) => {
+                                        return (
+                                            <Pressable
+                                                style={styles.levelContainer}
+                                                onPress={() => {
+                                                    this.setState({
+                                                        currentIndexLevel:
+                                                            index,
+                                                        currentLevel: item?.id,
+                                                    })
+                                                }}
+                                            >
+                                                <Text
+                                                    style={{
+                                                        color: 'rgba(0, 0, 0, 1)',
+                                                        fontWeight: '500',
+                                                        textAlign: 'center',
+                                                        paddingHorizontal:
+                                                            widthp(5),
+                                                    }}
+                                                    text={`${item?.name}`}
+                                                    fontSize={heightp(12)}
+                                                />
+                                                {index === currentIndexLevel ? (
+                                                    <View
+                                                        style={styles.check}
+                                                    />
+                                                ) : (
+                                                    <View
+                                                        style={styles.uncheck}
+                                                    />
+                                                )}
+                                            </Pressable>
+                                        )
+                                    })}
+                                </View>
+                                {loading ? (
+                                    <ContentLoader
+                                        viewBox="0 0 380 70"
+                                        backgroundColor={colors.darkGray}
+                                        foregroundColor={colors.gray}
+                                        height={100}
+                                        speed={1}
+                                    >
+                                        <Rect
+                                            x="80"
+                                            y="17"
+                                            rx="4"
+                                            ry="4"
+                                            width="200"
+                                            height="13"
+                                        />
+                                    </ContentLoader>
+                                ) : (
+                                    <Pressable
+                                        style={styles.nextBtn}
+                                        onPress={() => {
+                                            // homePage()
+                                            this.setState({
+                                                isVisibleStage: false,
+                                                isVisibleLevel: false,
+                                            })
+                                        }}
+                                    >
+                                        <View style={styles.nextBtnView}>
+                                            <MaterialIcons
+                                                name={
+                                                    lang == 'ar'
+                                                        ? 'arrow-forward-ios'
+                                                        : 'arrow-back-ios'
+                                                }
+                                                size={20}
+                                                color={colors.white}
+                                            />
+
+                                            <RNText style={styles.nextText}>
+                                                {I18n.t('Apply')}
+                                            </RNText>
+                                        </View>
+                                    </Pressable>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                <View style={globalStyles.rowBetween}>
+                                    {stagesArray?.map((item, index) => {
+                                        const uri = `${IMAGEURL2}/${item?.image}`
+                                        return (
+                                            <View
+                                                style={{
+                                                    flexDirection: 'column',
+                                                    marginVertical: heightp(10),
+                                                }}
+                                            >
+                                                <Pressable
+                                                    style={{
+                                                        marginTop: heightp(10),
+                                                        backgroundColor:
+                                                            'rgba(155, 186, 82, 1)',
+                                                        borderRadius: 20,
+                                                        padding: 10,
+                                                        width: heightp(90),
+                                                        height: heightp(90),
+                                                        justifyContent:
+                                                            'center',
+                                                        alignItems: 'center',
+                                                    }}
+                                                    onPress={() => {
+                                                        this.setState({
+                                                            currentIndex: index,
+                                                            currentStage: item,
+                                                            stageOption: item,
+                                                        })
+                                                    }}
+                                                >
+                                                    <FastImage
+                                                        style={{
+                                                            width: heightp(70),
+                                                            height: heightp(70),
+                                                            borderRadius: 10,
+                                                            // marginRight: heightp(20),
+                                                        }}
+                                                        source={{
+                                                            uri,
+                                                            priority:
+                                                                FastImage
+                                                                    .priority
+                                                                    .normal,
+                                                        }}
+                                                        resizeMode={
+                                                            FastImage.resizeMode
+                                                                .contain
+                                                        }
+                                                    />
+                                                </Pressable>
+                                                <Pressable
+                                                    style={{
+                                                        flexDirection: 'row',
+                                                        justifyContent:
+                                                            'center',
+                                                        alignItems: 'center',
+                                                        marginVertical:
+                                                            heightp(5),
+                                                    }}
+                                                    onPress={() => {
+                                                        this.setState({
+                                                            currentIndex: index,
+                                                            currentStage: item,
+                                                        })
+                                                    }}
+                                                >
+                                                    <Text
+                                                        style={{
+                                                            color: 'rgba(0, 0, 0, 1)',
+                                                            fontWeight: '500',
+                                                            textAlign: 'center',
+                                                            paddingHorizontal:
+                                                                widthp(5),
+                                                        }}
+                                                        text={`${item?.name}`}
+                                                        fontSize={heightp(12)}
+                                                    />
+                                                    {index === currentIndex ? (
+                                                        <View
+                                                            style={styles.check}
+                                                        />
+                                                    ) : (
+                                                        <View
+                                                            style={
+                                                                styles.uncheck
+                                                            }
+                                                        />
+                                                    )}
+                                                </Pressable>
+                                            </View>
+                                        )
+                                    })}
+                                </View>
+                                {loading ? (
+                                    <ContentLoader
+                                        viewBox="0 0 380 70"
+                                        backgroundColor={colors.darkGray}
+                                        foregroundColor={colors.gray}
+                                        height={100}
+                                        speed={1}
+                                    >
+                                        <Rect
+                                            x="80"
+                                            y="17"
+                                            rx="4"
+                                            ry="4"
+                                            width="200"
+                                            height="13"
+                                        />
+                                    </ContentLoader>
+                                ) : (
+                                    <Pressable
+                                        style={styles.nextBtn}
+                                        onPress={() => {
+                                            loading
+                                                ? null
+                                                : this.getSubjectLevels()
+                                        }}
+                                    >
+                                        <View style={styles.nextBtnView}>
+                                            <MaterialIcons
+                                                name={
+                                                    lang == 'ar'
+                                                        ? 'arrow-forward-ios'
+                                                        : 'arrow-back-ios'
+                                                }
+                                                size={20}
+                                                color={colors.white}
+                                            />
+
+                                            <RNText style={styles.nextText}>
+                                                {I18n.t('Next')}
+                                            </RNText>
+                                        </View>
+                                    </Pressable>
+                                )}
+                            </>
+                        )}
                     </View>
-                ) : null}
-            </SafeAreaView>
+                </Modal>
+            </>
         )
     }
 }
@@ -723,5 +1179,66 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'Cairo-Regular',
+    },
+    //
+    modal: {
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 1)',
+        padding: 20,
+    },
+    nextBtn: {
+        width: '80%',
+        flexDirection: 'row',
+        height: 45,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginVertical: heightp(10),
+    },
+    nextBtnView: {
+        flex: 1,
+        borderRadius: 40,
+        backgroundColor: colors.primary,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 15,
+    },
+    nextText: {
+        fontSize: 20,
+        fontFamily: 'Cairo-Bold',
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        color: colors.white,
+        paddingHorizontal: widthp(10),
+    },
+    uncheck: {
+        width: heightp(20),
+        height: heightp(20),
+        borderRadius: heightp(20 / 2),
+        backgroundColor: 'rgba(230, 230, 230, 1)',
+        borderWidth: 1,
+        borderColor: 'rgba(202, 202, 202, 1)',
+    },
+    check: {
+        width: heightp(20),
+        height: heightp(20),
+        borderRadius: heightp(20 / 2),
+        backgroundColor: 'rgba(155, 186, 82, 1)',
+        borderWidth: 1,
+        borderColor: 'rgba(155, 186, 82, 0.53)',
+    },
+    levelContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        height: 45,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingHorizontal: widthp(15),
+        borderRadius: 20,
+        // alignSelf: 'center',
+        marginVertical: heightp(5),
+        backgroundColor: 'rgba(250, 250, 249, 1)',
     },
 })
