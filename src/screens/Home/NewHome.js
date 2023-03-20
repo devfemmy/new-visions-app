@@ -171,11 +171,11 @@ const Home = () => {
                 // //('data fetched here in get stages', data)
                 setStagesArray(data)
                 data.map((item) => {
-                    if (item?.id === user?.level_id) {
+                    if (item?.id === user?.stage_id) {
                         setFilterOption(item)
                         console.log('item returned xxxxxxxxxxxxxx', item)
                         return item
-                    } else if (item?.id === user?.stage_id) {
+                    } else if (item?.id === user?.level_id) {
                         setFilterOption(item)
                         console.log('item returned xxxxxxxxxxxxxx', item)
                         return item
