@@ -14,6 +14,8 @@ import Toast from 'react-native-toast-message'
 import LandingImage from '../../assets/img/landing-img.svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { heightp } from '../../utils/responsiveDesign'
+const defaultUri =
+    'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=68b6dab7-4a8e-4093-9b7a-994a951eda7a'
 
 export default function Landing({ navigation }) {
     const { changeLang, lang, showLoadingSpinner } = useContext(AppContext)
@@ -50,7 +52,7 @@ export default function Landing({ navigation }) {
                         <View style={styles.touchLang}>
                             <Image
                                 style={styles.logo}
-                                source={require('../../assets/img/logo-New.png')}
+                                source={{ uri: defaultUri }}
                             />
                         </View>
                     </View>

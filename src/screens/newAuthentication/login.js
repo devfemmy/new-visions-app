@@ -31,6 +31,8 @@ import { useNavigation } from '@react-navigation/native'
 import { AppContext } from '../../context/AppState'
 import LoginForm from '../auth/newAuth/LoginForm'
 import HomePageService from '../../services/userServices'
+const defaultUri =
+    'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=68b6dab7-4a8e-4093-9b7a-994a951eda7a'
 
 function Login() {
     const {
@@ -68,52 +70,52 @@ function Login() {
                 //     alert(res.message)
                 // }
                 // return res
-                    console.log('response hereee', response.data);
-                    const responseData = response.data;
-                    if (responseData.code === 201) {
-                        console.log('response', responseData)
-                        showLoadingSpinner(false)
-                        navigation.navigate('RegisterUserData', {
-                            user: responseData?.data,
-                            emailFlag: true,
-                        })
-                    } else if (responseData.code === 200) {
-                        console.log('response login', responseData.data)
-                        setUserInfo(responseData?.data)
-                    } else {
-                        showLoadingSpinner(false)
-                        alert(responseData.message)
-                    }
-                    // return res
-                    // if (response.data.data?.type == 2) {
-                    //     Global.UserType = 'Teacher'
-                    // }
-                    // if (response.data.data.type == 3) {
-                    //     Global.UserType = 'Student'
-                    // }
-                    // if (response.data.data.type == 4) {
-                    //     Global.UserType = 'Parent'
-                    // }
-                    // Global.LoggedIn = true
-                    // if (
-                    //     response.data.data.phone === '123456' ||
-                    //     response.data.data.phone === 123456
-                    // ) {
-                    //     const responseData = response?.data?.data
-                    //     Global.AuthenticationToken =
-                    //         responseData?.remember_token
-                    //     AsyncStorage.setItem(
-                    //         'token',
-                    //         Global.AuthenticationToken
-                    //     )
-                    //     console.log(responseData, 'social login')
-                    //     navigation.navigate('CompleteProfile', {
-                    //         userData: responseData,
-                    //     })
-                    // } else {
-                    //     // replace('Main');
-                    //     setUserInfo(response.data.data)
-                    // }
+                console.log('response hereee', response.data)
+                const responseData = response.data
+                if (responseData.code === 201) {
+                    console.log('response', responseData)
+                    showLoadingSpinner(false)
+                    navigation.navigate('RegisterUserData', {
+                        user: responseData?.data,
+                        emailFlag: true,
+                    })
+                } else if (responseData.code === 200) {
+                    console.log('response login', responseData.data)
+                    setUserInfo(responseData?.data)
+                } else {
+                    showLoadingSpinner(false)
+                    alert(responseData.message)
+                }
+                // return res
+                // if (response.data.data?.type == 2) {
+                //     Global.UserType = 'Teacher'
+                // }
+                // if (response.data.data.type == 3) {
+                //     Global.UserType = 'Student'
+                // }
+                // if (response.data.data.type == 4) {
+                //     Global.UserType = 'Parent'
+                // }
+                // Global.LoggedIn = true
+                // if (
+                //     response.data.data.phone === '123456' ||
+                //     response.data.data.phone === 123456
+                // ) {
+                //     const responseData = response?.data?.data
+                //     Global.AuthenticationToken =
+                //         responseData?.remember_token
+                //     AsyncStorage.setItem(
+                //         'token',
+                //         Global.AuthenticationToken
+                //     )
+                //     console.log(responseData, 'social login')
+                //     navigation.navigate('CompleteProfile', {
+                //         userData: responseData,
+                //     })
+                // } else {
+                //     // replace('Main');
+                //     setUserInfo(response.data.data)
+                // }
             })
             .catch((error) => {
                 alert(error)
@@ -226,7 +228,7 @@ function Login() {
                         <View style={styles.center}>
                             <Image
                                 style={styles.logo}
-                                source={require('../../assets/img/logo-New.png')}
+                                source={{ uri: defaultUri }}
                             />
                             {Platform.OS === 'ios' && <AppleButton />}
                             <LoginForm

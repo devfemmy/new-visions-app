@@ -22,6 +22,8 @@ import { Text } from '../../components/common'
 import ContentLoader, { Rect } from 'react-content-loader/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Global from '../../../Global'
+const defaultUri =
+    'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=68b6dab7-4a8e-4093-9b7a-994a951eda7a'
 
 function RegisterStages() {
     const { showLoadingSpinner, loadingSpinner, onLogin, lang } =
@@ -174,7 +176,7 @@ function RegisterStages() {
                         <View style={styles.center}>
                             <Image
                                 style={styles.logo}
-                                source={require('../../assets/img/logo-New.png')}
+                                source={{ uri: defaultUri }}
                             />
                             {/* stages */}
                             <View
