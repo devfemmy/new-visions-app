@@ -81,7 +81,17 @@ function Login() {
                     })
                 } else if (responseData.code === 200) {
                     console.log('response login', responseData.data)
-                    setUserInfo(responseData?.data)
+                    const socialData = responseData.data;
+                    if (socialData?.phone === 123456 || socialData?.phone === '123456') {
+                        showLoadingSpinner(false)
+                        navigation.goBack();
+                        navigation.navigate('RegisterUserData', {
+                            user: responseData?.data,
+                            emailFlag: true,
+                        })
+                    }else {
+                        setUserInfo(responseData?.data)
+                    }
                 } else {
                     showLoadingSpinner(false)
                     alert(responseData.message)
@@ -205,16 +215,17 @@ function Login() {
     }
 
     const setUserInfo = (userData) => {
+        console.log('social login', userData)
         showLoadingSpinner(false)
         Global.AuthenticationToken = userData.remember_token
         AsyncStorage.setItem('token', Global.AuthenticationToken)
-        Global.Image = userData.image
-        Global.UserName = userData.first_name + userData.last_name
-        Global.phone = userData.phone
-        Global.email = userData.email
-        Global.UserId = userData.id
-        Global.UserType = String(userData.type)
+        Global.Image = userData?.image
+        Global.UserName = userData?.first_name + userData?.last_name
+        Global.phone = userData?.phone
+        Global.email = userData?.email
+        Global.UserId = userData?.id
         onLogin(userData, true)
+        // Global.UserType = String(userData.type)
     }
 
     return (

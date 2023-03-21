@@ -167,11 +167,11 @@ export default function MultiPackageDetails({ route }) {
         }
     }
     const subscribeMultiPackage = (value) => {
-        const userToken = Global.AuthenticationToken
-        if (userToken === '' || userToken === null) {
-            console.log('RUNNING THIS')
-            navigation.navigate('LoginModal', { name: 'modal' })
-        } else {
+        // const userToken = Global.AuthenticationToken
+        // if (userToken === '' || userToken === null) {
+        //     console.log('RUNNING THIS')
+        //     navigation.navigate('LoginModal', { name: 'modal' })
+        // } else {
             if (value === 'parent') {
                 console.log('her')
                 navigation.navigate('ParentSub', {
@@ -200,14 +200,14 @@ export default function MultiPackageDetails({ route }) {
                         .then(() => requestPurchase({ sku: iapId }))
                 }
             }
-        }
+        // }
     }
     const subscribeSinglePackage = (value) => {
-        const userToken = Global.AuthenticationToken
-        if (userToken === '' || userToken === null) {
-            console.log('RUNNING THIS')
-            navigation.navigate('LoginModal', { name: 'modal' })
-        }else {
+        // const userToken = Global.AuthenticationToken
+        // if (userToken === '' || userToken === null) {
+        //     console.log('RUNNING THIS')
+        //     navigation.navigate('LoginModal', { name: 'modal' })
+        // }else {
             if (value === 'parent') {
                 navigation.navigate('ParentSub', {
                     uniqueId,
@@ -235,7 +235,7 @@ export default function MultiPackageDetails({ route }) {
                         .then(() => requestPurchase({ sku: iapId }))
                 }
             }
-        }
+        // }
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
     }
 

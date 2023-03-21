@@ -36,6 +36,7 @@ const SubjectTeachers = () => {
     const [modalMessage, setModalMessage] = useState('')
     const route = useRoute()
     const { subject_id, teacher_id } = route.params
+    console.log('subject Id', subject_id, teacher_id);
     const {
         subjectTeachersPage,
         app: { loading },

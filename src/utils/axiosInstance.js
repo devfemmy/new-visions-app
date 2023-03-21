@@ -13,7 +13,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async config => {
     if (Global.AuthenticationToken) {
-      // config.headers.authorization = `Bearer ${Global.AuthenticationToken}`;
+      config.headers.authorization = `Bearer ${Global.AuthenticationToken}`;
     }
     return config;
   },

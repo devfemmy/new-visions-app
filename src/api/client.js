@@ -15,7 +15,7 @@ export const setInterceptors = (axios) => {
         async (config) => {
             const authToken = await AsyncStorage.getItem('token')
             if (authToken != null) {
-                // config.headers.Authorization = 'Bearer ' + authToken
+                config.headers.Authorization = 'Bearer ' + authToken
             }
             debugger
             config.baseURL = API_URL_Prod

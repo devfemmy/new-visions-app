@@ -138,10 +138,11 @@ function RegisterStages() {
             level_id: currentLevel,
             stage_id: currentStage?.id,
             email: emailAddress,
-            phone: user?.phone || phoneNumber,
+            phone: phoneNumber || user?.phone,
         }
         try {
             const res = await HomePageService.completeData(payload)
+            showLoadingSpinner(false)
             if (res.code === 200) {
                 showLoadingSpinner(false)
                 const newUser = {
