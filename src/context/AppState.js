@@ -77,6 +77,7 @@ export class AppState extends React.Component {
     }
 
     onLogout = () => {
+        AsyncStorage.removeItem('token')
         console.log('onLogout => ')
         Global.AuthenticationToken = '' || null
         this.setState({ user: null }, () => AsyncStorage.removeItem('user'))

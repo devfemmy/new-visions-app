@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {axios} from 'axios';
 import Global from '../../Global';
 
@@ -12,8 +13,9 @@ export const axiosInstance = axios.create({
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
   async config => {
-    if (Global.AuthenticationToken) {
-      // config.headers.authorization = `Bearer ${Global.AuthenticationToken}`;
+    const token = await AsyncStorage.getItem('token')
+    if (token) {
+      config.headers.authorization = `Bearer ${token}`;
     }
     return config;
   },

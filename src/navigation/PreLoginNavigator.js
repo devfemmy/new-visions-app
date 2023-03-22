@@ -316,9 +316,11 @@ const PreLoginNavigator = () => {
             <Stack.Screen
                 name="TeacherCourse"
                 component={TeacherCourse}
-                options={({ route }) => ({
-                    headerShown: true,
-                    title: I18n.t('TeacherCourse'),
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />
@@ -344,9 +346,11 @@ const PreLoginNavigator = () => {
             <Stack.Screen
                 name="SubjectTeachers"
                 component={SubjectTeachers}
-                options={({ route }) => ({
-                    headerShown: true,
-                    title: I18n.t('SubjectTeachers'),
+                component={Login}
+                options={() => ({
+                    headerShown: false,
+                    presentation: 'modal',
+                    title: I18n.t('StudyGuide'),
                     headerLeft: backRight,
                 })}
             />

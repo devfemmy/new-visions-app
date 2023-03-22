@@ -42,6 +42,7 @@ import { Loader } from '../../components/Loader'
 import { useNavigation } from '@react-navigation/native'
 import Global from '../../../Global'
 import SubscriptionModal from '../../components/SubscriptionModal'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function MultiPackageDetails({ route }) {
     const navigation = useNavigation()
@@ -166,12 +167,12 @@ export default function MultiPackageDetails({ route }) {
             setLoading(false)
         }
     }
-    const subscribeMultiPackage = (value) => {
-        // const userToken = Global.AuthenticationToken
-        // if (userToken === '' || userToken === null) {
-        //     console.log('RUNNING THIS')
-        //     navigation.navigate('LoginModal', { name: 'modal' })
-        // } else {
+    const subscribeMultiPackage = async (value) => {
+        const userToken = await AsyncStorage.getItem('token');
+        if (userToken === '' || userToken === null) {
+            console.log('RUNNING THIS')
+            navigation.navigate('LoginModal', { name: 'modal' })
+        } else {
             if (value === 'parent') {
                 console.log('her')
                 navigation.navigate('ParentSub', {
@@ -200,14 +201,14 @@ export default function MultiPackageDetails({ route }) {
                         .then(() => requestPurchase({ sku: iapId }))
                 }
             }
-        // }
+        }
     }
-    const subscribeSinglePackage = (value) => {
-        // const userToken = Global.AuthenticationToken
-        // if (userToken === '' || userToken === null) {
-        //     console.log('RUNNING THIS')
-        //     navigation.navigate('LoginModal', { name: 'modal' })
-        // }else {
+    const subscribeSinglePackage = async (value) => {
+        const userToken = await AsyncStorage.getItem('token');
+        if (userToken === '' || userToken === null) {
+            console.log('RUNNING THIS')
+            navigation.navigate('LoginModal', { name: 'modal' })
+        }else {
             if (value === 'parent') {
                 navigation.navigate('ParentSub', {
                     uniqueId,
@@ -235,7 +236,7 @@ export default function MultiPackageDetails({ route }) {
                         .then(() => requestPurchase({ sku: iapId }))
                 }
             }
-        // }
+        }
         //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
     }
 
