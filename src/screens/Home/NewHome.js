@@ -179,6 +179,18 @@ const Home = () => {
                         setFilterOption(item)
                         console.log('item returned xxxxxxxxxxxxxx', item)
                         return item
+                    } else if (
+                        !user?.level_id ||
+                        user?.level_id === null ||
+                        user?.level_id === undefined
+                    ) {
+                        const defaultFilterObject = {
+                            id: 3,
+                            image: '/stages/secondary.png',
+                            name: i18n.t('FirstSecondary'),
+                            package_image: '/package_stages/secondary.png',
+                        }
+                        setFilterOption(defaultFilterObject)
                     } else {
                         const userToken = Global.AuthenticationToken
                         if (userToken === '' || userToken === null) {
