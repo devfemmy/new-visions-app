@@ -57,7 +57,7 @@ const Home = () => {
     const [stagesArray, setStagesArray] = useState([])
     const [teachersArray, setTeachersArray] = useState(null)
     const [subjectsArray, setSubjectsArray] = useState(null)
-    const [videoId, setVideoId] = useState(null)
+    const [stageId, setStageId] = useState(null)
     //
     const [filterModal, setFilterModal] = useState(false)
     const [filterOption, setFilterOption] = useState({})
@@ -127,12 +127,11 @@ const Home = () => {
             })
     }
 
-    const homePage = async () => {
+    const homePage = async (level) => {
         showLoadingSpinner(true)
         const payload = {
-            level_id: currentLevel,
+            level_id: level ? level : currentLevel,
         }
-        //('payload', payload)
         try {
             const res = await HomePageService.homePage(payload)
             const data = res?.data
@@ -144,7 +143,7 @@ const Home = () => {
                 setSubjectsArray(data?.subjects)
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                 setVidId(id)
-                console.log('hmeeeeeeeee ========>')
+                // console.log('hmeeeeeeeee ========>')
                 // if (currentStage === '') {
                 //     setFilterOption(item)
                 // }
@@ -168,43 +167,65 @@ const Home = () => {
             const data = res?.data
             if (res.code === 200) {
                 showLoadingSpinner(false)
-                // //('data fetched here in get stages', data)
                 setStagesArray(data)
-                data.map((item) => {
-                    if (item?.id === user?.stage_id) {
-                        setFilterOption(item)
-                        console.log('item returned xxxxxxxxxxxxxx', item)
-                        return item
-                    } else if (item?.id === user?.level_id) {
-                        setFilterOption(item)
-                        console.log('item returned xxxxxxxxxxxxxx', item)
-                        return item
-                    } else if (
-                        !user?.level_id ||
-                        user?.level_id === null ||
-                        user?.level_id === undefined
-                    ) {
-                        const defaultFilterObject = {
-                            id: 3,
-                            image: '/stages/secondary.png',
-                            name: i18n.t('FirstSecondary'),
-                            package_image: '/package_stages/secondary.png',
-                        }
-                        setFilterOption(defaultFilterObject)
-                    } else {
-                        const userToken = Global.AuthenticationToken
-                        if (userToken === '' || userToken === null) {
-                            const defaultFilterObject = {
-                                id: 3,
-                                image: '/stages/secondary.png',
-                                name: i18n.t('FirstSecondary'),
-                                package_image: '/package_stages/secondary.png',
-                            }
-                            setFilterOption(defaultFilterObject)
-                        }
-                        return null
+                const userToken = user?.remember_token
+                if (userToken === '' || userToken === null || !user) {
+                    const defaultFilterObject = {
+                        id: 3,
+                        image: '/stages/secondary.png',
+                        name: i18n.t('FirstSecondary'),
+                        package_image: '/package_stages/secondary.png',
                     }
-                })
+                    setFilterOption(defaultFilterObject)
+                } else {
+                    const result = data.filter(
+                        (res) => res?.id === user?.stage_id
+                    )
+                    setFilterOption(result[0])
+                }
+                // data.map((item) => {
+                //     if (item?.id === stageId) {
+                //         setFilterOption(item)
+                //         console.log(
+                //             'item returned xxxxxxxxxxxxxx in stage',
+                //             item
+                //         )
+                //         // return item
+                //     } else if (item?.id === user?.stage_id) {
+                //         setFilterOption(item)
+                //         console.log(
+                //             'item returned xxxxxxxxxxxxxx in user',
+                //             item
+                //         )
+                //         // return item
+                //     }
+                //     // else if (
+                //     //     !user?.level_id ||
+                //     //     user?.level_id === null ||
+                //     //     user?.level_id === undefined
+                //     // ) {
+                //     //     const defaultFilterObject = {
+                //     //         id: 3,
+                //     //         image: '/stages/secondary.png',
+                //     //         name: i18n.t('FirstSecondary'),
+                //     //         package_image: '/package_stages/secondary.png',
+                //     //     }
+                //     //     setFilterOption(defaultFilterObject)
+                //     // }
+                //     else {
+                //         const userToken = Global.AuthenticationToken
+                //         if (userToken === '' || userToken === null) {
+                //             const defaultFilterObject = {
+                //                 id: 3,
+                //                 image: '/stages/secondary.png',
+                //                 name: i18n.t('FirstSecondary'),
+                //                 package_image: '/package_stages/secondary.png',
+                //             }
+                //             setFilterOption(defaultFilterObject)
+                //         }
+                //         return null
+                //     }
+                // })
             } else {
                 showLoadingSpinner(false)
                 // console.log('account is logged in another device')
@@ -262,12 +283,12 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getStages()
         const unsubscribe = navigation.addListener('focus', () => {
             getData()
             // dispatch(getHomePage())
-            homePage(user?.stage_id)
+            homePage(user?.level_id)
             getPackages()
+            getStages()
             // const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
             // setVideoId(id)
             // Send Notification Token
@@ -527,7 +548,7 @@ const Home = () => {
                         )}
                     </View>
                 </View>
-                {filterOption?.name === i18n.t('FirstPrimary') ? (
+                {filterOption?.id === 1 ? (
                     <>
                         <View
                             style={[

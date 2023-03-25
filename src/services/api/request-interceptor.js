@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import I18n from 'i18n-js'
+import { Platform } from 'react-native'
 
 export const reqInterceptor = async (req) => {
     const token = await AsyncStorage.getItem('token')
@@ -10,6 +11,7 @@ export const reqInterceptor = async (req) => {
     req.headers.Accept = 'application/json'
     req.headers.lang = I18n.locale
     req.headers.version = 4
+    req.headers.platform = Platform.OS === 'ios' ? 'IOS' : 'Android'
     if (token) {
         req.headers.Authorization = `Bearer ${token}`
     }

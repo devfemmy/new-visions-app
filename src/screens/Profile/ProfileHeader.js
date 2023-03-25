@@ -1,5 +1,12 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet,
+    Image,
+    Pressable,
+    Platform,
+} from 'react-native'
 import colors from '../../helpers/colors'
 import Global from '../../../Global'
 import IconText from '../../components/IconText'
@@ -14,37 +21,58 @@ import { IMAGEURL } from '../../utils/functions'
 
 export default function ProfileHeader() {
     const navigation = useNavigation()
-    const { user } = useContext(AppContext)
+    const { user, changeLang, lang } = useContext(AppContext)
+    const langTo = lang === 'ar' ? 'en' : 'ar'
+
     return (
         <View style={styles.outContainer}>
             <View style={styles.container}>
-                <Pressable
-                    onPress={() => {
-                        navigation.navigate('EditProfile')
-                    }}
+                <View
                     style={{
                         backgroundColor: 'inherit',
                         width: '100%',
                         opacity: 0.8,
                         justifyContent: 'flex-end',
-                        alignItems: 'flex-end',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
                         paddingHorizontal: 20,
                         // paddingBottom: 20,
                     }}
                 >
-                    <IconText
-                        style={styles.textAlign}
-                        text={I18n.t('Edit')}
-                        textColor={colors.white}
-                        children={
-                            <Ionicons
-                                name="create-outline"
-                                size={28}
-                                color={'#fff'}
-                            />
-                        }
-                    />
-                </Pressable>
+                    <Pressable
+                        onPress={() => {
+                            navigation.navigate('EditProfile')
+                        }}
+                    >
+                        <IconText
+                            style={styles.textAlign}
+                            text={I18n.t('Edit')}
+                            textColor={colors.white}
+                            children={
+                                <Ionicons
+                                    name="create-outline"
+                                    size={28}
+                                    color={'#fff'}
+                                />
+                            }
+                        />
+                    </Pressable>
+                    {Platform.OS === 'ios' && (
+                        <Pressable
+                            style={styles.touchLang2}
+                            onPress={() => {
+                                changeLang(langTo)
+                            }}
+                        >
+                            <View style={styles.lang}>
+                                <Text style={styles.langText}>
+                                    {I18n.t('Language')}
+                                </Text>
+                            </View>
+                        </Pressable>
+                    )}
+                </View>
                 <Image
                     style={styles.BG}
                     source={require('../../assets/img/profileHeader.png')}
@@ -114,5 +142,30 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
         color: colors.white,
+    },
+    //
+    touchLang2: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        // paddingTop: heightp(10),
+    },
+    lang: {
+        marginVertical: 5,
+        borderRadius: 30,
+        borderWidth: 1,
+        borderColor: colors.white,
+        width: 70,
+        // height: 40,
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // paddingVertical: heightp(20)
+    },
+    langText: {
+        color: colors.white,
+        fontSize: 20,
+        fontFamily: 'Cairo-Regular',
+        alignSelf: 'center',
     },
 })
