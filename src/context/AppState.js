@@ -31,15 +31,16 @@ export class AppState extends React.Component {
 
     initState = (user, lang) => {
         i18n.locale = lang
-        I18nManager.forceRTL(false)
-        this.setState({ user, lang, rtl: false, isLoading: false })
         if (lang !== 'ar') {
+            I18nManager.forceRTL(false)
+            this.setState({ user, lang, rtl: false, isLoading: false })
             if (I18nManager.isRTL) RNRestart.Restart()
         } else {
             I18nManager.forceRTL(true)
             this.setState({ user, lang, rtl: true, isLoading: false })
             if (!I18nManager.isRTL) RNRestart.Restart()
         }
+        AsyncStorage.setItem('lang', lang)
     }
 
     changeLang = async (lang) => {
