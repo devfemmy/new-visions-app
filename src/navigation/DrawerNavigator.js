@@ -7,7 +7,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
-import { TouchableOpacity, View, StyleSheet, Text } from 'react-native'
+import { TouchableOpacity, View, StyleSheet, Text, Platform, Pressable } from 'react-native'
 import { RootBottomTabNavigator } from './RootTabNavigator'
 import Home from '../screens/Home/Home'
 import BackIcon from '../assets/img/back.svg'
@@ -33,7 +33,8 @@ const Drawer = createDrawerNavigator()
 let session: ''
 const DrawerNavigator = () => {
     const navigation = useNavigation()
-    const { lang, user } = useContext(AppContext)
+    const { user, changeLang, lang } = useContext(AppContext)
+    const langTo = lang === 'ar' ? 'en' : 'ar'
     const backRight = () => (
         <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -97,6 +98,39 @@ const DrawerNavigator = () => {
                     <View style={styles.itemList}>
                         <DrawerItemList {...props} />
                     </View>
+                    {Platform.OS === 'ios' && (
+                        <Pressable
+                        onPress={() => {
+                            changeLang(langTo)
+                        }}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'flex-start',
+                            paddingHorizontal: 20,
+                            height: WINDOW_HEIGHT * 0.1,
+                            backgroundColor: colors.white,
+                        }}
+                    >
+                        <Ionicons
+                            name={'create-outline'}
+                            size={20}
+                            color={colors.primary}
+                            // style={{ paddingRight: 15 }}
+                        />
+                        <Text
+                            style={{
+                                ...defaultStyles.text,
+                                fontSize: 14,
+                                color: colors.primary,
+                                fontWeight: '700',
+                                fontStyle: 'normal',
+                                paddingRight: 35,
+                            }}
+                        >
+                            {I18n.t('Language')}
+                        </Text>
+                    </Pressable>
+                    )}
                     {user && (
                         <TouchableOpacity
                             onPress={() => {
@@ -128,6 +162,39 @@ const DrawerNavigator = () => {
                                 }}
                             >
                                 {I18n.t('logout')}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    {!user && (
+                        <TouchableOpacity
+                            onPress={() => {
+                            navigation.replace('Login')
+                            }}
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'flex-start',
+                                paddingHorizontal: 20,
+                                height: WINDOW_HEIGHT * 0.1,
+                                backgroundColor: colors.white,
+                            }}
+                        >
+                            <Ionicons
+                                name={'log-in'}
+                                size={20}
+                                color={colors.primary}
+                                // style={{ paddingRight: 15 }}
+                            />
+                            <Text
+                                style={{
+                                    ...defaultStyles.text,
+                                    fontSize: 14,
+                                    color: colors.primary,
+                                    fontWeight: '700',
+                                    fontStyle: 'normal',
+                                    paddingRight: 35,
+                                }}
+                            >
+                                {I18n.t('login')}
                             </Text>
                         </TouchableOpacity>
                     )}
