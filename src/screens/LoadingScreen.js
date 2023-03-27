@@ -7,15 +7,16 @@ import Global from '../../Global'
 
 const image = require('../assets/img/splash.png')
 function LoadingScreen() {
-    const { initState } = useContext(AppContext)
+    const { initState, lang: newLang } = useContext(AppContext)
 
-    const initAppState = () => {
-        AsyncStorage.multiGet(['user', 'lang'], (error, results) => {
+    const initAppState = async () => {
+        AsyncStorage.multiGet(['user', 'lang'], async (error, results) => {
             const user =
                 JSON.parse(results[0][1]) !== null
                     ? JSON.parse(results[0][1])
                     : null
-            const lang = results[1][1] !== null ? results[1][1] : 'ar'
+            // const lang = results[1][1] !== null ? results[1][1] : newLang
+            const lang =  await AsyncStorage.getItem('lang');
             console.log('user ==>', user)
             console.log('lang ==>', lang)
             Global.UserType = user?.type
@@ -26,7 +27,9 @@ function LoadingScreen() {
         })
     }
     useEffect(() => {
+        // AsyncStorage.setItem('lang', newLang);
         initAppState()
+        console.log('I AM CALLED', newLang);
     }, [])
     return (
         <Screen>

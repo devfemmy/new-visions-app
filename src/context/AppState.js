@@ -34,24 +34,27 @@ export class AppState extends React.Component {
         if (lang !== 'ar') {
             I18nManager.forceRTL(false)
             this.setState({ user, lang, rtl: false, isLoading: false })
+            AsyncStorage.setItem('lang', lang)
             if (I18nManager.isRTL) RNRestart.Restart()
         } else {
             I18nManager.forceRTL(true)
             this.setState({ user, lang, rtl: true, isLoading: false })
+            AsyncStorage.setItem('lang', lang)
             if (!I18nManager.isRTL) RNRestart.Restart()
         }
-        AsyncStorage.setItem('lang', lang)
     }
 
     changeLang = async (lang) => {
         // this.setState({ loadingSpinner: true })
+        AsyncStorage.setItem('lang', lang);
+        console.log('new language', lang);
         i18n.locale = lang
         this.setState({ lang })
         if (lang !== 'ar') {
             if (I18nManager.isRTL) {
                 await I18nManager.forceRTL(false)
                 this.setState({ lang, rtl: false }, () =>
-                    AsyncStorage.setItem('lang', lang)
+                    console.log('lang', lang)
                 )
             }
         } else {
@@ -59,7 +62,7 @@ export class AppState extends React.Component {
                 await I18nManager.forceRTL(true)
                 console.log(I18nManager.isRTL, 'what is rtl 222')
                 this.setState({ lang, rtl: true }, () =>
-                    AsyncStorage.setItem('lang', lang)
+                    console.log('lang', lang)
                 )
             }
         }

@@ -29,6 +29,7 @@ initTranslate()
 setInterceptors(axios)
 function App() {
     const { onLogout, lang } = useContext(AppContext)
+    const langTo = lang === 'ar' ? 'en' : 'ar'
     const { isIOS } = usePlatform()
     const purchaseUpdateSubscription = useRef(null)
     const purchaseErrorSubscription = useRef(null)

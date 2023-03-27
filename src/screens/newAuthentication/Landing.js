@@ -24,11 +24,12 @@ export default function Landing({ navigation }) {
     const [focusPar, setFocusPar] = useState(false)
 
     const discoverClicked = () => {
-        AsyncStorage.clear()
+        AsyncStorage.removeItem('user')
         navigation.replace('Home')
     }
     const createClicked = () => {
-        AsyncStorage.clear()
+        // AsyncStorage.clear()
+        AsyncStorage.removeItem('user')
         navigation.navigate('Login', { name: 'Login' })
     }
     return (
