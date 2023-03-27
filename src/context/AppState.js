@@ -74,6 +74,14 @@ export class AppState extends React.Component {
         this.setState({ user }, () => {
             if (remember_me)
                 AsyncStorage.setItem('user', JSON.stringify(this.state.user))
+            AsyncStorage.setItem(
+                'stage_id',
+                JSON.stringify(this.state.user?.stage_id)
+            )
+            AsyncStorage.setItem(
+                'level_id',
+                JSON.stringify(this.state.user?.level_id)
+            )
         })
     }
 

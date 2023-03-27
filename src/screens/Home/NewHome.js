@@ -161,6 +161,13 @@ const Home = () => {
     }
 
     const getStages = async () => {
+        const session = await AsyncStorage.getItem('stage_id')
+        stageFromAsync = JSON.parse(session)
+        console.log(
+            'type and stageFromAsync',
+            typeof stageFromAsync,
+            stageFromAsync
+        )
         // showLoadingSpinner(true)
         try {
             const res = await HomePageService.getStages()
@@ -179,7 +186,7 @@ const Home = () => {
                     setFilterOption(defaultFilterObject)
                 } else {
                     const result = data.filter(
-                        (res) => res?.id === user?.stage_id
+                        (res) => res?.id === stageFromAsync
                     )
                     setFilterOption(result[0])
                 }
@@ -1416,6 +1423,10 @@ const Home = () => {
                                             onPress={() => {
                                                 setCurrentLevelIndex(index)
                                                 setCurrentLevel(item?.id)
+                                                AsyncStorage.setItem(
+                                                    'level_id',
+                                                    JSON.stringify(item?.id)
+                                                )
                                             }}
                                         >
                                             <Text
@@ -1508,6 +1519,10 @@ const Home = () => {
                                                     setCurrentIndex(index)
                                                     setCurrentStage(item)
                                                     setFilterOption(item)
+                                                    AsyncStorage.setItem(
+                                                        'stage_id',
+                                                        JSON.stringify(item?.id)
+                                                    )
                                                 }}
                                             >
                                                 <FastImage
@@ -1540,6 +1555,10 @@ const Home = () => {
                                                     setCurrentIndex(index)
                                                     setCurrentStage(item)
                                                     setFilterOption(item)
+                                                    AsyncStorage.setItem(
+                                                        'stage_id',
+                                                        JSON.stringify(item?.id)
+                                                    )
                                                 }}
                                             >
                                                 <Text
