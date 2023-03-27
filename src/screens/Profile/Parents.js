@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message'
 import Global from '../../../Global'
 
 export default function Parents({ navigation }) {
-    const { onLogout, showLoadingSpinner, lang } = useContext(AppContext)
+    const { onLogout, showLoadingSpinner, lang, user } = useContext(AppContext)
     const [parents, setParents] = useState([])
     const [loadingContent, setLoadingContent] = useState(true)
 
@@ -25,7 +25,7 @@ export default function Parents({ navigation }) {
                     headers: {
                         'Content-Type': 'application/json',
                         'Acess-Control-Allow-Origin': '*',
-                        Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Authorization: `Bearer ${user.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
                         version: 4,

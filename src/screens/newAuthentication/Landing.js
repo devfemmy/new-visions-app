@@ -24,6 +24,7 @@ export default function Landing({ navigation }) {
     const [focusPar, setFocusPar] = useState(false)
 
     const discoverClicked = () => {
+        AsyncStorage.clear()
         navigation.navigate('Home')
     }
     const createClicked = () => {
