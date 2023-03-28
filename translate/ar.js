@@ -384,7 +384,7 @@ const Arabic = {
 
     // new design translation
     DiscoverNewVisions: 'اكتشف نيو فيجن',
-    CreateANewAccount2: 'تسجيل حساب جديد',
+    CreateANewAccount2: 'تسجيل الدخول-حساب جديد',
     PleaseAddVerificationCode: 'الرجاء ادخال  الكود',
     ContinueWithGoogle: 'تسجيل الدخول عبر جوجل',
     ContinueWithApple: 'تسجيل الدخول عبر ابل',
@@ -395,7 +395,7 @@ const Arabic = {
     FirstSecondary: 'أول ثانوي',
     ChooseYourStageOfStudy: 'اختر مرحلتك الدراسية',
     ChooseYourClass: 'اختر صفك',
-    Apply: 'تطبيق',
+    Apply: 'التالي',
 }
 
 export default Arabic
