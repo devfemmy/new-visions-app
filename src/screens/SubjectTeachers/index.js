@@ -36,7 +36,6 @@ const SubjectTeachers = () => {
     const [modalMessage, setModalMessage] = useState('')
     const route = useRoute()
     const { subject_id, teacher_id } = route.params
-    console.log('subject Id', subject_id, teacher_id);
     const {
         subjectTeachersPage,
         app: { loading },
@@ -244,6 +243,7 @@ const SubjectTeachers = () => {
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     renderItem={({ item }) => {
+                        console.log('item in subject teachers', item)
                         return (
                             <>
                                 <TeachersDetailCard
@@ -269,6 +269,7 @@ const SubjectTeachers = () => {
                                         item?.subject?.number_of_students
                                     }
                                     uri={`${IMAGEURL}/${item?.user?.image}`}
+                                    image={item?.user?.image}
                                     contents={`${item?.user?.first_name} ${item?.user?.last_name}`}
                                 />
                             </>

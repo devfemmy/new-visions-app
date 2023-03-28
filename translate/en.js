@@ -377,7 +377,7 @@ const English = {
 
     // new design translation
     DiscoverNewVisions: 'Discover New Visions',
-    CreateANewAccount2: 'Create A New Account',
+    CreateANewAccount2: 'Login-Register',
     PleaseAddVerificationCode: 'Please add verification code',
     ContinueWithGoogle: 'Continue with google',
     ContinueWithApple: 'Continue with Apple ID',
@@ -388,7 +388,7 @@ const English = {
     FirstSecondary: 'Secondary',
     ChooseYourStageOfStudy: 'Choose your stage of study',
     ChooseYourClass: 'Choose your class',
-    Apply: 'Apply',
+    Apply: 'Next',
 }
 
 export default English
