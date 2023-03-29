@@ -1,6 +1,6 @@
 import { I18nManager } from 'react-native'
 
-export const IMAGEURL = 'https://www.newvisions.sa/storage/';
+export const IMAGEURL = 'https://mo.visionsplus.net/public/storage';
 export const IMAGEURL2 = 'https://mo.visionsplus.net/public';
 
 export const getKey = (key) => {
