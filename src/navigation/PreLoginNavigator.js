@@ -93,7 +93,7 @@ const PreLoginNavigator = () => {
             }}
         >
             {lang === 'ar' ? (
-                <BackIcon width={20} height={20} />
+                <ForwardIcon width={20} height={20} />
             ) : (
                 <BackIcon width={20} height={20} />
             )}
