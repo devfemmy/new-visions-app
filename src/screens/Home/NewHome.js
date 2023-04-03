@@ -132,6 +132,7 @@ const Home = () => {
         const payload = {
             level_id: level ? level : currentLevel,
         }
+        console.log('================== hmeeeeeeeee ========>', payload)
         try {
             const res = await HomePageService.homePage(payload)
             const data = res?.data
@@ -143,7 +144,6 @@ const Home = () => {
                 setSubjectsArray(data?.subjects)
                 const id = parseInt(data?.video.replace(/[^0-9]/g, ''))
                 setVidId(id)
-                // console.log('hmeeeeeeeee ========>')
                 // if (currentStage === '') {
                 //     setFilterOption(item)
                 // }
@@ -384,6 +384,7 @@ const Home = () => {
     const navigateSubjectsDetails = useCallback(
         (item) => {
             const { id, title, image } = item
+            console.log("id in subkect", id)
             const uri = `${IMAGEURL}/${image}`
             if (id)
                 navigation.navigate('DisplaySubject', {

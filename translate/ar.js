@@ -13,8 +13,8 @@ const Arabic = {
     DontHaveAnAccount: 'ليس لديك حساب في منصة نيو فيجين؟',
     ForgotPassword: 'هل نسيت كلمة السر؟',
     CreateANewAccount: 'انشاء حساب جديد',
-    ContinueWithGoogle: 'الدخول بحساب جوجل',
-    ContinueWithApple: 'الدخول بحساب Apple',
+    ContinueWithGoogle: 'تسجيل الدخول بحساب',
+    ContinueWithApple: 'تسجيل الدخول بحساب Apple',
     Gmail: 'جيميل',
     Apple: 'ابل',
 
@@ -384,7 +384,7 @@ const Arabic = {
 
     // new design translation
     DiscoverNewVisions: 'اكتشف نيو فيجن',
-    CreateANewAccount2: 'تسجيل الدخول-حساب جديد',
+    CreateANewAccount2: 'دخول - انشاء حساب',
     PleaseAddVerificationCode: 'الرجاء ادخال  الكود',
     ContinueWithGoogle: 'تسجيل الدخول عبر جوجل',
     ContinueWithApple: 'تسجيل الدخول عبر ابل',
