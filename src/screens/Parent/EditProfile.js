@@ -180,14 +180,16 @@ class EditProfile extends Component {
             )
             .then((response) => {
                 if (response.data.code === 200) {
-                    if (Global.UserName) {
-                        alert('Your data has been updated Succssfully!')
+                    if (Global?.UserName) {
+                        this.setState({ loading: false })
+                        alert('Your data has been updated Successfully!')
                         replace('Main')
                         this.getUpdatedProfile({ lang, onLogin })
-                        return response.data.code
+                        // return response.data.code
                     } else {
+                        this.setState({ loading: false })
                         Alert.alert(
-                            'Your data has been updated Succssfully!',
+                            'Your data has been updated Successfully!',
                             'To synchronize your data we will need to restart the app',
                             [
                                 {
@@ -202,7 +204,7 @@ class EditProfile extends Component {
                                 cancelable: false,
                             }
                         )
-                        return response.data.code
+                        // return response.data.code
                     }
                     // console.log(BroadcastData);
                 } else if (response.data.code === -2) {
@@ -287,7 +289,7 @@ class EditProfile extends Component {
             })
             .catch((error) => {
                 // alert(error)
-                console.log(error)
+                console.log('error in the response', error)
             })
             .finally(() => {
                 // setIsLoading(false)
@@ -324,11 +326,11 @@ class EditProfile extends Component {
                 data.append('image', photo ? photo : null)
             }
             // if (user?.gender) {
-            data.append('gender', user?.gender ? user?.gender : null)
+            data.append('gender', user?.gender ? user?.gender : 1)
             // }
             data.append(
                 'level_id',
-                currentLevel ? currentLevel : user?.stage_id
+                currentLevel ? currentLevel : user?.level_id
             )
 
             this.updateProfile({ data, lang, onLogin })
@@ -398,35 +400,56 @@ class EditProfile extends Component {
                 this.setState({
                     stagesArray: data,
                 })
-                data.map((item) => {
-                    if (item?.id === user?.level_id) {
-                        this.setState({
-                            stageOption: item,
-                        })
-                        console.log('item returned xxxxxxxxxxxxxx', item)
-                        return item
-                    } else if (item?.id === user?.stage_id) {
-                        this.setState({
-                            stageOption: item,
-                        })
-                        console.log('item returned xxxxxxxxxxxxxx', item)
-                        return item
-                    } else {
-                        const userToken = Global.AuthenticationToken
-                        if (userToken === '' || userToken === null) {
-                            const defaultFilterObject = {
-                                id: 3,
-                                image: '/stages/secondary.png',
-                                name: I18n.t('FirstSecondary'),
-                                package_image: '/package_stages/secondary.png',
-                            }
-                            this.setState({
-                                stageOption: defaultFilterObject,
-                            })
-                        }
-                        return null
+                const userToken = user?.remember_token
+                if (userToken === '' || userToken === null || !user) {
+                    const defaultFilterObject = {
+                        id: 3,
+                        image: '/stages/secondary.png',
+                        name: i18n.t('FirstSecondary'),
+                        package_image: '/package_stages/secondary.png',
                     }
-                })
+                    this.setState({
+                        stageOption: defaultFilterObject,
+                    })
+                } else {
+                    const result = data.filter(
+                        (res) => res?.id === stageFromAsync
+                    )
+                    // setFilterOption(result[0])
+                    console.log('result[0]', result)
+                    this.setState({
+                        stageOption: result[0],
+                    })
+                }
+                // data.map((item) => {
+                //     if (item?.id === user?.level_id) {
+                //         this.setState({
+                //             stageOption: item,
+                //         })
+                //         console.log('item returned xxxxxxxxxxxxxx', item)
+                //         return item
+                //     } else if (item?.id === user?.stage_id) {
+                //         this.setState({
+                //             stageOption: item,
+                //         })
+                //         console.log('item returned xxxxxxxxxxxxxx', item)
+                //         return item
+                //     } else {
+                //         const userToken = Global.AuthenticationToken
+                //         if (userToken === '' || userToken === null) {
+                //             const defaultFilterObject = {
+                //                 id: 3,
+                //                 image: '/stages/secondary.png',
+                //                 name: I18n.t('FirstSecondary'),
+                //                 package_image: '/package_stages/secondary.png',
+                //             }
+                //             this.setState({
+                //                 stageOption: defaultFilterObject,
+                //             })
+                //         }
+                //         return null
+                //     }
+                // })
             } else {
                 // showLoadingSpinner(false)
                 // console.log('account is logged in another device')
