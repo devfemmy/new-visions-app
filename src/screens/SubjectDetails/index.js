@@ -24,6 +24,7 @@ import colors from '../../helpers/colors'
 import { globalStyles } from '../../helpers/globalStyles'
 import HomePageService from '../../services/userServices'
 import { AppContext } from '../../context/AppState'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 LogBox.ignoreAllLogs()
 const SubjectDetails = () => {
@@ -42,9 +43,11 @@ const SubjectDetails = () => {
 
     const getSubject = async () => {
         setLoading(true)
+        const levelFromAsync = await AsyncStorage.getItem('level_id')
         const payload = {
-            level: user?.level_id,
+            level: levelFromAsync,
         }
+        console.log(payload, 'xxxxxxxxxxxxx')
         try {
             const res = await HomePageService.getSubjects(payload)
             const data = res?.data?.data

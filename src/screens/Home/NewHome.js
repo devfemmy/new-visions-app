@@ -132,10 +132,13 @@ const Home = () => {
         const payload = {
             level_id: level ? level : currentLevel,
         }
+        console.log('home page payload', payload)
         try {
             const res = await HomePageService.homePage(payload)
             const data = res?.data
             if (res.code === 200) {
+                console.log('subjects returned', data?.subjects)
+
                 showLoadingSpinner(false)
                 setPackagesArray(data?.multi_packages)
                 // setStagesArray(data?.stages)
@@ -293,7 +296,7 @@ const Home = () => {
         const unsubscribe = navigation.addListener('focus', () => {
             getData()
             // dispatch(getHomePage())
-            homePage(user?.level_id)
+            // homePage(user?.level_id)
             getPackages()
             getStages()
             // const id = parseInt(videoId?.replace(/[^0-9]/g, ''))
@@ -331,6 +334,8 @@ const Home = () => {
 
     const getData = async () => {
         const dataFromAsync = await AsyncStorage.getItem('user')
+        const levelFromAsync = await AsyncStorage.getItem('level_id')
+        homePage(levelFromAsync)
         session = JSON.parse(dataFromAsync)
         // //('data in the async storage', session)
     }
@@ -434,7 +439,6 @@ const Home = () => {
         console.log('am inside the level func')
         setIsVisibleLevel(!isVisibleLevel)
     }
-
 
     return (
         <>
@@ -608,7 +612,6 @@ const Home = () => {
                                     onEndReachedThreshold={0.5}
                                     renderItem={({ item, index }) => {
                                         const uri = `${IMAGEURL}/${item.image}`
-
                                         return (
                                             <Pressable
                                                 onPress={() => {
