@@ -1,8 +1,8 @@
 import baseAxios from './api/baseAxios'
 
 export default class HomePageService {
-    static async homePage() {
-        const res = await baseAxios.post('/homePage')
+    static async homePage(data) {
+        const res = await baseAxios.post('/homePage', data)
         return res?.data || res
     }
 
