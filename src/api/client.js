@@ -19,7 +19,7 @@ export const setInterceptors = (axios) => {
             }
             debugger
             config.baseURL = API_URL_Prod
-            config.headers.version = '4'
+            config.headers.version = '5'
 
             config.headers.platform = Platform.OS === 'ios' ? 'IOS' : 'Android'
             config.headers['content-type'] = 'application/json'

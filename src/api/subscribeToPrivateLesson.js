@@ -5,7 +5,7 @@ export const subscribeToPrivateLesson = async ({ id, setLoading }) => {
   setLoading(true);
   try {
     const response = await axios.post(
-      'https://mo.visionsplus.net/api/subscribeToPrivateCourse',
+      'https://newvisions.sa/api/subscribeToPrivateCourse',
       {
         subject_id: id,
       },

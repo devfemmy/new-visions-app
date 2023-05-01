@@ -5,7 +5,7 @@ export const getStages = ({ setIsLoading, setStages }) => {
   setIsLoading(true);
   axios
     .post(
-      'https://mo.visionsplus.net/api/getStages', // URL
+      'https://newvisions.sa/api/getStages', // URL
       {},
       {
         // config

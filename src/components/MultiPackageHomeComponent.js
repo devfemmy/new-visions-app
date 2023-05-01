@@ -21,7 +21,7 @@ function MultiPackageHomeComp({
         <Card>
           <Card.Cover
             style={{height: 140, resizeMode: 'contain'}}
-            source={{uri: `https://mo.visionsplus.net/storage/${PImage}`}}
+            source={{uri: `https://newvisions.sa/storage/${PImage}`}}
             // source={require('../../assets/multi.jpg')}
           />
         </Card>

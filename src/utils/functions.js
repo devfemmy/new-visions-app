@@ -1,7 +1,7 @@
 import { I18nManager } from 'react-native'
 
-export const IMAGEURL = 'https://mo.visionsplus.net/public/storage';
-export const IMAGEURL2 = 'https://mo.visionsplus.net/public';
+export const IMAGEURL = 'https://newvisions.sa/public/storage';
+export const IMAGEURL2 = 'https://newvisions.sa/public';
 
 export const getKey = (key) => {
     let isAr = I18nManager.isRTL

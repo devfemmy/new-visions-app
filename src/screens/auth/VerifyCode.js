@@ -26,7 +26,7 @@ export default function VerifyConfirmPassword({ route, navigation }) {
     const VerifyAPI = () => {
         setLoading(true)
         axios
-            .post('https://mo.visionsplus.net/api/verifyForgetPassword', {
+            .post('https://newvisions.sa/api/verifyForgetPassword', {
                 phone:
                     route.params.phone != undefined ? route.params.phone : null,
                 code: CodeInput,

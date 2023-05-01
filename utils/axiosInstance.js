@@ -3,7 +3,7 @@ import {axios} from 'axios';
 import Global from '../../Global';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://mo.visionsplus.net/api/',
+  baseURL: 'https://newvisions.sa/api/',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

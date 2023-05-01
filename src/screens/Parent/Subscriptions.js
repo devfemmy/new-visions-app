@@ -44,7 +44,7 @@ export default function Subscriptions({}) {
     function getSonSubscriptions() {
         axios
             .post(
-                'https://mo.visionsplus.net/api/getUserSubscription',
+                'https://newvisions.sa/api/getUserSubscription',
                 {
                     // getChildPayments (this can be returned whenever the child API wants to be used)
                     // child_id: route.params.id,

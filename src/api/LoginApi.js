@@ -5,7 +5,7 @@ import Global from '../../Global';
 
 export const LoginAPI = ({ email, password, navigation }) => {
   axios
-    .post('https://mo.visionsplus.net/api/login', {
+    .post('https://newvisions.sa/api/login', {
       email,
       password,
     })

@@ -48,7 +48,7 @@ function Login() {
     const socialAuthApi = ({ givenName, familyName, email, id, type }) => {
         console.log('I AM HERE')
         axios
-            .post('https://mo.visionsplus.net/api/signupExternal', {
+            .post('https://newvisions.sa/api/signupExternal', {
                 first_name: givenName,
                 last_name: familyName,
                 email,
@@ -154,7 +154,7 @@ function Login() {
     const submitLogin = (values) => {
         showLoadingSpinner(true)
         axios
-            .post('https://mo.visionsplus.net/api/login', {
+            .post('https://newvisions.sa/api/login', {
                 email: values.email,
                 password: values.password,
             })

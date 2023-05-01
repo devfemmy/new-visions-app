@@ -5,7 +5,7 @@ export const getLevels = ({ activeStage, setLevelIsLoading, setLevels }) => {
   setLevelIsLoading(true);
   axios
     .post(
-      'https://mo.visionsplus.net/api/getLevels', // URL
+      'https://newvisions.sa/api/getLevels', // URL
       {
         stage_id: activeStage?.id,
       },

@@ -8,7 +8,7 @@ export const updateProfile = ({ data, setIsLoading }) => {
   setIsLoading(true);
   axios
     .post(
-      'https://mo.visionsplus.net/api/editUserProfile', // URL
+      'https://newvisions.sa/api/editUserProfile', // URL
       data,
       {
         // config

@@ -5,7 +5,7 @@ export const privateLessonPaymentSuccess = async ({ subscribeData, setLoading })
   setLoading(true);
   try {
     const response = await axios.post(
-      'https://mo.visionsplus.net/api/privateCoursePaySuccess',
+      'https://newvisions.sa/api/privateCoursePaySuccess',
       subscribeData,
       {
         headers: {

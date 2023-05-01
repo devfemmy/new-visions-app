@@ -36,7 +36,7 @@ const WebViewComponent = () => {
                     if (
                         liveNow === 'liveNow' &&
                         title === 'New Visions - Login' &&
-                        url === 'https://mo.visionsplus.net/login'
+                        url === 'https://newvisions.sa/login'
                     ) {
                         navigateLiveNowQuiz(item)
                         console.log('pressed')

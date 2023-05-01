@@ -24,7 +24,7 @@ export default function VerifyEnterEmail({ navigation }) {
     const ForgetPasswordAPI = () => {
         setLoading(true)
         axios
-            .post('https://mo.visionsplus.net/api/forgetPassword', {
+            .post('https://newvisions.sa/api/forgetPassword', {
                 phone: InputValue,
             })
             .then(function (response) {

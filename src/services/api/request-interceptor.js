@@ -10,7 +10,7 @@ export const reqInterceptor = async (req) => {
     req.headers['content-type'] = 'application/json'
     req.headers.Accept = 'application/json'
     req.headers.lang = I18n.locale
-    req.headers.version = 4
+    req.headers.version = 5
     req.headers.platform = Platform.OS === 'ios' ? 'IOS' : 'Android'
     if (token) {
         req.headers.Authorization = `Bearer ${token}`

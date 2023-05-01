@@ -11,7 +11,7 @@ import { subscribeToMultiPackage } from './subscribeToMultiPackage';
 export const validateReceiptIOS = async ({ purchase, subscriptionInfo, setIsLoading }) => {
   try {
     const response = await axios.post(
-      'https://mo.visionsplus.net/api/verifySubscription',
+      'https://newvisions.sa/api/verifySubscription',
       { receipt: purchase.transactionReceipt },
 
       {

@@ -91,7 +91,7 @@ const Home = () => {
 
     function getPackages(params) {
         axios
-            .post('https://mo.visionsplus.net/api/getPackages', {})
+            .post('https://newvisions.sa/api/getPackages', {})
             .then((response) => {
                 //('success message xxxxx', response.data)
                 if (
@@ -259,7 +259,7 @@ const Home = () => {
     const getChildren = (value) => {
         //showLoadingSpinner(true);
         axios
-            .post('https://mo.visionsplus.net/api/getUserChildren', {})
+            .post('https://newvisions.sa/api/getUserChildren', {})
             .then((response) => {
                 // //('home response', response.data)
                 //alert(response.data.code);

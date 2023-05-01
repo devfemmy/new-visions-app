@@ -62,7 +62,7 @@ export default function Attendance({}) {
         console.log('params', route.params.id)
         axios
             .post(
-                'https://mo.visionsplus.net/api/getAttendance',
+                'https://newvisions.sa/api/getAttendance',
                 {
                     // child_id: route.params.id,
                     month: monthNo,
@@ -111,7 +111,7 @@ export default function Attendance({}) {
         console.log('getting child attendance', route.params.id)
         axios
             .post(
-                'https://mo.visionsplus.net/api/getChildAttendance',
+                'https://newvisions.sa/api/getChildAttendance',
                 {
                     child_id: route.params.id,
                     month: monthNo,
@@ -161,7 +161,7 @@ export default function Attendance({}) {
         showLoadingSpinner(true)
         axios
             .post(
-                'https://mo.visionsplus.net/api/getRecords',
+                'https://newvisions.sa/api/getRecords',
                 {
                     // child_id: route.params.id,
                     attendance_id: id.toString(),

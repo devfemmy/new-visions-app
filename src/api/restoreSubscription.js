@@ -9,7 +9,7 @@ export const restoreSubscription = async ({ billNumber, setIsLoading }) => {
     .then(() => {
       axios
         .post(
-          'https://mo.visionsplus.net/api/restoreSubscription',
+          'https://newvisions.sa/api/restoreSubscription',
           { bill_number: billNumber },
           {
             headers: {

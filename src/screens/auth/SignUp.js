@@ -62,7 +62,7 @@ function Registration({ navigation }) {
     const SignupAPI = (values) => {
         setLoading(true)
         axios
-            .post('https://mo.visionsplus.net/api/signup', {
+            .post('https://newvisions.sa/api/signup', {
                 first_name: values.firstName,
                 last_name: values.lastName,
                 email: values.email,
@@ -291,7 +291,7 @@ function Registration({ navigation }) {
                                             }}
                                             onPress={() => {
                                                 Linking.openURL(
-                                                    'https://mo.visionsplus.net/terms_and_conditions'
+                                                    'https://newvisions.sa/terms_and_conditions'
                                                 )
                                             }}
                                         >

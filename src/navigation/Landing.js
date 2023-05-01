@@ -23,7 +23,7 @@ export default function Landing({ navigation }) {
     const [focusSt, setFocusSt] = useState(false)
     const [focusPar, setFocusPar] = useState(false)
 
-    const https://mo.visionsplus.netClicked = () => {
+    const https://newvisions.saClicked = () => {
         navigation.replace('Home')
     }
     const createClicked = () => {
@@ -67,11 +67,11 @@ export default function Landing({ navigation }) {
                     >
                         <TouchableOpacity
                             style={styles.loginBtn}
-                            onPress={() => https://mo.visionsplus.netClicked()}
+                            onPress={() => https://newvisions.saClicked()}
                         >
                             <View style={styles.loginBtnView}>
                                 <Text style={styles.loginText}>
-                                    {I18n.t('https://mo.visionsplus.netNewVisions')}
+                                    {I18n.t('https://newvisions.saNewVisions')}
                                 </Text>
                             </View>
                         </TouchableOpacity>

@@ -6,7 +6,7 @@ export const checkCoupon = ({ code, setCouponIsLoading, setCouponData }) => {
   setCouponIsLoading(true);
   axios
     .post(
-      'https://mo.visionsplus.net/api/checkCoupon', // URL
+      'https://newvisions.sa/api/checkCoupon', // URL
       {
         code,
       },

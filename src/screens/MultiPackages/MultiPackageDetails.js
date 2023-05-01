@@ -65,7 +65,7 @@ export default function MultiPackageDetails({ route }) {
     async function getMultiPackageDetails(params) {
         return await axios
             .post(
-                'https://mo.visionsplus.net/api/getMultiPackageDetails',
+                'https://newvisions.sa/api/getMultiPackageDetails',
                 {
                     package_id: item?.id,
                 },

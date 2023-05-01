@@ -7,7 +7,7 @@ import { navigate, replace } from '../../Navigator';
 
 export const socialAuthApi = ({ firstName, lastName, email, id, type, navigation }) => {
   axios
-    .post('https://mo.visionsplus.net/api/signupExternal', {
+    .post('https://newvisions.sa/api/signupExternal', {
       first_name: firstName,
       last_name: lastName,
       email,

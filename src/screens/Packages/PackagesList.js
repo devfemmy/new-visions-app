@@ -27,7 +27,7 @@ export default function PackagesList({ route, navigation }) {
     async function getPackages(params) {
         return await axios
             .post(
-                'https://mo.visionsplus.net/api/getPackages',
+                'https://newvisions.sa/api/getPackages',
                 {
                     stage_id: route.params.stage_id,
                 },
@@ -94,7 +94,7 @@ export default function PackagesList({ route, navigation }) {
     const shareDetails = async (item) => {
         try {
             const result = await Share.share({
-                url: 'https://mo.visionsplus.net/multi_package/' + item.id,
+                url: 'https://newvisions.sa/multi_package/' + item.id,
             })
             if (result.action === Share.sharedAction) {
                 if (result.activityType) {
