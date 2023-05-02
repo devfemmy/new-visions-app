@@ -154,7 +154,6 @@ const StudentGuide = () => {
                         onEndReachedThreshold={0.5}
                         renderItem={({ item }) => (
                             <>
-                                <>{console.log(item.id)}</>
                                 <StudentGuideCard
                                     // subjectDetails
                                     viewProfile={

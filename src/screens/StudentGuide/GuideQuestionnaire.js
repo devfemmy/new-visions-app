@@ -325,7 +325,8 @@ const GuideQuestionnaire = () => {
                         alignSelf: 'center',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        marginVertical: 20,
+                        marginVertical: 10,
+                        marginBottom: 35,
                         borderRadius: 20,
                     }}
                 >
