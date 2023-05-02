@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useContext } from 'react'
 import {
     StyleSheet,
     View,
@@ -13,9 +13,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 
 // import { signInGoogle, onAppleButtonPress } from '../../api/socialAuth';
 import I18n from 'i18n-js'
+import { AppContext } from '../../context/AppState'
 
 export function SocialButtons({ signInGoogle, onAppleButtonPress }) {
-    const { lang } = I18n.locale
+    // const { lang } = I18n.locale
+    const { lang } = useContext(AppContext)
     const isIOS = Platform.OS === 'ios'
 
     return (

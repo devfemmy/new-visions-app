@@ -168,7 +168,7 @@ export default function MultiPackageDetails({ route }) {
         }
     }
     const subscribeMultiPackage = async (value) => {
-        const userToken = await AsyncStorage.getItem('token');
+        const userToken = await AsyncStorage.getItem('token')
         if (userToken === '' || userToken === null) {
             console.log('RUNNING THIS')
             navigation.navigate('LoginModal', { name: 'modal' })
@@ -204,11 +204,11 @@ export default function MultiPackageDetails({ route }) {
         }
     }
     const subscribeSinglePackage = async (value) => {
-        const userToken = await AsyncStorage.getItem('token');
+        const userToken = await AsyncStorage.getItem('token')
         if (userToken === '' || userToken === null) {
             console.log('RUNNING THIS')
             navigation.navigate('LoginModal', { name: 'modal' })
-        }else {
+        } else {
             if (value === 'parent') {
                 navigation.navigate('ParentSub', {
                     uniqueId,
@@ -340,12 +340,12 @@ export default function MultiPackageDetails({ route }) {
                         <View style={styles.countHalfContainer}>
                             <View
                                 style={{
-                                    width: 45,
+                                    width: 40,
                                     height: 40,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     backgroundColor: colors.primary,
-                                    borderRadius: 25,
+                                    borderRadius: 40 / 2,
                                 }}
                             >
                                 <MaterialIcons
@@ -400,7 +400,10 @@ export default function MultiPackageDetails({ route }) {
                             {description && (
                                 <HTML
                                     tagsStyles={{
-                                        div: { textAlign: 'left' },
+                                        div: {
+                                            textAlign: 'left',
+                                            color: colors.dark,
+                                        },
                                     }}
                                     source={{ html: description.description }}
                                     imagesMaxWidth={
@@ -588,5 +591,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: heightp(15),
         lineHeight: heightp(20),
+        color: colors.dark,
     },
 })

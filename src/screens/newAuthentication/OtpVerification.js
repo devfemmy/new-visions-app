@@ -45,15 +45,18 @@ function OtpVerification() {
                     emailFlag: false,
                 })
             } else if (res.code === 200) {
-                const socialData = res.data;
-                if (socialData?.phone === 123456 || socialData?.phone === '123456') {
+                const socialData = res.data
+                if (
+                    socialData?.phone === 123456 ||
+                    socialData?.phone === '123456'
+                ) {
                     showLoadingSpinner(false)
                     // navigation.goBack();
                     navigation.navigate('RegisterUserData', {
                         user: res?.data,
                         emailFlag: true,
                     })
-                }else {
+                } else {
                     setUserInfo(res?.data)
                 }
                 // setUserInfo(res?.data)
@@ -77,8 +80,8 @@ function OtpVerification() {
         Global.phone = userData?.phone
         Global.email = userData?.email
         Global.UserId = userData?.id
+        Global.UserType = userData.type
         onLogin(userData, true)
-        // Global.UserType = String(userData.type)
     }
     return (
         <>
