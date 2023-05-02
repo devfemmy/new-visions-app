@@ -81,15 +81,18 @@ function Login() {
                     })
                 } else if (responseData.code === 200) {
                     console.log('response login', responseData.data)
-                    const socialData = responseData.data;
-                    if (socialData?.phone === 123456 || socialData?.phone === '123456') {
+                    const socialData = responseData.data
+                    if (
+                        socialData?.phone === 123456 ||
+                        socialData?.phone === '123456'
+                    ) {
                         showLoadingSpinner(false)
-                        navigation.goBack();
+                        navigation.goBack()
                         navigation.navigate('RegisterUserData', {
                             user: responseData?.data,
                             emailFlag: true,
                         })
-                    }else {
+                    } else {
                         setUserInfo(responseData?.data)
                     }
                 } else {
@@ -224,8 +227,8 @@ function Login() {
         Global.phone = userData?.phone
         Global.email = userData?.email
         Global.UserId = userData?.id
+        Global.UserType = userData.type
         onLogin(userData, true)
-        // Global.UserType = String(userData.type)
     }
 
     return (

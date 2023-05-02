@@ -111,7 +111,7 @@ function RegisterStages() {
         Global.phone = userData.phone
         Global.email = userData.email
         Global.UserId = userData.id
-        Global.UserType = String(userData.type)
+        Global.UserType = userData.type
         onLogin(userData, true)
     }
 
