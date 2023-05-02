@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AppContext } from '../context/AppState'
-import { ImageBackground } from 'react-native'
+import { ImageBackground, Platform } from 'react-native'
 import Screen from '../components/Screen'
 import Global from '../../Global'
 
@@ -15,10 +15,11 @@ function LoadingScreen() {
                 JSON.parse(results[0][1]) !== null
                     ? JSON.parse(results[0][1])
                     : null
-            // const lang = results[1][1] !== null ? results[1][1] : newLang
+            const iOSLang = results[1][1] !== null ? results[1][1] : newLang
             // const lang =  await AsyncStorage.getItem('lang');
-            const lang = 'ar'
-            await AsyncStorage.setItem('lang', lang)
+            const lang = Platform.OS === 'android' ? 'ar' : iOSLang
+            Platform.OS === 'android' &&
+                (await AsyncStorage.setItem('lang', lang))
             console.log('user ==>', user)
             console.log('lang ==>', lang)
             Global.UserType = user?.type
