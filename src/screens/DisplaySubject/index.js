@@ -91,7 +91,7 @@ const DisplaySubject = () => {
             contentContainerStyle={[
                 styles.container,
                 globalStyles.container,
-                globalStyles.wrapper,
+                // globalStyles.wrapper,
             ]}
             showsVerticalScrollIndicator={false}
             refreshControl={
@@ -245,7 +245,9 @@ const DisplaySubject = () => {
 }
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        // flexGrow: 1,
+        // backgroundColor: '#f0f',
+        paddingBottom: heightp(20),
     },
     flatlistContent: {
         flexGrow: 1,
