@@ -369,11 +369,13 @@ const Home = () => {
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true)
-        const res = await dispatch(getHomePage())
-        //('response', res?.payload)
-        if (res?.payload?.code === 200) {
-            setRefreshing(false)
-        }
+        // const res = await dispatch(getHomePage())
+        getData()
+        getPackages()
+        getStages()
+        setTimeout(() => {
+            setRefreshing(false);
+          }, 2000);
     }, [])
 
     const videoCallbacks = {
