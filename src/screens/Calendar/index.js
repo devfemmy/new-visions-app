@@ -6,6 +6,8 @@ import { Loader } from '../../components/Loader'
 import { AppContext } from '../../context/AppState'
 import HomePageService from '../../services/userServices'
 import CalendarView from './CalendarView'
+import { globalStyles } from '../../helpers/globalStyles'
+import { widthp } from '../../utils/responsiveDesign'
 
 const Calendar = () => {
     const { onLogout, lang } = useContext(AppContext)
@@ -36,11 +38,13 @@ const Calendar = () => {
                 if (res.code === 403) {
                     setLoading(false)
                     console.log('account is logged in another device')
-                    onLogout()
+                    // onLogout()
+                    setCalendarData([])
                 } else {
                     const data = res?.data
                     setLoading(false)
                     setCalendarData(data)
+
                     return res
                 }
             } catch (err) {
@@ -51,9 +55,13 @@ const Calendar = () => {
         getCalendar()
     }, [])
     return (
-        <Container>
+        <>
             <Loader visible={loading} />
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                contentContainerStyle={styles.container}
+                nestedScrollEnabled
+                showsVerticalScrollIndicator={false}
+            >
                 {daysOfWeek?.map((item, index) => {
                     const specialIndex = `${index + 1}`
                     let calendarArray
@@ -71,11 +79,14 @@ const Calendar = () => {
                     )
                 })}
             </ScrollView>
-        </Container>
+        </>
     )
 }
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        flexGrow: 1,
+        paddingHorizontal: widthp(15),
+    },
 })
 
 export default Calendar

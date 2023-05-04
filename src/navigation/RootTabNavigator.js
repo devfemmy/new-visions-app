@@ -109,7 +109,7 @@ export const RootBottomTabNavigator = () => {
                         iconName = focused ? 'ios-mail' : 'ios-mail-outline'
                     } else if (route.name === I18n.t('Teachers')) {
                         iconName = focused ? 'ios-people' : 'ios-people-outline'
-                    } else if (route.name === I18n.t('LiveNow')) {
+                    } else if (route.name === I18n.t('Calendar')) {
                         iconName = focused
                             ? 'ios-videocam'
                             : 'ios-videocam-outline'
@@ -182,6 +182,17 @@ export const RootBottomTabNavigator = () => {
                     }}
                     name={I18n.t('Messages')}
                     component={Conversation}
+                />
+            )}
+            {user && (
+                <RootBottomTab.Screen
+                    options={{
+                        headerShown: true,
+                        headerLeft: backRight,
+                        unmountOnBlur: true,
+                    }}
+                    name={I18n.t('Calendar')}
+                    component={Calendar}
                 />
             )}
             {user && (
