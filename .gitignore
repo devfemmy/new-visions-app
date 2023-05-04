@@ -58,6 +58,7 @@ buck-out/
 *.jsbundle
 
 # CocoaPods
+/ios/Pods/
 # Logs
 logs
 *.log
