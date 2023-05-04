@@ -5,9 +5,11 @@ import { resInterceptor } from './response-interceptor'
 
 const axiosInstance = axios.create({
     baseURL: 'https://newvisions.sa/api', // https://newvisions.sa/api/
+    version: 5
 })
 axiosInstance.interceptors.request.use(reqInterceptor, (err) =>
     console.log(err)
 )
 
 export default axiosInstance
+
