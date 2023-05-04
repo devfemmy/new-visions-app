@@ -24,17 +24,16 @@ export default function CalendarView({ text, data }) {
     const [statusInfo, setStatusInfo] = useState('')
     const [itemDetails, setItemDetails] = useState({})
     const navigation = useNavigation()
+
     const checkStatus = async (item) => {
         setLoading(true)
         const payload = {
             id: item?.id.toString(),
             type: item?.type.toString(),
         }
-        console.log(payload)
         try {
             const res = await HomePageService.checkLive(payload)
             setItemDetails(item)
-            console.log(res, 'first response')
             setLoading(false)
             if (res.code === -2) {
                 setIsVisible(true)
@@ -138,6 +137,10 @@ export default function CalendarView({ text, data }) {
                 statusInfo === 'start' ? colors.primary : 'rgba(0, 0, 0, 0.55)',
             fontWeight: 'bold',
         },
+        flatlistContent: {
+            flexGrow: 1,
+            width: '80%',
+        },
     })
     return (
         <View style={styles.container}>
@@ -146,37 +149,40 @@ export default function CalendarView({ text, data }) {
                 <View style={styles.card}>
                     <Text style={styles.text} text={text} />
                 </View>
-                <View style={styles.widthContainer}>
-                    <FlatList
-                        horizontal
-                        keyboardShouldPersistTaps="handled"
-                        contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => (
-                            <View style={styles.noData}>
-                                <Text
-                                    style={styles.noClass}
-                                    text={I18n.t('NoClasses')}
-                                />
-                            </View>
-                        )}
-                        data={data}
-                        showsVerticalScrollIndicator={false}
-                        onEndReachedThreshold={0.5}
-                        renderItem={({ item }) => {
-                            return (
-                                <CalendarItem
-                                    pressed={() => {
-                                        checkStatus(item)
-                                        // setItemDetails(item)
-                                        console.log('pressed double In')
-                                    }}
-                                    time={item.start}
-                                    title={item.title}
-                                />
-                            )
-                        }}
-                    />
-                </View>
+                {/* <View style={styles.widthContainer}> */}
+                <FlatList
+                    horizontal
+                    nestedScrollEnabled
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={styles.flatlistContent}
+                    ListEmptyComponent={() => (
+                        <View style={styles.noData}>
+                            <Text
+                                style={styles.noClass}
+                                text={I18n.t('NoClasses')}
+                            />
+                        </View>
+                    )}
+                    data={data}
+                    showsHorizontalScrollIndicator={false}
+                    onEndReachedThreshold={0.5}
+                    renderItem={({ item }) => {
+                        return (
+                            <CalendarItem
+                                pressed={() => {
+                                    checkStatus(item)
+                                    // setItemDetails(item)
+                                    console.log(
+                                        'xxxxxxxxxxxxxxxxxxxxxxxxxxxx pressed double In'
+                                    )
+                                }}
+                                time={item.start}
+                                title={item.title}
+                            />
+                        )
+                    }}
+                />
+                {/* </View> */}
             </View>
             <Modal
                 onBackdropPress={() => setIsVisible(false)}

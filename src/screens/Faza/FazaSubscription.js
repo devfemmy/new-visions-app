@@ -121,13 +121,14 @@ const FazaSubscription = () => {
     const subscribeExternal = async () => {
         setLoading(true)
         const payload = {
-            id: groupData?.subject?.id,
+            id: groupData?.id,
             type: 4,
             lesson_id: '',
             day_id: '',
         }
         try {
             const res = await HomePageService.subscribeExternal(payload)
+
             if (res.code === 200) {
                 setLoading(false)
                 openModal(res?.message)
@@ -617,7 +618,7 @@ const FazaSubscription = () => {
                 text={modalMessage}
                 navigation={() => {
                     setIsVisible(!isVisible)
-                    navigation.popToTop()
+                    navigation.navigate('Calendar')
                 }}
             />
         </View>
