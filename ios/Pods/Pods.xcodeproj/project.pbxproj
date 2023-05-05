@@ -24714,7 +24714,7 @@
 			baseConfigurationReference = 46EB2E0000D530 /* GoogleSignIn.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleSignIn";
-				DEVELOPMENT_TEAM = QRKJFDAGQV;
+				DEVELOPMENT_TEAM = JBR8MHLCSP;
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = GoogleSignIn;
 				INFOPLIST_FILE = "Target Support Files/GoogleSignIn/ResourceBundle-GoogleSignIn-GoogleSignIn-Info.plist";
@@ -24732,7 +24732,7 @@
 			baseConfigurationReference = 46EB2E0000D520 /* GoogleSignIn.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleSignIn";
-				DEVELOPMENT_TEAM = QRKJFDAGQV;
+				DEVELOPMENT_TEAM = JBR8MHLCSP;
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = GoogleSignIn;
 				INFOPLIST_FILE = "Target Support Files/GoogleSignIn/ResourceBundle-GoogleSignIn-GoogleSignIn-Info.plist";

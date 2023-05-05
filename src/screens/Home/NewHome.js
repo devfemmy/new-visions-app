@@ -129,8 +129,15 @@ const Home = () => {
 
     const homePage = async (level) => {
         showLoadingSpinner(true)
+        const realLevel_id = level ? level : currentLevel
+        let level_id;
+        if (realLevel_id === 0 || realLevel_id === "") {
+            level_id = 1
+        }else {
+            level_id = realLevel_id
+        }
         const payload = {
-            level_id: level ? level : currentLevel,
+            level_id
         }
         console.log('home page payload', payload)
         try {
