@@ -10,6 +10,7 @@ import {
     Text as RNText,
     TouchableOpacity,
     View,
+    ActivityIndicator,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { globalStyles } from '../../helpers/globalStyles'
@@ -152,39 +153,6 @@ const FazaSubscription = () => {
         }
     }
 
-    const subscribeToGroup = () => {
-        subscribeExternal()
-        //  navigation.navigate('SuccessSub', {name: 'Private Lesson'})
-        // if (Global.UserType == 4 && !iap_activation) {
-        //     navigation.navigate('ParentSub', {
-        //         uniqueId: groupData?.subject?.id,
-        //         type: 4,
-        //         lesson_id: '',
-        //         day_id: '',
-        //     })
-        // } else if (Global.UserType == 3) {
-        //     console.log('hello')
-        //     if (!iap_activation || Platform.OS === 'android') {
-        //         subscribeExternal()
-        //     } else {
-        //         const subscriptionInfo = {
-        //             billNumber: 'ios_bill',
-        //             paymentFor: 'FullLesson',
-        //             lessonId: '1258',
-        //             subjectId: subject_id,
-        //             price: 200,
-        //         }
-        //         deviceStorage
-        //             .saveDataToDevice({
-        //                 key: 'subscriptionInfo',
-        //                 value: subscriptionInfo,
-        //             })
-        //             .then(() => requestPurchase({ sku: iap_id }))
-        //     }
-        // } else {
-        //     return
-        // }
-    }
     const navigateTeachersProfile = useCallback(
         (item) => {
             navigation.navigate('TeacherProfile', {
@@ -196,7 +164,7 @@ const FazaSubscription = () => {
     )
 
     return (
-        <View style={{ flex: 1 }}>
+        <>
             <ScrollView
                 contentContainerStyle={[
                     styles.container,
@@ -582,7 +550,7 @@ const FazaSubscription = () => {
                     onPress={() => {
                         groupData === null
                             ? alert(I18n.t('ChooseGroup'))
-                            : subscribeToGroup()
+                            : subscribeExternal()
                     }}
                 >
                     <View style={{ flexDirection: 'row' }}>
@@ -609,7 +577,15 @@ const FazaSubscription = () => {
                     </View>
                 </TouchableOpacity>
             </View>
-            <Loader visible={loading} />
+
+            {/* <Loader visible={loading} /> */}
+            {loading && (
+                <View style={styles.popUp2}>
+                    <View style={styles.activityBox}>
+                        <ActivityIndicator animating color="green" />
+                    </View>
+                </View>
+            )}
             <SubscriptionModal
                 onPress={() => {
                     setIsVisible(!isVisible)
@@ -621,7 +597,7 @@ const FazaSubscription = () => {
                     navigation.navigate('Calendar')
                 }}
             />
-        </View>
+        </>
     )
 }
 
@@ -629,6 +605,7 @@ export default FazaSubscription
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         flexGrow: 1,
         paddingBottom: 50,
     },
@@ -700,5 +677,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: heightp(10),
         marginBottom: heightp(5),
+    },
+    activityBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 50,
+        height: 50,
+        borderRadius: 5,
+        backgroundColor: 'white',
+    },
+    popUp2: {
+        flex: 1,
+        position: 'absolute',
+        width: '100%',
+        height: '110%',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })

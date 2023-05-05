@@ -8,6 +8,7 @@ import HomePageService from '../../services/userServices'
 import CalendarView from './CalendarView'
 import { globalStyles } from '../../helpers/globalStyles'
 import { widthp } from '../../utils/responsiveDesign'
+import { ActivityIndicator } from 'react-native'
 
 const Calendar = () => {
     const { onLogout, lang } = useContext(AppContext)
@@ -56,7 +57,14 @@ const Calendar = () => {
     }, [])
     return (
         <>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
+            {loading && (
+                <View style={styles.popUp2}>
+                    <View style={styles.activityBox}>
+                        <ActivityIndicator animating color="green" />
+                    </View>
+                </View>
+            )}
             <ScrollView
                 contentContainerStyle={styles.container}
                 nestedScrollEnabled
@@ -86,6 +94,24 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         paddingHorizontal: widthp(15),
+    },
+    activityBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 50,
+        height: 50,
+        borderRadius: 5,
+        backgroundColor: 'white',
+    },
+    popUp2: {
+        flex: 1,
+        position: 'absolute',
+        width: '100%',
+        height: '110%',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 9999,
     },
 })
 

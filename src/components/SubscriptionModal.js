@@ -23,7 +23,10 @@ const SubscriptionModal = ({ isVisible, onPress, text, navigation }) => {
                         source={require('../assets/img/SubscriptionModal.png')}
                         resizeMode={FastImage.resizeMode.cover}
                     />
-                    <Text style={styles.header} text={ I18n.t('RegistrationRequest')} />
+                    <Text
+                        style={styles.header}
+                        text={I18n.t('RegistrationRequest')}
+                    />
                     <Text style={styles.text} text={text} />
                     <View
                         style={{

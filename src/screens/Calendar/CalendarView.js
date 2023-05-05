@@ -138,13 +138,13 @@ export default function CalendarView({ text, data }) {
             fontWeight: 'bold',
         },
         flatlistContent: {
-            flexGrow: 1,
-            width: '80%',
+            // flexGrow: 1,
+            // width: '80%',
         },
     })
     return (
         <View style={styles.container}>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
             <View style={globalStyles.rowBetween}>
                 <View style={styles.card}>
                     <Text style={styles.text} text={text} />
