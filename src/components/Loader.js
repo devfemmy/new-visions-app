@@ -4,10 +4,6 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { Modal } from './Modal'
 
 export const Loader = ({ visible }) => {
-    console.log(
-        'visible inside the loading comp ====== XXXXXXXXXXXX +++++ =====>',
-        visible
-    )
     return (
         <Modal visible={visible} opacity={0.6}>
             <View style={styles.activityBox}>
