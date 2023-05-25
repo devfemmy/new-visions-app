@@ -105,6 +105,7 @@ export default function DetailsTeacherItem({
                 styles.container,
                 {
                     flexDirection: 'row',
+                    // width: '90%',
                 },
             ]}
         >
@@ -219,10 +220,11 @@ export default function DetailsTeacherItem({
                     nestedScrollEnabled
                     showsHorizontalScrollIndicator
                     contentContainerStyle={{
-                        // flex: 1,
+                        flex: 1,
                         flexGrow: 1,
-                        // paddingVertical: 40,
-                        backgroundColor: '#f0f',
+                        width: '100%',
+                        // paddingVertical: 5,
+                        // backgroundColor: '#f0f',
                     }}
                     style={{ flex: 1 }}
                     data={calender}
