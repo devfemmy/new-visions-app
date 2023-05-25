@@ -1,11 +1,11 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, Text, FlatList, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import colors from '../../helpers/colors'
 
 import DetailsTeacherItem from './DetailsTeacherItem'
 
 export default function DetailsTeachers({ data }) {
-    const renderItem = ({ item }) => (
+    const RenderItem = ({ item }) => (
         <DetailsTeacherItem
             itemData={item.teacher}
             image={item.teacher.image}
@@ -16,7 +16,17 @@ export default function DetailsTeachers({ data }) {
     )
     return (
         <View style={styles.BGView}>
-            <FlatList
+            <View
+            // contentContainerStyle={{ flexGrow: 1, flex: 1 }}
+            // nestedScrollEnabled
+            // horizontal
+            // showsVerticalScrollIndicator={false}
+            >
+                {data?.map((item, index) => {
+                    return <RenderItem item={item} />
+                })}
+            </View>
+            {/* <FlatList
                 nestedScrollEnabled
                 horizontal={false}
                 data={data}
@@ -24,7 +34,7 @@ export default function DetailsTeachers({ data }) {
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 scrollEnabled={true}
-            />
+            /> */}
         </View>
     )
 }

@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Pressable,
     ScrollView,
+    FlatList,
 } from 'react-native'
 import React, { useCallback, useContext } from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -18,7 +19,7 @@ import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import { AppContext } from '../../context/AppState'
 import { WINDOW_WIDTH } from '../../helpers/common'
-import { FlatList } from 'react-native-gesture-handler'
+import IconText from '../../components/IconText'
 
 export default function DetailsTeacherItem({
     image,
@@ -98,7 +99,7 @@ export default function DetailsTeacherItem({
     return (
         <Pressable
             onPress={() => {
-                // navigateTeacherProfile(itemData)
+                navigateTeacherProfile(itemData)
             }}
             style={[
                 styles.container,
@@ -112,8 +113,6 @@ export default function DetailsTeacherItem({
                     width: uri ? heightp(100) : heightp(75),
                     height: uri ? heightp(100) : heightp(75),
                     borderRadius: 10,
-                    // marginRight: lang === 'ar' ? heightp(0) : heightp(20),
-                    // marginLeft: lang === 'ar' ? heightp(20) : heightp(0),
                 }}
                 source={
                     uri
@@ -129,37 +128,61 @@ export default function DetailsTeacherItem({
                 style={{
                     justifyContent: 'space-between',
                     marginHorizontal: 10,
-                    // width: '80%',
-                    // flex: 1,
+                    width: '100%',
+                    // backgroundColor: '#f0f',
+                    flex: 1,
                     // flexGrow: 1,
                 }}
             >
-                <View
+                {/* <View
                     style={{
                         flexDirection: 'row',
                         alignItems: 'center',
+                        justifyContent: 'flex-start',
                     }}
                 >
-                    <FontAwesome5
-                        name="chalkboard-teacher"
-                        size={20}
-                        color={colors.black}
-                    />
+                 <FontAwesome5
+                            name="chalkboard-teacher"
+                            size={20}
+                           />
                     <Text
                         style={[
                             styles.subItemText,
                             {
-                                // textAlign: lang === 'ar' ? 'right' : 'left',
+                                textAlign: lang === 'ar' ? 'right' : 'left',
                             },
                         ]}
                     >
                         {teacherName}
                     </Text>
-                </View>
-                <View
+                </View> */}
+                <IconText
+                    style={styles.subItemText}
+                    text={teacherName && teacherName}
+                    children={
+                        <FontAwesome5
+                            name="chalkboard-teacher"
+                            size={20}
+                            color={colors.black}
+                        />
+                    }
+                />
+                <IconText
+                    style={styles.subItemText}
+                    text={subjectName && subjectName}
+                    children={
+                        <MaterialIcons
+                            name="subject"
+                            size={20}
+                            color={colors.black}
+                        />
+                    }
+                />
+                {/* <View
                     style={{
                         flexDirection: 'row',
                         alignItems: 'center',
+                        justifyContent: 'flex-start',
                     }}
                 >
                     <MaterialIcons
@@ -178,43 +201,36 @@ export default function DetailsTeacherItem({
                     >
                         {subjectName}
                     </Text>
-                </View>
-                <View
-                    style={
-                        {
-                            // backgroundColor: '#f0f',
-                            // alignItems: 'center',
-                            // justifyContent: 'center',
-                            // width: '90%',
-                            // paddingVertical: 20,
-                        }
-                    }
+                </View> */}
+
+                {/* <ScrollView
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    style={{ flex: 1 }}
+                    // nestedScrollEnabled
+                    horizontal
+                    showsVerticalScrollIndicator={false}
                 >
-                    {/* <ScrollView
-                        contentContainerStyle={{ flexGrow: 1, flex: 1 }}
-                        nestedScrollEnabled
-                        horizontal
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {calender?.map((item, index) => {
-                            return <RenderCalItem item={item} />
-                        })}
-                    </ScrollView> */}
-                    <FlatList
-                        horizontal
-                        nestedScrollEnabled
-                        showsHorizontalScrollIndicator
-                        contentContainerStyle={{
-                            flex: 1,
-                            flexGrow: 1,
-                        }}
-                        data={calender}
-                        extraData={calender}
-                        renderItem={renderItem}
-                        keyExtractor={(item, index) => index}
-                        scrollEnabled={true}
-                    />
-                </View>
+                    {calender?.map((item, index) => {
+                        return <RenderItem item={item} />
+                    })}
+                </ScrollView> */}
+                <FlatList
+                    horizontal
+                    nestedScrollEnabled
+                    showsHorizontalScrollIndicator
+                    contentContainerStyle={{
+                        // flex: 1,
+                        flexGrow: 1,
+                        // paddingVertical: 40,
+                        backgroundColor: '#f0f',
+                    }}
+                    style={{ flex: 1 }}
+                    data={calender}
+                    extraData={calender}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => index}
+                    scrollEnabled={true}
+                />
             </View>
         </Pressable>
     )
