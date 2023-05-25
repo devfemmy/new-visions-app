@@ -19,9 +19,6 @@ export default function DetailsTeachers({ data }) {
             <FlatList
                 nestedScrollEnabled
                 horizontal={false}
-                contentContainerStyle={{
-                    flexGrow: 1,
-                }}
                 data={data}
                 extraData={data}
                 renderItem={renderItem}
