@@ -1,6 +1,7 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
 import colors from '../../helpers/colors'
+
 import DetailsTeacherItem from './DetailsTeacherItem'
 
 export default function DetailsTeachers({ data }) {
@@ -16,6 +17,11 @@ export default function DetailsTeachers({ data }) {
     return (
         <View style={styles.BGView}>
             <FlatList
+                nestedScrollEnabled
+                horizontal={false}
+                contentContainerStyle={{
+                    flexGrow: 1,
+                }}
                 data={data}
                 extraData={data}
                 renderItem={renderItem}

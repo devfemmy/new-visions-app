@@ -3,9 +3,9 @@ import {
     View,
     Text,
     Image,
-    FlatList,
     StyleSheet,
     Pressable,
+    ScrollView,
 } from 'react-native'
 import React, { useCallback, useContext } from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -18,6 +18,7 @@ import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
 import { AppContext } from '../../context/AppState'
 import { WINDOW_WIDTH } from '../../helpers/common'
+import { FlatList } from 'react-native-gesture-handler'
 
 export default function DetailsTeacherItem({
     image,
@@ -51,8 +52,9 @@ export default function DetailsTeacherItem({
         return (
             <View
                 style={{
+                    // flex: 1,
                     backgroundColor: colors.darkGray,
-                    flexDirection: I18n.locale !== 'ar' ? 'row-reverse' : 'row',
+                    flexDirection: 'row',
                     width: 100,
                     height: 30,
                     alignItems: 'center',
@@ -66,8 +68,16 @@ export default function DetailsTeacherItem({
                     size={20}
                     color={colors.dark}
                 />
-                <Text style={[styles.subItemText, { fontWeight: '100' }]}>
-                    {I18n.locale == 'ar'
+                <Text
+                    style={[
+                        styles.subItemText,
+                        {
+                            fontWeight: '100',
+                            // textAlign: lang == 'ar' ? 'right' : 'left',
+                        },
+                    ]}
+                >
+                    {lang == 'ar'
                         ? dateArr[item.day_id - 1]
                         : dateArrEn[item.day_id - 1]}
                 </Text>
@@ -84,16 +94,16 @@ export default function DetailsTeacherItem({
         [navigation]
     )
     const uri = image
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx', uri, lang)
 
     return (
         <Pressable
-            onPress={() => navigateTeacherProfile(itemData)}
+            onPress={() => {
+                // navigateTeacherProfile(itemData)
+            }}
             style={[
                 styles.container,
                 {
-                    flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
-                    // backgroundColor: '#f0f',
+                    flexDirection: 'row',
                 },
             ]}
         >
@@ -119,11 +129,15 @@ export default function DetailsTeacherItem({
                 style={{
                     justifyContent: 'space-between',
                     marginHorizontal: 10,
+                    // width: '80%',
+                    // flex: 1,
+                    // flexGrow: 1,
                 }}
             >
                 <View
                     style={{
-                        flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
+                        flexDirection: 'row',
+                        alignItems: 'center',
                     }}
                 >
                     <FontAwesome5
@@ -135,7 +149,7 @@ export default function DetailsTeacherItem({
                         style={[
                             styles.subItemText,
                             {
-                                textAlign: lang !== 'ar' ? 'left' : 'right',
+                                // textAlign: lang === 'ar' ? 'right' : 'left',
                             },
                         ]}
                     >
@@ -144,7 +158,8 @@ export default function DetailsTeacherItem({
                 </View>
                 <View
                     style={{
-                        flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
+                        flexDirection: 'row',
+                        alignItems: 'center',
                     }}
                 >
                     <MaterialIcons
@@ -157,7 +172,7 @@ export default function DetailsTeacherItem({
                         style={[
                             styles.subItemText,
                             {
-                                textAlign: lang !== 'ar' ? 'left' : 'right',
+                                // textAlign: lang !== 'ar' ? 'left' : 'right',
                             },
                         ]}
                     >
@@ -165,18 +180,38 @@ export default function DetailsTeacherItem({
                     </Text>
                 </View>
                 <View
-                    style={{
-                        flexDirection: lang !== 'ar' ? 'row-reverse' : 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
+                    style={
+                        {
+                            // backgroundColor: '#f0f',
+                            // alignItems: 'center',
+                            // justifyContent: 'center',
+                            // width: '90%',
+                            // paddingVertical: 20,
+                        }
+                    }
                 >
+                    {/* <ScrollView
+                        contentContainerStyle={{ flexGrow: 1, flex: 1 }}
+                        nestedScrollEnabled
+                        horizontal
+                        showsVerticalScrollIndicator={false}
+                    >
+                        {calender?.map((item, index) => {
+                            return <RenderCalItem item={item} />
+                        })}
+                    </ScrollView> */}
                     <FlatList
                         horizontal
+                        nestedScrollEnabled
+                        showsHorizontalScrollIndicator
+                        contentContainerStyle={{
+                            flex: 1,
+                            flexGrow: 1,
+                        }}
                         data={calender}
                         extraData={calender}
                         renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item, index) => index}
                         scrollEnabled={true}
                     />
                 </View>
@@ -195,7 +230,6 @@ const styles = StyleSheet.create({
         width: '52.5%',
     },
     container: {
-        // width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         minHeight: 120,

@@ -258,6 +258,7 @@ export default function MultiPackageDetails({ route }) {
             <Screen style={{ marginBottom: 20, paddingHorizontal: 20 }}>
                 <Loader visible={loading} />
                 <ScrollView
+                    nestedScrollEnabled
                     showsVerticalScrollIndicator={false}
                     refreshControl={
                         <RefreshControl

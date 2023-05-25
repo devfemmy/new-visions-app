@@ -65,6 +65,7 @@ const Home = () => {
     const colors_ = ['#9BBA52', '#F37529', '#59A7F2', '#917CFF']
 
     const bg_colors_ = ['#C9EB7AC7', '#FFC59B8A', '#D3E9FF', '#917CFF88']
+    const bg_colors_light = ['#f3fae0', '#fef9f5', '#e7f3ff', '#ebe8ff']
 
     const data = useAppSelector((state) => state.homePage)
 
@@ -388,7 +389,7 @@ const Home = () => {
     const navigateSubjectsDetails = useCallback(
         (item) => {
             const { id, title, image } = item
-            console.log("id in subkect", id)
+            console.log('id in subkect', id)
             const uri = `${IMAGEURL}/${image}`
             if (id)
                 navigation.navigate('DisplaySubject', {
@@ -727,7 +728,7 @@ const Home = () => {
                                                         'space-between',
                                                     alignItems: 'center',
                                                     height:
-                                                        WINDOW_HEIGHT * 0.18,
+                                                        WINDOW_HEIGHT * 0.15,
                                                     borderRadius: 10,
                                                     marginVertical: heightp(10),
                                                     paddingHorizontal:
@@ -741,26 +742,41 @@ const Home = () => {
                                                         ],
                                                 }}
                                             >
-                                                <FastImage
-                                                    style={{
-                                                        width: heightp(60),
-                                                        height: heightp(70),
-                                                        borderRadius: 10,
-                                                    }}
-                                                    source={{
-                                                        uri,
-                                                        priority:
-                                                            FastImage.priority
-                                                                .normal,
-                                                    }}
-                                                    resizeMode={
-                                                        FastImage.resizeMode
-                                                            .cover
-                                                    }
-                                                />
                                                 <View
                                                     style={{
-                                                        width: '75%',
+                                                        width: heightp(90),
+                                                        height: '100%',
+                                                        backgroundColor:
+                                                            bg_colors_light[
+                                                                index %
+                                                                    bg_colors_light.length
+                                                            ],
+                                                        alignItems: 'center',
+                                                        borderRadius: 10,
+                                                    }}
+                                                >
+                                                    <FastImage
+                                                        style={{
+                                                            width: heightp(80),
+                                                            height: heightp(80),
+                                                            borderRadius: 10,
+                                                        }}
+                                                        source={{
+                                                            uri,
+                                                            priority:
+                                                                FastImage
+                                                                    .priority
+                                                                    .normal,
+                                                        }}
+                                                        resizeMode={
+                                                            FastImage.resizeMode
+                                                                .contain
+                                                        }
+                                                    />
+                                                </View>
+                                                <View
+                                                    style={{
+                                                        // width: '75%',
                                                         height: '100%',
                                                         flexDirection: 'column',
                                                         alignItems:
@@ -1686,7 +1702,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     newWrapper: {
-        backgroundColor: '#rgba(250, 250, 250, 1)',
+        backgroundColor: 'rgba(250, 250, 250, 1)',
         paddingHorizontal: 15,
         paddingVertical: heightp(10),
         borderRadius: 18,
