@@ -26,11 +26,11 @@ function RegisterUserData() {
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
     const route = useRoute()
-    const { user, emailFlag } = route.params
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [emailAddress, setEmailAddress] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
+    const { user, emailFlag } = route.params;
+    const [firstName, setFirstName] = useState(emailFlag ? user?.first_name : '')
+    const [lastName, setLastName] = useState(emailFlag ? user?.last_name : '')
+    const [emailAddress, setEmailAddress] = useState(emailFlag ? user?.email : '')
+    const [phoneNumber, setPhoneNumber] = useState(emailFlag ? user?.phone : '')
     const [accountType, setAccountType] = useState('student')
     const [gender, setGender] = useState('male')
 
@@ -97,6 +97,8 @@ function RegisterUserData() {
                                         paddingTop: heightp(10),
                                     }}
                                 >
+                                {!emailFlag && 
+                                <>
                                     <AppTextInput
                                         onChangeText={setFirstName}
                                         style={{
@@ -127,6 +129,8 @@ function RegisterUserData() {
                                         keyboardType="default"
                                         labelName={I18n.t('LastName')}
                                     />
+                                </>
+                                }
                                     <AppTextInput
                                         onChangeText={
                                             !emailFlag

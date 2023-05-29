@@ -9,19 +9,20 @@ import {
     Pressable,
     FlatList,
 } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import I18n from 'i18n-js'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import ContentLoader, { Rect } from 'react-content-loader/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { heightp, widthp } from '../../utils/responsiveDesign'
 import Lottie from '../../components/Lottie'
-import { useNavigation, useRoute } from '@react-navigation/native'
 import { AppContext } from '../../context/AppState'
 import HomePageService from '../../services/userServices'
 import colors from '../../helpers/colors'
-import I18n from 'i18n-js'
 import { WINDOW_WIDTH } from '../../helpers/common'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Text } from '../../components/common'
-import ContentLoader, { Rect } from 'react-content-loader/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import Global from '../../../Global'
+
 const defaultUri =
     'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=68b6dab7-4a8e-4093-9b7a-994a951eda7a'
 
@@ -140,6 +141,7 @@ function RegisterStages() {
             email: emailAddress,
             phone: phoneNumber || user?.phone,
         }
+        console.log('my payload', payload)
         try {
             const res = await HomePageService.completeData(payload)
             showLoadingSpinner(false)
@@ -289,8 +291,7 @@ function RegisterStages() {
                                                                     renderItem={({
                                                                         item,
                                                                         index,
-                                                                    }) => {
-                                                                        return (
+                                                                    }) => (
                                                                             <Pressable
                                                                                 onPress={() => {
                                                                                     setCurrentLevel(
@@ -336,8 +337,7 @@ function RegisterStages() {
                                                                                     )}
                                                                                 />
                                                                             </Pressable>
-                                                                        )
-                                                                    }}
+                                                                        )}
                                                                 />
                                                             </>
                                                         )}
