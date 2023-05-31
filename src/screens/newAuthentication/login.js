@@ -20,17 +20,18 @@ import {
 import axios from 'axios'
 
 // import LoginApi from '../../api/Login/LoginApi'
+import Toast from 'react-native-toast-message'
+import { useNavigation } from '@react-navigation/native'
 import Global from '../../../Global'
 
 // import { SocialButtons } from './SocialButtons'
 import { heightp } from '../../utils/responsiveDesign'
 // import { socialAuthApi } from "../../api/socialAuthApi";
-import Toast from 'react-native-toast-message'
 import Lottie from '../../components/Lottie'
-import { useNavigation } from '@react-navigation/native'
 import { AppContext } from '../../context/AppState'
 import LoginForm from '../auth/newAuth/LoginForm'
 import HomePageService from '../../services/userServices'
+
 const defaultUri =
     'https://firebasestorage.googleapis.com/v0/b/newvisions-9f9ef.appspot.com/o/logo-light.png?alt=media&token=68b6dab7-4a8e-4093-9b7a-994a951eda7a'
 
@@ -45,8 +46,8 @@ function Login() {
     } = useContext(AppContext)
     const sourceLot = require('../../assets/Lottie/green-dots-loader.json')
     const navigation = useNavigation()
-    const socialAuthApi = ({ givenName, familyName, email, id, type }) => {
-        console.log('I AM HERE')
+    const socialAuthApi = (givenName, familyName, email, id, type ) => {
+        console.log('I AM HERE', givenName, familyName)
         axios
             .post('https://newvisions.sa/api/signupExternal', {
                 first_name: givenName,
@@ -70,10 +71,9 @@ function Login() {
                 //     alert(res.message)
                 // }
                 // return res
-                console.log('response hereee', response.data)
                 const responseData = response.data
                 if (responseData.code === 201) {
-                    console.log('response', responseData)
+                    console.log('', responseData)
                     showLoadingSpinner(false)
                     navigation.navigate('RegisterUserData', {
                         user: responseData?.data,
@@ -150,13 +150,18 @@ function Login() {
         // use credentialState response to ensure the user is authenticated
         if (credentialState === appleAuth.State.AUTHORIZED) {
             // user is authenticated
-            socialAuthApi({
-                firstName: appleAuthRequestResponse?.fullName?.givenName,
-                lastName: appleAuthRequestResponse?.fullName?.familyName,
-                email: appleAuthRequestResponse?.email,
-                id: appleAuthRequestResponse?.user,
-                type: 'APPLE',
-            })
+            const firstName = appleAuthRequestResponse?.fullName?.givenName;
+            const lastName = appleAuthRequestResponse?.fullName?.familyName;
+            const email = appleAuthRequestResponse?.email;
+            const id = appleAuthRequestResponse?.user;
+            const type = 'APPLE'
+            socialAuthApi(
+                firstName,
+                lastName,
+                email,
+                id,
+                type
+            )
         }
     }
 
@@ -170,14 +175,18 @@ function Login() {
             })
             const {
                 user: { givenName, familyName, id, email },
-            } = await GoogleSignin.signIn()
-            socialAuthApi({
-                firstName: givenName,
-                lastName: familyName,
+            } = await GoogleSignin.signIn();
+            console.log('what came back', givenName, familyName)
+            const firstName = givenName;
+            const lastName = familyName;
+            const type = 'GMAIL'
+            socialAuthApi(
+                firstName,
+                lastName,
                 email,
                 id,
-                type: 'GMAIL',
-            })
+                type
+            )
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // alert('User Cancelled the Login Flow');

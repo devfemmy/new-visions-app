@@ -130,8 +130,15 @@ const Home = () => {
 
     const homePage = async (level) => {
         showLoadingSpinner(true)
+        const realLevel_id = level ? level : currentLevel
+        let level_id;
+        if (realLevel_id === 0 || realLevel_id === "") {
+            level_id = 1
+        }else {
+            level_id = realLevel_id
+        }
         const payload = {
-            level_id: level ? level : currentLevel,
+            level_id
         }
         console.log('home page payload', payload)
         try {
@@ -370,11 +377,13 @@ const Home = () => {
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true)
-        const res = await dispatch(getHomePage())
-        //('response', res?.payload)
-        if (res?.payload?.code === 200) {
-            setRefreshing(false)
-        }
+        // const res = await dispatch(getHomePage())
+        getData()
+        getPackages()
+        getStages()
+        setTimeout(() => {
+            setRefreshing(false);
+          }, 2000);
     }, [])
 
     const videoCallbacks = {

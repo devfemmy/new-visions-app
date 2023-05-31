@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable arrow-body-style */
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
@@ -43,9 +44,16 @@ const SubjectDetails = () => {
 
     const getSubject = async () => {
         setLoading(true)
-        const levelFromAsync = await AsyncStorage.getItem('level_id')
+        const levelFromAsync = await AsyncStorage.getItem('level_id');
+        const realLevel_id = levelFromAsync
+        let level;
+        if (realLevel_id === 0 || realLevel_id === "") {
+            level = 1
+        }else {
+            level = realLevel_id
+        }
         const payload = {
-            level: levelFromAsync,
+            level,
         }
         console.log(payload, 'xxxxxxxxxxxxx')
         try {
