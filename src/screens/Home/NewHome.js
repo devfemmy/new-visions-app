@@ -131,14 +131,14 @@ const Home = () => {
     const homePage = async (level) => {
         showLoadingSpinner(true)
         const realLevel_id = level ? level : currentLevel
-        let level_id;
-        if (realLevel_id === 0 || realLevel_id === "") {
+        let level_id
+        if (realLevel_id === 0 || realLevel_id === '') {
             level_id = 1
-        }else {
+        } else {
             level_id = realLevel_id
         }
         const payload = {
-            level_id
+            level_id,
         }
         console.log('home page payload', payload)
         try {
@@ -172,6 +172,7 @@ const Home = () => {
 
     const getStages = async () => {
         const session = await AsyncStorage.getItem('stage_id')
+        const levelFromAsync = await AsyncStorage.getItem('level_id')
         stageFromAsync = JSON.parse(session)
         console.log(
             'type and stageFromAsync',
@@ -187,62 +188,26 @@ const Home = () => {
                 setStagesArray(data)
                 const userToken = user?.remember_token
                 if (userToken === '' || userToken === null || !user) {
-                    const defaultFilterObject = {
-                        id: 3,
-                        image: '/stages/secondary.png',
-                        name: i18n.t('FirstSecondary'),
-                        package_image: '/package_stages/secondary.png',
+                    if (stageFromAsync) {
+                        const result = data?.filter(
+                            (res) => res?.id === stageFromAsync
+                        )
+                        setFilterOption(result[0])
+                    } else {
+                        const defaultFilterObject = {
+                            id: 3,
+                            image: '/stages/secondary.png',
+                            name: i18n.t('FirstSecondary'),
+                            package_image: '/package_stages/secondary.png',
+                        }
+                        setFilterOption(defaultFilterObject)
                     }
-                    setFilterOption(defaultFilterObject)
                 } else {
                     const result = data.filter(
                         (res) => res?.id === stageFromAsync
                     )
                     setFilterOption(result[0])
                 }
-                // data.map((item) => {
-                //     if (item?.id === stageId) {
-                //         setFilterOption(item)
-                //         console.log(
-                //             'item returned xxxxxxxxxxxxxx in stage',
-                //             item
-                //         )
-                //         // return item
-                //     } else if (item?.id === user?.stage_id) {
-                //         setFilterOption(item)
-                //         console.log(
-                //             'item returned xxxxxxxxxxxxxx in user',
-                //             item
-                //         )
-                //         // return item
-                //     }
-                //     // else if (
-                //     //     !user?.level_id ||
-                //     //     user?.level_id === null ||
-                //     //     user?.level_id === undefined
-                //     // ) {
-                //     //     const defaultFilterObject = {
-                //     //         id: 3,
-                //     //         image: '/stages/secondary.png',
-                //     //         name: i18n.t('FirstSecondary'),
-                //     //         package_image: '/package_stages/secondary.png',
-                //     //     }
-                //     //     setFilterOption(defaultFilterObject)
-                //     // }
-                //     else {
-                //         const userToken = Global.AuthenticationToken
-                //         if (userToken === '' || userToken === null) {
-                //             const defaultFilterObject = {
-                //                 id: 3,
-                //                 image: '/stages/secondary.png',
-                //                 name: i18n.t('FirstSecondary'),
-                //                 package_image: '/package_stages/secondary.png',
-                //             }
-                //             setFilterOption(defaultFilterObject)
-                //         }
-                //         return null
-                //     }
-                // })
             } else {
                 showLoadingSpinner(false)
                 // console.log('account is logged in another device')
@@ -382,8 +347,8 @@ const Home = () => {
         getPackages()
         getStages()
         setTimeout(() => {
-            setRefreshing(false);
-          }, 2000);
+            setRefreshing(false)
+        }, 2000)
     }, [])
 
     const videoCallbacks = {
@@ -446,7 +411,6 @@ const Home = () => {
     }
 
     function openLevel() {
-        console.log('am inside the level func')
         setIsVisibleLevel(!isVisibleLevel)
     }
 
@@ -785,7 +749,7 @@ const Home = () => {
                                                 </View>
                                                 <View
                                                     style={{
-                                                        // width: '75%',
+                                                        width: '72.5%',
                                                         height: '100%',
                                                         flexDirection: 'column',
                                                         alignItems:
@@ -794,15 +758,13 @@ const Home = () => {
                                                             'space-between',
                                                         paddingHorizontal:
                                                             widthp(5),
-                                                        paddingVertical:
-                                                            heightp(2),
                                                     }}
                                                 >
                                                     <Text
                                                         style={{
                                                             color: 'rgba(67, 72, 84, 1)',
                                                             fontWeight: '500',
-                                                            paddingTop: 5,
+                                                            paddingTop: 3,
                                                             textAlign:
                                                                 lang !== 'ar'
                                                                     ? 'left'
@@ -815,7 +777,7 @@ const Home = () => {
                                                         style={{
                                                             color: 'rgba(67, 72, 84, 1)',
                                                             fontWeight: '500',
-                                                            paddingTop: 5,
+                                                            paddingTop: 3,
                                                             textAlign: 'center',
                                                         }}
                                                         text={`${i18n.t(
@@ -835,8 +797,8 @@ const Home = () => {
                                                                 'rgba(231, 243, 255, 1)',
                                                             paddingHorizontal:
                                                                 widthp(10),
-                                                            paddingVertical:
-                                                                heightp(2.5),
+                                                            // paddingVertical:
+                                                            //     heightp(2.5),
                                                             borderRadius: 20,
                                                             alignSelf:
                                                                 'flex-end',
