@@ -20,7 +20,7 @@ export const updateProfile = ({ data, lang, onLogin }) => {
                     Authorization: `Bearer ${Global.AuthenticationToken}`,
                     Accept: 'application/json',
                     lang: lang,
-                    version: 2,
+                    version: 5,
                 },
             }
         )
@@ -91,7 +91,7 @@ export const getUpdatedProfile = ({ lang, onLogin }) => {
                     Authorization: `Bearer ${Global.AuthenticationToken}`,
                     Accept: 'application/json',
                     lang: lang,
-                    version: 2,
+                    version: 5,
                 },
             }
         )

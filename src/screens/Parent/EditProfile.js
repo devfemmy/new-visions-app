@@ -51,6 +51,7 @@ class EditProfile extends Component {
         this.state = {
             firstname: '',
             lastname: '',
+            bio: '',
             phone: '',
             email: '',
             place: '',
@@ -174,7 +175,7 @@ class EditProfile extends Component {
                         Authorization: `Bearer ${user?.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
@@ -244,7 +245,7 @@ class EditProfile extends Component {
         const { user } = this.context
 
         axios
-            .get(
+            .post(
                 'https://newvisions.sa/api/getUserProfile', // URL
                 // data,
                 {
@@ -255,13 +256,14 @@ class EditProfile extends Component {
                         Authorization: `Bearer ${user?.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
             .then((response) => {
                 if (response.data.code === 200) {
                     if (Global.UserName) {
+                        console.log('response', response?.data)
                         onLogin(response.data.data, true)
                         this.onReload()
                         this.setState({ loading: false })
@@ -289,7 +291,10 @@ class EditProfile extends Component {
             })
             .catch((error) => {
                 // alert(error)
-                console.log('error in the response', error)
+                console.log(
+                    'error in the response getUpdatedProfile =======>',
+                    error
+                )
             })
             .finally(() => {
                 // setIsLoading(false)
@@ -302,6 +307,7 @@ class EditProfile extends Component {
             let {
                 firstname,
                 lastname,
+                bio,
                 phone,
                 email,
                 avatarUrl,
@@ -321,7 +327,7 @@ class EditProfile extends Component {
             data.append('first_name', firstname)
             data.append('last_name', lastname)
             data.append('phone', phone)
-            data.append('bio', '')
+            data.append('bio', bio)
             if (photo) {
                 data.append('image', photo ? photo : null)
             }
@@ -346,6 +352,7 @@ class EditProfile extends Component {
         this.setState({
             firstname: user.first_name,
             lastname: user.last_name,
+            bio: user.bio,
             phone: user.phone,
             email: user.email,
             avatarUrl: user.image,
@@ -490,6 +497,7 @@ class EditProfile extends Component {
         const {
             firstname,
             lastname,
+            bio,
             email,
             phone,
             toggleTypePicker,
@@ -668,6 +676,28 @@ class EditProfile extends Component {
                                             placeholderTextColor="#000000"
                                             onChangeText={(lastname) =>
                                                 this.setState({ lastname })
+                                            }
+                                        />
+                                    </View>
+
+                                    <View style={styles.formContainer}>
+                                        <View style={globalStyles.rowBetween}>
+                                            <RNText style={styles.inputTitle}>
+                                                {I18n.t('Bio')}
+                                            </RNText>
+                                            <Ionicons
+                                                name="create-outline"
+                                                size={20}
+                                                color={'rgba(70, 79, 84, 1)'}
+                                            />
+                                        </View>
+                                        <TextInput
+                                            style={styles.input}
+                                            autoCapitalize="none"
+                                            defaultValue={bio}
+                                            placeholderTextColor="#000000"
+                                            onChangeText={(lastname) =>
+                                                this.setState({ bio })
                                             }
                                         />
                                     </View>

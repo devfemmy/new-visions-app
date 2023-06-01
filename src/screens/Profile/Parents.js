@@ -28,7 +28,7 @@ export default function Parents({ navigation }) {
                         Authorization: `Bearer ${user.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
@@ -38,7 +38,7 @@ export default function Parents({ navigation }) {
                     response.data != undefined &&
                     response.data.code != undefined
                 ) {
-                    console.log('getParents', response?.data)
+                    console.log('getParents =====>', response?.data)
                     if (response.data.code == 200) {
                         const data = response.data.data
                         setParents(data)
@@ -83,7 +83,7 @@ export default function Parents({ navigation }) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
@@ -133,7 +133,7 @@ export default function Parents({ navigation }) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )

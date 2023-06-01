@@ -76,7 +76,7 @@ export default function Attendance({}) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
@@ -125,7 +125,7 @@ export default function Attendance({}) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
@@ -175,7 +175,7 @@ export default function Attendance({}) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )

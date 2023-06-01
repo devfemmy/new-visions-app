@@ -57,7 +57,7 @@ export default function Subscriptions({}) {
                         Authorization: `Bearer ${user?.remember_token}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )

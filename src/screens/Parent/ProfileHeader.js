@@ -1,12 +1,73 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    Image,
+    Pressable,
+    Platform,
+} from 'react-native'
 import colors from '../../helpers/colors'
 import Global from '../../../Global'
+import { useNavigation } from '@react-navigation/native'
+import { AppContext } from '../../context/AppState'
+import IconText from '../../components/IconText'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import I18n from 'i18n-js'
 
 export default function ProfileHeader() {
+    const navigation = useNavigation()
+    const { user, changeLang, lang } = useContext(AppContext)
+    const langTo = lang === 'ar' ? 'en' : 'ar'
     return (
         <View style={styles.outContainer}>
             <View style={styles.container}>
+                <View
+                    style={{
+                        backgroundColor: 'inherit',
+                        width: '100%',
+                        opacity: 0.8,
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        paddingHorizontal: 20,
+                        // paddingBottom: 20,
+                    }}
+                >
+                    <Pressable
+                        onPress={() => {
+                            navigation.navigate('EditProfile')
+                        }}
+                    >
+                        <IconText
+                            style={styles.textAlign}
+                            text={I18n.t('Edit')}
+                            textColor={colors.white}
+                            children={
+                                <Ionicons
+                                    name="create-outline"
+                                    size={28}
+                                    color={'#fff'}
+                                />
+                            }
+                        />
+                    </Pressable>
+                    {Platform.OS === 'ios' && (
+                        <Pressable
+                            style={styles.touchLang2}
+                            onPress={() => {
+                                changeLang(langTo)
+                            }}
+                        >
+                            <View style={styles.lang}>
+                                <Text style={styles.langText}>
+                                    {I18n.t('Language')}
+                                </Text>
+                            </View>
+                        </Pressable>
+                    )}
+                </View>
                 <Image
                     style={styles.BG}
                     source={require('../../assets/img/profileHeader.png')}
@@ -17,9 +78,11 @@ export default function ProfileHeader() {
                     source={require('../../assets/img/default-profile-picture.jpeg')}
                 ></Image>
             </View>
-            <Text style={styles.MainText}>{Global.UserName}</Text>
-            <Text style={styles.subText}>{Global.email}</Text>
-            <Text style={styles.subText}>{Global.phone}</Text>
+            <Text
+                style={styles.MainText}
+            >{`${user?.first_name} ${user?.last_name}`}</Text>
+            <Text style={styles.subText}>{user?.email}</Text>
+            <Text style={styles.subText}>{user?.phone}</Text>
         </View>
     )
 }
@@ -56,5 +119,23 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily: 'Cairo',
         color: colors.black,
+    },
+    lang: {
+        marginVertical: 5,
+        borderRadius: 30,
+        borderWidth: 1,
+        borderColor: colors.white,
+        width: 70,
+        // height: 40,
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // paddingVertical: heightp(20)
+    },
+    langText: {
+        color: colors.white,
+        fontSize: 20,
+        fontFamily: 'Cairo-Regular',
+        alignSelf: 'center',
     },
 })
