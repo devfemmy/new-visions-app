@@ -20,6 +20,7 @@ import { globalStyles } from '../../helpers/globalStyles'
 import HomePageService from '../../services/userServices'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
+import NewLoader from '../../components/NewLoader'
 
 const Conversation = () => {
     const navigation = useNavigation()
@@ -61,9 +62,14 @@ const Conversation = () => {
               x?.name.toLowerCase().includes(searchText.toLowerCase())
           )
         : messages
+        if (loading){
+            return(
+                <NewLoader />
+            )
+        }
     return (
         <Container>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
             {/* <SelectTab
                 eventActive={eventActive}
                 pressed={() => setEventActive(!eventActive)}

@@ -7,6 +7,7 @@ import NotificationCard from '../../components/NotificationCard'
 import { AppContext } from '../../context/AppState'
 import HomePageService from '../../services/userServices'
 import I18n from 'i18n-js'
+import NewLoader from '../../components/NewLoader'
 
 const Notification = () => {
     const navigation = useNavigation()
@@ -41,9 +42,14 @@ const Notification = () => {
         }
         getNotification()
     }, [])
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
     return (
         <Container style={styles.container}>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
             <View>
                 <FlatList
                     keyboardShouldPersistTaps="handled"

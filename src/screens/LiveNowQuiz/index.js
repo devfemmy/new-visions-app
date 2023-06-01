@@ -26,6 +26,7 @@ import {
 import { AirbnbRating } from 'react-native-ratings'
 import * as Progress from 'react-native-progress'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import NewLoader from '../../components/NewLoader'
 
 const LiveNowQuiz = () => {
     const route = useRoute()
@@ -505,6 +506,11 @@ const LiveNowQuiz = () => {
             </>
         )
     }
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -627,7 +633,7 @@ const LiveNowQuiz = () => {
                     keyExtractor={(item, index) => index.toString()}
                 />
             </KeyboardAwareScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

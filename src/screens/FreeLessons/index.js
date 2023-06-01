@@ -27,6 +27,7 @@ import { Text } from '../../components/common'
 import CheckBox from '@react-native-community/checkbox'
 import SubscriptionModal from '../../components/SubscriptionModal'
 import moment from 'moment'
+import NewLoader from '../../components/NewLoader'
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 const freeLessonsUri = require('../../assets/img/freeLessons.png')
 
@@ -107,6 +108,11 @@ const FreeLessons = () => {
         } catch (err) {
             setLoading(false)
         }
+    }
+    if (loading){
+        return(
+            <NewLoader />
+        )
     }
 
     return (
@@ -383,7 +389,7 @@ const FreeLessons = () => {
                     )
                 })}
             </ScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </View>
     )
 }

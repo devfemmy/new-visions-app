@@ -18,6 +18,7 @@ import HomePageService from '../../services/userServices'
 import { Loader } from '../../components/Loader'
 import { AppContext } from '../../context/AppState'
 import SubscriptionModal from '../../components/SubscriptionModal'
+import NewLoader from '../../components/NewLoader'
 
 const dayOptions = [
     { value: '1', label: 'Saturday' },
@@ -152,6 +153,11 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
             setLoading(false)
             console.log('err', err)
         }
+    }
+    if (loading){
+        return(
+            <NewLoader />
+        )
     }
     return (
         <>
@@ -311,7 +317,7 @@ const PrivateSubjectSubscribe = ({ navigation, route }) => {
                     </View>
                 </Pressable>
             </View>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

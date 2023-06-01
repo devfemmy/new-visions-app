@@ -69,5 +69,10 @@ export const globalStyles = StyleSheet.create({
   btnColor: {
     color: colors.white,
     fontWeight: 'bold'
-  }
+  },
+  activityBox: {
+    flex: 1,
+    marginVertical: heightp(20),
+    justifyContent: 'center'
+},
 });

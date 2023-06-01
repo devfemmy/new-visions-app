@@ -22,6 +22,7 @@ import { AppContext } from '../../context/AppState'
 import I18n from 'i18n-js'
 import { Text } from '../../components/common'
 import StudentGuideCard from '../../components/StudentGuideCard'
+import NewLoader from '../../components/NewLoader'
 
 const StudentGuide = () => {
     const route = useRoute()
@@ -92,6 +93,11 @@ const StudentGuide = () => {
         },
         [navigation]
     )
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -190,7 +196,7 @@ const StudentGuide = () => {
                     />
                 </ScrollView>
             </View>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

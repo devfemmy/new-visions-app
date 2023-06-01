@@ -3,15 +3,13 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
 import { Modal } from './Modal'
 
-export const Loader = ({ visible }) => {
-    return (
+export const Loader = ({ visible }) => (
         <Modal visible={visible} opacity={0.6}>
             <View style={styles.activityBox}>
                 <ActivityIndicator animating color="green" />
             </View>
         </Modal>
     )
-}
 
 const styles = StyleSheet.create({
     activityBox: {

@@ -22,7 +22,7 @@ import { useNavigation } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 
 export default function Sons({ navigation }) {
-    const { onLogout, lang, showLoadingSpinner, initUUID, onLogin } =
+    const { onLogout, lang, showLoadingSpinner, initUUID, onLogin, user } =
         useContext(AppContext)
     const [sons, setSons] = useState([])
     const [searchMail, setsearch] = useState('')
@@ -30,25 +30,25 @@ export default function Sons({ navigation }) {
 
     const handleAddSon = () => {
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
-        if (reg.test(searchMail) === false) {
-            Toast.show({
-                text1:
-                    I18n.locale === 'ar'
-                        ? 'البريد الالكتروني غير صحيح'
-                        : 'Wrong Mail Format',
-                type: 'error',
-                style: { color: colors.dark },
-            })
+        // if (reg.test(searchMail) === false) {
+        //     Toast.show({
+        //         text1:
+        //             I18n.locale === 'ar'
+        //                 ? 'البريد الالكتروني غير صحيح'
+        //                 : 'Wrong Mail Format',
+        //         type: 'error',
+        //         style: { color: colors.dark },
+        //     })
 
-            return
-        }
+        //     return
+        // }
         //alert(searchMail);
         showLoadingSpinner(true)
         axios
             .post(
                 'https://newvisions.sa/api/addNewChild',
                 {
-                    email: searchMail,
+                    phone: searchMail,
                 },
                 {
                     // config
@@ -58,7 +58,7 @@ export default function Sons({ navigation }) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
@@ -102,7 +102,21 @@ export default function Sons({ navigation }) {
     const getChildren = (value) => {
         //showLoadingSpinner(true);
         axios
-            .post('https://newvisions.sa/api/getUserChildren', {})
+            .post(
+                'https://newvisions.sa/api/getUserChildren',
+                {},
+                {
+                    // config
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Acess-Control-Allow-Origin': '*',
+                        // Authorization: `Bearer ${Global.AuthenticationToken}`,
+                        Accept: 'application/json',
+                        lang: lang,
+                        version: 5,
+                    },
+                }
+            )
             .then((response) => {
                 //alert(response.data.code);
                 if (
@@ -114,7 +128,6 @@ export default function Sons({ navigation }) {
                         const data = response.data.data
                         setSons(data)
                         setLoadingContent(false)
-                        console.log(sons)
                     } else if (response.data.code == 403) {
                         console.log('account is logged in another device')
                         // onLogout()

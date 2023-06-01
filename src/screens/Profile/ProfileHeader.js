@@ -98,9 +98,11 @@ export default function ProfileHeader() {
                     />
                 )}
             </View>
-            <Text style={styles.MainText}>{Global.UserName}</Text>
-            <Text style={styles.subText}>{Global.email}</Text>
-            <Text style={styles.subText}>{Global.phone}</Text>
+            <Text
+                style={styles.MainText}
+            >{`${user?.first_name} ${user?.last_name}`}</Text>
+            <Text style={styles.subText}>{user?.email}</Text>
+            <Text style={styles.subText}>{user?.phone}</Text>
         </View>
     )
 }

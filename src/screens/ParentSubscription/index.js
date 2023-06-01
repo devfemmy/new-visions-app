@@ -11,6 +11,7 @@ import { AppContext } from '../../context/AppState'
 import { Loader } from '../../components/Loader'
 import { IMAGEURL } from '../../utils/functions'
 import SubscriptionModal from '../../components/SubscriptionModal'
+import NewLoader from '../../components/NewLoader'
 
 const ParentSubscription = () => {
     const route = useRoute()
@@ -86,9 +87,14 @@ const ParentSubscription = () => {
             setLoading(false)
         }
     }
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
     return (
         <Container>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
             <Text style={styles.textStyle} text={I18n.t('ChooseChild')} />
             <View>
                 <FlatList

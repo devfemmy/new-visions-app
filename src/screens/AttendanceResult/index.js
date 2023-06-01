@@ -30,6 +30,7 @@ import { IMAGEURL } from '../../utils/functions'
 import FastImage from 'react-native-fast-image'
 import IconText from '../../components/IconText'
 import { AppContext } from '../../context/AppState'
+import NewLoader from '../../components/NewLoader'
 
 const AttendanceResult = () => {
     const route = useRoute()
@@ -281,6 +282,11 @@ const AttendanceResult = () => {
             </>
         )
     }
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -471,7 +477,7 @@ const AttendanceResult = () => {
                     keyExtractor={(item, index) => index.toString()}
                 />
             </KeyboardAwareScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

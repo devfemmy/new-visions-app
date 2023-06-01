@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import HomePageService from '../../services/userServices'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
+import NewLoader from '../../components/NewLoader'
 
 const AllMeasurementQuiz = () => {
     const route = useRoute()
@@ -89,6 +90,11 @@ const AllMeasurementQuiz = () => {
             setRefreshing(false)
         }
     }, [])
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -143,7 +149,7 @@ const AllMeasurementQuiz = () => {
                     </View>
                 )}
             </ScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

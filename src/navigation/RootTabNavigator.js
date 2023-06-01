@@ -198,7 +198,7 @@ export const RootBottomTabNavigator = () => {
             {user && (
                 <RootBottomTab.Screen
                     options={{
-                        headerShown: session?.type == 3,
+                        headerShown: false,
                         headerLeft: backRight,
                         unmountOnBlur: true,
                     }}

@@ -22,6 +22,7 @@ import I18n from 'i18n-js'
 import { Text } from '../../components/common'
 import colors from '../../helpers/colors'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import NewLoader from '../../components/NewLoader'
 
 const GuideQuestionnaire = () => {
     const route = useRoute()
@@ -102,6 +103,11 @@ const GuideQuestionnaire = () => {
                 [id]: value.nativeEvent.text,
             },
         ])
+    }
+    if (loading){
+        return(
+            <NewLoader />
+        )
     }
 
     return (
@@ -351,7 +357,7 @@ const GuideQuestionnaire = () => {
                     </TouchableOpacity>
                 </View>
             </KeyboardAwareScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

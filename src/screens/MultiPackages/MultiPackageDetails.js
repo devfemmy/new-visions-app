@@ -43,6 +43,7 @@ import { useNavigation } from '@react-navigation/native'
 import Global from '../../../Global'
 import SubscriptionModal from '../../components/SubscriptionModal'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import NewLoader from '../../components/NewLoader'
 
 export default function MultiPackageDetails({ route }) {
     const navigation = useNavigation()
@@ -77,7 +78,7 @@ export default function MultiPackageDetails({ route }) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )
@@ -252,11 +253,16 @@ export default function MultiPackageDetails({ route }) {
             setRefreshing(false)
         }
     }, [])
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
             <Screen style={{ marginBottom: 20, paddingHorizontal: 20 }}>
-                <Loader visible={loading} />
+                {/* <Loader visible={loading} /> */}
                 <ScrollView
                     nestedScrollEnabled
                     showsVerticalScrollIndicator={false}

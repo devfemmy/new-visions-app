@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import HomePageService from '../../services/userServices'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
+import NewLoader from '../../components/NewLoader'
 
 const FazaReviewCourses = () => {
     const route = useRoute()
@@ -86,6 +87,11 @@ const FazaReviewCourses = () => {
         `SubjectReview levelDatas =================================`,
         levelDatas
     )
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -172,7 +178,7 @@ const FazaReviewCourses = () => {
                     </View>
                 )}
             </ScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

@@ -15,6 +15,7 @@ import {
     FlatList,
     Platform,
     RefreshControl,
+    ActivityIndicator,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -37,6 +38,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getSubjectTeachers } from '../../redux/action'
 import HeaderTitle from '../../components/common/HeaderTitle'
 import { Loader } from '../../components/Loader'
+import NewLoader from '../../components/NewLoader'
 
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
@@ -160,10 +162,15 @@ const TeacherProfile = () => {
             setRefreshing(false)
         }
     }, [item?.id])
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
             <ScrollView
                 contentContainerStyle={[
                     {
@@ -241,16 +248,26 @@ const TeacherProfile = () => {
                             horizontal
                             keyboardShouldPersistTaps="handled"
                             contentContainerStyle={styles.flatlistContent}
-                            ListEmptyComponent={() => (
-                                <View
-                                    style={{
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    <Text text={I18n.t('NoData')} />
-                                </View>
-                            )}
+                            ListEmptyComponent={() => {
+                                if(loading){
+                                return (
+                                    <View style={globalStyles.activityBox}>
+                                    <ActivityIndicator animating color="green" />
+                                    </View>
+                                )
+                                }
+                                    return (
+                                        <View
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Text text={I18n.t('NoData')} />
+                                    </View>
+                                    )
+                                
+                            }}
                             data={courses?.slice(0, 3)}
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}

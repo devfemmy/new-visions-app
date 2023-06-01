@@ -43,7 +43,7 @@ export default function MultiPackagesList({ route, navigation }) {
                         // Authorization: `Bearer ${Global.AuthenticationToken}`,
                         Accept: 'application/json',
                         lang: lang,
-                        version: 4,
+                        version: 5,
                     },
                 }
             )

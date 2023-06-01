@@ -10,8 +10,11 @@ import {
     StyleSheet,
     View,
     Text as RNText,
+    ActivityIndicator,
 } from 'react-native'
 import SearchBar from 'react-native-platform-searchbar'
+import I18n from 'i18n-js'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Container, Text } from '../../components/common'
 import { Loader } from '../../components/Loader'
 import StageCard from '../../components/StageCard'
@@ -20,12 +23,10 @@ import { getSubject } from '../../redux/action/subjectPageAction'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp } from '../../utils/responsiveDesign'
-import I18n from 'i18n-js'
 import colors from '../../helpers/colors'
 import { globalStyles } from '../../helpers/globalStyles'
 import HomePageService from '../../services/userServices'
 import { AppContext } from '../../context/AppState'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 LogBox.ignoreAllLogs()
 const SubjectDetails = () => {
@@ -40,10 +41,9 @@ const SubjectDetails = () => {
     const [subjectData, setSubjectData] = useState([])
     // const subjectData = subject?.data
     const [refreshing, setRefreshing] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const getSubject = async () => {
-        setLoading(true)
         const levelFromAsync = await AsyncStorage.getItem('level_id');
         const realLevel_id = levelFromAsync
         let level;
@@ -55,11 +55,14 @@ const SubjectDetails = () => {
         const payload = {
             level,
         }
-        console.log(payload, 'xxxxxxxxxxxxx')
+        console.log(payload, 'xxxxxxxxxxxxx make request')
+        setLoading(true)
         try {
+
             const res = await HomePageService.getSubjects(payload)
             const data = res?.data?.data
             console.log('wwwwwwwwww data zooooooooooooooom', res)
+            setLoading(false)
             if (res.code === 200) {
                 setLoading(false)
                 setSubjectData(data)
@@ -76,12 +79,12 @@ const SubjectDetails = () => {
     }
 
     useEffect(() => {
-        getSubject()
         const unsubscribe = navigation.addListener('focus', () => {
             // console.log('<<<<<tabs Refreshed>>>>>>')
+            getSubject()
         })
         return unsubscribe
-    }, [dispatch, user])
+    }, [])
 
     const navigateSubjectsDetails = useCallback(
         (item) => {
@@ -110,6 +113,11 @@ const SubjectDetails = () => {
             setRefreshing(false)
         }
     }, [])
+    // if(loading){
+    //     <View style={styles.activityBox}>
+    //     <ActivityIndicator animating color="green" />
+    //     </View>
+    // }
 
     return (
         <>
@@ -154,16 +162,26 @@ const SubjectDetails = () => {
                     <FlatList
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.flatlistContent}
-                        ListEmptyComponent={() => (
-                            <View
-                                style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Text text={I18n.t('NoData')} />
+                        ListEmptyComponent={() => {
+                            if(loading){
+                            return (
+                                <View style={styles.activityBox}>
+                                <ActivityIndicator animating color="green" />
                             </View>
-                        )}
+                            )
+                            }
+                                return (
+                                    <View
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Text text={I18n.t('NoData')} />
+                                </View>
+                                )
+                            
+                        }}
                         ListFooterComponent={() => (
                             <View
                                 style={{
@@ -205,7 +223,7 @@ const SubjectDetails = () => {
                     />
                 </View>
             </ScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }
@@ -218,6 +236,16 @@ const styles = StyleSheet.create({
     },
     containerFlex: {
         marginBottom: heightp(20),
+    },
+    activityBox: {
+        flex: 1,
+        marginVertical: heightp(20)
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // width: 50,
+        // height: 50,
+        // borderRadius: 5,
+        // backgroundColor: 'white',
     },
 })
 

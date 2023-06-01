@@ -31,6 +31,7 @@ import Global from '../../../Global'
 import SubscriptionModal from '../../components/SubscriptionModal'
 import { AppContext } from '../../context/AppState'
 import { heightp } from '../../utils/responsiveDesign'
+import NewLoader from '../../components/NewLoader'
 // import ChooseGroup from './ChooseGroup';
 // import ChooseTime from './ChooseTime';
 // import SelectGroup from './SelectGroup';
@@ -181,6 +182,11 @@ const PrivateLessonSubscription = () => {
             return
         }
     }
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
     return (
         <SubContext.Provider
             value={{
@@ -203,7 +209,7 @@ const PrivateLessonSubscription = () => {
                     navigation.popToTop()
                 }}
             />
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
             <Container>
                 <View style={{ flex: 1 }}>
                     <ProgressSteps

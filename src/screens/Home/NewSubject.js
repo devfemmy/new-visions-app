@@ -22,6 +22,7 @@ import HomePageService from '../../services/userServices'
 import { IMAGEURL } from '../../utils/functions'
 import { heightp, widthp } from '../../utils/responsiveDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import NewLoader from '../../components/NewLoader'
 
 const HomeSubject = () => {
     const route = useRoute()
@@ -95,6 +96,11 @@ const HomeSubject = () => {
             setRefreshing(false)
         }
     }, [])
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -403,7 +409,7 @@ const HomeSubject = () => {
                     ))} */}
                 </View>
             </ScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

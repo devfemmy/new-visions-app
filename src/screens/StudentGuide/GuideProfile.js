@@ -37,6 +37,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getSubjectTeachers } from '../../redux/action'
 import HeaderTitle from '../../components/common/HeaderTitle'
 import { Loader } from '../../components/Loader'
+import NewLoader from '../../components/NewLoader'
 
 const defaultUri = require('../../assets/img/default-profile-picture.jpeg')
 
@@ -160,10 +161,15 @@ const GuideProfile = () => {
             setRefreshing(false)
         }
     }, [item?.id])
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
             <ScrollView
                 contentContainerStyle={[
                     {

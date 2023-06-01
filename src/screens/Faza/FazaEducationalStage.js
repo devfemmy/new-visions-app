@@ -20,6 +20,7 @@ import { getSubjectLevels } from '../../redux/action'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import HomePageService from '../../services/userServices'
 import { heightp } from '../../utils/responsiveDesign'
+import NewLoader from '../../components/NewLoader'
 
 const FazaEducationalStage = () => {
     const route = useRoute()
@@ -89,6 +90,11 @@ const FazaEducationalStage = () => {
             setRefreshing(false)
         }
     }, [])
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -132,7 +138,7 @@ const FazaEducationalStage = () => {
                     ))}
                 </View>
             </ScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

@@ -30,6 +30,7 @@ import { IMAGEURL } from '../../utils/functions'
 import FastImage from 'react-native-fast-image'
 import IconText from '../../components/IconText'
 import { AppContext } from '../../context/AppState'
+import NewLoader from '../../components/NewLoader'
 
 const LiveNowQuizResult = () => {
     const route = useRoute()
@@ -343,6 +344,11 @@ const LiveNowQuizResult = () => {
             </>
         )
     }
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <>
@@ -564,7 +570,7 @@ const LiveNowQuizResult = () => {
                     keyExtractor={(item, index) => index.toString()}
                 />
             </KeyboardAwareScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </>
     )
 }

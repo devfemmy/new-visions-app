@@ -23,6 +23,7 @@ import I18n from 'i18n-js'
 import { Text } from '../../components/common'
 import StageCard from '../../components/StageCard'
 import colors from '../../helpers/colors'
+import NewLoader from '../../components/NewLoader'
 
 const ChooseStudyDate = () => {
     const route = useRoute()
@@ -89,6 +90,11 @@ const ChooseStudyDate = () => {
         },
         [navigation, item, data]
     )
+    if (loading){
+        return(
+            <NewLoader />
+        )
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -202,7 +208,7 @@ const ChooseStudyDate = () => {
                     }}
                 />
             </ScrollView>
-            <Loader visible={loading} />
+            {/* <Loader visible={loading} /> */}
         </View>
     )
 }
