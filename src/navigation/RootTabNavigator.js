@@ -198,7 +198,7 @@ export const RootBottomTabNavigator = () => {
             {user && (
                 <RootBottomTab.Screen
                     options={{
-                        headerShown: session?.type == 4,
+                        headerShown: session?.type == 3,
                         headerLeft: backRight,
                         unmountOnBlur: true,
                     }}
@@ -206,7 +206,7 @@ export const RootBottomTabNavigator = () => {
                         session?.type == 3 ? I18n.t('Profile') : I18n.t('Sons')
                     }
                     component={
-                        session?.type == 4 ? ParentProfileNavigator : Profile
+                        session?.type == 3 ? ParentProfileNavigator : Profile
                     }
                 />
             )}
