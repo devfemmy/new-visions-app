@@ -13,6 +13,7 @@ import {
     SafeAreaView,
     Platform,
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { AppContext } from '../../context/AppState'
 import colors from '../../helpers/colors'
@@ -181,7 +182,7 @@ class EditProfile extends Component {
             )
             .then((response) => {
                 if (response.data.code === 200) {
-                    console.log('user changed', response.data);
+                    console.log(Global.UserName, 'user changed', response.data)
                     if (Global?.UserName) {
                         this.setState({ loading: false })
                         alert('Your data has been updated Successfully!')
@@ -212,22 +213,14 @@ class EditProfile extends Component {
                 } else if (response.data.code === -2) {
                     this.setState({ loading: false })
                     alert(response.data.message)
-                    console.log(
-                        response.data,
-                        '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
-                        response.data.message
-                    )
+
                     return response.data.code
                 } else if (response.data.code !== 200) {
                     this.setState({ loading: false })
-                    console.log('request failed')
-                    console.log(response.data)
+
                     alert(response.data.message)
                     return response.data.code
-
-                    // console.log(JSON.stringify(response.data.message));
                 } else {
-                    console.log(response)
                     this.setState({ loading: false })
                     alert(response.data.message)
                     return response.data.code
@@ -238,7 +231,6 @@ class EditProfile extends Component {
             })
             .finally(() => {
                 // setIsLoading(false)
-                console.log('done')
             })
     }
 
@@ -264,7 +256,7 @@ class EditProfile extends Component {
             .then((response) => {
                 if (response.data.code === 200) {
                     if (Global.UserName) {
-                        console.log('response', response?.data)
+                        console.log('response', response?.data?.data)
                         onLogin(response.data.data, true)
                         this.onReload()
                         this.setState({ loading: false })
@@ -275,31 +267,19 @@ class EditProfile extends Component {
                     // console.log(BroadcastData);
                 } else if (response.data.code === -2) {
                     this.setState({ loading: false })
-                    console.log(
-                        '<<<<<<<<<<DATA>>>>>>>>>>>>>>',
-                        response.data.message
-                    )
+
                     return response.data.code
                 } else if (response.data.code !== 200) {
-                    console.log('request failed')
-                    console.log(response.data)
                     return response.data.code
-                    // console.log(JSON.stringify(response.data.message));
                 } else {
-                    console.log(response)
                     return response.data.code
                 }
             })
             .catch((error) => {
                 // alert(error)
-                console.log(
-                    'error in the response getUpdatedProfile =======>',
-                    error
-                )
             })
             .finally(() => {
                 // setIsLoading(false)
-                console.log('done')
             })
     }
 
@@ -314,16 +294,18 @@ class EditProfile extends Component {
                 avatarUrl,
                 toggleTypePicker,
                 currentLevel,
+                stageOption,
             } = this.state
             const { user, lang, onLogin } = this.context
             this.setState({ loading: true })
 
-            console.log(
-                avatarUrl,
-                currentLevel,
-                '<<<==========PHOTO================>>>',
-                photo
-            )
+            // console.log(
+            //     avatarUrl,
+            //     currentLevel,
+            //     '<<<==========PHOTO================>>>',
+            //     stageOption?.id,
+            //     photo
+            // )
             const data = new FormData()
             data.append('first_name', firstname)
             data.append('last_name', lastname)
@@ -338,6 +320,10 @@ class EditProfile extends Component {
             data.append(
                 'level_id',
                 currentLevel ? currentLevel : user?.level_id
+            )
+            data.append(
+                'stage_id',
+                stageOption ? stageOption?.id : user?.stage_id
             )
 
             this.updateProfile({ data, lang, onLogin })
@@ -398,6 +384,9 @@ class EditProfile extends Component {
     }
 
     getStages = async () => {
+        const session = await AsyncStorage.getItem('stage_id')
+        stageFromAsync = JSON.parse(session)
+        console.log('stageFromAsync', stageFromAsync)
         const { user } = this.context
         // showLoadingSpinner(true)
         try {
@@ -413,7 +402,7 @@ class EditProfile extends Component {
                     const defaultFilterObject = {
                         id: 3,
                         image: '/stages/secondary.png',
-                        name: i18n.t('FirstSecondary'),
+                        name: I18n.t('FirstSecondary'),
                         package_image: '/package_stages/secondary.png',
                     }
                     this.setState({
@@ -423,41 +412,10 @@ class EditProfile extends Component {
                     const result = data.filter(
                         (res) => res?.id === stageFromAsync
                     )
-                    // setFilterOption(result[0])
-                    console.log('result[0]', result)
                     this.setState({
                         stageOption: result[0],
                     })
                 }
-                // data.map((item) => {
-                //     if (item?.id === user?.level_id) {
-                //         this.setState({
-                //             stageOption: item,
-                //         })
-                //         console.log('item returned xxxxxxxxxxxxxx', item)
-                //         return item
-                //     } else if (item?.id === user?.stage_id) {
-                //         this.setState({
-                //             stageOption: item,
-                //         })
-                //         console.log('item returned xxxxxxxxxxxxxx', item)
-                //         return item
-                //     } else {
-                //         const userToken = Global.AuthenticationToken
-                //         if (userToken === '' || userToken === null) {
-                //             const defaultFilterObject = {
-                //                 id: 3,
-                //                 image: '/stages/secondary.png',
-                //                 name: I18n.t('FirstSecondary'),
-                //                 package_image: '/package_stages/secondary.png',
-                //             }
-                //             this.setState({
-                //                 stageOption: defaultFilterObject,
-                //             })
-                //         }
-                //         return null
-                //     }
-                // })
             } else {
                 // showLoadingSpinner(false)
                 // console.log('account is logged in another device')
@@ -695,7 +653,11 @@ class EditProfile extends Component {
                                         <TextInput
                                             style={styles.input}
                                             autoCapitalize="none"
-                                            defaultValue={bio === 'undefined' || null ? '' : bio}
+                                            defaultValue={
+                                                bio === 'undefined' || null
+                                                    ? ''
+                                                    : bio
+                                            }
                                             placeholderTextColor="#000000"
                                             onChangeText={(bio) =>
                                                 this.setState({ bio: bio })
@@ -777,7 +739,7 @@ class EditProfile extends Component {
                                                 //         : 'left',
                                             }}
                                         >
-                                            {this.state.stageOption?.name}
+                                            {stageOption?.name}
                                         </RNText>
                                     </Pressable>
                                 </View>
@@ -791,9 +753,7 @@ class EditProfile extends Component {
                                         color="primary"
                                         title={I18n.t('Save')}
                                         onPress={() => {
-                                            console.log('hereee')
                                             this.uploadAvatar()
-                                            // navigation.navigate('SignUp')
                                         }}
                                     />
                                 </View>
@@ -979,6 +939,10 @@ class EditProfile extends Component {
                                                         alignItems: 'center',
                                                     }}
                                                     onPress={() => {
+                                                        console.log(
+                                                            'item selected',
+                                                            item
+                                                        )
                                                         this.setState({
                                                             currentIndex: index,
                                                             currentStage: item,
@@ -1019,6 +983,7 @@ class EditProfile extends Component {
                                                         this.setState({
                                                             currentIndex: index,
                                                             currentStage: item,
+                                                            stageOption: item,
                                                         })
                                                     }}
                                                 >
