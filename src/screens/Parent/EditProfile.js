@@ -160,7 +160,7 @@ class EditProfile extends Component {
     }
 
     updateProfile = ({ data, lang, onLogin }) => {
-        console.log('data', data, 'lang', lang)
+        console.log('data >>>>>>', data, 'lang', lang)
         const { user } = this.context
         // setIsLoading(true)
         axios
@@ -181,6 +181,7 @@ class EditProfile extends Component {
             )
             .then((response) => {
                 if (response.data.code === 200) {
+                    console.log('user changed', response.data);
                     if (Global?.UserName) {
                         this.setState({ loading: false })
                         alert('Your data has been updated Successfully!')
@@ -694,10 +695,10 @@ class EditProfile extends Component {
                                         <TextInput
                                             style={styles.input}
                                             autoCapitalize="none"
-                                            defaultValue={bio}
+                                            defaultValue={bio === 'undefined' || null ? '' : bio}
                                             placeholderTextColor="#000000"
-                                            onChangeText={(lastname) =>
-                                                this.setState({ bio })
+                                            onChangeText={(bio) =>
+                                                this.setState({ bio: bio })
                                             }
                                         />
                                     </View>
